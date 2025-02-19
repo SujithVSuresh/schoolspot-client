@@ -1,27 +1,36 @@
 import React from "react";
 import Header from "../components/Header";
 import { useState } from "react";
-import { SignupFormType } from "../types/propsTypes";
+import { AdminSignupFormType } from "../types/types";
 import google from '../../../assets/images/google.png'
 import { emailRegex, passwordRegex } from "../../../app/validation/regex";
+import {signup} from '../api/api'
+import { useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { AppDispatch, RootState } from "../../../app/store";
+// import { signup } from "../redux/adminAuthSlice";
 
 
 const Signup = () => {
+  const navigate = useNavigate()
+  // const dispatch = useDispatch<AppDispatch>()
+  // const {user, loading} = useSelector((state: RootState) => state.adminAuth)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
-  const [error, setError] = useState<SignupFormType>({
+  const [error, setError] = useState<AdminSignupFormType>({
     email: "",
     password: "",
     confirmPassword: ""
   });
 
+
   let isValid = true
 
   const validate = () => {
-    const error: SignupFormType = {
+    const error: AdminSignupFormType = {
       email: "",
       password: "",
       confirmPassword: ""
@@ -53,13 +62,17 @@ const Signup = () => {
     return error
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError(validate())
 
     if(isValid){
-    // dispatch(signup(name, email, password))
+        const response = await signup({email, password})
+
+        if(response.success){
+          navigate('/otp', {state: response.data})
+        }
     }
   };
 
@@ -129,7 +142,7 @@ const Signup = () => {
     </div>
     
     <button disabled={email && password && confirmPassword ? false : true} onClick={(e) => handleSubmit(e)} className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center ${
-            email && password && confirmPassword ? "bg-blue-700" : "bg-gray-400"
+            email && password && confirmPassword ? "bg-blue-700" : "bg-blue-200"
           }`}>
         <h1 className="text-base font-medium text-white">Submit</h1>
       </button>
@@ -142,7 +155,6 @@ const Signup = () => {
 
     <div className="flex justify-center">
       <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
-        {/* <FcGoogle className="mr-2 text-xl" /> Continue with Google */}
         <img src={google} className='h-5 w-5 mr-5' alt="" />
         Continue with Google
       </button>
