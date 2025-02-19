@@ -1,9 +1,8 @@
-import google from '../../assets/google.png'
-import { SignupProgressPropType } from "../../types/propsTypes";
+import google from '../../../assets/images/google.png'
+import { SignupProgressPropType } from '../types/propsTypes';
 import { useState } from 'react';
 import React from 'react';
-import { emailRegex } from '../../validation/regex';
-
+import { emailRegex } from '../../../app/validation/regex';
 
 const EmailForm = ({ progress }: SignupProgressPropType)=> {
   const [email, setEmail] = useState("")
@@ -37,7 +36,7 @@ const EmailForm = ({ progress }: SignupProgressPropType)=> {
     <h5 className="text-base text-center mt-5 mb-6">
       100% free. No credit card needed.
     </h5>
-
+ <div>
     <div>
       <label
         htmlFor="email"
@@ -53,12 +52,45 @@ const EmailForm = ({ progress }: SignupProgressPropType)=> {
       />
       <p className='text-red-500 text-xs mt-1'>{error}</p>
 
-      <button disabled={email ? false : true} onClick={(e) => handleSubmit(e)} className={`w-full mt-10 h-12 rounded-sm flex justify-center items-center ${
+    </div>
+
+    <div>
+      <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          Password
+        </label>
+        <div className="relative">
+          <input
+            type="password"
+            id="password"
+     
+            className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
+          />
+        </div>
+        <p className='text-red-500 text-xs mt-1'>{error}</p>
+    </div>
+
+    <div>
+      <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          Confirm Password
+        </label>
+        <div className="relative">
+          <input
+            type="password"
+            id="password"
+     
+            className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
+          />
+        </div>
+        <p className='text-red-500 text-xs mt-1'>{error}</p>
+    </div>
+
+    </div>
+    
+    <button disabled={email ? false : true} onClick={(e) => handleSubmit(e)} className={`w-full mt-10 h-12 rounded-sm flex justify-center items-center ${
             email ? "bg-blue-700" : "bg-gray-400"
           }`}>
-        <h1 className="text-base font-medium text-white">Verify email</h1>
+        <h1 className="text-base font-medium text-white">Submit</h1>
       </button>
-    </div>
 
     <div className="flex items-center w-full my-5">
       <hr className="flex-grow border-gray-300" />
