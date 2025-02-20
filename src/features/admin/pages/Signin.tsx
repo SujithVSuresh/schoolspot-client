@@ -1,8 +1,67 @@
 import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { AdminSigninFormType } from '../types/types'
+import { emailRegex, passwordRegex } from '../../../app/validation/regex'
+import google from '../../../assets/images/google.png'
+import { signin } from '../api/api'
 
 const Signin = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    
+      const [error, setError] = useState<{email: string, password: string}>({
+        email: "",
+        password: "",
+      });
+
+      let isValid = true
+
+      const validate = () => {
+        const error: AdminSigninFormType = {
+          email: "",
+          password: "",
+        }
+    
+        if(!email){
+          error.email = "This field is required"
+          isValid = false
+        }else if(!emailRegex.test(email)){
+          error.email = "Enter a valid email"
+          isValid = false
+        }
+    
+        if(!password){
+          error.password = "This field is required"
+          isValid = false
+        }else if(!passwordRegex.test(password)){
+          error.password = "Password should be atleast 8 character long"
+          isValid = false
+        }
+    
+        return error
+      }
+    
+
+
+
+      const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        setError(validate())
+
+        if(isValid){
+          const response = await signin({email, password})
+
+          if(response.success){
+            console.log("signin success", response)
+          }
+          console.log("form submitted", response)
+        }
+
+      }
   return (
     <>
       <Header />
@@ -16,6 +75,7 @@ const Signin = () => {
     </h5> */}
 
     <div>
+    <div className="mb-5">
       <label
         htmlFor="email"
         className="block text-sm font-medium text-gray-700"
@@ -23,11 +83,16 @@ const Signin = () => {
         Email address
       </label>
       <input
+      onChange={(e) => setEmail(e.target.value)}
+      value={email}
         type="email"
         id="email"
         className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
       />
+      <p className='text-red-500 text-xs mt-1'>{error.email}</p>
 
+    </div>
+    <div className="mb-5">
 <label
         htmlFor="password"
         className="block text-sm font-medium mt-5 text-gray-700"
@@ -38,22 +103,28 @@ const Signin = () => {
       <input
         type="password"
         id="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
       />
       <div className="w-10 h-10 absolute right-0 top-0">
 
       </div>
       </div>
+      <p className='text-red-500 text-xs mt-1'>{error.password}</p>
 
-      <div className="bg-blue-700 h-12 rounded-sm flex justify-center mt-6 items-center">
-        <h1 className="text-base font-medium text-white">Sign in</h1>
+
       </div>
+
+      <button onClick={(e) => handleFormSubmit(e)} disabled={password && email ? false : true} className={`${password && email ? "bg-blue-700" : "bg-blue-200"} w-full h-12 rounded-sm flex justify-center mt-6 items-center`}>
+        <h1 className="text-base font-medium text-white">Sign in</h1>
+      </button>
 
       <h5 className="font-medium mt-5">
           Forgot your password?{" "}
-          <span onClick={() => navigate('/signin/forgot')} className="text-blue-500 cursor-pointer font-semibold">
+          <Link to={'/signin/forgot'} className="text-blue-500 cursor-pointer font-semibold">
             Reset password
-          </span>
+          </Link>
         </h5>
     </div>
 
@@ -64,8 +135,8 @@ const Signin = () => {
     </div>
 
     <div className="flex justify-center">
-      <button className="flex items-center justify-center w-96 p-2 text-gray-500 bg-gray-200 rounded-sm hover:bg-gray-300">
-        {/* <FcGoogle className="mr-2 text-xl" /> Continue with Google */}
+      <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
+        <img src={google} className='h-5 w-5 mr-5' alt="" />
         Continue with Google
       </button>
     </div>
