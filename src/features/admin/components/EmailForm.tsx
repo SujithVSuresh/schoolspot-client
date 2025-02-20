@@ -1,5 +1,5 @@
 import google from '../../../assets/images/google.png'
-import { SignupProgressPropType } from '../types/propsTypes';
+import { SignupProgressPropType } from '../types/types';
 import { useState } from 'react';
 import React from 'react';
 import { emailRegex } from '../../../app/validation/regex';

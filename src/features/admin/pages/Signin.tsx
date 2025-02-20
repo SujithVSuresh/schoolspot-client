@@ -5,9 +5,10 @@ import { AdminSigninFormType } from '../types/types'
 import { emailRegex, passwordRegex } from '../../../app/validation/regex'
 import google from '../../../assets/images/google.png'
 import { signin } from '../api/api'
+import { useNavigate } from 'react-router-dom'
 
 const Signin = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -45,8 +46,6 @@ const Signin = () => {
       }
     
 
-
-
       const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
@@ -57,6 +56,7 @@ const Signin = () => {
 
           if(response.success){
             console.log("signin success", response)
+            navigate('/dashboard/students')
           }
           console.log("form submitted", response)
         }
