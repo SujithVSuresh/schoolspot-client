@@ -3,6 +3,7 @@ import { useState } from "react";
 import { emailRegex } from "../../../app/validation/regex";
 import { Link } from "react-router-dom";
 import { passwordResetRequest } from "../api/api";
+import {toast} from 'react-toastify'
 
 
 const ResetPassword = () => {
@@ -41,6 +42,15 @@ const ResetPassword = () => {
       const response = await passwordResetRequest({email}) 
 
       if(response.data){
+                              toast.success("Password reset link is send to your email.", {
+                                        position: "bottom-right", 
+                                        autoClose: 3000,    
+                                        hideProgressBar: true,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                      });
         console.log("password reset link send successfully", response.data)
         setEmail("")
       }
@@ -87,11 +97,7 @@ const ResetPassword = () => {
             Sign in
           </Link>
         </h5>
-
-
   </div>
-
-
     </main>
   </>
   )

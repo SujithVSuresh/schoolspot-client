@@ -2,6 +2,7 @@ import axios from 'axios';
 import { store } from '../store';
 
 
+
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
     headers: {
@@ -13,12 +14,12 @@ axiosInstance.interceptors.request.use(
     (config) => {
         const {admin} = store.getState()
 
-        const userType = config.headers.userType
+        const userType = config.headers['x-role']
 
         let token = null
 
         if(userType == 'admin'){
-            token = admin.accessToken
+            token = admin?.accessToken
         }
 
         if(token){

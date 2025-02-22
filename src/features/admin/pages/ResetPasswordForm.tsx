@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { passwordRegex } from "../../../app/validation/regex";
 import { useSearchParams } from "react-router-dom";
 import { passwordReset } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ResetPasswordForm = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 
@@ -57,6 +60,29 @@ const ResetPasswordForm = () => {
     if (isValid && token) {
       const response = await passwordReset({ token, password });
       console.log("submit the reset form", response);
+
+      if (response.success) {
+        toast.success("Password reset successfully", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate("/signin");
+      } else {
+        toast.error(response.error.message, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
   };
 

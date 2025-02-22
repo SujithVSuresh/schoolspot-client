@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { AppDispatch, RootState } from "../../../app/store";
 // import { signup } from "../redux/adminAuthSlice";
+import {toast} from 'react-toastify'
 
 
 const Signup = () => {
@@ -36,7 +37,7 @@ const Signup = () => {
       confirmPassword: ""
     }
 
-    if(!email){
+    if(!email.trim()){
       error.email = "This field is required"
       isValid = false
     }else if(!emailRegex.test(email)){
@@ -44,7 +45,7 @@ const Signup = () => {
       isValid = false
     }
 
-    if(!password){
+    if(!password.trim()){
       error.password = "This field is required"
       isValid = false
     }else if(!passwordRegex.test(password)){
@@ -52,7 +53,7 @@ const Signup = () => {
       isValid = false
     }
 
-    if(!confirmPassword){
+    if(!confirmPassword.trim()){
       error.confirmPassword = "This field is required"
       isValid = false
     }else if(confirmPassword != password){
@@ -72,6 +73,16 @@ const Signup = () => {
 
         if(response.success){
           navigate('/otp', {state: response.data})
+        }else{
+                  toast.error(response.error.message, {
+                    position: "bottom-right", 
+                    autoClose: 3000,    
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
         }
     }
   };

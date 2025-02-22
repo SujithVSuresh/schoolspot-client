@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
-
+import {toast} from 'react-toastify'
 
 const Otp = () => {
     const navigate = useNavigate()
@@ -87,14 +87,26 @@ const Otp = () => {
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const otpCode = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
-        if (otpCode.length === 6) {
+        if (otpCode.length === 6 && location.state.email) {
           const response = await verify({
             otp: Number(otpCode),
             email: location.state.email
           })
           
           if(response.success){
-            navigate('/school-info')
+            setTimer(60)
+            navigate('/signin')
+          }else{
+                         toast.error(response.error.message, {
+                                position: "bottom-right", 
+                                autoClose: 3000,    
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                              });
+                              
           }
             
           console.log("OTP Submitted:", otpCode);
@@ -106,10 +118,24 @@ const Otp = () => {
 
       const handleResendSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if(location.state.email){
         const response = await resendOtp({email: location.state.email})
+
+        console.log(response)
 
         if(response.success){
           setTimer(60)
+        }else{
+                  toast.error(response.error.message, {
+                    position: "bottom-right", 
+                    autoClose: 3000,    
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+        }
         }
 
       }

@@ -5,7 +5,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 //     uppercase: /[a-z]/,
 //     specialChar: /[!@#$%^&*(),.?":{}|<>+-]/
 // }
-const passwordRegex = /^.{8,}$/
+const passwordRegex = /^[^\s]{8,}$/
 
 export {
     emailRegex,

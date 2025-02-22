@@ -5,15 +5,23 @@ import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
+    isLogin: boolean
 }
 
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, isLogin }: ProtectedRouteProps) => {
     const user = useSelector((state: RootState) => state.admin)
 
-    if (user.accessToken) {
+    if (isLogin && !user.accessToken) {
+      return <Navigate to="/signin" replace />;
+    }
+    
+    if(!isLogin && user.accessToken){
       return <Navigate to="/students" replace />;
     }
+    // if(!user.accessToken){
+    //   return <Navigate to="/signin" replace />;
+    // }
   
     return (
     <>{children}</>
