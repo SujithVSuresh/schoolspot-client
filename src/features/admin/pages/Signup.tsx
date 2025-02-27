@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import { useState } from "react";
 import { AdminSignupFormType } from "../types/types";
-import google from "../../../assets/images/google.png";
+// import google from "../../../assets/images/google.png";
 import { emailRegex, passwordRegex } from "../../../app/validation/regex";
 import { signup } from "../api/api";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 // import { AppDispatch, RootState } from "../../../app/store";
 // import { signup } from "../redux/adminAuthSlice";
 import { toast } from "react-toastify";
+import GoogleAuth from "../components/GoogleAuth";
+
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -174,12 +176,13 @@ const Signup = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
 
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
               <img src={google} className="h-5 w-5 mr-5" alt="" />
               Continue with Google
             </button>
-          </div>
+          </div> */}
+          <GoogleAuth />
         </div>
       </main>
     </>

@@ -78,6 +78,7 @@ export const signin = async (userData: AdminSigninFormType) => {
         const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", userData, {headers: {
             'x-access': 'public'
         }});
+        console.log(data, "signin dfata")
         return { success: true, data }
     }catch(error){
         console.log(error, "this is the error")
@@ -106,6 +107,20 @@ export const getAllStudents = async () => {
         const {data} = await axiosInstance.get("http://localhost:3000/api/auth/student/get-students", {headers: {
             'x-access': 'private',
             'x-role': 'admin'
+        }});
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const googleAuth = async (payload: {credential: string, clientId: string}) => {
+    try{
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/google-auth", payload, {headers: {
+            'x-access': 'public',
         }});
         return { success: true, data }
     }catch(error){
