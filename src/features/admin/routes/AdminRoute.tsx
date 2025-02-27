@@ -10,10 +10,19 @@ import Student from "../pages/Student";
 import Teachers from "../pages/Teachers";
 import Pricing from "../pages/Pricing";
 import SchoolInfoForm from "../pages/SchoolInfoForm";
+import Home from "../pages/Home";
 
 const AdminRoute = () => {
   return (
     <Routes>
+       <Route
+        path="/"
+        element={
+          <ProtectedRoute isLogin={false}>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/signup"
         element={
@@ -57,7 +66,7 @@ const AdminRoute = () => {
       <Route
         path="/school-info"
         element={
-          <ProtectedRoute isLogin={true}>
+          <ProtectedRoute isLogin={false}>
             <SchoolInfoForm />
           </ProtectedRoute>
         }
