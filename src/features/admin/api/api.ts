@@ -75,7 +75,7 @@ export const passwordReset = async (passwordResetData: {token: string, password:
 
 export const signin = async (userData: AdminSigninFormType) => {
     try{
-        const {data} = await axiosInstance.post("http://localhost:3000/api/auth/user/signin", userData, {headers: {
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", userData, {headers: {
             'x-access': 'public'
         }});
         return { success: true, data }
