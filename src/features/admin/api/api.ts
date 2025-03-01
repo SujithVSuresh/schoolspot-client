@@ -10,7 +10,7 @@ import axiosInstance from '../../../app/api/axiosInstance'
 
 export const signup = async (userData: AdminSignupFormType) => {
     try{
-        const {data} = await axiosInstance.post("http://localhost:3000/api/auth/admin/signup", userData, {headers: {
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/signup", userData, {headers: {
             'x-access': 'public'
         }});
         return { success: true, data }

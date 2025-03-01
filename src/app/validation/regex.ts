@@ -1,11 +1,12 @@
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-// const passwordRegex = {
-//     letter: /[a-zA-Z]/,
-//     lowercase: /[A-Z]/,
-//     uppercase: /[a-z]/,
-//     specialChar: /[!@#$%^&*(),.?":{}|<>+-]/
-// }
-const passwordRegex = /^[^\s]{8,}$/
+const passwordRegex = {
+    letter: /[a-zA-Z]/,
+    lowercase: /[a-z]/,
+    uppercase: /[A-Z]/,
+    specialChar: /[!@#$%^&*(),.?":{}|<>+-]/,
+    spaces: /^\S+$/
+}
+
 
 export {
     emailRegex,

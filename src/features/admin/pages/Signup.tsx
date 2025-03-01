@@ -1,89 +1,43 @@
-import React from "react";
 import Header from "../components/Header";
-import { useState } from "react";
+// import { useState } from "react";
 import { AdminSignupFormType } from "../types/types";
-// import google from "../../../assets/images/google.png";
-import { emailRegex, passwordRegex } from "../../../app/validation/regex";
 import { signup } from "../api/api";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AppDispatch, RootState } from "../../../app/store";
-// import { signup } from "../redux/adminAuthSlice";
 import { toast } from "react-toastify";
 import GoogleAuth from "../components/GoogleAuth";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { signupValidationSchema } from "../validation/formValidation";
 
 const Signup = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch<AppDispatch>()
-  // const {user, loading} = useSelector((state: RootState) => state.adminAuth)
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [error, setError] = useState<AdminSignupFormType>({
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signupValidationSchema),
   });
 
-  let isValid = true;
+  const onSubmit = async (data: AdminSignupFormType) => {
+    console.log("Form Data:", data);
 
-  const validate = () => {
-    const error: AdminSignupFormType = {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
+    const response = await signup(data);
+    console.log(response, "this is the response")
 
-    if (!email.trim()) {
-      error.email = "This field is required";
-      isValid = false;
-    } else if (!emailRegex.test(email)) {
-      error.email = "Enter a valid email";
-      isValid = false;
-    }
-
-    if (!password.trim()) {
-      error.password = "This field is required";
-      isValid = false;
-    } else if (!passwordRegex.test(password)) {
-      error.password = "Password should be atleast 8 character long";
-      isValid = false;
-    }
-
-    if (!confirmPassword.trim()) {
-      error.confirmPassword = "This field is required";
-      isValid = false;
-    } else if (confirmPassword != password) {
-      error.confirmPassword = "Password doesn't match";
-      isValid = false;
-    }
-    return error;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setError(validate());
-
-    if (isValid) {
-      const response = await signup({ email, password });
-
-      if (response.success) {
-        navigate("/otp", { state: response.data });
-      } else {
-        toast.error(response.error.message, {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
+    if (response.success) {
+      navigate("/otp", { state: response.data });
+    } else {
+      toast.error(response.error.message, {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -91,13 +45,13 @@ const Signup = () => {
     <>
       <Header />
       <main className="h-screen flex justify-center items-center">
-        <div className="w-[420px]">
+        <div className="w-[440px]">
           <h1 className="font-bold text-4xl">Create your free account</h1>
 
           <h5 className="text-base text-center mt-5 mb-6">
             100% free. No credit card needed.
           </h5>
-          <div className="bg-white">
+          <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
             <div className="mb-5">
               <label
                 htmlFor="email"
@@ -106,13 +60,16 @@ const Signup = () => {
                 Email address
               </label>
               <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                {...register("email")}
                 type="email"
                 id="email"
                 className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
               />
-              <p className="text-red-500 text-xs mt-1">{error.email}</p>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="mb-5">
@@ -124,14 +81,17 @@ const Signup = () => {
               </label>
               <div className="relative">
                 <input
+                  {...register("password")}
                   type="password"
                   id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
               </div>
-              <p className="text-red-500 text-xs mt-1">{error.password}</p>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div className="mb-5">
@@ -143,32 +103,28 @@ const Signup = () => {
               </label>
               <div className="relative">
                 <input
+                  {...register("confirmPassword")}
                   type="password"
                   id="password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  value={confirmPassword}
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
               </div>
               <p className="text-red-500 text-xs mt-1">
-                {error.confirmPassword}
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </p>
             </div>
 
             <button
-            disabled={email && password && confirmPassword ? false : true}
-            onClick={(e) => handleSubmit(e)}
-            className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center ${
-              email && password && confirmPassword
-                ? "bg-blue-700"
-                : "bg-blue-200"
-            }`}
-          >
-            <h1 className="text-base font-medium text-white">Submit</h1>
-          </button>
-          </div>
-
-
+              type="submit"
+              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center bg-blue-700`}
+            >
+              <h1 className="text-base font-medium text-white">Submit</h1>
+            </button>
+          </form>
 
           <div className="flex items-center w-full my-5">
             <hr className="flex-grow border-gray-300" />
