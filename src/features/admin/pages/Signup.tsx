@@ -21,7 +21,7 @@ const Signup = () => {
   });
 
   const onSubmit = async (data: AdminSignupFormType) => {
-    console.log("Form Data:", data);
+    
 
     const response = await signup(data);
     console.log(response, "this is the response")

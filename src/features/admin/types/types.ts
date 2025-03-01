@@ -28,6 +28,24 @@ export interface UserStoreType {
     createdAt?: string
 }
 
+export interface SchoolProfileType {
+    _id?:string;
+    schoolName: string;
+    email: string;
+    phoneNumber: string;
+    regNumber: string;
+    yearEstablished: number;
+    principalName: string;
+    websiteUrl: string;
+    totalStudents: number;
+    totalTeachers: number;
+    board: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
+}
+
 
 export interface StudentProfileType {
     _id?: string;
@@ -46,8 +64,3 @@ export interface StudentProfileType {
     createdAt?: Date;
     updatedAt?: Date;
 }
-
-// export interface StudentUserProfileType extends Omit<UserStoreType, 'accessToken'>, StudentProfileType{
-//     profileId?: string
-//     password: string
-// }

@@ -9,7 +9,7 @@ import AdminProfile from "../pages/AdminProfile";
 import Student from "../pages/Student";
 import Teachers from "../pages/Teachers";
 import Pricing from "../pages/Pricing";
-import SchoolInfoForm from "../pages/SchoolInfoForm";
+import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
 
 const AdminRoute = () => {
@@ -67,7 +67,7 @@ const AdminRoute = () => {
         path="/school-info"
         element={
           <ProtectedRoute isLogin={false}>
-            <SchoolInfoForm />
+            <SchoolInfoFormPage />
           </ProtectedRoute>
         }
       />
