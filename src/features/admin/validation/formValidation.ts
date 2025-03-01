@@ -20,3 +20,11 @@ export const signupValidationSchema = z.object({
     message: "Password doesn't match"
 })
 
+export const signinValidationSchema = z.object({
+    email: z.string()
+        .min(1, {message: "Email is required"})
+        .regex(emailRegex, {message: "Enter a valid email address"}),
+    password: z.string()
+        .min(1, {message: "Password is required"})
+})
+

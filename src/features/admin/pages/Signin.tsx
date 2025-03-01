@@ -1,65 +1,32 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { AdminSigninFormType } from "../types/types";
-import { emailRegex, passwordRegex } from "../../../app/validation/regex";
-import google from "../../../assets/images/google.png";
 import { signin } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "../redux/adminSlice";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import GoogleAuth from "../components/GoogleAuth";
+import { signinValidationSchema } from "../validation/formValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {useForm} from 'react-hook-form'
 
 
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const [error, setError] = useState<{ email: string; password: string }>({
-    email: "",
-    password: "",
-  });
+  const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      resolver: zodResolver(signinValidationSchema),
+    });
 
-  // const GOOGLE_CLIENT_ID='311853395320-tr7hshp5f1f0ldqik89iurhdrqffnkve.apps.googleusercontent.com'
-  // const GOOGLE_CLIENT_SECRET='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'
+  const onSubmit = async (data: AdminSigninFormType) => {
 
-  let isValid = true;
-
-  const validate = () => {
-    const error: AdminSigninFormType = {
-      email: "",
-      password: "",
-    };
-
-    if (!email.trim()) {
-      error.email = "This field is required";
-      isValid = false;
-    } else if (!emailRegex.test(email)) {
-      error.email = "Enter a valid email";
-      isValid = false;
-    }
-
-    if (!password.trim()) {
-      error.password = "This field is required";
-      isValid = false;
-    } else if (!passwordRegex.test(password)) {
-      error.password = "Password should be atleast 8 character long";
-      isValid = false;
-    }
-
-    return error;
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setError(validate());
-
-    if (isValid) {
-      const response = await signin({ email, password });
+      const response = await signin(data);
 
       if (response.success) {
         console.log("signin success", response);
@@ -75,17 +42,17 @@ const Signin = () => {
         navigate("/students");
       } else {
         console.log(response, "this is the error")
-        // toast.error(response.error.message, {
-        //   position: "bottom-right",
-        //   autoClose: 3000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
+        toast.error(response.error.message, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
-    }
+    
   };
   return (
     <>
@@ -100,7 +67,7 @@ const Signin = () => {
       Sign in fast and safe to your SchoolSpot account.
     </h5> */}
 
-          <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <label
                 htmlFor="email"
@@ -109,13 +76,16 @@ const Signin = () => {
                 Email address
               </label>
               <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                {...register("email")}
                 type="email"
                 id="email"
                 className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
               />
-              <p className="text-red-500 text-xs mt-1">{error.email}</p>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -126,23 +96,22 @@ const Signin = () => {
               </label>
               <div className="relative">
                 <input
+                {...register("password")}
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
                 <div className="w-10 h-10 absolute right-0 top-0"></div>
               </div>
-              <p className="text-red-500 text-xs mt-1">{error.password}</p>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <button
-              onClick={(e) => handleFormSubmit(e)}
-              disabled={password && email ? false : true}
-              className={`${
-                password && email ? "bg-blue-700" : "bg-blue-200"
-              } w-full h-12 rounded-sm flex justify-center mt-6 items-center`}
+              className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center mt-6 items-center`}
             >
               <h1 className="text-base font-medium text-white">Sign in</h1>
             </button>
@@ -156,7 +125,7 @@ const Signin = () => {
                 Reset password
               </Link>
             </h5>
-          </div>
+          </form>
 
           <div className="flex items-center w-full my-5">
             <hr className="flex-grow border-gray-300" />
