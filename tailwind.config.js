@@ -9,6 +9,10 @@ export default {
       colors: {
         background: '#F0EEFF',
       },
+      fontFamily: {
+        'roboto': ['Roboto', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+      }
     },
   },
   plugins: [],

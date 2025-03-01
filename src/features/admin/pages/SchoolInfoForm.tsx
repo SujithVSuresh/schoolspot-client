@@ -24,108 +24,118 @@ const SchoolInfoForm = () => {
             </h5>
 
             <section className="container mx-auto py-16 bg-lavender-50">
-        <h3 className="text-xl font-normal text-gray-800 mb-10">Popular Features</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Marketing */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">Marketing</h4>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Lead generation</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Marketing automation</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Breeze content and social media agents (Beta)</p>
-            </div>
-          </div>
-          
-          {/* Sales */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Advanced CRM</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Sales automation</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Breeze prospecting agent (Beta)</p>
-            </div>
-          </div>
+              <h3 className="text-xl font-normal text-gray-800 mb-10">
+                Popular Features
+              </h3>
 
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Advanced CRM</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Sales automation</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Breeze prospecting agent (Beta)</p>
-            </div>
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Marketing */}
+                <div className="space-y-6">
+                  <h4 className="text-lg font-semibold text-gray-900">
+                    Marketing
+                  </h4>
 
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Advanced CRM</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-              <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Sales automation</p>
-            </div>
-            
-            <div className="flex items-start space-x-3">
-            <CircleCheck className="h-5 w-5 text-indigo-600"/>
-              <p className="text-sm text-gray-700">Breeze prospecting agent (Beta)</p>
-            </div>
-          </div>
-          
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Lead generation</p>
+                  </div>
 
-        </div>
-      </section>
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">
+                      Marketing automation
+                    </p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">
+                      Breeze content and social media agents (Beta)
+                    </p>
+                  </div>
+                </div>
+
+                {/* Sales */}
+                <div className="space-y-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Advanced CRM</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Sales automation</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">
+                      Breeze prospecting agent (Beta)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Advanced CRM</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Sales automation</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">
+                      Breeze prospecting agent (Beta)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Sales</h4>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Advanced CRM</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">Sales automation</p>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <CircleCheck className="h-5 w-5 text-indigo-600" />
+                    <p className="text-sm text-gray-700">
+                      Breeze prospecting agent (Beta)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
           <div className="w-[650px] px-12">
             <div className="mx-auto px-12 py-12 bg-white rounded border">
-              {/* <h2 className="text-xl font-bold text-gray-900 mb-4">Organization Form</h2> */}
-              <form className="space-y-4">
+            <form className="space-y-4">
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="schoolName"
                     className="block text-sm mb-1 font-medium text-gray-700"
                   >
-                    {" "}
                     School name
                   </label>
                   <input
                     type="text"
-                    name="organizationName"
-                    placeholder="Organization Name"
+                    name="schoolName"
+                    placeholder="school name"
                     className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                   />
                 </div>
@@ -135,29 +145,27 @@ const SchoolInfoForm = () => {
                       htmlFor="email"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Email
                     </label>
                     <input
                       type="email"
                       name="email"
-                      placeholder="Email"
+                      placeholder="email"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="phoneNumber"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Phone number
                     </label>
                     <input
                       type="text"
                       name="phoneNumber"
-                      placeholder="Phone number"
+                      placeholder="phone number"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
@@ -165,32 +173,30 @@ const SchoolInfoForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="regNumber"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Reg number
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="text"
+                      name="regNumber"
+                      placeholder="reg number"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="yearEstablished"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Year established
                     </label>
                     <input
                       type="text"
-                      name="phoneNumber"
-                      placeholder="Phone number"
+                      name="yearEstablished"
+                      placeholder="year established"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
@@ -198,32 +204,30 @@ const SchoolInfoForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="principalName"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Principal name
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="text"
+                      name="principalName"
+                      placeholder="principal name"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="websiteUrl"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Website url
                     </label>
                     <input
                       type="text"
-                      name="phoneNumber"
-                      placeholder="Phone number"
+                      name="websiteUrl"
+                      placeholder="website url"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
@@ -232,48 +236,45 @@ const SchoolInfoForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="totalStudents"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Total students
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="number"
+                      name="totalStudents"
+                      placeholder="total students"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="totalTeachers"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Total teachers
                     </label>
                     <input
-                      type="text"
-                      name="phoneNumber"
-                      placeholder="Phone number"
+                      type="number"
+                      name="totalTeachers"
+                      placeholder="total teachers"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
                 </div>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="board"
                     className="block text-sm mb-1 font-medium text-gray-700"
                   >
-                    {" "}
                     Board
                   </label>
                   <input
                     type="text"
-                    name="organizationName"
-                    placeholder="Organization Name"
+                    name="board"
+                    placeholder="board"
                     className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                   />
                 </div>
@@ -281,32 +282,30 @@ const SchoolInfoForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="city"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       City
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="text"
+                      name="city"
+                      placeholder="city"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="state"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       State
                     </label>
                     <input
                       type="text"
-                      name="phoneNumber"
-                      placeholder="Phone number"
+                      name="state"
+                      placeholder="state"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
@@ -315,42 +314,34 @@ const SchoolInfoForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="country"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Country
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="text"
+                      name="country"
+                      placeholder="country"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="postalCode"
                       className="block text-sm mb-1 font-medium text-gray-700"
                     >
-                      {" "}
                       Postal code
                     </label>
                     <input
                       type="text"
-                      name="phoneNumber"
-                      placeholder="Phone number"
+                      name="postalCode"
+                      placeholder="postal code"
                       className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
                     />
                   </div>
                 </div>
-
-                {/* <textarea
-                  name="description"
-                  placeholder="Description of your Organization"
-                  className="w-full p-2 border rounded h-20"
-                /> */}
 
               <div className="flex justify-center">
               <button

@@ -1,5 +1,5 @@
 import Sidebar from '../components/Sidebar';
-import { Search, UserPlus, MoreHorizontal } from 'lucide-react';
+import { Search, UserPlus, MoreVertical } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import React, { useState } from 'react';
 import AddStudentModal from '../components/AddStudentModal';
@@ -15,9 +15,41 @@ interface Student {
   admissionNo: string;
   parent: string;
   phone: string;
+  profile: string
   class: string;
 }
 
+
+const studentsi: Student[] = [
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" },
+  { id: 1, name: 'Jason Statham', admissionNo: 'Mathematics', parent: 'Sujith', phone: "8590369084", profile: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop', class: "2 B" }
+];
 
 
 function Student() {
@@ -70,10 +102,10 @@ function Student() {
       <Sidebar />
 
       {/* Header */}
-      <div className="flex-1 p-8">
+      <div className="flex-1">
         <DashboardHeader />
 
-      <AddStudentModal
+      {/* <AddStudentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Add Student"
@@ -134,8 +166,8 @@ function Student() {
             </button>
           </div>
         </div>
-      </AddStudentModal>
-      
+      </AddStudentModal> */}
+      <div className='pt-16 pl-28 pr-8'>
         <div className="flex justify-between items-center my-5">
             <h1 className="text-2xl font-bold text-gray-800 ml-4">Students</h1>
             <div className="flex gap-4">
@@ -154,7 +186,7 @@ function Student() {
               </button>
             </div>
           </div>
-
+{/* 
         <div className="bg-white rounded-2xl p-6">
 
           <div className="overflow-x-auto">
@@ -186,7 +218,35 @@ function Student() {
             </table>
           </div>
 
+        </div>*/}
+
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {studentsi.map((student) => (
+    <div key={student.id} className="bg-gray-100 rounded-xl p-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img
+            src={student.profile}
+            alt={student.name}
+            className="w-12 h-12 rounded-full object-cover"
+          />
+          <div>
+            <h3 className="font-medium text-gray-700">{student.name}</h3>
+            <p className="text-sm text-gray-500">{student.class}</p>
+          </div>
         </div>
+        <button className="text-gray-400 hover:text-gray-600 transition-colors">
+          <MoreVertical className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+</div>
 
   
 

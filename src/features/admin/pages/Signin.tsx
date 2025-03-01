@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "../redux/adminSlice";
 // import { toast } from "react-toastify";
+import GoogleAuth from "../components/GoogleAuth";
 
 
 const Signin = () => {
@@ -163,13 +164,14 @@ const Signin = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
 
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
    
               <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
                 <img src={google} className="h-5 w-5 mr-5" alt="" />
                 Continue with Google
               </button>
-          </div>
+          </div> */}
+          <GoogleAuth />
         </div>
       </main>
     </>
