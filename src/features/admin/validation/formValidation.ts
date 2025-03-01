@@ -28,3 +28,10 @@ export const signinValidationSchema = z.object({
         .min(1, {message: "Password is required"})
 })
 
+
+export const resetPasswordValidationSchema = z.object({
+    email: z.string()
+        .min(1, {message: "Email is required"})
+        .regex(emailRegex, {message: "Enter a valid email address"}),
+})
+
