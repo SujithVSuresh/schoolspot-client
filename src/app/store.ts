@@ -11,12 +11,19 @@ const adminPersistConfig = {
     storage,
 };
 
+const schoolProfilePersistConfig = {
+    key: "schoolProfile",
+    version: 1,
+    storage,
+};
+
 const persistedAdminReducer = persistReducer(adminPersistConfig, adminReducer)
+const persistedSchoolProfileReducer = persistReducer(schoolProfilePersistConfig, schoolProfileReducer)
 
 export const store = configureStore({
     reducer: {
         admin: persistedAdminReducer,
-        schoolProfile: schoolProfileReducer
+        schoolProfile: persistedSchoolProfileReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

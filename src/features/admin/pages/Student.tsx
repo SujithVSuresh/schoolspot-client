@@ -57,12 +57,9 @@ function Student() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [students, setStudents] = useState<UserStoreType[]>([])
-
-
-  console.log(students, "kkk")
 
   useEffect(() => {
 

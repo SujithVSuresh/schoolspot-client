@@ -1,9 +1,11 @@
-import { BookOpen, CreditCard, Clock } from 'lucide-react';
+import { CreditCard, Clock } from 'lucide-react';
 import logo from '../../../assets/images/logo.png'
 import themeimg from '../../../assets/images/themeimg.png'
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
+  const navigate = useNavigate()
   return (
 <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       {/* Navigation */}
@@ -18,7 +20,7 @@ const Home = () => {
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Portfolio</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Blog</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Contact</a>
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">
+          <button onClick={() => navigate('/school-info')} className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">
           Get Started Free
         </button>
         </div>

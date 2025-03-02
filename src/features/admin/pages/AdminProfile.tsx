@@ -31,11 +31,11 @@ const AdminProfile = () => {
       <Sidebar />
 
       {/* Header */}
-      <div className="flex-1 p-8">
+      <div className="flex-1">
         <DashboardHeader />
       
 
-        <div className="rounded-2xl p-8">
+        <div className="rounded-2xl pt-20 pl-28 pr-8">
           <h1 className="text-2xl font-bold text-gray-800 mb-8">Profile</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
