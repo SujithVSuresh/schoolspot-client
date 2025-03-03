@@ -5,22 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSchoolProfile } from "../redux/schoolProfileSlice";
 import { RootState } from '../../../app/store'
 import { useNavigate } from "react-router-dom";
+import { SchoolProfileType } from "../types/types";
+
 
 const SchoolInfoForm = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const schoolProfileData = useSelector((state: RootState) => state.schoolProfile)
 
-    console.log(schoolProfileData, "this is the school profile data")
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schoolInfoValidationSchema),
+    defaultValues: {
+      schoolName: schoolProfileData.schoolName || ""
+    }
   });
 
-  const onSubmit = (data: unknown) => {
+  const onSubmit = (data: SchoolProfileType) => {
     console.log("Form Data:", data);
     const k = dispatch(setSchoolProfile(data))
     console.log(k, "this is the dispatched result")
@@ -41,7 +45,6 @@ const SchoolInfoForm = () => {
             School name
           </label>
           <input
-            value={schoolProfileData.schoolName || ""}
             type="text"
             placeholder="school name"
             className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
