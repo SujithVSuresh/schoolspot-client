@@ -43,7 +43,11 @@ const SchoolInfoForm = () => {
   const onSubmit = (data: SchoolProfileType) => {
     setLoading(true)
     dispatch(setSchoolProfile(data))
-    // navigate('/signup')
+    setTimeout(( )=> {
+      setLoading(false)
+      navigate('/signup')
+
+    }, 3000)
   };
   return (
     <div className="mx-auto px-12 py-12 bg-white rounded border">
