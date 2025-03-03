@@ -1,7 +1,6 @@
 import logo from "../../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import { passwordResetRequest } from "../api/api";
-import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { resetPasswordValidationSchema } from "../validation/formValidation";
@@ -22,15 +21,15 @@ const ResetPassword = () => {
        const response = await passwordResetRequest(data);
 
       if (response.data) {
-        toast.success("Password reset link is send to your email.", {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        // toast.success("Password reset link is send to your email.", {
+        //   position: "bottom-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
         console.log("password reset link send successfully", response.data);
       }
     

@@ -1,12 +1,12 @@
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 import AdminRoute from "./features/admin/routes/AdminRoute";
 
 function App() {
   return (
     <div className="font-inter">
-      <ToastContainer />
+      <Toaster />
       <Router>
         <AdminRoute />
       </Router>

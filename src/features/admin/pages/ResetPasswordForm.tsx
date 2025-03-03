@@ -1,10 +1,9 @@
 import logo from "../../../assets/images/logo.png";
 import React, { useState } from "react";
-import { passwordRegex } from "../../../app/validation/regex";
+// import { passwordRegex } from "../../../app/validation/regex";
 import { useSearchParams } from "react-router-dom";
 import { passwordReset } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -34,13 +33,13 @@ const ResetPasswordForm = () => {
       confirmPassword: "",
     };
 
-    if (!password) {
-      error.password = "This field is required";
-      isValid = false;
-    } else if (!passwordRegex.test(password)) {
-      error.password = "Password should be atleast 8 character long";
-      isValid = false;
-    }
+    // if (!password) {
+    //   error.password = "This field is required";
+    //   isValid = false;
+    // } else if (!passwordRegex.test(password)) {
+    //   error.password = "Password should be atleast 8 character long";
+    //   isValid = false;
+    // }
 
     if (!confirmPassword) {
       error.confirmPassword = "This field is required";
@@ -62,26 +61,26 @@ const ResetPasswordForm = () => {
       console.log("submit the reset form", response);
 
       if (response.success) {
-        toast.success("Password reset successfully", {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        // toast.success("Password reset successfully", {
+        //   position: "bottom-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
         navigate("/signin");
       } else {
-        toast.error(response.error.message, {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        // toast.error(response.error.message, {
+        //   position: "bottom-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
       }
     }
   };

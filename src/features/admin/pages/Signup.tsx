@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import { AdminSignupFormType } from "../types/types";
 import { signup } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import GoogleAuth from "../components/GoogleAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,15 +28,15 @@ const Signup = () => {
     if (response.success) {
       navigate("/otp", { state: response.data });
     } else {
-      toast.error(response.error.message, {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      // toast.error(response.error.message, {
+      //   position: "bottom-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      // });
     }
   };
 

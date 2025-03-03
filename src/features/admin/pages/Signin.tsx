@@ -5,11 +5,11 @@ import { signin } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "../redux/adminSlice";
-import { toast } from "react-toastify";
 import GoogleAuth from "../components/GoogleAuth";
 import { signinValidationSchema } from "../validation/formValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {useForm} from 'react-hook-form'
+import toast from "react-hot-toast";
 
 
 const Signin = () => {
@@ -43,14 +43,15 @@ const Signin = () => {
       } else {
         console.log(response, "this is the error")
         toast.error(response.error.message, {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          duration: 8000,
+          position: 'bottom-right',
+          style: {
+            backgroundColor: '#DBEAFE',
+            border: "2px, solid, #1D4ED8",
+            color: '#1D4ED8'
+          },
         });
+
       }
     
   };
@@ -133,13 +134,6 @@ const Signin = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
 
-          {/* <div className="flex justify-center">
-   
-              <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
-                <img src={google} className="h-5 w-5 mr-5" alt="" />
-                Continue with Google
-              </button>
-          </div> */}
           <GoogleAuth />
         </div>
       </main>

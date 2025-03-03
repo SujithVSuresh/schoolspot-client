@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
-import {toast} from 'react-toastify'
 
 const Otp = () => {
     const navigate = useNavigate()
@@ -97,15 +96,15 @@ const Otp = () => {
             setTimer(60)
             navigate('/signin')
           }else{
-                         toast.error(response.error.message, {
-                                position: "bottom-right", 
-                                autoClose: 3000,    
-                                hideProgressBar: true,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                              });
+                        //  toast.error(response.error.message, {
+                        //         position: "bottom-right", 
+                        //         autoClose: 3000,    
+                        //         hideProgressBar: true,
+                        //         closeOnClick: true,
+                        //         pauseOnHover: true,
+                        //         draggable: true,
+                        //         progress: undefined,
+                        //       });
                               
           }
             
@@ -126,15 +125,15 @@ const Otp = () => {
         if(response.success){
           setTimer(60)
         }else{
-                  toast.error(response.error.message, {
-                    position: "bottom-right", 
-                    autoClose: 3000,    
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  });
+                  // toast.error(response.error.message, {
+                  //   position: "bottom-right", 
+                  //   autoClose: 3000,    
+                  //   hideProgressBar: true,
+                  //   closeOnClick: true,
+                  //   pauseOnHover: true,
+                  //   draggable: true,
+                  //   progress: undefined,
+                  // });
         }
         }
 
