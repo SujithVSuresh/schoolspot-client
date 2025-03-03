@@ -1,5 +1,4 @@
 import Header from "../components/AuthHeader";
-// import { useState } from "react";
 import { AdminSignupFormType } from "../types/types";
 import { signup } from "../api/api";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +6,14 @@ import GoogleAuth from "../components/GoogleAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupValidationSchema } from "../validation/formValidation";
+import { useState } from "react";
+import { Eye, EyeClosed } from "lucide-react";
+
 
 const Signup = () => {
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -26,6 +30,13 @@ const Signup = () => {
     console.log(response, "this is the response")
 
     if (response.success) {
+          // setLoading(true)
+          // dispatch(setSchoolProfile(data))
+          // setTimeout(( )=> {
+          //   setLoading(false)
+          //   navigate('/signup')
+      
+          // }, 3000)
       navigate("/otp", { state: response.data });
     } else {
       // toast.error(response.error.message, {
@@ -81,10 +92,11 @@ const Signup = () => {
               <div className="relative">
                 <input
                   {...register("password")}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
+
               </div>
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1">
@@ -93,7 +105,7 @@ const Signup = () => {
               )}
             </div>
 
-            <div className="mb-5">
+            <div className="mb-2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
@@ -103,7 +115,7 @@ const Signup = () => {
               <div className="relative">
                 <input
                   {...register("confirmPassword")}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
@@ -117,6 +129,14 @@ const Signup = () => {
               </p>
             </div>
 
+            <label className="flex items-center hover:cursor-pointer">
+        <input
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(prev => !prev)}
+        />
+        <span className="text-sm font-norm text-gray-500 ml-1">Show password</span>
+      </label>
             <button
               type="submit"
               className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center bg-blue-700`}
