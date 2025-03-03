@@ -1,13 +1,13 @@
 import logo from "../../../assets/images/logo.png";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { passwordReset } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { resetPasswordValidationSchema } from "../validation/formValidation";
 import loadingGif from "../../../assets/images/loading.webp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { resetPasswordValidationSchema } from "../validation/formValidation";
+import toast from "react-hot-toast";
 
 
 const ResetPasswordForm = () => {
@@ -30,33 +30,42 @@ const ResetPasswordForm = () => {
     console.log("no token provided");
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: {password: string, confirmPassword: string}) => {
 
     if (token) {
-      const response = await passwordReset({ token, password });
+      const response = await passwordReset({ token, password: data.password });
       console.log("submit the reset form", response);
 
       if (response.success) {
-        // toast.success("Password reset successfully", {
-        //   position: "bottom-right",
-        //   autoClose: 3000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
+        toast(
+          "Your password has been successfully reset! Log in with your new password.",
+          {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#E7FEE2",
+              border: "2px, solid, #16A34A",
+              minWidth: "400px",
+              color: "black",
+            },
+          }
+        );
         navigate("/signin");
       } else {
-        // toast.error(response.error.message, {
-        //   position: "bottom-right",
-        //   autoClose: 3000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
+        setTimeout(() => {
+          setLoading(false);
+          console.log("resppp", response)
+          toast("Error occured while resetting your password. Please try again later.", {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#FEE2E2",
+              border: "2px, solid, #DC2626",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
+        }, 1000);
       }
     }
   };
