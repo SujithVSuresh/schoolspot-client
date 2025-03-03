@@ -11,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {useForm} from 'react-hook-form'
 import toast from "react-hot-toast";
 import { useState } from "react";
+import loadingGif from "../../../assets/images/loading.webp";
+
 
 
 const Signin = () => {
@@ -29,6 +31,7 @@ const Signin = () => {
     });
 
   const onSubmit = async (data: AdminSigninFormType) => {
+      setLoading(true)
 
       const response = await signin(data);
 
@@ -43,19 +46,27 @@ const Signin = () => {
             accessToken: response.data.accessToken,
           })
         );
-        navigate("/students");
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/students");
+        }, 1000);
+        
       } else {
         console.log(response, "this is the error")
-        toast("We don't have any record of a SchoolSpot account with this credentials", {
-          duration: 8000,
-          position: 'bottom-right',
-          style: {
-            backgroundColor: '#FEE2E2',
-            border: "2px, solid, #DC2626",
-            minWidth: "400px",
-            color: "black"
-          }
-        });
+
+        setTimeout(() => {
+          setLoading(false);
+          toast("We don't have any record of a SchoolSpot account with this credentials", {
+            duration: 8000,
+            position: 'bottom-right',
+            style: {
+              backgroundColor: '#FEE2E2',
+              border: "2px, solid, #DC2626",
+              minWidth: "400px",
+              color: "black"
+            }
+          });
+        }, 1000);
 
       }
     
@@ -128,9 +139,13 @@ const Signin = () => {
             </label>
 
             <button
-              className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center mt-6 items-center`}
+              className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center text-base font-medium text-white mt-6 items-center`}
             >
-              <h1 className="text-base font-medium text-white">Sign in</h1>
+              {loading ? (
+                <img className="w-10 h-10" src={loadingGif} alt="loading" />
+              ) : (
+                "Sign in"
+              )}
             </button>
 
             <h5 className="font-medium mt-5">
