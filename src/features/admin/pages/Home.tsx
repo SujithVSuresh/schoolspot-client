@@ -27,7 +27,6 @@ const Home = () => {
         </div>
 
       </nav>
-      <Header />
 
       {/* Hero Section */}
       <section className="container mx-auto px-56 py-16 md:py-24 flex flex-col md:flex-row items-center">

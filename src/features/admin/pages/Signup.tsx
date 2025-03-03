@@ -140,6 +140,7 @@ const Signup = () => {
               </span>
             </label>
             <button
+            disabled={loading}
               type="submit"
               className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-blue-700`}
             >

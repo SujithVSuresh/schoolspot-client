@@ -3,34 +3,33 @@ import { Link } from "react-router-dom";
 import { passwordResetRequest } from "../api/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { resetPasswordValidationSchema } from "../validation/formValidation";
+import { resetPasswordEmailValidationSchema } from "../validation/formValidation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import loadingGif from "../../../assets/images/loading.webp";
 
-
 const ResetPassword = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: zodResolver(resetPasswordValidationSchema),
-    });
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(resetPasswordEmailValidationSchema),
+  });
 
+  const onSubmit = async (data: { email: string }) => {
+    setLoading(true);
 
+    const response = await passwordResetRequest(data);
 
-  const onSubmit = async (data: {email: string}) => {
-       setLoading(true)
-
-       const response = await passwordResetRequest(data);
-
-      if (response.success) {
-        setTimeout(() => {
-          setLoading(false);
-          toast("Password reset link send successfully. Please check your email to access the password reset link.", {
+    if (response.success) {
+      setTimeout(() => {
+        setLoading(false);
+        toast(
+          "Password reset link send successfully. Please check your email to access the password reset link.",
+          {
             duration: 8000,
             position: "bottom-right",
             style: {
@@ -39,26 +38,25 @@ const ResetPassword = () => {
               minWidth: "400px",
               color: "black",
             },
-          });
-        }, 1000);
-        console.log("password reset link send successfully", response.data);
-      }else{
-        setTimeout(() => {
-          setLoading(false);
-          toast("Error sending password reset link.", {
-            duration: 8000,
-            position: "bottom-right",
-            style: {
-              backgroundColor: "#FEE2E2",
-              border: "2px, solid, #DC2626",
-              minWidth: "400px",
-              color: "black",
-            },
-          });
-        }, 1000);
-
-      }
-    
+          }
+        );
+      }, 1000);
+      console.log("password reset link send successfully", response.data);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+        toast("Error sending password reset link.", {
+          duration: 8000,
+          position: "bottom-right",
+          style: {
+            backgroundColor: "#FEE2E2",
+            border: "2px, solid, #DC2626",
+            minWidth: "400px",
+            color: "black",
+          },
+        });
+      }, 1000);
+    }
   };
 
   return (
@@ -86,19 +84,18 @@ const ResetPassword = () => {
             </label>
             <input
               {...register("email")}
-
               type="email"
               id="email"
               className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
             />
             {errors.email && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
-                </p>
-              )}
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
+            )}
 
-             <button
-             disabled={loading}
+            <button
+              disabled={loading}
               type="submit"
               className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-blue-700`}
             >

@@ -8,68 +8,66 @@ import { setAdmin } from "../redux/adminSlice";
 import GoogleAuth from "../components/GoogleAuth";
 import { signinValidationSchema } from "../validation/formValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {useForm} from 'react-hook-form'
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import loadingGif from "../../../assets/images/loading.webp";
-
-
 
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: zodResolver(signinValidationSchema),
-    });
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signinValidationSchema),
+  });
 
   const onSubmit = async (data: AdminSigninFormType) => {
-      setLoading(true)
+    setLoading(true);
 
-      const response = await signin(data);
+    const response = await signin(data);
 
-      if (response.success) {
-        console.log("signin success", response);
-        dispatch(
-          setAdmin({
-            _id: response.data._id,
-            email: response.data.email,
-            role: response.data.role,
-            status: response.data.status,
-            accessToken: response.data.accessToken,
-          })
-        );
-        setTimeout(() => {
-          setLoading(false);
-          navigate("/students");
-        }, 1000);
-        
-      } else {
-        console.log(response, "this is the error")
+    if (response.success) {
+      console.log("signin success", response);
+      dispatch(
+        setAdmin({
+          _id: response.data._id,
+          email: response.data.email,
+          role: response.data.role,
+          status: response.data.status,
+          accessToken: response.data.accessToken,
+        })
+      );
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/students");
+      }, 1000);
+    } else {
+      console.log(response, "this is the error");
 
-        setTimeout(() => {
-          setLoading(false);
-          toast("We don't have any record of a SchoolSpot account with this credentials", {
+      setTimeout(() => {
+        setLoading(false);
+        toast(
+          "We don't have any record of a SchoolSpot account with this credentials",
+          {
             duration: 8000,
-            position: 'bottom-right',
+            position: "bottom-right",
             style: {
-              backgroundColor: '#FEE2E2',
+              backgroundColor: "#FEE2E2",
               border: "2px, solid, #DC2626",
               minWidth: "400px",
-              color: "black"
-            }
-          });
-        }, 1000);
-
-      }
-    
+              color: "black",
+            },
+          }
+        );
+      }, 1000);
+    }
   };
   return (
     <>
@@ -104,7 +102,7 @@ const Signin = () => {
                 </p>
               )}
             </div>
-            <div className="mb-5">
+            <div className="mb-2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium mt-5 text-gray-700"
@@ -113,9 +111,9 @@ const Signin = () => {
               </label>
               <div className="relative">
                 <input
-                {...register("password")}
-                type={showPassword ? "text" : "password"}
-                id="password"
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
                 <div className="w-10 h-10 absolute right-0 top-0"></div>
@@ -139,6 +137,7 @@ const Signin = () => {
             </label>
 
             <button
+             disabled={loading}
               className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center text-base font-medium text-white mt-6 items-center`}
             >
               {loading ? (
