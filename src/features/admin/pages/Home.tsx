@@ -2,6 +2,7 @@ import { CreditCard, Clock } from 'lucide-react';
 import logo from '../../../assets/images/logo.png'
 import themeimg from '../../../assets/images/themeimg.png'
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 
 const Home = () => {
@@ -26,6 +27,7 @@ const Home = () => {
         </div>
 
       </nav>
+      <Header />
 
       {/* Hero Section */}
       <section className="container mx-auto px-56 py-16 md:py-24 flex flex-col md:flex-row items-center">

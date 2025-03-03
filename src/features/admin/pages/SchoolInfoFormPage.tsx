@@ -1,13 +1,12 @@
 import logo from "../../../assets/images/logo.png";
 import { CircleCheck } from "lucide-react";
 import SchoolInfoForm from "../components/SchoolInfoForm";
+import Header from "../components/Header";
 
 const SchoolInfoFormPage = () => {
   return (
     <>
-      <header className="h-16 flex items-center px-32 bg-white justify-between">
-        <img src={logo} alt="" className="h-10" />
-      </header>
+      <Header />
 
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="flex justify-center pt-20">
