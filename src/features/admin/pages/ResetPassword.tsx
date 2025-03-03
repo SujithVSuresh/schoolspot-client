@@ -4,8 +4,13 @@ import { passwordResetRequest } from "../api/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { resetPasswordValidationSchema } from "../validation/formValidation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import loadingGif from "../../../assets/images/loading.webp";
+
 
 const ResetPassword = () => {
+  const [loading, setLoading] = useState(false)
 
   const {
       register,
@@ -18,19 +23,40 @@ const ResetPassword = () => {
 
 
   const onSubmit = async (data: {email: string}) => {
+       setLoading(true)
+
        const response = await passwordResetRequest(data);
 
-      if (response.data) {
-        // toast.success("Password reset link is send to your email.", {
-        //   position: "bottom-right",
-        //   autoClose: 3000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
+      if (response.success) {
+        setTimeout(() => {
+          setLoading(false);
+          toast("Password reset link send successfully. Please check your email to access the password reset link.", {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#E7FEE2",
+              border: "2px, solid, #16A34A",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
+        }, 1000);
         console.log("password reset link send successfully", response.data);
+      }else{
+        setTimeout(() => {
+          setLoading(false);
+          toast("Error sending password reset link.", {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#FEE2E2",
+              border: "2px, solid, #DC2626",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
+        }, 1000);
+
       }
     
   };
@@ -71,12 +97,16 @@ const ResetPassword = () => {
                 </p>
               )}
 
-            <button
-              className={`bg-blue-700 h-12 w-full rounded-sm flex justify-center mt-6 items-center`}
+             <button
+             disabled={loading}
+              type="submit"
+              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-blue-700`}
             >
-              <h1 className="text-base font-medium text-white">
-                Reset password
-              </h1>
+              {loading ? (
+                <img className="w-10 h-10" src={loadingGif} alt="loading" />
+              ) : (
+                "Reset password"
+              )}
             </button>
           </form>
 
