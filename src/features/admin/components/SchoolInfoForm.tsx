@@ -6,12 +6,14 @@ import { setSchoolProfile } from "../redux/schoolProfileSlice";
 import { RootState } from '../../../app/store'
 import { useNavigate } from "react-router-dom";
 import { SchoolProfileType } from "../types/types";
-
+import loadingGif from '../../../assets/images/loading.webp'
+import { useState } from "react";
 
 const SchoolInfoForm = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const schoolProfileData = useSelector((state: RootState) => state.schoolProfile)
+    const [loading, setLoading] = useState(false)
 
   const {
     register,
@@ -20,17 +22,17 @@ const SchoolInfoForm = () => {
   } = useForm({
     resolver: zodResolver(schoolInfoValidationSchema),
     defaultValues: {
-      schoolName: schoolProfileData.schoolName || "",
-      board: schoolProfileData.board || "",
-      city: schoolProfileData.city || "",
-      country: schoolProfileData.country || "",
-      email: schoolProfileData.email || "",
-      phoneNumber: schoolProfileData.phoneNumber || "",
-      postalCode: schoolProfileData.postalCode || "",
-      principalName: schoolProfileData.principalName || "",
-      regNumber: schoolProfileData.regNumber || "",
-      state: schoolProfileData.state || "",
-      websiteUrl: schoolProfileData.websiteUrl || "",
+      schoolName: schoolProfileData.schoolName,
+      board: schoolProfileData.board,
+      city: schoolProfileData.city,
+      country: schoolProfileData.country,
+      email: schoolProfileData.email,
+      phoneNumber: schoolProfileData.phoneNumber,
+      postalCode: schoolProfileData.postalCode,
+      principalName: schoolProfileData.principalName,
+      regNumber: schoolProfileData.regNumber,
+      state: schoolProfileData.state,
+      websiteUrl: schoolProfileData.websiteUrl,
       yearEstablished: schoolProfileData.yearEstablished,
       totalStudents: schoolProfileData.totalStudents,
       totalTeachers: schoolProfileData.totalTeachers
@@ -39,8 +41,9 @@ const SchoolInfoForm = () => {
   });
 
   const onSubmit = (data: SchoolProfileType) => {
+    setLoading(true)
     dispatch(setSchoolProfile(data))
-    navigate('/signup')
+    // navigate('/signup')
   };
   return (
     <div className="mx-auto px-12 py-12 bg-white rounded border">
@@ -336,9 +339,11 @@ const SchoolInfoForm = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-indigo-600 w-full mt-5 text-white py-3 px-5 rounded-lg font-medium hover:bg-indigo-700"
-          >
-            Get your free demo
+            className="bg-indigo-600 w-full mt-5 text-white h-12 px-5 flex justify-center items-center rounded-lg font-medium hover:bg-indigo-700"
+          >{
+            loading ? <img className="w-10 h-10" src={loadingGif} alt="" /> : "Get your free demo"
+          }
+            
           </button>
         </div>
       </form>
