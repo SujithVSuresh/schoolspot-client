@@ -9,7 +9,7 @@ const SchoolInfoFormPage = () => {
         <img src={logo} alt="" className="h-10" />
       </header>
 
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="flex justify-center pt-20">
           <div className="w-[580px] pr-6">
             <h1 className="font-bold text-4xl">
