@@ -23,20 +23,18 @@ const ResetPasswordForm = () => {
       resolver: zodResolver(resetPasswordValidationSchema),
     });
 
-  // const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  if (!token) {
-    console.log("no token provided");
-  }
 
   const onSubmit = async (data: {password: string, confirmPassword: string}) => {
-
+    setLoading(true)
     if (token) {
       const response = await passwordReset({ token, password: data.password });
       console.log("submit the reset form", response);
 
       if (response.success) {
+        setTimeout(() => {
         toast(
           "Your password has been successfully reset! Log in with your new password.",
           {
@@ -50,7 +48,9 @@ const ResetPasswordForm = () => {
             },
           }
         );
+        setLoading(false)
         navigate("/signin");
+      }, 1000)
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -92,7 +92,7 @@ const ResetPasswordForm = () => {
             <div className="relative">
               <input
                 {...register("password")}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
               />
@@ -104,7 +104,7 @@ const ResetPasswordForm = () => {
               )}
           </div>
 
-          <div className="mb-5">
+          <div className="mb-2">
             <label
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-gray-700"
@@ -114,7 +114,7 @@ const ResetPasswordForm = () => {
             <div className="relative">
               <input
                 {...register("confirmPassword")}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="confirmPassword"
                 className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
               />
@@ -125,6 +125,17 @@ const ResetPasswordForm = () => {
                 </p>
               )}
           </div>
+
+          <label className="flex items-center hover:cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword((prev) => !prev)}
+              />
+              <span className="text-sm font-normal text-gray-500 ml-1">
+                Show password
+              </span>
+            </label>
 
           <button
             disabled={loading}
