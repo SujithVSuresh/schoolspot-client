@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/AuthHeader";
 import { Link } from "react-router-dom";
 import { AdminSigninFormType } from "../types/types";
 import { signin } from "../api/api";

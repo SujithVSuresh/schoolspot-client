@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/AuthHeader";
 // import { useState } from "react";
 import { AdminSignupFormType } from "../types/types";
 import { signup } from "../api/api";

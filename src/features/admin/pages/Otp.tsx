@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import Header from '../components/Header';
+import Header from '../components/AuthHeader';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
