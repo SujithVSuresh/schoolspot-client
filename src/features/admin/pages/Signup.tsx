@@ -7,13 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupValidationSchema } from "../validation/formValidation";
 import { useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
-
+import loadingGif from "../../../assets/images/loading.webp";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -24,30 +25,30 @@ const Signup = () => {
   });
 
   const onSubmit = async (data: AdminSignupFormType) => {
-    
+    setLoading(true);
 
     const response = await signup(data);
-    console.log(response, "this is the response")
 
     if (response.success) {
-          // setLoading(true)
-          // dispatch(setSchoolProfile(data))
-          // setTimeout(( )=> {
-          //   setLoading(false)
-          //   navigate('/signup')
-      
-          // }, 3000)
-      navigate("/otp", { state: response.data });
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/otp", { state: response.data });
+      }, 1000);
     } else {
-      // toast.error(response.error.message, {
-      //   position: "bottom-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: true,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      // });
+
+      setTimeout(() => {
+        setLoading(false);
+        toast("An account with this email address already exist", {
+          duration: 8000,
+          position: "bottom-right",
+          style: {
+            backgroundColor: "#FEE2E2",
+            border: "2px, solid, #DC2626",
+            minWidth: "400px",
+            color: "black",
+          },
+        });
+      }, 1000);
     }
   };
 
@@ -96,7 +97,6 @@ const Signup = () => {
                   id="password"
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
-
               </div>
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1">
@@ -130,18 +130,24 @@ const Signup = () => {
             </div>
 
             <label className="flex items-center hover:cursor-pointer">
-        <input
-          type="checkbox"
-          checked={showPassword}
-          onChange={() => setShowPassword(prev => !prev)}
-        />
-        <span className="text-sm font-norm text-gray-500 ml-1">Show password</span>
-      </label>
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword((prev) => !prev)}
+              />
+              <span className="text-sm font-normal text-gray-500 ml-1">
+                Show password
+              </span>
+            </label>
             <button
               type="submit"
-              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center bg-blue-700`}
+              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-blue-700`}
             >
-              <h1 className="text-base font-medium text-white">Submit</h1>
+              {loading ? (
+                <img className="w-10 h-10" src={loadingGif} alt="loading" />
+              ) : (
+                "Submit"
+              )}
             </button>
           </form>
 
@@ -151,12 +157,6 @@ const Signup = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
 
-          {/* <div className="flex justify-center">
-            <button className="flex items-center justify-center w-96 p-2 text-gray-600 bg-gray-200 rounded-sm hover:bg-gray-300">
-              <img src={google} className="h-5 w-5 mr-5" alt="" />
-              Continue with Google
-            </button>
-          </div> */}
           <GoogleAuth />
         </div>
       </main>

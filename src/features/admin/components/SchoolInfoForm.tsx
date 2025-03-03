@@ -47,7 +47,7 @@ const SchoolInfoForm = () => {
       setLoading(false)
       navigate('/signup')
 
-    }, 3000)
+    }, 1000)
   };
   return (
     <div className="mx-auto px-12 py-12 bg-white rounded border">
