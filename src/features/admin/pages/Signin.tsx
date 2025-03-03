@@ -10,11 +10,15 @@ import { signinValidationSchema } from "../validation/formValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {useForm} from 'react-hook-form'
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
   const {
       register,
@@ -99,8 +103,8 @@ const Signin = () => {
               <div className="relative">
                 <input
                 {...register("password")}
-                  type="password"
-                  id="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
                   className="w-full py-2 border-b-2 focus:ring-0 border-b-black outline-none"
                 />
                 <div className="w-10 h-10 absolute right-0 top-0"></div>
@@ -111,6 +115,17 @@ const Signin = () => {
                 </p>
               )}
             </div>
+
+            <label className="flex items-center hover:cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword((prev) => !prev)}
+              />
+              <span className="text-sm font-normal text-gray-500 ml-1">
+                Show password
+              </span>
+            </label>
 
             <button
               className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center mt-6 items-center`}
