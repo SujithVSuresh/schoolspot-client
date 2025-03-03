@@ -42,14 +42,15 @@ const Signin = () => {
         navigate("/students");
       } else {
         console.log(response, "this is the error")
-        toast.error(response.error.message, {
+        toast("We don't have any record of a SchoolSpot account with this credentials", {
           duration: 8000,
           position: 'bottom-right',
           style: {
-            backgroundColor: '#DBEAFE',
-            border: "2px, solid, #1D4ED8",
-            color: '#1D4ED8'
-          },
+            backgroundColor: '#FEE2E2',
+            border: "2px, solid, #DC2626",
+            minWidth: "400px",
+            color: "black"
+          }
         });
 
       }
