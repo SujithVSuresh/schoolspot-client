@@ -8,7 +8,7 @@ const SchoolInfoFormPage = () => {
       <Header />
 
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-  <div className="flex flex-col md:flex-row justify-center items-start py-8 md:py-12 lg:py-20 px-4 sm:px-6 lg:px-8">
+  <div className="flex flex-col md:flex-row lg:flex-row justify-center items-start py-8 md:py-12 lg:py-20 px-4 sm:px-6 lg:px-8">
     {/* Left Section */}
     <div className="w-full max-w-[500px] mb-8">
       <h1 className="font-bold text-2xl sm:text-3xl lg:text-4xl">
@@ -44,10 +44,10 @@ const SchoolInfoFormPage = () => {
             </div>
             <div className="flex items-start space-x-3">
               <CircleCheck className="h-4 w-4 md:h-5 md:w-5 text-indigo-600" />
-              <p className="text-xs md:text-sm text-gray-700">
-                Breeze content and social media agents (Beta)
+              <p className="text-xs md:text-sm text-gray-700">Breeze content and social
               </p>
             </div>
+
           </div>
 
           {/* Sales (Repeated Sections Adjusted) */}

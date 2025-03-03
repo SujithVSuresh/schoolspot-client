@@ -9,10 +9,10 @@ const Header = () => {
   return (
     <header
       className={`container mx-auto ${
-        location.pathname === "/school-info" ? "lg:px-44 md:px-10 px-10" : "lg:px-10 md:px-10 px-10"
+        location.pathname === "/school-info" ? "lg:px-44 md:px-5 px-5" : "lg:px-10 md:px-10 px-10"
       } py-4 flex items-center justify-between`}
     >
-      <img src={logo} alt="" className="lg:h-10 md:h-5 h-5" />
+      <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
       {(location.pathname === "/signup" || location.pathname === "/signin") &&
         (location.pathname === "/signup" ? (
           <h5 className="font-medium">

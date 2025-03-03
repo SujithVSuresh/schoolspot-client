@@ -20,14 +20,26 @@ const SchoolInfoForm = () => {
   } = useForm({
     resolver: zodResolver(schoolInfoValidationSchema),
     defaultValues: {
-      schoolName: schoolProfileData.schoolName || ""
+      schoolName: schoolProfileData.schoolName || "",
+      board: schoolProfileData.board || "",
+      city: schoolProfileData.city || "",
+      country: schoolProfileData.country || "",
+      email: schoolProfileData.email || "",
+      phoneNumber: schoolProfileData.phoneNumber || "",
+      postalCode: schoolProfileData.postalCode || "",
+      principalName: schoolProfileData.principalName || "",
+      regNumber: schoolProfileData.regNumber || "",
+      state: schoolProfileData.state || "",
+      websiteUrl: schoolProfileData.websiteUrl || "",
+      yearEstablished: schoolProfileData.yearEstablished,
+      totalStudents: schoolProfileData.totalStudents,
+      totalTeachers: schoolProfileData.totalTeachers
+
     }
   });
 
   const onSubmit = (data: SchoolProfileType) => {
-    console.log("Form Data:", data);
-    const k = dispatch(setSchoolProfile(data))
-    console.log(k, "this is the dispatched result")
+    dispatch(setSchoolProfile(data))
     navigate('/signup')
   };
   return (
@@ -66,7 +78,6 @@ const SchoolInfoForm = () => {
               Email
             </label>
             <input
-            value={schoolProfileData.email || ""}
               type="email"
               placeholder="email"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
@@ -86,7 +97,6 @@ const SchoolInfoForm = () => {
               Phone number
             </label>
             <input
-              value={schoolProfileData.phoneNumber || ""}
               type="text"
               placeholder="phone number"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
@@ -110,7 +120,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.regNumber || ""}
               placeholder="reg number"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("regNumber")}
@@ -130,7 +139,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.yearEstablished || ""}
               placeholder="year established"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("yearEstablished")}
@@ -153,7 +161,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.principalName || ""}
               placeholder="principal name"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("principalName")}
@@ -173,7 +180,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.websiteUrl || ""}
               placeholder="website url"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("websiteUrl")}
@@ -196,7 +202,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="number"
-              value={schoolProfileData.totalStudents || ""}
               placeholder="total students"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("totalStudents")}
@@ -216,7 +221,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="number"
-              value={schoolProfileData.totalTeachers || ""}
               placeholder="total teachers"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("totalTeachers")}
@@ -238,7 +242,6 @@ const SchoolInfoForm = () => {
           </label>
           <input
             type="text"
-            value={schoolProfileData.board || ""}
             placeholder="board"
             className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
             {...register("board")}
@@ -258,7 +261,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.city || ""}
               placeholder="city"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("city")}
@@ -278,7 +280,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.state || ""}
               placeholder="state"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("state")}
@@ -301,7 +302,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.country || ""}
               placeholder="country"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("country")}
@@ -321,7 +321,6 @@ const SchoolInfoForm = () => {
             </label>
             <input
               type="text"
-              value={schoolProfileData.postalCode || ""}
               placeholder="postal code"
               className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
               {...register("postalCode")}
