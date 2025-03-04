@@ -32,6 +32,7 @@ const Signup = () => {
     if (response.success) {
       setTimeout(() => {
         setLoading(false);
+        localStorage.setItem("otpTimer", JSON.stringify(Math.floor((new Date().getTime() + 60000)  / 1000)))
         navigate("/otp", { state: response.data });
       }, 1000);
     } else {

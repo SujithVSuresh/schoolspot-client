@@ -3,6 +3,7 @@ import Header from '../components/AuthHeader';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
+import toast from 'react-hot-toast';
 
 const Otp = () => {
     const navigate = useNavigate()
@@ -19,32 +20,38 @@ const Otp = () => {
 
       const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-      
-    const [timer, setTimer] = useState(60)
+      const [timer, setTimer] = useState(0)
 
-    useEffect(() => {
-      const value = Number(localStorage.getItem("timer"))
-      if(value){
-        setTimer(value)
-      }
 
-      const interval = setInterval(() => {
-        setTimer(prevTime => {
-          if(prevTime > 0){
-            const time = prevTime-1
-            localStorage.setItem("timer", time.toString())
-            return time
-          }else{
-            return 0
+      useEffect(() => {
+        const storedTime = localStorage.getItem("otpTimer"); 
+        const currentTime = Math.floor(new Date().getTime() / 1000)
+        const futureTime = storedTime ? JSON.parse(storedTime) : null
+
+        console.log(futureTime, currentTime, (futureTime - currentTime), "Hey this is the future data.")
+
+        if(futureTime && futureTime > currentTime){
+          setTimer(futureTime - currentTime)
+        }else{
+          setTimer(0)
+        }
+        
+      }, [])
+
+      useEffect(() => {
+        if(timer > 0){
+          const settingTime = setTimeout(() => {
+            setTimer(timer - 1)
+          }, 1000)
+
+          return () => {
+            clearTimeout(settingTime)
           }
-        })
-    }, 1000)
+        }
 
-    return () => {
-      clearInterval(interval);
-    };
+      }, [timer])
 
-    }, [])
+
         
       const handleChange = (index: number, value: string) => {
         if (!/^\d?$/.test(value)) return;
@@ -93,7 +100,7 @@ const Otp = () => {
           })
           
           if(response.success){
-            setTimer(60)
+            // setTimer(60)
             navigate('/signin')
           }else{
                         //  toast.error(response.error.message, {
@@ -117,24 +124,50 @@ const Otp = () => {
 
       const handleResendSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if(location.state.email){
+        if(location?.state?.email){
         const response = await resendOtp({email: location.state.email})
 
         console.log(response)
 
         if(response.success){
+          localStorage.setItem("otpTimer", JSON.stringify(Math.floor((new Date().getTime() + 60000)  / 1000)))
           setTimer(60)
+          toast(
+            "OTP resend successfully",
+            {
+              duration: 8000,
+              position: "bottom-right",
+              style: {
+                backgroundColor: "#E7FEE2",
+                border: "2px, solid, #16A34A",
+                minWidth: "400px",
+                color: "black",
+              },
+            }
+          );
         }else{
-                  // toast.error(response.error.message, {
-                  //   position: "bottom-right", 
-                  //   autoClose: 3000,    
-                  //   hideProgressBar: true,
-                  //   closeOnClick: true,
-                  //   pauseOnHover: true,
-                  //   draggable: true,
-                  //   progress: undefined,
-                  // });
+          toast("Error sending otp to your email", {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#FEE2E2",
+              border: "2px, solid, #DC2626",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
         }
+        }else{
+          toast("Error occured while trying to send otp", {
+            duration: 8000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#FEE2E2",
+              border: "2px, solid, #DC2626",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
         }
 
       }
@@ -175,24 +208,27 @@ const Otp = () => {
         <button
           onClick={handleSubmit}
           disabled={otp1 && otp2 && otp3 && otp4 && otp5 && otp6 ? false : true}
-          className={`w-full h-12 rounded-sm flex justify-center mt-10 items-center ${
-            otp1 && otp2 && otp3 && otp4 && otp5 && otp6 ? "cursor-pointer bg-blue-700" : "cursor-not-allowed bg-blue-200"
-          }`}
+          className={`w-full h-12 rounded-sm flex justify-center mt-10 items-center  bg-blue-700`}
         >
           <h1 className="text-base font-medium text-white">Next</h1>
         </button>
-        
-        {timer<=0 ? (
-            <h5 className="font-medium mt-5">
-             Didn't get the email?{" "}
-            <span className="text-blue-500 cursor-pointer font-semibold" onClick={(e) => handleResendSubmit(e)}>Resend</span>
-            </h5>
+        {timer <= 0 ? (
+                      <h5 className="font-medium mt-5">
+                      Didn't get the email?{" "}
+                     <span className="text-blue-500 cursor-pointer font-semibold" onClick={(e) => handleResendSubmit(e)}>Resend</span>
+                     </h5>
+
         ) : (
           <h5 className="font-normal mt-5">
           Resend OTP in <span className='font-medium'>{timer} sec</span>
         </h5>
 
         )}
+  
+   
+
+
+   
 
       </div>
     </div>

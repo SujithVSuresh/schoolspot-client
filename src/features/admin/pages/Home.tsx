@@ -2,7 +2,7 @@ import { CreditCard, Clock } from 'lucide-react';
 import logo from '../../../assets/images/logo.png'
 import themeimg from '../../../assets/images/themeimg.png'
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/AuthHeader';
+// import Header from '../components/AuthHeader';
 
 
 const Home = () => {

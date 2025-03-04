@@ -13,8 +13,10 @@ export const signup = async (userData: AdminSignupFormType) => {
         const {data} = await axiosInstance.post("http://localhost:3000/auth/signup", userData, {headers: {
             'x-access': 'public'
         }});
+        console.log(data)
         return { success: true, data }
     }catch(error){
+        console.log(error)
         const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
         return { success: false, error: message }
     }
