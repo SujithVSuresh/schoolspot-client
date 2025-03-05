@@ -1,10 +1,11 @@
 import Sidebar from "../components/Sidebar";
 import { Search, UserPlus, MoreVertical } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
-import { useState } from "react";
-// import { getAllStudents } from "../api/api";
+import { useEffect, useState } from "react";
+import { getAllStudents } from "../api/api";
 // import { UserStoreType } from "../types/types";
 import AddStudentModal from "../components/AddStudentModal";
+import { UserStoreType } from "../types/types";
 
 
 
@@ -18,298 +19,317 @@ interface Student {
   class: string;
 }
 
-const studentsi: Student[] = [
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-  {
-    id: 1,
-    name: "Jason Statham",
-    admissionNo: "Mathematics",
-    parent: "Sujith",
-    phone: "8590369084",
-    profile:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
-    class: "2 B",
-  },
-];
+// const studentsi: Student[] = [
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+//   {
+//     id: 1,
+//     name: "Jason Statham",
+//     admissionNo: "Mathematics",
+//     parent: "Sujith",
+//     phone: "8590369084",
+//     profile:
+//       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+//     class: "2 B",
+//   },
+// ];
 
 function Student() {
   const [studentAddModalOpen, setStudentAddModalOpen] = useState(false);
   // const [studentProfileModalOpen, setStudentProfileModalOpen] = useState(false);
+  const [students, setStudents] = useState<UserStoreType[] | []>([])
+
+
+
+  useEffect(() => {
+
+    const fetchUserData = async () => {
+      const data = await getAllStudents()
+
+      if(data.success){
+        console.log(data, "this is the student data...")
+        setStudents(data.data)
+      }else{
+        console.log(data.error)
+      }
+    }
+
+    fetchUserData()
+  }, [])
  
 
   return (
     <div className="flex min-h-screen bg-gray-50 relative">
       {studentAddModalOpen && (
-        <AddStudentModal onClose={() => setStudentAddModalOpen(false)}/>
+        <AddStudentModal onClose={() => setStudentAddModalOpen(false)} setStudent={setStudents}/>
       )}
 
 {/* {studentProfileModalOpen && (
@@ -403,45 +423,12 @@ function Student() {
               </button>
             </div>
           </div>
-          {/* 
-        <div className="bg-white rounded-2xl p-6">
-
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-gray-600">Sl No</th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-gray-600">Account email</th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-gray-600">Account status</th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-gray-600">Created at</th>
-               
-                </tr>
-              </thead>
-              <tbody>
-                {students && students.map((student, index) => (
-                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-4 px-4">{index + 1}</td>
-                    <td className="py-4 px-4">{student.email}</td>
-                    <td className="py-4 px-4">{student.status}</td>
-                    <td className="py-4 px-4">{student.createdAt}</td>
-                    <td className="py-4 px-4">
-                      <button className="text-gray-500 hover:text-gray-700">
-                        <MoreHorizontal className="h-5 w-5" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-        </div>*/}
-
+         
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {studentsi.map((student, index) => (
+            {students.length > 0 && students.map((student, index) => (
               <div key={index} className="bg-gray-100 rounded-xl p-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+                  {/* <div className="flex items-center gap-3">
                     <img
                       src={student.profile}
                       alt={student.name}
@@ -453,7 +440,7 @@ function Student() {
                       </h3>
                       <p className="text-sm text-gray-500">{student.class}</p>
                     </div>
-                  </div>
+                  </div> */}
                   <button className="text-gray-400 hover:text-gray-600 transition-colors">
                     <MoreVertical className="h-5 w-5" />
                   </button>

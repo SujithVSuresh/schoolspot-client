@@ -106,20 +106,6 @@ export const signin = async (userData: AdminSigninFormType) => {
 }
 
 
-// export const addStudent = async (userData: {email: string, password: string}) => {
-//     try{
-//         const {data} = await axiosInstance.post("http://localhost:3000/auth/add-student", userData, {headers: {
-//             'x-access': 'private',
-//             'x-role': 'admin'
-//         }});
-//         return { success: true, data }
-//     }catch(error){
-//         console.log(error, "this is the error")
-//         const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
-//         return { success: false, error: message }
-//     }
-// }
-
 export const getAllStudents = async () => {
     try{
         const {data} = await axiosInstance.get("http://localhost:3000/auth/get-students", {headers: {

@@ -6,13 +6,15 @@ import { UserSignupFormType } from "../types/types";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { createUser } from "../api/api";
+import { UserStoreType } from "../types/types";
 
 
 interface ModalProps {
   onClose: () => void;
+  setStudent: React.Dispatch<React.SetStateAction<UserStoreType[]>>;
 }
 
-const AddStudentModal = ({ onClose }: ModalProps) => {
+const AddStudentModal = ({ onClose, setStudent }: ModalProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -28,8 +30,13 @@ const AddStudentModal = ({ onClose }: ModalProps) => {
 
     const response = await createUser({...data, role: "student"})
 
+    console.log(response, "this ddddd")
+
     if(response.success){
       setTimeout(() => {
+        setStudent((prev) => {
+          return [...prev, response.data]
+        })
         setLoading(false);
         onClose()
       }, 1000);
