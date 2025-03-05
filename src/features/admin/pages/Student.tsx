@@ -1,12 +1,12 @@
 import Sidebar from "../components/Sidebar";
 import { Search, UserPlus, MoreVertical } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
-import React, { useState } from "react";
+import { useState } from "react";
+// import { getAllStudents } from "../api/api";
+// import { UserStoreType } from "../types/types";
 import AddStudentModal from "../components/AddStudentModal";
-import { addStudent } from "../api/api";
-import { useEffect } from "react";
-import { getAllStudents } from "../api/api";
-import { UserStoreType } from "../types/types";
+
+
 
 interface Student {
   id: number;
@@ -302,46 +302,19 @@ const studentsi: Student[] = [
 ];
 
 function Student() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const [students, setStudents] = useState<UserStoreType[]>([])
-
-  // useEffect(() => {
-
-  //   fetchUsers()
-
-  // }, [])
-
-  // const fetchUsers = async () => {
-  //   const data = await getAllStudents()
-  //   setStudents(data.data)
-  //   console.log(data, "this is the data")
-  // }
-
-  // const addStudentFormHandler = async (e: React.FormEvent) => {
-  //   e.preventDefault()
-
-  //   const response = await addStudent({
-  //     email: email,
-  //     password: password
-  //   })
-
-  //   console.log(response, "sss")
-
-  //   if(response.success){
-  //     setIsModalOpen(false)
-  //     setEmail("")
-  //     setPassword("")
-  //     setConfirmPassword("")
-  //     setStudents((prev) => [...prev, response.data])
-  //   }
-  // }
+  const [studentAddModalOpen, setStudentAddModalOpen] = useState(false);
+  // const [studentProfileModalOpen, setStudentProfileModalOpen] = useState(false);
+ 
 
   return (
     <div className="flex min-h-screen bg-gray-50 relative">
-      {isModalOpen == true && (
-              <div className="bg-white h-full w-5/12 absolute z-10 right-0">
-              <div className="space-y-4">
+      {studentAddModalOpen && (
+        <AddStudentModal onClose={() => setStudentAddModalOpen(false)}/>
+      )}
+
+{/* {studentProfileModalOpen && (
+              <div className="bg-white h-full w-5/12 fixed z-40 right-0">
+              <form method="POST" className="space-y-4">
                 <div>
                   <label
                     htmlFor="email"
@@ -386,7 +359,8 @@ function Student() {
       
                 <div className="flex justify-end space-x-3">
                   <button
-                    onClick={() => setIsModalOpen(false)}
+                  type="submit"
+                    onClick={() => setStudentAddModalOpen(false)}
                     className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     Cancel
@@ -395,11 +369,11 @@ function Student() {
                     Submit
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
 
       )}
-
+ */}
 
       {/* Sidebar */}
       <Sidebar />
@@ -421,7 +395,7 @@ function Student() {
                 />
               </div>
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setStudentAddModalOpen(true)}
                 className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
               >
                 <UserPlus className="h-5 w-5" />
@@ -464,8 +438,8 @@ function Student() {
         </div>*/}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {studentsi.map((student) => (
-              <div key={student.id} className="bg-gray-100 rounded-xl p-4">
+            {studentsi.map((student, index) => (
+              <div key={index} className="bg-gray-100 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <img

@@ -1,9 +1,6 @@
 import {
   KeyRound,
-  User,
-  Phone,
-  Activity,
-  Shield,
+
   Edit2,
   Power,
   LogOut,
@@ -17,13 +14,7 @@ import { Settings } from "lucide-react";
 const AdminProfile = () => {
   const dispatch = useDispatch();
 
-  const profileData = {
-    name: "Jason Statham",
-    email: "jason@gmail.com",
-    phone: "8590369084",
-    status: "Active",
-    role: "Admin",
-  };
+
 
   const logoutHandler = () => {
     dispatch(removeAdmin());

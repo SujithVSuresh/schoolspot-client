@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { AdminSignupFormType, AdminSigninFormType } from "../types/types";
+import { UserSignupFormType, AdminSigninFormType } from "../types/types";
 import { OTPFormType } from "../types/types";
 import axiosInstance from '../../../app/api/axiosInstance'
 
@@ -8,7 +8,7 @@ import axiosInstance from '../../../app/api/axiosInstance'
 
 
 
-export const signup = async (userData: AdminSignupFormType) => {
+export const signup = async (userData: UserSignupFormType) => {
     try{
         const {data} = await axiosInstance.post("http://localhost:3000/auth/signup", userData, {headers: {
             'x-access': 'public'
@@ -27,7 +27,22 @@ export const verify = async (otpData: OTPFormType) => {
         const {data} = await axiosInstance.post("http://localhost:3000/auth/verify", otpData, {headers: {
             'x-access': 'public'
         }});
-        console.log(data)
+        console.log(data, "blablabla")
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const createUser = async (userData: UserSignupFormType) => {
+    try{
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/create-user", userData, {headers: {
+            'x-access': 'private',
+            'x-role': 'admin'
+        }});
+        console.log(data, "blablabla")
         return { success: true, data }
     }catch(error){
         const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
@@ -64,7 +79,8 @@ export const passwordResetRequest = async (email: {email: string}) => {
 export const passwordReset = async (passwordResetData: {token: string, password: string}) => {
     try{
         const {data} = await axiosInstance.post("http://localhost:3000/auth/password-reset", passwordResetData, {headers: {
-            'x-access': 'public'
+            'x-access': 'public',
+            
         }});
         return { success: true, data }
     }catch(error){
@@ -90,19 +106,19 @@ export const signin = async (userData: AdminSigninFormType) => {
 }
 
 
-export const addStudent = async (userData: {email: string, password: string}) => {
-    try{
-        const {data} = await axiosInstance.post("http://localhost:3000/auth/add-student", userData, {headers: {
-            'x-access': 'private',
-            'x-role': 'admin'
-        }});
-        return { success: true, data }
-    }catch(error){
-        console.log(error, "this is the error")
-        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
-        return { success: false, error: message }
-    }
-}
+// export const addStudent = async (userData: {email: string, password: string}) => {
+//     try{
+//         const {data} = await axiosInstance.post("http://localhost:3000/auth/add-student", userData, {headers: {
+//             'x-access': 'private',
+//             'x-role': 'admin'
+//         }});
+//         return { success: true, data }
+//     }catch(error){
+//         console.log(error, "this is the error")
+//         const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+//         return { success: false, error: message }
+//     }
+// }
 
 export const getAllStudents = async () => {
     try{

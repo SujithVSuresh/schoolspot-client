@@ -2,10 +2,11 @@ export interface SignupProgressPropType {
     progress: () => void
 }
 
-export interface AdminSignupFormType {
+export interface UserSignupFormType {
     email: string;
     password: string;
     confirmPassword?: string;
+    role?: "admin" | "student" | "teacher";
 }
 
 export interface AdminSigninFormType {
@@ -21,8 +22,8 @@ export interface OTPFormType {
 export interface UserStoreType {
     _id?: string;
     email: string;
-    role: "admin" | "student" | "teacher" | "";
-    status: "active" | "blocked" | "deleted" | "";
+    role: "admin" | "student" | "teacher";
+    status: "active" | "blocked" | "deleted" | "inactive";
     accessToken: string | null;
     profilePicture?: string;
     createdAt?: string

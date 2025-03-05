@@ -1,5 +1,5 @@
 import Header from "../components/AuthHeader";
-import { AdminSignupFormType } from "../types/types";
+import { UserSignupFormType } from "../types/types";
 import { signup } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
@@ -24,7 +24,7 @@ const Signup = () => {
     resolver: zodResolver(signupValidationSchema),
   });
 
-  const onSubmit = async (data: AdminSignupFormType) => {
+  const onSubmit = async (data: UserSignupFormType) => {
     setLoading(true);
 
     const response = await signup(data);

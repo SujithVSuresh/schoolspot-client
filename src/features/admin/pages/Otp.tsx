@@ -5,9 +5,13 @@ import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
 import toast from 'react-hot-toast';
 import loadingGif from "../../../assets/images/loading.webp";
+import { useDispatch } from 'react-redux';
+import { setAdmin } from '../redux/adminSlice';
 
 
 const Otp = () => {
+  const dispatch = useDispatch()
+
     const navigate = useNavigate()
 
     const location = useLocation()
@@ -31,8 +35,6 @@ const Otp = () => {
         const storedTime = localStorage.getItem("otpTimer"); 
         const currentTime = Math.floor(new Date().getTime() / 1000)
         const futureTime = storedTime ? JSON.parse(storedTime) : null
-
-        console.log(futureTime, currentTime, (futureTime - currentTime), "Hey this is the future data.")
 
         if(futureTime && futureTime > currentTime){
           setTimer(futureTime - currentTime)
@@ -105,6 +107,15 @@ const Otp = () => {
           })
           
           if(response.success){
+                  dispatch(
+                    setAdmin({
+                      _id: response.data._id,
+                      email: response.data.email,
+                      role: response.data.role,
+                      status: response.data.status,
+                      accessToken: response.data.accessToken,
+                    })
+                  );
             setTimeout(() => {
               setLoading(false)
               navigate('/profile')
