@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
 import toast from 'react-hot-toast';
+import loadingGif from "../../../assets/images/loading.webp";
+
 
 const Otp = () => {
     const navigate = useNavigate()
@@ -17,6 +19,8 @@ const Otp = () => {
       const [otp4, setOtp4] = useState("");
       const [otp5, setOtp5] = useState("");
       const [otp6, setOtp6] = useState("");
+
+      const [loading, setLoading] = useState(false);
 
       const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -92,6 +96,7 @@ const Otp = () => {
     
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true)
         const otpCode = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
         if (otpCode.length === 6 && location.state.email) {
           const response = await verify({
@@ -100,18 +105,26 @@ const Otp = () => {
           })
           
           if(response.success){
-            // setTimer(60)
-            navigate('/signin')
+            setTimeout(() => {
+              setLoading(false)
+              navigate('/profile')
+            }, 500)
+
           }else{
-                        //  toast.error(response.error.message, {
-                        //         position: "bottom-right", 
-                        //         autoClose: 3000,    
-                        //         hideProgressBar: true,
-                        //         closeOnClick: true,
-                        //         pauseOnHover: true,
-                        //         draggable: true,
-                        //         progress: undefined,
-                        //       });
+            setTimeout(() => {
+              setLoading(false)
+              toast(response?.error?.message, {
+                duration: 8000,
+                position: "bottom-right",
+                style: {
+                  backgroundColor: "#FEE2E2",
+                  border: "2px, solid, #DC2626",
+                  minWidth: "400px",
+                  color: "black",
+                },
+              });
+            }, 500)
+   
                               
           }
             
@@ -208,9 +221,13 @@ const Otp = () => {
         <button
           onClick={handleSubmit}
           disabled={otp1 && otp2 && otp3 && otp4 && otp5 && otp6 ? false : true}
-          className={`w-full h-12 rounded-sm flex justify-center mt-10 items-center  bg-blue-700`}
+          className={`w-full h-12 rounded-sm flex justify-center mt-10 items-center text-base font-medium text-white bg-blue-700`}
         >
-          <h1 className="text-base font-medium text-white">Next</h1>
+          {loading ? (
+                <img className="w-10 h-10" src={loadingGif} alt="loading" />
+              ) : (
+                "Next"
+              )}
         </button>
         {timer <= 0 ? (
                       <h5 className="font-medium mt-5">
