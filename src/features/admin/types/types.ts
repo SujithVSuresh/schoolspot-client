@@ -51,7 +51,7 @@ export interface SchoolProfileType {
 export interface StudentProfileType {
     _id?: string;
     fullName: string;
-    profilePhoto: string;
+    profilePhoto: FileList;
     gender: "male" | "female";
     dob: string;
     address: string;
@@ -65,3 +65,21 @@ export interface StudentProfileType {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+
+export interface StudentDataResponseType {
+    _id?: string;
+    fullName: string;
+    class: string;
+    section: string;
+    profilePhoto: string;
+    schoolId?: string;
+    user: {
+        _id: string
+        email: string,
+        status: "active" | "inactive" | "deleted" | "blocked";
+    }
+
+}
+
+export interface StudentUserProfileType extends StudentProfileType, UserSignupFormType {}

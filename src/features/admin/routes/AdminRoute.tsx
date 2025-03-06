@@ -11,6 +11,7 @@ import Teachers from "../pages/Teachers";
 import Pricing from "../pages/Pricing";
 import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
+import AddStudent from "../pages/AddStudent";
 
 const AdminRoute = () => {
   return (
@@ -100,6 +101,15 @@ const AdminRoute = () => {
         element={
           <ProtectedRoute isLogin={true}>
             <Teachers />
+          </ProtectedRoute>
+        }
+      />
+
+<Route
+        path="/add-student"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <AddStudent />
           </ProtectedRoute>
         }
       />
