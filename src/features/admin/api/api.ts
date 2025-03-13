@@ -96,9 +96,12 @@ export const signin = async (userData: AdminSigninFormType) => {
 
 export const getAllStudents = async (page: number, search: string, sortBy: string, sortOrder: string) => {
     try{
-        const {data} = await axiosInstance.get(`http://localhost:3000/student/get-students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
+        const {data} = await axiosInstance.get(`http://localhost:3000/student/get-students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
 
-        console.log(data, "ddd")
         return { success: true, data }
     }catch(error){
         console.log(error, "this is the error")

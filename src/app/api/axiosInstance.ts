@@ -13,11 +13,19 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const { admin } = store.getState();
 
+    const userRole = config.headers['x-user-role']
 
-    const token = admin?.accessToken;
+    const {admin, student} = store.getState();
 
+    let token 
+
+    if(userRole == "admin"){
+      token = admin?.accessToken
+    }else if(userRole == "student"){
+      token = student?.accessToken
+      
+    }
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
