@@ -22,8 +22,8 @@ export interface OTPFormType {
 export interface UserStoreType {
     _id?: string;
     email: string;
-    role: "admin" | "student" | "teacher";
-    status: "active" | "blocked" | "deleted" | "inactive";
+    role: "admin" | "student" | "teacher" | "";
+    status: "active" | "blocked" | "deleted" | "inactive" | "";
     accessToken: string | null;
     profilePicture?: string;
     createdAt?: string
@@ -83,3 +83,38 @@ export interface StudentDataResponseType {
 }
 
 export interface StudentUserProfileType extends StudentProfileType, UserSignupFormType {}
+
+
+export interface TeacherProfileType {
+    fullName: string;
+    phoneNumber: string;
+    subjectSpecialized: string;
+    qualification: string;
+    experience: number;
+    profilePhoto: FileList;
+    userId?: string;
+    schoolId?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }
+
+
+  export interface TeacherUserProfileType extends TeacherProfileType, UserSignupFormType {}
+
+
+  export interface TeacherDataResponseType {
+    _id?: string;
+    fullName: string;
+    subjectSpecialized: string;
+    qualification: string;
+    profilePhoto: string;
+    schoolId?: string;
+    user: {
+        _id: string
+        email: string,
+        status: "active" | "inactive" | "deleted" | "blocked";
+    }
+}
+
+
+   

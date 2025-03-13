@@ -15,10 +15,6 @@ const ProtectedRoute = ({ children, isLogin }: ProtectedRouteProps) => {
     if (isLogin && !user.accessToken) {
       return <Navigate to="/signin" replace />;
     }
-
-    if(!isLogin && user.status == "inactive"){
-      return <Navigate to="/profile" replace />;
-    }
     
     if(!isLogin && user.accessToken && user.status == "active"){
       return <Navigate to="/students" replace />;

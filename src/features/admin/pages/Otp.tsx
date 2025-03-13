@@ -118,7 +118,7 @@ const Otp = () => {
                   );
             setTimeout(() => {
               setLoading(false)
-              navigate('/profile')
+              navigate('/students')
             }, 500)
 
           }else{
@@ -150,8 +150,6 @@ const Otp = () => {
         e.preventDefault()
         if(location?.state?.email){
         const response = await resendOtp({email: location.state.email})
-
-        console.log(response)
 
         if(response.success){
           localStorage.setItem("otpTimer", JSON.stringify(Math.floor((new Date().getTime() + 60000)  / 1000)))

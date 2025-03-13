@@ -9,7 +9,6 @@ import {
   LayoutDashboard,
   Settings,
   HelpCircle,
-  BarChart3,
   FileText,
 } from "lucide-react";
 
@@ -45,7 +44,7 @@ const Sidebar = () => {
             onClick={() => navigate('/teachers')}
             className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/teachers' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
-            <BarChart3 className="h-5 w-5" />
+            <Users className="h-5 w-5" />
           </a>
           <a
             href="#"

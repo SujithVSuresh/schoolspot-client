@@ -1,12 +1,8 @@
-import axios, {
-  InternalAxiosRequestConfig,
-  AxiosError,
-  AxiosResponse,
-} from "axios";
+import axios from "axios";
 import { store } from "../store";
-import { removeAdmin } from "../../features/admin/redux/adminSlice";
-import { refreshToken } from "../../features/admin/api/api";
 import { setAdmin } from "../../features/admin/redux/adminSlice";
+import { removeAdmin } from "../../features/admin/redux/adminSlice";
+
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
@@ -32,62 +28,43 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default axiosInstance;
 
-interface ErrorResponseData {
-  user?: boolean;
-  message?: string;
-  success: boolean;
-}
+
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
-  async (error: AxiosError<ErrorResponseData>) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & {
-      _retry?: boolean;
-    };
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    // const { admin } = store.getState();
 
-    if (error.response?.status === 401 && error.response.data.user) {
-      store.dispatch(removeAdmin());
-      return Promise.reject(error);
-    }
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (error.response?.data?.message === "Token expired") {
+        originalRequest._retry = true;
 
-    if (error.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
+        try {
+          const { data } = await axios.post("http://localhost:3000/auth/refreshToken");
 
-      try {
-        const response = await refreshToken()
-        store.dispatch(
-            
-                  setAdmin({
-                    _id: response.data._id,
-                    email: response.data.email,
-                    role: response.data.role,
-                    status: response.data.status,
-                    accessToken: response.data.accessToken,
-                  })
-     
-        );
+          store.dispatch(setAdmin({
+            _id: data._id,
+            email: data.email,
+            role: data.role,
+            status: data.status,
+            accessToken: data.accessToken,
+          }));
 
-        // Update Authorization header for the current request
-        originalRequest.headers[
-          "Authorization"
-        ] = `Bearer ${response?.data?.accessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+          return axiosInstance(originalRequest);
 
-        return axiosInstance(originalRequest);
-      } catch (refreshError: unknown) {
-        if (refreshError instanceof AxiosError) {
-          console.error(
-            "Error during token refresh:",
-            refreshError.response?.data
-          );
+        } catch (refreshError) {
+          store.dispatch(removeAdmin()); 
+          return Promise.reject(refreshError);
         }
-        return Promise.reject(refreshError);
       }
     }
 
     return Promise.reject(error);
   }
 );
+
+export default axiosInstance;
+

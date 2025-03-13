@@ -7,11 +7,12 @@ import ResetPasswordForm from "../pages/ResetPasswordForm";
 import Otp from "../pages/Otp";
 import AdminProfile from "../pages/AdminProfile";
 import Student from "../pages/Student";
-import Teachers from "../pages/Teachers";
+import Teachers from "../pages/Teacher";
 import Pricing from "../pages/Pricing";
 import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
 import AddStudent from "../pages/AddStudent";
+import AddTeacher from "../pages/AddTeacher";
 
 const AdminRoute = () => {
   return (
@@ -113,7 +114,20 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
+
+<Route
+        path="/add-teacher"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <AddTeacher />
+          </ProtectedRoute>
+        }
+      />
+    
     </Routes>
+
+
+
   );
 };
 

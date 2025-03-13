@@ -35,9 +35,9 @@ const AdminProfile = () => {
             <h1 className="text-xl font-medium text-gray-800 mb-8">Profile info</h1>
             <Settings className="h-5 w-5 mt-2" />
 
-            <div className="bg-red-500 w-40 h-20 absolute right-0 top-2 z-10">
+            {/* <div className="bg-red-500 w-40 h-20 absolute right-0 top-2 z-10">
 
-            </div>
+            </div> */}
 
             </div>
 

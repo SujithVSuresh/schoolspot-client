@@ -9,8 +9,13 @@ import { signupValidationSchema } from "../validation/formValidation";
 import { useState } from "react";
 import loadingGif from "../../../assets/images/loading.webp";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store"
+
 
 const Signup = () => {
+  const schoolData = useSelector((state: RootState) => state.schoolProfile);
+  
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -24,10 +29,10 @@ const Signup = () => {
     resolver: zodResolver(signupValidationSchema),
   });
 
-  const onSubmit = async (data: UserSignupFormType) => {
+  const onSubmit = async (userData: UserSignupFormType) => {
     setLoading(true);
 
-    const response = await signup(data);
+    const response = await signup(userData, schoolData);
 
     if (response.success) {
       setTimeout(() => {

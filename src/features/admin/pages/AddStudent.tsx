@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import { studentValidationSchema } from "../validation/formValidation";
 import { StudentUserProfileType } from "../types/types";
 import { createStudent } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 const AddStudent = () => {
+  const navigate = useNavigate()
 
   const {
     register,
@@ -38,6 +40,10 @@ const AddStudent = () => {
     const response = await createStudent(formData)
 
     console.log(response, "this is the response in form submit.")
+
+    if(response.success){
+      navigate('/students')
+    }
  
   };
   return (
@@ -48,231 +54,118 @@ const AddStudent = () => {
       {/* Header */}
       <div className="flex-1">
         <DashboardHeader />
-
-        <div className="pt-16 px-28 flex justify-center">
+        <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10 w-full">
+        <h1 className="text-2xl font-bold text-gray-800 text-center">Add Student</h1>
           <form
             method="POST"
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4 w-5/12 mt-10"
+            className="space-y-4 w-full max-w-2xl mt-6"
           >
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm mb-1 font-medium text-gray-700"
-              >
+              <label className="block text-sm mb-1 font-medium text-gray-700">
                 Email
               </label>
               <input
                 {...register("email")}
                 type="text"
-                name="email"
-                className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
+                className="w-full p-2 border border-gray-400 rounded outline-none"
               />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
-                </p>
-              )}
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
             </div>
-            <div className="flex justify-between">
-              <div className="w-full">
-                <label
-                  htmlFor="password"
-                  className="block text-sm mb-1 font-medium text-gray-700"
-                >
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm mb-1 font-medium text-gray-700">
                   Password
                 </label>
                 <input
                   {...register("password")}
                   type="password"
-                  name="password"
-                  className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
+                  className="w-full p-2 border border-gray-400 rounded outline-none"
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
+                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
               </div>
-
-              <div className="w-full ml-5">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm mb-1 font-medium text-gray-700"
-                >
+              
+              <div>
+                <label className="block text-sm mb-1 font-medium text-gray-700">
                   Confirm password
                 </label>
                 <input
                   {...register("confirmPassword")}
                   type="password"
-                  name="confirmPassword"
-                  className="w-full outline-none focus:right-0 p-2 border border-gray-400 rounded"
+                  className="w-full p-2 border border-gray-400 rounded outline-none"
                 />
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
+                {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">
-                Full Name
-              </label>
-              <input
-                {...register("fullName")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.fullName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.fullName.message}
-                </p>
-              )}
+              <label className="block text-sm font-medium mb-1 text-gray-700">Full Name</label>
+              <input {...register("fullName")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+              {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
             </div>
-
-            <div className="flex justify-between">
-            <div className="w-full">
-            <label className="block text-sm font-medium text-gray-700">
-              Class
-            </label>
-            <input
-              {...register("class")}
-              className="w-full p-2 border border-gray-400 rounded outline-none"
-            />
-            {errors.class && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.class.message}
-              </p>
-            )}
-          </div>
-          <div className="ml-5 w-full">
-            <label className="block text-sm font-medium text-gray-700">
-              Section
-            </label>
-            <input
-              {...register("section")}
-              className="w-full p-2 border border-gray-400 rounded outline-none"
-            />
-            {errors.section && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.section.message}
-              </p>
-            )}
-          </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Class</label>
+                <input {...register("class")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+                {errors.class && <p className="text-red-500 text-xs mt-1">{errors.class.message}</p>}
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Section</label>
+                <input {...register("section")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+                {errors.section && <p className="text-red-500 text-xs mt-1">{errors.section.message}</p>}
+              </div>
             </div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Profile Photo URL
-              </label>
-              <input
-                {...register("profilePhoto")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.profilePhoto && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.profilePhoto.message}
-                </p>
-              )}
-            </div> */}
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Gender
-              </label>
-              <select
-                {...register("gender")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              >
+              <label className="block text-sm font-medium text-gray-700">Gender</label>
+              <select {...register("gender")} className="w-full p-2 border border-gray-400 rounded outline-none">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
-              {errors.gender && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.gender.message}
-                </p>
-              )}
+              {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>}
             </div>
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Date of Birth
-              </label>
-              <input
-                {...register("dob")}
-                type="date"
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.dob && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.dob.message}
-                </p>
-              )}
+              <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+              <input {...register("dob")} type="date" className="w-full p-2 border border-gray-400 rounded outline-none" />
+              {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob.message}</p>}
             </div>
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Address
-              </label>
-              <input
-                {...register("address")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.address && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.address.message}
-                </p>
-              )}
+              <label className="block text-sm font-medium text-gray-700">Address</label>
+              <input {...register("address")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+              {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Father's Name
-              </label>
-              <input
-                {...register("fatherName")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.fatherName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.fatherName.message}
-                </p>
-              )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Father's Name</label>
+                <input {...register("fatherName")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+                {errors.fatherName && <p className="text-red-500 text-xs mt-1">{errors.fatherName.message}</p>}
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Mother's Name</label>
+                <input {...register("motherName")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+                {errors.motherName && <p className="text-red-500 text-xs mt-1">{errors.motherName.message}</p>}
+              </div>
             </div>
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Mother's Name
-              </label>
-              <input
-                {...register("motherName")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.motherName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.motherName.message}
-                </p>
-              )}
+              <label className="block text-sm font-medium text-gray-700">Contact Number</label>
+              <input {...register("contactNumber")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+              {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
             </div>
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Contact Number
-              </label>
-              <input
-                {...register("contactNumber")}
-                className="w-full p-2 border border-gray-400 rounded outline-none"
-              />
-              {errors.contactNumber && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.contactNumber.message}
-                </p>
-              )}
+              <label className="block text-sm font-medium text-gray-700">Profile Photo</label>
+              <input type="file" {...register("profilePhoto")} accept="image/png, image/jpeg" className="w-full p-2" />
+              {errors.profilePhoto && <p className="text-red-500 text-xs mt-1">{errors.profilePhoto.message}</p>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Profile photo
-              </label>
-            <input type="file" {...register("profilePhoto")} accept="image/png, image/jpeg" />
-            {errors.profilePhoto && <p>{errors.profilePhoto.message}</p>}
-
-           </div>
-
+            
             <div className="flex justify-end space-x-3">
               <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                 Cancel
@@ -286,6 +179,9 @@ const AddStudent = () => {
             </div>
           </form>
         </div>
+
+  
+  
       </div>
     </div>
   );

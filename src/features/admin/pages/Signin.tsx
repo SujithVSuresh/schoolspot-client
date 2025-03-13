@@ -34,7 +34,6 @@ const Signin = () => {
     const response = await signin(data);
 
     if (response.success) {
-      console.log("signin success", response);
       dispatch(
         setAdmin({
           _id: response.data._id,
@@ -49,8 +48,6 @@ const Signin = () => {
         navigate("/students");
       }, 1000);
     } else {
-      console.log(response, "this is the error");
-
       setTimeout(() => {
         setLoading(false);
         toast(

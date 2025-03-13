@@ -218,3 +218,67 @@ export const studentValidationSchema = z
     path: ["confirmPassword"],
     message: "Password doesn't match",
   });
+
+
+  export const teacherValidationSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .regex(emailRegex, { message: "Enter a valid email address" }),
+    password: z
+      .string()
+      .min(1, { message: "Password is required" })
+      .min(8, { message: "Password must be at least 8 characters long" })
+      .regex(passwordRegex.letter, {
+        message: "Password must contain at least one letter",
+      })
+      .regex(passwordRegex.lowercase, {
+        message: "Password must contain atleast one lowercase character",
+      })
+      .regex(passwordRegex.uppercase, {
+        message: "Password must contain atleast one uppercase character",
+      })
+      .regex(passwordRegex.specialChar, {
+        message: "Password must contain atleast one special character",
+      })
+      .regex(passwordRegex.spaces, {
+        message: "Pasword must not contain any spaces",
+      }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: "Confirm password is required" }),
+    fullName: z
+      .string()
+      .min(1, { message: "Full name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    profilePhoto: z
+      .instanceof(FileList)
+      .refine((files) => files.length > 0, "Image is required")
+      .refine((files) => files[0]?.size < 5 * 1024 * 1024, "File size must be under 5MB")
+      .refine(
+        (files) => ["image/jpeg", "image/png"].includes(files[0]?.type),
+        "Only JPEG and PNG images are allowed"
+      ),
+    subjectSpecialized: z  
+      .string()
+      .min(1, { message: "Subject specialized is required" })
+      .regex(nameRegex, { message: "Enter a valid subject" }),
+    qualification: z  
+      .string()
+      .min(1, { message: "Qualification is required" })
+      .regex(nameRegex, { message: "Enter a valid qualification" }),
+    experience: z.coerce
+      .number({ invalid_type_error: "Enter a valid experience" })
+      .min(1, { message: "This field is required" })
+      .max(50, { message: "Enter a valid experience" }),
+    phoneNumber: z  
+      .string()
+      .min(1, { message: "Phone number is required" })
+      .regex(phoneNumberRegex, { message: "Enter a valid email phone number" }),
+
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Password doesn't match",
+  });

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserStoreType } from "../types/types";
-
+import { UserStoreType } from "../../admin/types/types";
 
 
 const initialState: UserStoreType = {
@@ -12,20 +11,19 @@ const initialState: UserStoreType = {
 }
 
 
-const adminSlice = createSlice({
-    name: 'admin',
+const studentSlice = createSlice({
+    name: 'student',
     initialState,
     reducers: {
-        setAdmin: (state, action) => {
+        setStudent: (state, action) => {
             return {...state, ...action.payload}
         },
-        removeAdmin: () => {
+        removeStudent: () => {
             return initialState
         }
     }
 })
 
 
-export const {setAdmin, removeAdmin} = adminSlice.actions;
-export const adminReducer = adminSlice.reducer;
-
+export const {setStudent, removeStudent} = studentSlice.actions;
+export const studentReducer = studentSlice.reducer;
