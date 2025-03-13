@@ -43,7 +43,7 @@ const StudentSignin = () => {
               );
               setTimeout(() => {
                 setLoading(false);
-                navigate("/students");
+                navigate("/student");
               }, 1000);
             } else {
               setTimeout(() => {

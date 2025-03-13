@@ -6,7 +6,10 @@ import axios from "axios";
 
 export const signin = async (userData: StudentSigninFormType) => {
     try{
-        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", userData);
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", {
+            ...userData,
+            role: "student"
+        });
         return { success: true, data }
     }catch(error){
         console.log(error, "this is the error")

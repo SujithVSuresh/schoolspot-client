@@ -11,7 +11,6 @@ import axiosInstance from '../../../app/api/axiosInstance'
 export const signup = async (userData: UserSignupFormType, schoolData: SchoolProfileType) => {
     try{
         const {data} = await axiosInstance.post("http://localhost:3000/auth/signup", {userData, schoolData});
-        console.log(data)
         return { success: true, data }
     }catch(error){
         console.log(error)
@@ -82,7 +81,10 @@ export const passwordReset = async (passwordResetData: {token: string, password:
 
 export const signin = async (userData: AdminSigninFormType) => {
     try{
-        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", userData);
+        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", {
+            ...userData,
+            role: "admin"
+        });
         return { success: true, data }
     }catch(error){
         console.log(error, "this is the error")
