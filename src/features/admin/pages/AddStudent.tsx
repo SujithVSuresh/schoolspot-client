@@ -21,8 +21,6 @@ const AddStudent = () => {
 
 
   const onSubmit = async (data: StudentUserProfileType) => {
-    console.log(data);
-
     const formData = new FormData();
     formData.append("profilePhoto", data.profilePhoto[0]);
     formData.append("fullName", data.fullName);

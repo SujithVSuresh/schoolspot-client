@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import {adminReducer} from '../features/admin/redux/adminSlice.ts'
 import { schoolProfileReducer } from "../features/admin/redux/schoolProfileSlice.ts";
 import { studentReducer } from "../features/student/redux/studentSlice.tsx";
+import { teacherReducer } from "../features/teacher/redux/teacherSlice.ts";
 
 const adminPersistConfig = {
     key: "admin",
@@ -24,14 +25,22 @@ const schoolProfilePersistConfig = {
     storage,
 };
 
+const teacherPersistConfig = {
+    key: "teacherProfile",
+    version: 1,
+    storage,
+};
+
 const persistedAdminReducer = persistReducer(adminPersistConfig, adminReducer)
 const persistedStudentReducer = persistReducer(studentPersistConfig, studentReducer)
+const persistedTeacherReducer = persistReducer(teacherPersistConfig, teacherReducer)
 const persistedSchoolProfileReducer = persistReducer(schoolProfilePersistConfig, schoolProfileReducer)
 
 export const store = configureStore({
     reducer: {
         admin: persistedAdminReducer,
         student: persistedStudentReducer,
+        teacher: persistedTeacherReducer,
         schoolProfile: persistedSchoolProfileReducer
     },
     middleware: (getDefaultMiddleware) =>

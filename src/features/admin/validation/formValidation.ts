@@ -282,3 +282,21 @@ export const studentValidationSchema = z
     path: ["confirmPassword"],
     message: "Password doesn't match",
   });
+
+
+  export const classValidationSchema = z
+  .object({
+    className: z
+      .string()
+      .min(1, { message: "Class name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    section: z
+      .string()
+      .min(1, { message: "Section is required" })
+      .regex(nameRegex, { message: "Enter a valid section" }),
+    teacher: z  
+      .string()
+      .min(1, { message: "This field is required" })
+      .regex(nameRegex, { message: "Enter a value" }),
+  })
+

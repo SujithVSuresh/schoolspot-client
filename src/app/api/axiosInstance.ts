@@ -2,10 +2,11 @@ import axios from "axios";
 import { store } from "../store";
 import { setAdmin } from "../../features/admin/redux/adminSlice";
 import { removeAdmin } from "../../features/admin/redux/adminSlice";
+const envData = import.meta.env;
 
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: envData.VITE_ENDPOINT_ORIGIN,
   headers: {
     "Content-Type": "application/json",
   },

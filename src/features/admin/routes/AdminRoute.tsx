@@ -13,11 +13,14 @@ import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
 import AddStudent from "../pages/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
+import Classes from "../pages/Classes";
+import AddClass from "../pages/AddClass";
+import ClassDetails from "../pages/ClassDetails";
 
 const AdminRoute = () => {
   return (
     <Routes>
-       <Route
+      <Route
         path="/"
         element={
           <ProtectedRoute isLogin={false}>
@@ -54,6 +57,31 @@ const AdminRoute = () => {
         element={
           <ProtectedRoute isLogin={false}>
             <ResetPasswordForm />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/classes"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <Classes />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/classes/:id"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <ClassDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/add-class"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <AddClass />
           </ProtectedRoute>
         }
       />
@@ -106,7 +134,7 @@ const AdminRoute = () => {
         }
       />
 
-<Route
+      <Route
         path="/add-student"
         element={
           <ProtectedRoute isLogin={true}>
@@ -115,7 +143,7 @@ const AdminRoute = () => {
         }
       />
 
-<Route
+      <Route
         path="/add-teacher"
         element={
           <ProtectedRoute isLogin={true}>
@@ -123,11 +151,7 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
-    
     </Routes>
-
-
-
   );
 };
 

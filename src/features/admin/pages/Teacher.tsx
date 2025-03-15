@@ -1,6 +1,5 @@
 import Sidebar from "../components/Sidebar";
 import {
-  Search,
   UserPlus,
   MoreVertical,
   ChevronLeft,
@@ -30,6 +29,25 @@ function Teacher() {
   const [sortTeacher, setSortTeacher] = useState(sort);
 
   useEffect(() => {
+    const handler = setTimeout(() => {
+
+
+        updateQuery({
+          search: searchTeacher,
+          page: 1,
+          sort: sortTeacher,
+        })
+        
+    
+    
+      }, 500);
+  
+      return () => clearTimeout(handler);
+
+}, [searchTeacher, setSearchParams, sortTeacher])
+
+
+  useEffect(() => {
     const fetchUserData = async () => {
       console.log(sort)
 
@@ -51,8 +69,6 @@ function Teacher() {
         sortOrder = "";
       }
 
-      console.log(sortBy, sortOrder, "tttkkk")
-
       const data = await getAllTeachers(
         page,
         search,
@@ -70,6 +86,19 @@ function Teacher() {
 
     fetchUserData();
   }, [page, search, sort]);
+
+  const updateQuery = (newParams: Partial<Record<string, string | number>>) => {
+    const query = {
+      page: String(page),
+      search,
+      sort,
+      ...newParams,
+    };
+
+    setSearchParams(query);
+  };
+
+
 
   const toggleMenu = (index: number) => {
     setOpenMenu(openMenu === index ? null : index);
@@ -99,16 +128,7 @@ function Teacher() {
     }
   };
 
-  const updateQuery = (newParams: Partial<Record<string, string | number>>) => {
-    const query = {
-      page: String(page),
-      search,
-      sort,
-      ...newParams,
-    };
 
-    setSearchParams(query);
-  };
 
   return (
     <div className="flex min-h-screen bg-gray-50 relative">
@@ -119,7 +139,7 @@ function Teacher() {
       <div className="flex-1">
         <DashboardHeader />
 
-        <div className="pt-6 md:pt-16 px-4 sm:px-8 md:pl-28 md:pr-8">
+        <div className="pt-12 md:pt-16 px-4 sm:px-8 pl-24 md:pl-28 md:pr-8">
   <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
     <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0 md:ml-4">
       Teachers
@@ -142,7 +162,7 @@ function Teacher() {
           <option value="name-asc">Name - a to z</option>
           <option value="name-desc">Name - z to a</option>
         </select>
-        <button
+        {/* <button
           onClick={() =>
             updateQuery({
               search: searchTeacher,
@@ -153,7 +173,7 @@ function Teacher() {
           className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
         >
           <Search className="h-5 w-5" />
-        </button>
+        </button> */}
       </div>
       <button
         onClick={() => navigate('/add-teacher')}

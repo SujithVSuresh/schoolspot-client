@@ -1,10 +1,8 @@
-import React from 'react'
 import logo from "../../../assets/images/logo.png";
 import { useDispatch } from 'react-redux';
-import { removeStudent } from '../redux/studentSlice';
+import { removeTeacher } from '../redux/teacherSlice';
 
-
-const StudentHome = () => {
+const TeacherHome = () => {
   const dispatch = useDispatch()
 
   return (
@@ -18,16 +16,16 @@ const StudentHome = () => {
 
 
                 <button
-                onClick={() => dispatch(removeStudent())}
+                onClick={() => dispatch(removeTeacher())}
                 className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
               >
                 Logout
               </button>
       
     </header>
-      Welcome to student home page
+      Welcome to Teacher home page
     </div>
   )
 }
 
-export default StudentHome
+export default TeacherHome
