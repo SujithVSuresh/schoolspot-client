@@ -5,6 +5,7 @@ import StudentList from "../components/StudentList";
 import SubjectList from "../components/SubjectList";
 import { useState } from "react";
 import AttendanceRecord from "../components/AttendanceRecord";
+import TimeTable from "../components/TimeTable";
 
 const ClassDetails = () => {
     const [selectedBtn, setSelectedBtn] = useState("students")
@@ -101,7 +102,7 @@ const ClassDetails = () => {
             <div onClick={() => setSelectedBtn("students")} className={`${selectedBtn == "students" ? "bg-blue-200" : "bg-gray-200"} text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}>Students</div>
             <div onClick={() => setSelectedBtn("subjects")} className={`${selectedBtn == "subjects" ? "bg-blue-200" : "bg-gray-200"} text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}>Subjects</div>
             <div onClick={() => setSelectedBtn("attendance")} className={`${selectedBtn == "attendance" ? "bg-blue-200" : "bg-gray-200"} text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}>Attendance Record</div>
-            <div className="bg-gray-200 text-gray-800 px-4 py-3 rounded-full mr-3 text-sm">Timetable</div>
+            <div onClick={() => setSelectedBtn("timetable")} className={`${selectedBtn == "timetable" ? "bg-blue-200" : "bg-gray-200"} text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}>Timetable</div>
           </div>
           </div>
 
@@ -110,14 +111,11 @@ const ClassDetails = () => {
             <StudentList />
           ) : selectedBtn == "subjects" ? (
             <SubjectList />
-          ) : (
+          ) : selectedBtn == "attendance" ? (
             <AttendanceRecord />
+          ) : (
+            <TimeTable />
           )}
-          
-
-         
-
-
         </div>
       </div>
     </div>
