@@ -213,18 +213,17 @@ const TimeTable = () => {
     </button> */}
         </div>
       </div>
-
-      <div className="flex">
-        <div className="flex gap-2">
+<div className="flex">
+        <div className="flex bg-white rounded-e w-auto">
           {Object.keys(schoolTimetable).map((value) => {
            const validDay = value as Day; 
 
           return(
-            <div className="flex flex-col gap-1">
-              <div className="bg-red-400 w-28 h-16">{value}</div>
+            <div className="flex flex-col">
+              <div className="w-36 h-16 flex justify-center items-center font-medium bg-blue-100">{value}</div>
         
                 {schoolTimetable[validDay].map((subject: SubjectDetails) => (
-                  <div className="bg-red-400 w-28 h-16">{subject.subject}</div>
+                  <div className="w-36 h-16 border-t flex justify-center items-center text-center text-sm">{subject.subject}</div>
                 ))}
     
           
@@ -233,7 +232,8 @@ const TimeTable = () => {
       
            })}
         </div>
-      </div>
+        </div>
+ 
     </div>
   );
 };

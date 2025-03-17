@@ -30,28 +30,30 @@ const Sidebar = () => {
       <nav className="mt-5 px-2">
         <div className="space-y-1">
           <a
-            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
+          onClick={() => navigate('/dashboard/overview')}
+            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/overview' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
             <LayoutDashboard className="h-5 w-5" />
           </a>
           <a
-            onClick={() => navigate('/students')}
-            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/students' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
+            onClick={() => navigate('/dashboard/students')}
+            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/students' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
             <Users className="h-5 w-5" />
           </a>
           <a
-            onClick={() => navigate('/teachers')}
-            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/teachers' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
+            onClick={() => navigate('/dashboard/teachers')}
+            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/teachers' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
             <Users className="h-5 w-5" />
           </a>
           <a
-            href="#"
-            className="flex items-center justify-center p-5 text-indigo-100 hover:bg-indigo-800 rounded-md group"
+            onClick={() => navigate('/dashboard/classes')}
+            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/classes' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
-            <FileText className="h-5 w-5" />
+            <Users className="h-5 w-5" />
           </a>
+   
         </div>
 
         <div className="mt-10 pt-6 border-t border-indigo-800">

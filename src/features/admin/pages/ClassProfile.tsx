@@ -1,5 +1,4 @@
-import Sidebar from "../components/Sidebar";
-import DashboardHeader from "../components/DashboardHeader";
+
 import { BarChart3 } from "lucide-react";
 import StudentList from "../components/StudentList";
 import SubjectList from "../components/SubjectList";
@@ -7,21 +6,12 @@ import { useState } from "react";
 import AttendanceRecord from "../components/AttendanceRecord";
 import TimeTable from "../components/TimeTable";
 
-const ClassDetails = () => {
+const ClassProfile = () => {
     const [selectedBtn, setSelectedBtn] = useState("students")
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
+    <>
 
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
-
-        <div className="pt-28 md:pt-24 px-4 sm:px-8 md:pl-28 md:pr-8">
-
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
               <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
                 <div className="bg-gray-100 p-4 rounded-full">
                 <BarChart3 className="w-5 h-5 text-indigo-600" />
@@ -116,10 +106,9 @@ const ClassDetails = () => {
           ) : (
             <TimeTable />
           )}
-        </div>
-      </div>
-    </div>
+    
+        </>
   );
 };
 
-export default ClassDetails;
+export default ClassProfile;

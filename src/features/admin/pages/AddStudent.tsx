@@ -1,5 +1,3 @@
-import DashboardHeader from "../components/DashboardHeader";
-import Sidebar from "../components/Sidebar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { studentValidationSchema } from "../validation/formValidation";
@@ -45,15 +43,9 @@ const AddStudent = () => {
  
   };
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
 
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
-        <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10 w-full">
-        <h1 className="text-2xl font-bold text-gray-800 text-center">Add Student</h1>
+        <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col w-full">
+        <h1 className="text-2xl font-bold text-gray-800 ">Add Student</h1>
           <form
             method="POST"
             onSubmit={handleSubmit(onSubmit)}
@@ -178,10 +170,7 @@ const AddStudent = () => {
           </form>
         </div>
 
-  
-  
-      </div>
-    </div>
+
   );
 };
 

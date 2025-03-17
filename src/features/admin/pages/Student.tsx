@@ -1,14 +1,11 @@
-import Sidebar from "../components/Sidebar";
 import {
   UserPlus,
   MoreVertical,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import DashboardHeader from "../components/DashboardHeader";
 import { useEffect, useState } from "react";
 import { getAllStudents } from "../api/api";
-// import { UserStoreType } from "../types/types";
 import { useSearchParams } from "react-router-dom";
 import { StudentDataResponseType } from "../types/types";
 import { changeAccountStatus } from "../api/api";
@@ -113,15 +110,9 @@ function Student() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
 
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
 
-        <div className="pt-12 md:pt-16 px-4 sm:px-8 pl-24   md:pl-28 md:pr-8">
+        <div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0 md:ml-4">
               Students
@@ -260,8 +251,7 @@ function Student() {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+  
   );
 }
 

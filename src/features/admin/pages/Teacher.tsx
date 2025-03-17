@@ -131,15 +131,9 @@ function Teacher() {
 
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
 
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
 
-        <div className="pt-12 md:pt-16 px-4 sm:px-8 pl-24 md:pl-28 md:pr-8">
+        <>
   <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
     <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0 md:ml-4">
       Teachers
@@ -268,9 +262,8 @@ function Teacher() {
       <ChevronRight className="h-5 w-5" />
     </button>
   </div>
-</div>
-      </div>
-    </div>
+</>
+
   );
 }
 

@@ -31,16 +31,9 @@ const Classes = () => {
     }, [searchClass, setSearchParams])
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-        
-    {/* Sidebar */}
-    <Sidebar />
 
-    {/* Header */}
-    <div className="flex-1">
-      <DashboardHeader />
 
-      <div className="pt-6 md:pt-16 px-4 sm:px-8 md:pl-28 md:pr-8">
+      <div>
 <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
   <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0 md:ml-4">
     Classes
@@ -85,7 +78,7 @@ const Classes = () => {
 
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
 
-      <div className="bg-gray-100 rounded-xl p-4 relative">
+<div className="bg-gray-100 rounded-xl p-4 relative">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* <img
@@ -260,8 +253,6 @@ const Classes = () => {
 </div> */}
 </div>
 
-    </div>
-  </div>
   )
 }
 

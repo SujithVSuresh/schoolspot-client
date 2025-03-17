@@ -6,21 +6,27 @@ import ResetPassword from "../pages/ResetPassword";
 import ResetPasswordForm from "../pages/ResetPasswordForm";
 import Otp from "../pages/Otp";
 import AdminProfile from "../pages/AdminProfile";
-import Student from "../pages/Student";
-import Teachers from "../pages/Teacher";
 import Pricing from "../pages/Pricing";
 import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
+import Announcement from "../pages/Announcement";
+
+import Dashboard from "../pages/Dashboard";
+import Overview from "../pages/Overview";
+import Student from "../pages/Student";
+import Teacher from "../pages/Teacher";
 import AddStudent from "../pages/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
+import StudentProfile from "../pages/StudentProfile";
+import TeacherProfile from "../pages/TeacherProfile";
 import Classes from "../pages/Classes";
 import AddClass from "../pages/AddClass";
-import ClassDetails from "../pages/ClassDetails";
+import ClassProfile from "../pages/ClassProfile";
 
 const AdminRoute = () => {
   return (
     <Routes>
-      <Route
+    <Route
         path="/"
         element={
           <ProtectedRoute isLogin={false}>
@@ -60,31 +66,17 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
+
+
       <Route
-        path="/classes"
+        path="/announcement"
         element={
           <ProtectedRoute isLogin={true}>
-            <Classes />
+            <Announcement />
           </ProtectedRoute>
         }
       />
 
-      <Route
-        path="/classes/:id"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <ClassDetails />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/add-class"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <AddClass />
-          </ProtectedRoute>
-        }
-      />
       <Route
         path="/pricing"
         element={
@@ -117,40 +109,19 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/students"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <Student />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/teachers"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <Teachers />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/add-student"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <AddStudent />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/add-teacher"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <AddTeacher />
-          </ProtectedRoute>
-        }
-      />
+ 
+      <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="overview" element={<Overview />} />
+        <Route path="students" element={<Student />}/>
+        <Route path="students/new" element={<AddStudent />} />
+        <Route path="students/profile/:id" element={<StudentProfile/>} />
+        <Route path="teachers" element={<Teacher />} />
+        <Route path="teachers/new" element={<AddTeacher />} />
+        <Route path="teachers/profile/:id" element={<TeacherProfile/>} />
+        <Route path="classes" element={<Classes />} />
+        <Route path="classes/new" element={<AddClass />} />
+        <Route path="classes/profile/:id" element={<ClassProfile/>} />
+      </Route>
     </Routes>
   );
 };
