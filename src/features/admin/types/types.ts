@@ -51,7 +51,7 @@ export interface SchoolProfileType {
 export interface StudentProfileType {
     _id?: string;
     fullName: string;
-    profilePhoto: FileList;
+    profilePhoto: FileList | string;
     gender: "male" | "female";
     dob: string;
     address: string;

@@ -4,6 +4,8 @@ import SubjectList from "../components/SubjectList";
 import { useState } from "react";
 import AttendanceRecord from "../components/AttendanceRecord";
 import TimeTable from "../components/TimeTable";
+import ProfileAttendanceRecord from "../components/ProfileAttendanceRecord";
+
 
 const StudentProfile = () => {
     const [selectedBtn, setSelectedBtn] = useState("students")
@@ -119,7 +121,7 @@ const StudentProfile = () => {
     ) : selectedBtn == "subjects" ? (
       <SubjectList />
     ) : selectedBtn == "attendance" ? (
-      <AttendanceRecord />
+      <ProfileAttendanceRecord />
     ) : (
       <TimeTable />
     )}

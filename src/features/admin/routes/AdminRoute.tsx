@@ -13,7 +13,7 @@ import Announcement from "../pages/Announcement";
 
 import Dashboard from "../pages/Dashboard";
 import Overview from "../pages/Overview";
-import Student from "../pages/Student";
+import Student from "../pages/Student/Student";
 import Teacher from "../pages/Teacher";
 import AddStudent from "../pages/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
@@ -26,7 +26,7 @@ import ClassProfile from "../pages/ClassProfile";
 const AdminRoute = () => {
   return (
     <Routes>
-    <Route
+      <Route
         path="/"
         element={
           <ProtectedRoute isLogin={false}>
@@ -67,16 +67,6 @@ const AdminRoute = () => {
         }
       />
 
-
-      <Route
-        path="/announcement"
-        element={
-          <ProtectedRoute isLogin={true}>
-            <Announcement />
-          </ProtectedRoute>
-        }
-      />
-
       <Route
         path="/pricing"
         element={
@@ -109,18 +99,19 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
- 
+
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="overview" element={<Overview />} />
-        <Route path="students" element={<Student />}/>
+        <Route path="students" element={<Student />} />
         <Route path="students/new" element={<AddStudent />} />
-        <Route path="students/profile/:id" element={<StudentProfile/>} />
+        <Route path="students/profile/:id" element={<StudentProfile />} />
         <Route path="teachers" element={<Teacher />} />
         <Route path="teachers/new" element={<AddTeacher />} />
-        <Route path="teachers/profile/:id" element={<TeacherProfile/>} />
+        <Route path="teachers/profile/:id" element={<TeacherProfile />} />
         <Route path="classes" element={<Classes />} />
         <Route path="classes/new" element={<AddClass />} />
-        <Route path="classes/profile/:id" element={<ClassProfile/>} />
+        <Route path="classes/profile/:id" element={<ClassProfile />} />
+        <Route path="announcement" element={<Announcement />}/>
       </Route>
     </Routes>
   );

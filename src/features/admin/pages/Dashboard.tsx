@@ -8,7 +8,7 @@ const Dashboard = () => {
     <div>
     <DashboardHeader />
     <Sidebar />
-    <div className='pt-16 pl-24 pr-10 bg-gray-50 min-h-screen'>
+    <div className='pt-16 pl-28 pr-10 bg-gray-50 min-h-screen'>
         <Outlet />
     </div>
   

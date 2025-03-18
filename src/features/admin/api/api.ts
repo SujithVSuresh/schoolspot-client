@@ -96,9 +96,9 @@ export const signin = async (userData: AdminSigninFormType) => {
 }
 
 
-export const getAllStudents = async (page: number, search: string, sortBy: string, sortOrder: string) => {
+export const getAllStudents = async (page: number, search: string, sortBy: string, sortOrder: string, classfilter: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}&classfilter=${classfilter}`, {
             headers: {
                 'x-user-role': 'admin'
             }

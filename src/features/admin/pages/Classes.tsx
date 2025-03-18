@@ -1,5 +1,4 @@
-import Sidebar from '../components/Sidebar'
-import DashboardHeader from '../components/DashboardHeader'
+
 import { MoreVertical } from 'lucide-react'
 import { Search } from 'lucide-react'
 import { useSearchParams } from "react-router-dom";

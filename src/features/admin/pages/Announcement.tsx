@@ -1,12 +1,12 @@
-import DashboardLayout from '../components/DashboardLayout'
 import { MoreVertical } from 'lucide-react';
+import Heading from '../components/Heading';
 
 const Announcement = () => {
   return (
-    <DashboardLayout>
-    <h1 className="text-xl sm:text-2xl font-bold mb-8 text-gray-800 ml-0">
-      Announcement
-    </h1>
+    <div>
+        <Heading headingValue="Announcements">
+            <></>
+        </Heading>
       <div className="w-full max-w-md bg-gray-100 rounded-xl shadow-sm overflow-hidden">
         <div className="p-5 space-y-3">
           {/* Header with date and menu */}
@@ -32,7 +32,7 @@ const Announcement = () => {
         </div>
       </div>
       
-    </DashboardLayout>
+    </div>
   )
 }
 
