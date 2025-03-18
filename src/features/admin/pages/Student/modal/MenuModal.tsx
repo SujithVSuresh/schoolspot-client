@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 //   onClose: () => void;
 // }
 
-const MenuModal = () => {
+const MenuModal = ({closeSideMenu}: {closeSideMenu: () => void}) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -55,9 +55,9 @@ const MenuModal = () => {
 
   }
   return (
-    <div className="bg-white h-full w-3/12 fixed z-40 right-0">
+    <div className="bg-white h-full w-8/12 md:w-3/12 lg:w-3/12 fixed z-40 right-0">
       <div className="flex border-b px-5 items-center w-full h-16">
-        <X />
+        <X onClick={() => closeSideMenu()} className="hover: cursor-pointer"/>
       </div>
 
       <div className="h-full p-5">
@@ -72,18 +72,18 @@ const MenuModal = () => {
         <select
           value={sort}
           onChange={(e) => updateSort(e.target.value)}
-          className="w-full border p-2 mt-2 border-gray-200 rounded-lg focus:outline-none focus:ring-0 bg-white"
+          className="w-full border p-2 mt-5 border-gray-200 rounded-lg focus:outline-none focus:ring-0 bg-white"
         >
           <option value="">Sort</option>
           <option value="name-asc">Name - a to z</option>
           <option value="name-desc">Name - z to a</option>
         </select>
 
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="flex mt-5 flex-wrap gap-2">
           {classes.map((value, index) => (
           <div key={index} className="bg-gray-100 px-2 rounded-lg">
-          <input onClick={() => updateClassFilter(value)} type="checkbox" id={value} value={value}/>
-          <label htmlFor={value}> {value}</label>
+          <input className="hover: cursor-pointer" checked={classfilter.includes(value) ? true : false} onClick={() => updateClassFilter(value)} type="checkbox" id={value} value={value}/>
+          <label htmlFor={value} className="hover: cursor-pointer"> {value}</label>
           </div>
           ))}
 

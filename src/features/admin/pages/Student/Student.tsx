@@ -4,24 +4,24 @@ import { getAllStudents } from "../../api/api";
 import { useSearchParams } from "react-router-dom";
 import { StudentDataResponseType } from "../../types/types";
 import { changeAccountStatus } from "../../api/api";
-import { useNavigate } from "react-router-dom";
 import Heading from "../../components/Heading";
 import StudentCard from "./components/StudentCard";
 import { AlignJustify } from "lucide-react";
 import MenuModal from "./modal/MenuModal";
 
 function Student() {
-  const navigate = useNavigate();
 
   const [students, setStudents] = useState<StudentDataResponseType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openMenu, setOpenMenu] = useState<number | null>(null);
 
+  const [openSideMenu, setOpenSideMenu] = useState(false)
+
   const page = Number(searchParams.get("page")) || 1;
   const search = searchParams.get("search") || "";
   const sort = searchParams.get("sort") || "";
-  const classfilter = searchParams.get("classfilter") || null
+  const classfilter = searchParams.get("classfilter") || "";
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -31,10 +31,17 @@ function Student() {
       if (sort) {
         const sortValue = sort.split("-");
         sortBy = sortValue[0] == "name" ? "fullName" : "";
-        sortOrder = sortValue[1] == "asc" || sortValue[1] == "desc" ? sortValue[1] : "";
+        sortOrder =
+          sortValue[1] == "asc" || sortValue[1] == "desc" ? sortValue[1] : "";
       }
 
-      const data = await getAllStudents(page, search, sortBy, sortOrder, classfilter as string);
+      const data = await getAllStudents(
+        page,
+        search,
+        sortBy,
+        sortOrder,
+        classfilter
+      );
 
       if (data?.success) {
         setStudents(data.data.students);
@@ -75,8 +82,6 @@ function Student() {
     }
   };
 
-
-
   const updatePage = (value: number) => {
     console.log(value, "this is the value");
     if (value) {
@@ -85,13 +90,16 @@ function Student() {
     }
   };
 
+  const closeSideMenu = () => {
+    setOpenSideMenu(false)
+  }
+
   return (
     <>
-    <MenuModal />
+    {openSideMenu && <MenuModal closeSideMenu={closeSideMenu}/>}
+      
       <Heading headingValue="Students">
-
-
-<AlignJustify />
+        <AlignJustify className="hover: cursor-pointer" onClick={() => setOpenSideMenu(true)}/>
       </Heading>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

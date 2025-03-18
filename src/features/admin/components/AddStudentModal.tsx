@@ -8,10 +8,6 @@ interface ModalProps {
 
 const AddStudentModal = ({ onClose }: ModalProps) => {
 
-
-
-
-
   return (
     <div className="bg-white h-full w-4/12 fixed z-40 right-0">
     <div className="flex items-center w-full h-16">

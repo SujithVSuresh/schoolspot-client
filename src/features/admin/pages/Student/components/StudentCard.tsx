@@ -1,6 +1,7 @@
-import { StudentProfileType } from "../../../types/types";
 import { UserStoreType } from "../../../types/types";
+import { StudentProfileType } from "../../../types/types";
 import { MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const StudentCard = ({
   student,
@@ -20,10 +21,11 @@ const StudentCard = ({
   toggleMenu: (index: number) => void;
   openMenu: null | number
 }) => {
+  const navigate = useNavigate()
   return (
     <div className="bg-gray-100 rounded-xl p-4 relative">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div onClick={() => navigate(`/dashboard/students/profile/${user._id}`)} className="flex items-center gap-3 hover:cursor-pointer">
           <img
             src={student.profilePhoto as string}
             alt={student.fullName}
