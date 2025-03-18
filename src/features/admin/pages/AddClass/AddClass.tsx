@@ -1,8 +1,6 @@
-import Sidebar from '../components/Sidebar'
-import DashboardHeader from '../components/DashboardHeader'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { classValidationSchema } from '../validation/formValidation';
+import { classValidationSchema } from '../../validation/formValidation';
 
 const AddClass = () => {
 
@@ -21,13 +19,7 @@ const AddClass = () => {
     }
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
 
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
         <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10 w-full">
           <form
             method="POST"
@@ -90,10 +82,6 @@ const AddClass = () => {
           </form>
         </div>
 
-  
-  
-      </div>
-    </div>
   )
 }
 

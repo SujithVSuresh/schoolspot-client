@@ -17,10 +17,10 @@ import Student from "../pages/Student/Student";
 import Teacher from "../pages/Teacher";
 import AddStudent from "../pages/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
-import StudentProfile from "../pages/StudentProfile";
+import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import TeacherProfile from "../pages/TeacherProfile";
 import Classes from "../pages/Classes";
-import AddClass from "../pages/AddClass";
+import AddClass from "../pages/AddClass/AddClass";
 import ClassProfile from "../pages/ClassProfile";
 
 const AdminRoute = () => {

@@ -79,8 +79,17 @@ export interface StudentDataResponseType {
         email: string,
         status: "active" | "inactive" | "deleted" | "blocked";
     }
-
 }
+
+export interface StudentProfileResponseType extends StudentProfileType {
+    user: {
+        _id: string,
+        email: string, 
+        status: "active" | "inactive" | "deleted" | "blocked";
+    }
+}
+
+
 
 export interface StudentUserProfileType extends StudentProfileType, UserSignupFormType {}
 
