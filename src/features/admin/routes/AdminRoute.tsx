@@ -19,9 +19,10 @@ import AddStudent from "../pages/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import TeacherProfile from "../pages/TeacherProfile";
-import Classes from "../pages/Classes";
+import Classes from "../pages/Classes/Classes";
 import AddClass from "../pages/AddClass/AddClass";
-import ClassProfile from "../pages/ClassProfile";
+import ClassProfile from "../pages/ClassProfile/ClassProfile";
+
 
 const AdminRoute = () => {
   return (

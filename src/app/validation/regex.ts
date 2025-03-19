@@ -14,6 +14,8 @@ const urlRegex = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- ./?%&=]*)?$/i;
 const alphabetOnlyRegex = /^[a-zA-Z]+$/;
 const addressRegex = /^[a-zA-Z]+([ -][a-zA-Z]+)*$/
 const postalCodeRegex = /^\d{6}$/
+const classRegex = /^(1[0-2]|[1-9])$/
+
 
 
 export {
@@ -26,5 +28,6 @@ export {
     urlRegex,
     alphabetOnlyRegex,
     addressRegex,
-    postalCodeRegex
+    postalCodeRegex,
+    classRegex
 }

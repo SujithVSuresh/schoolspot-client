@@ -14,11 +14,6 @@ import { GrStatusInfo } from "react-icons/gr";
 import { PiGenderIntersexLight } from "react-icons/pi";
 
 
-
-
-
-
-
 const StudentProfile = () => {
   const {id: userId} = useParams()
 

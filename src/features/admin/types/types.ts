@@ -125,5 +125,23 @@ export interface TeacherProfileType {
     }
 }
 
+type SubjectType = {
+    name: string;
+    teacher: string;
+  };
+  
+
+export interface ClassType {
+    _id?:string;
+    name: string;
+    strength: number;
+    section: string;
+    teacher: string;
+    school?: string;
+    subjects?: SubjectType[];
+    createdAt?: string;
+    updatedAt?: string
+}
+
 
    

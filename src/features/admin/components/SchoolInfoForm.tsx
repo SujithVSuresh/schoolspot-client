@@ -46,7 +46,6 @@ const SchoolInfoForm = () => {
     setTimeout(( )=> {
       setLoading(false)
       navigate('/signup')
-
     }, 1000)
   };
   return (
