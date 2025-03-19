@@ -1,12 +1,33 @@
 import { BarChart3 } from "lucide-react";
 import SubjectList from "./components/SubjectList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AttendanceRecord from "./components/AttendanceRecord";
 import TimeTable from "./components/TimeTable";
 import StudentList from "./components/StudentList";
+import { getClassById } from "../../api/api";
+import { ClassType } from "../../types/types";
+import { useParams } from "react-router-dom";
 
 const ClassProfile = () => {
+  const {id: classId} = useParams()
   const [selectedBtn, setSelectedBtn] = useState("students");
+  const [classData, setClassData] = useState<ClassType | null>(null)
+
+   useEffect(() => {
+
+    const fetchClassProfileData = async () => {
+      if(classId){
+      const response = await getClassById(classId)
+      console.log(response)
+      if(response.success){
+        setClassData(response.data?.data)
+       }
+     } 
+    }
+
+    fetchClassProfileData()
+
+  }, [classId])
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -16,7 +37,7 @@ const ClassProfile = () => {
           </div>
           <div>
             <div className="text-xs text-gray-500 font-medium">Class</div>
-            <div className="text-lg font-medium text-gray-900">10 B</div>
+            <div className="text-lg font-medium text-gray-900">{classData?.name} {classData?.section}</div>
           </div>
         </div>
 
@@ -29,7 +50,7 @@ const ClassProfile = () => {
               Class Teacher
             </div>
             <div className="text-lg font-medium text-gray-900">
-              Salman Faris
+              {classData?.teacher}
             </div>
           </div>
         </div>
@@ -52,7 +73,7 @@ const ClassProfile = () => {
           </div>
           <div>
             <div className="text-xs text-gray-500 font-medium">Strength</div>
-            <div className="text-lg font-medium text-gray-900">40</div>
+            <div className="text-lg font-medium text-gray-900">{classData?.strength}</div>
           </div>
         </div>
 
@@ -62,7 +83,7 @@ const ClassProfile = () => {
           </div>
           <div>
             <div className="text-xs text-gray-500 font-medium">Present</div>
-            <div className="text-lg font-meedium text-gray-900">38</div>
+            <div className="text-lg font-meedium text-gray-900">0</div>
           </div>
         </div>
 
@@ -72,7 +93,7 @@ const ClassProfile = () => {
           </div>
           <div>
             <div className="text-xs text-gray-500 font-medium">Absent</div>
-            <div className="text-lg font-medium text-gray-900">2</div>
+            <div className="text-lg font-medium text-gray-900">0</div>
           </div>
         </div>
       </div>
