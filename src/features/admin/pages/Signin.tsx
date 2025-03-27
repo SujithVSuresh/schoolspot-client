@@ -45,7 +45,7 @@ const Signin = () => {
       );
       setTimeout(() => {
         setLoading(false);
-        navigate("/students");
+        navigate("/dashboard/students");
       }, 1000);
     } else {
       setTimeout(() => {

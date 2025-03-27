@@ -21,8 +21,6 @@ const AddClass = () => {
     resolver: zodResolver(classValidationSchema),
   });
 
-  // fetch teacher data in that school when the page loads.
-
   useEffect(() => {
     const fetchTeachersList = async () => {
       const response = await getTeachersBySchool();

@@ -118,7 +118,7 @@ const Otp = () => {
                   );
             setTimeout(() => {
               setLoading(false)
-              navigate('/students')
+              navigate('/dashboard/students')
             }, 500)
 
           }else{

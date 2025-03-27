@@ -58,8 +58,9 @@ export interface StudentProfileType {
     fatherName: string;
     motherName: string
     contactNumber: string;
-    class: string;
-    section: string;
+    roll: number;
+    class?: string;
+    section?: string;
     userId?: string;
     schoolId?: string;
     createdAt?: Date;
@@ -71,6 +72,8 @@ export interface StudentDataResponseType {
     _id?: string;
     fullName: string;
     class: string;
+    classId: string;
+    roll: number;
     section: string;
     profilePhoto: string;
     schoolId?: string;
@@ -125,7 +128,8 @@ export interface TeacherProfileType {
     }
 }
 
-type SubjectType = {
+export interface SubjectType {
+    _id?: string;
     name: string;
     teacher: string;
   };
@@ -143,5 +147,42 @@ export interface ClassType {
     updatedAt?: string
 }
 
+export interface AttendanceType {
+    _id?: string;
+    student: string;
+    class: string;
+    status: "Present" | "Absent";
+    name?: string;
+    roll?: number;
+}
 
+
+
+export interface AttendaceResponseType {
+    _id?: string;
+    student: {
+      _id: string;
+      name: string;
+      roll: number;
+    }
+    status: "Present" | "Absent";
+    createdAt?: Date;
+    updatedAt?: Date;  
+  }
+  
    
+export interface AnnouncementCreateType {
+    title: string;
+    content: string;
+    sendTo: string[]
+}
+
+export interface AnnouncementResponseType {
+    _id: string;
+    title: string;
+    content: string;
+    author: string;
+    createdAt?: string;
+    updatedAt?: Date;
+}
+

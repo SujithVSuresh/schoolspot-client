@@ -1,5 +1,3 @@
-import React from "react";
-
 
 type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
 
@@ -225,11 +223,8 @@ const TimeTable = () => {
                 {schoolTimetable[validDay].map((subject: SubjectDetails) => (
                   <div className="w-36 h-16 border-t flex justify-center items-center text-center text-sm">{subject.subject}</div>
                 ))}
-    
-          
               </div>
           )
-      
            })}
         </div>
         </div>

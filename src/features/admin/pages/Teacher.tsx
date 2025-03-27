@@ -1,11 +1,9 @@
-import Sidebar from "../components/Sidebar";
 import {
   UserPlus,
   MoreVertical,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import DashboardHeader from "../components/DashboardHeader";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { changeAccountStatus } from "../api/api";
@@ -170,7 +168,7 @@ function Teacher() {
         </button> */}
       </div>
       <button
-        onClick={() => navigate('/add-teacher')}
+        onClick={() => navigate('/dashboard/teachers/new')}
         className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
       >
         <UserPlus className="h-5 w-5" />

@@ -2,14 +2,20 @@
 import dotlogo from "../../../assets/images/dotlogo.png";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { SiGoogleclassroom } from "react-icons/si";
+import { TfiAnnouncement } from "react-icons/tfi";
+import { PiStudentBold } from "react-icons/pi";
+import { FaChalkboardTeacher } from "react-icons/fa";
+
+
+
+
 
 
 import {
-  Users,
   LayoutDashboard,
   Settings,
   HelpCircle,
-  FileText,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -39,19 +45,26 @@ const Sidebar = () => {
             onClick={() => navigate('/dashboard/students')}
             className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/students' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
-            <Users className="h-5 w-5" />
+            <PiStudentBold className="h-5 w-7" />
           </a>
           <a
             onClick={() => navigate('/dashboard/teachers')}
             className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/teachers' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
-            <Users className="h-5 w-5" />
+            <FaChalkboardTeacher className="h-5 w-5" />
           </a>
           <a
             onClick={() => navigate('/dashboard/classes')}
             className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/classes' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
           >
-            <Users className="h-5 w-5" />
+            <SiGoogleclassroom className="h-5 w-5" />
+          </a>
+
+          <a
+            onClick={() => navigate('/dashboard/announcement')}
+            className={`flex hover: cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/announcement' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
+          >
+            <TfiAnnouncement className="h-5 w-5" />
           </a>
    
         </div>

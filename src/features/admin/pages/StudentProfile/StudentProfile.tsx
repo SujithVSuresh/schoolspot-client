@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProfileAttendanceRecord from "../../components/ProfileAttendanceRecord";
+import ProfileAttendanceRecord from "./component/ProfileAttendanceRecord";
 import { getStudentProfile } from "../../api/api";
 import { useParams } from "react-router-dom";
 import { StudentProfileResponseType } from "../../types/types";
@@ -20,6 +20,7 @@ const StudentProfile = () => {
   const [selectedBtn, setSelectedBtn] = useState("students");
 
   const [student, setStudent] = useState<StudentProfileResponseType | null>(null)
+
 
   useEffect(() => {
     const fetchStudentData = async () => {

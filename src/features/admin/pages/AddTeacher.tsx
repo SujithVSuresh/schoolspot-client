@@ -1,5 +1,4 @@
-import DashboardHeader from "../components/DashboardHeader";
-import Sidebar from "../components/Sidebar";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { teacherValidationSchema } from "../validation/formValidation";
@@ -45,13 +44,6 @@ const AddTeacher = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Header */}
-      <div className="flex-1">
-        <DashboardHeader />
 
         <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10">
   <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Add Teacher</h1>
@@ -168,8 +160,7 @@ const AddTeacher = () => {
   </form>
 </div>
 
-      </div>
-    </div>
+  
   );
 };
 

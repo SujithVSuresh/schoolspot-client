@@ -2,23 +2,29 @@ import { BarChart3 } from "lucide-react";
 import SubjectList from "./components/SubjectList";
 import { useEffect, useState } from "react";
 import AttendanceRecord from "./components/AttendanceRecord";
-import TimeTable from "./components/TimeTable";
 import StudentList from "./components/StudentList";
 import { getClassById } from "../../api/api";
-import { ClassType } from "../../types/types";
+import { ClassType, SubjectType } from "../../types/types";
 import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import FeesPayment from "./components/FeesPayment";
+
+import TimeTable from "./components/TimeTable";
+
 
 const ClassProfile = () => {
   const {id: classId} = useParams()
-  const [selectedBtn, setSelectedBtn] = useState("students");
   const [classData, setClassData] = useState<ClassType | null>(null)
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const section = searchParams.get("section") || "";
 
    useEffect(() => {
 
     const fetchClassProfileData = async () => {
       if(classId){
       const response = await getClassById(classId)
-      console.log(response)
       if(response.success){
         setClassData(response.data?.data)
        }
@@ -28,8 +34,15 @@ const ClassProfile = () => {
     fetchClassProfileData()
 
   }, [classId])
+
+
+
+  const updateSection = (value: string) => {
+    searchParams.set("section", value);
+    setSearchParams(searchParams);
+  }
   return (
-    <>
+    <div className="pt-5">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
           <div className="bg-gray-100 p-4 rounded-full">
@@ -100,50 +113,71 @@ const ClassProfile = () => {
       <div className="mt-10">
         <div className="flex border-b pb-5 border-gray-200">
           <div
-            onClick={() => setSelectedBtn("students")}
+            onClick={() => updateSection("students")}
             className={`${
-              selectedBtn == "students" ? "bg-blue-200" : "bg-gray-200"
+              section == "students" ? "bg-blue-200" : "bg-gray-200"
             } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Students
           </div>
           <div
-            onClick={() => setSelectedBtn("subjects")}
+            onClick={() => updateSection("subjects")}
             className={`${
-              selectedBtn == "subjects" ? "bg-blue-200" : "bg-gray-200"
+              section == "subjects" ? "bg-blue-200" : "bg-gray-200"
             } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Subjects
           </div>
           <div
-            onClick={() => setSelectedBtn("attendance")}
+            onClick={() => updateSection("timetable")}
             className={`${
-              selectedBtn == "attendance" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Attendance Record
-          </div>
-          <div
-            onClick={() => setSelectedBtn("timetable")}
-            className={`${
-              selectedBtn == "timetable" ? "bg-blue-200" : "bg-gray-200"
+              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
             } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Timetable
           </div>
+          <div
+            onClick={() => updateSection("attendance")}
+            className={`${
+              section == "attendance" ? "bg-blue-200" : "bg-gray-200"
+            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          >
+            Attendance Record
+          </div>
+
+          <div
+            onClick={() => updateSection("fees")}
+            className={`${
+              section == "fees" ? "bg-blue-200" : "bg-gray-200"
+            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          >
+            Fees Payment
+          </div>
+          {/* <div
+            onClick={() => updateSection("timetable")}
+            className={`${
+              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
+            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          >
+            Timetable
+          </div> */}
         </div>
       </div>
 
-      {selectedBtn == "students" ? (
-        <StudentList />
-      ) : selectedBtn == "subjects" ? (
-        <SubjectList />
-      ) : selectedBtn == "attendance" ? (
-        <AttendanceRecord />
-      ) : (
+      {section == "students" ? (
+        <StudentList classId={classId as string} />
+      ) : section == "subjects" ? (
+        <SubjectList data={classData?.subjects as SubjectType[]} classId={classId as string}/>
+      ) : section == "attendance" ? (
+        <AttendanceRecord classId={classId as string}/>
+      ) : section == "fees" ? (
+        <FeesPayment />
+      ) : section == "timetable" ? (
         <TimeTable />
+      ) : (
+        <></>
       )}
-    </>
+    </div>
   );
 };
 

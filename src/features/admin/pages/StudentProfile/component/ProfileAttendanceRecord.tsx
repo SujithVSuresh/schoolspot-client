@@ -63,7 +63,7 @@ const ProfileAttendanceRecord = () => {
     <>
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
       <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
-        Attendance
+        Attendance Record
       </h1>
       <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
 
@@ -73,10 +73,10 @@ const ProfileAttendanceRecord = () => {
     <div className="flex">
       <div className="w-9/12">
 
-       <div className='flex flex-wrap bg-white p-8 rounded-2xl gap-1'>
+       <div className='flex flex-wrap bg-white rounded p-2 gap-1'>
 
       {attendanceData.map((data) => (
-        <div className={`w-10 h-10 ${data.status == "absent" ? "bg-red-400" : "bg-green-400"}`}>
+        <div className={`w-10 h-10 rounded ${data.status == "absent" ? "bg-red-400" : "bg-green-400"}`}>
           
         </div>
       ))}

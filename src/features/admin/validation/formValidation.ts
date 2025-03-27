@@ -9,7 +9,7 @@ import {
   postalCodeRegex,
   schoolNameRegex,
   urlRegex,
-  classRegex
+  classRegex,
 } from "../../../app/validation/regex";
 
 export const signupValidationSchema = z
@@ -205,12 +205,10 @@ export const studentValidationSchema = z
       .string()
       .min(1, { message: "Phone number is required" })
       .regex(phoneNumberRegex, { message: "Enter a valid email phone number" }),
-    class: z
-      .string()
-      .min(1, { message: "Class is required" }),
-    section: z
-      .string()
-      .min(1, { message: "Section is required" }),
+    roll: z.coerce  
+      .number({ invalid_type_error: "Enter a valid roll number" })
+      .min(1, { message: "This field is required" })
+      .max(100, { message: "Enter a valid experience" }),
     address: z
       .string()
       .min(1, { message: "Address is required" })

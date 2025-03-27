@@ -9,19 +9,23 @@ import AdminProfile from "../pages/AdminProfile";
 import Pricing from "../pages/Pricing";
 import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";
-import Announcement from "../pages/Announcement";
-
+import Announcement from "../pages/Announcement/Announcement";
 import Dashboard from "../pages/Dashboard";
 import Overview from "../pages/Overview";
 import Student from "../pages/Student/Student";
 import Teacher from "../pages/Teacher";
-import AddStudent from "../pages/AddStudent";
+import AddStudent from "../pages/AddStudent/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import TeacherProfile from "../pages/TeacherProfile";
 import Classes from "../pages/Classes/Classes";
 import AddClass from "../pages/AddClass/AddClass";
 import ClassProfile from "../pages/ClassProfile/ClassProfile";
+import AddAttendance from "../pages/AddAttendance/AddAttendance";
+import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
+import AddSubject from "../pages/AddSubject/AddSubject";
+import Invoice from "../pages/Invoice/Invoice";
+import UpdateStudentProfile from "../pages/UpdateStudentProfile/UpdateStudentProfile";
 
 
 const AdminRoute = () => {
@@ -104,15 +108,20 @@ const AdminRoute = () => {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="overview" element={<Overview />} />
         <Route path="students" element={<Student />} />
-        <Route path="students/new" element={<AddStudent />} />
+        <Route path="students/new/:classId" element={<AddStudent />} />
         <Route path="students/profile/:id" element={<StudentProfile />} />
+        <Route path="students/profile/:id/update" element={<UpdateStudentProfile />} />
         <Route path="teachers" element={<Teacher />} />
         <Route path="teachers/new" element={<AddTeacher />} />
         <Route path="teachers/profile/:id" element={<TeacherProfile />} />
         <Route path="classes" element={<Classes />} />
         <Route path="classes/new" element={<AddClass />} />
+        <Route path="classes/subject/new/:classId" element={<AddSubject />} />
         <Route path="classes/profile/:id" element={<ClassProfile />} />
         <Route path="announcement" element={<Announcement />}/>
+        <Route path="announcement/new" element={<AddAnnouncement />}/>
+        <Route path="attendance/new/:classId" element={<AddAttendance />}/>
+        <Route path="classes/invoice/:classId" element={<Invoice />}/>
       </Route>
     </Routes>
   );

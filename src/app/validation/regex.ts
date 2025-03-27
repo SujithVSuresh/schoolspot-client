@@ -16,8 +16,6 @@ const addressRegex = /^[a-zA-Z]+([ -][a-zA-Z]+)*$/
 const postalCodeRegex = /^\d{6}$/
 const classRegex = /^(1[0-2]|[1-9])$/
 
-
-
 export {
     emailRegex,
     passwordRegex,
@@ -29,5 +27,6 @@ export {
     alphabetOnlyRegex,
     addressRegex,
     postalCodeRegex,
-    classRegex
+    classRegex,
+    
 }

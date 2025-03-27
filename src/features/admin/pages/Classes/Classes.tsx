@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Heading from "../../components/Heading";
 import { ClassType } from "../../types/types";
 import { getAllClasses } from "../../api/api";
+import { ChevronRight } from "lucide-react";
+
 
 const Classes = () => {
   const navigate = useNavigate();
@@ -56,13 +58,13 @@ const Classes = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-4 sm:gap-6">
        {classes.length > 0 && classes.map((value) => (
-        <div className="bg-gray-100 rounded-xl p-4 relative" onClick={() => navigate(`/dashboard/classes/profile/${value._id}`)}>
+        <div className="bg-gray-100 rounded-xl p-4 relative" onClick={() => navigate(`/dashboard/classes/profile/${value._id}?section=students`)}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div>
               <div className="flex items-center">
                 <h3 className="font-medium text-gray-700 text-sm sm:text-base">
-                  {value.name}-{value.section}
+                  {value.name} {value.section}
                 </h3>
               </div>
 
@@ -72,7 +74,7 @@ const Classes = () => {
             </div>
           </div>
           <button className="text-gray-400 hover:text-gray-600 transition-colors relative">
-            <MoreVertical className="h-5 w-5" />
+            <ChevronRight className="h-5 w-5" />
           </button>
         </div>
       </div>
