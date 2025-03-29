@@ -114,13 +114,13 @@ const Otp = () => {
                       role: response.data.role,
                       status: response.data.status,
                       accessToken: response.data.accessToken,
+                      schoolId: response.data.schoolId
                     })
                   );
             setTimeout(() => {
               setLoading(false)
               navigate('/dashboard/students')
             }, 500)
-
           }else{
             setTimeout(() => {
               setLoading(false)

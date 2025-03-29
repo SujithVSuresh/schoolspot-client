@@ -5,7 +5,7 @@ import Signin from "../pages/Signin";
 import ResetPassword from "../pages/ResetPassword";
 import ResetPasswordForm from "../pages/ResetPasswordForm";
 import Otp from "../pages/Otp";
-import AdminProfile from "../pages/AdminProfile";
+import AdminProfile from "../pages/AdminProfile/AdminProfile";
 import Pricing from "../pages/Pricing";
 import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
 import Home from "../pages/Home";

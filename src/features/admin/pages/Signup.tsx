@@ -41,7 +41,6 @@ const Signup = () => {
         navigate("/otp", { state: response.data });
       }, 1000);
     } else {
-
       setTimeout(() => {
         setLoading(false);
         toast("An account with this email address already exist", {

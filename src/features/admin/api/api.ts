@@ -378,3 +378,37 @@ export const removeSubject = async (subjectId: string, classId: string) => {
     }
 }
 
+
+
+export const getSchoolProfile = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/school/get-school`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const editSchoolProfile = async (schoolData: SchoolProfileType, id: string) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/school/edit-school/${id}`, schoolData, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+

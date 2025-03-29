@@ -5,11 +5,13 @@ import {
   Power,
   LogOut,
 } from "lucide-react";
-import Sidebar from "../components/Sidebar";
-import DashboardHeader from "../components/DashboardHeader";
+import Sidebar from "../../components/Sidebar";
+import DashboardHeader from "../../components/DashboardHeader";
 import { useDispatch } from "react-redux";
-import { removeAdmin } from "../redux/adminSlice";
+import { removeAdmin } from "../../redux/adminSlice";
 import { Settings } from "lucide-react";
+import SchoolProfileForm from "./components/SchoolProfileForm";
+
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
@@ -147,114 +149,10 @@ const AdminProfile = () => {
             
            </div>
 
-
-           <div className="rounded-2xl pt-20 pl-28 pr-8">
-            <h1 className="text-xl font-medium text-gray-800 mb-8">School Profile</h1>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Name
-                </label>
-                <input
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Email
-                </label>
-                <input
-                  disabled={true}
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Role
-                </label>
-                <input
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Status
-                </label>
-                <input
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Phone number
-                </label>
-                <input
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="nameInput"
-                  className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-500 bg-gray-50"
-                >
-                  Designation
-                </label>
-                <input
-                  id="nameInput"
-                  type="text"
-                  className="w-full p-4 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 placeholder-gray-400"
-                  placeholder="Enter your name"
-                  aria-label="Name input field"
-                />
-              </div>
+           <SchoolProfileForm />
 
 
-            </div>
-              <button
-            type="submit"
-            className={`rounded-md mt-5 flex justify-center px-6 py-3 items-center text-base font-medium text-white bg-blue-300`}
-          >
    
-              Save changes
-           </button>
-            
-           </div>
 
             {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-gray-100 rounded-xl p-4">
