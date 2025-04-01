@@ -12,14 +12,18 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children, isLogin }: ProtectedRouteProps) => {
     const user = useSelector((state: RootState) => state.admin)
 
-    if (isLogin && !user.accessToken) {
+    if (isLogin===true && !user?.accessToken) {
       return <Navigate to="/signin" replace />;
     }
+
     
-    if(!isLogin && user.accessToken && user.status == "active"){
+    if(isLogin===false && user?.accessToken && user?.status === "active"){
       return <Navigate to="/dashboard/students" replace />;
     }
 
+    if(user?.accessToken && user?.status === "inactive" && window.location.pathname !== "/signup/profile"){
+      return <Navigate to="/signup/profile" replace />
+    }
   
     return (
     <>{children}</>

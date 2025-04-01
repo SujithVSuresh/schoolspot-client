@@ -119,7 +119,7 @@ const Otp = () => {
                   );
             setTimeout(() => {
               setLoading(false)
-              navigate('/dashboard/students')
+              navigate('/signup/profile')
             }, 500)
           }else{
             setTimeout(() => {
@@ -134,11 +134,8 @@ const Otp = () => {
                   color: "black",
                 },
               });
-            }, 500)
-   
-                              
+            }, 500)                
           }
-            
           console.log("OTP Submitted:", otpCode);
         } else {
           alert("Please enter all 6 digits.");

@@ -56,7 +56,7 @@ const SubjectList = ({data, classId}: {data:SubjectType[], classId: string}) => 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
        {subjects && subjects.map((subject, index) => (
               <div className="bg-gray-100 rounded-xl p-4 relative">
           <div className="flex items-center justify-between">
