@@ -5,9 +5,6 @@ const NavLink = () => {
     const location = useLocation()
 
     const selectedLink = location.pathname.split("/")[2];
-    console.log(selectedLink, "blaaaaa")
-
-    console.log(location)
     const navItems = [
         { name: "Dashboard", link: "/student/dashboard" },
         { name: "Assignment", link: "/assignment" },

@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType } from "../types/types";
+import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType, AdminProfileType } from "../types/types";
 import { OTPFormType } from "../types/types";
 import axiosInstance from '../../../app/api/axiosInstance'
 const envData = import.meta.env;
@@ -399,6 +399,38 @@ export const getSchoolProfile = async () => {
 export const editSchoolProfile = async (schoolData: SchoolProfileType, id: string) => {
     try{
         const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/school/edit-school/${id}`, schoolData, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const createAdminProfile = async (profileData: AdminProfileType) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/admin/admin-profile`, {...profileData}, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const fetchAdminProfile = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/admin/admin-profile`, {
             headers: {
                 'x-user-role': 'admin'
             }

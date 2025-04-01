@@ -300,6 +300,19 @@ export const studentValidationSchema = z
     teacher: z  
       .string()
       .min(1, { message: "This field is required" })
-      // .regex(nameRegex, { message: "Enter a value" }),
+  })
+
+
+
+  export const adminProfileValidationSchema = z
+  .object({
+    fullName: z
+      .string()
+      .min(1, { message: "Full name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    phoneNumber: z
+      .string()
+      .min(1, { message: "Phone number is required" })
+      .regex(phoneNumberRegex, { message: "Enter a valid phone number" }),
   })
 

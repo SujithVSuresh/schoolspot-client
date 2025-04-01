@@ -186,3 +186,14 @@ export interface AnnouncementResponseType {
     updatedAt?: Date;
 }
 
+
+export interface AdminProfileType {
+    _id?: string
+    fullName: string;
+    phoneNumber: string;
+    userId?: string;
+    schoolId?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
