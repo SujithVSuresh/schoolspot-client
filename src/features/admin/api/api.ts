@@ -428,6 +428,22 @@ export const createAdminProfile = async (profileData: AdminProfileType) => {
 }
 
 
+export const updateAdminProfile = async (id: string, profileData: Partial<AdminProfileType>) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/admin/admin-profile/${id}`, {...profileData}, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const fetchAdminProfile = async () => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/admin/admin-profile`, {

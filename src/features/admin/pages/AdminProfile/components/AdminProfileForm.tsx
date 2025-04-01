@@ -5,15 +5,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adminProfileValidationSchema } from "../../../validation/formValidation";
 import loadingGif from '../../../../../assets/images/loading.webp'
+import { updateAdminProfile } from "../../../api/api";
+import toast from "react-hot-toast";
 
 interface AdminUserData {
-        email: string,
+        email: string;
         role: "admin" | "student" | "teacher" | "";
-        status?: "active" | "blocked" | "deleted" | "inactive" | "" 
+        status?: "active" | "blocked" | "deleted" | "inactive" | "";
+        profileId?: string; 
 }
 
 const AdminProfileForm = () => {
-    const [userData, setUserData] = useState<AdminUserData>({email: "", role: "", status: ""})
+    const [userData, setUserData] = useState<AdminUserData>({email: "", role: "", status: "", profileId: ""})
     const [loading, setLoading] = useState(false)
 
         const {
@@ -39,12 +42,50 @@ const AdminProfileForm = () => {
         setUserData({
             email: response.data.user.email,
             role: response.data.user.role,
-            status: response.data.user.status
+            status: response.data.user.status,
+            profileId: response.data._id
         })
     }
 
-    const onSubmit = async (data: {fullName: string, phoneNumber: string}) => {
-        console.log(data, "JJJ")
+    const onSubmit = async (data: {fullName?: string, phoneNumber?: string}) => {
+        const response = await updateAdminProfile(userData.profileId as string, data)
+        setLoading(true)
+
+        if (response.success) {
+            setTimeout(() => {
+              setLoading(false);
+              toast(
+                "School profile updated successfully.",
+                {
+                  duration: 8000,
+                  position: "bottom-right",
+                  style: {
+                    backgroundColor: "#E7FEE2",
+                    border: "2px, solid, #16A34A",
+                    minWidth: "400px",
+                    color: "black",
+                  },
+                }
+              );
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              setLoading(false);
+              toast(
+                response.error,
+                {
+                  duration: 8000,
+                  position: "bottom-right",
+                  style: {
+                    backgroundColor: "#FEE2E2",
+                    border: "2px, solid, #DC2626",
+                    minWidth: "300px",
+                    color: "black",
+                  },
+                }
+              );
+            }, 1000);
+          }
     }
   return (
     <div className="pt-20 pl-28 pr-8 ">
