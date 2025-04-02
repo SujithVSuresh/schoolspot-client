@@ -21,7 +21,7 @@ const AdminProfile = () => {
   };
 
   return (
-    <div>
+  
       <div className="flex min-h-screen bg-gray-50">
         {/* Sidebar */}
         <Sidebar />
@@ -62,7 +62,7 @@ const AdminProfile = () => {
      
         </div>
       </div>
-    </div>
+  
   );
 };
 

@@ -27,6 +27,7 @@ import AddSubject from "../pages/AddSubject/AddSubject";
 import Invoice from "../pages/Invoice/Invoice";
 import UpdateStudentProfile from "../pages/UpdateStudentProfile/UpdateStudentProfile";
 import SignupProfile from "../pages/SignupProfile/SignupProfile";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 const AdminRoute = () => {
   return (
@@ -111,6 +112,13 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
+      <Route 
+        path="/profile/change-password" 
+        element={
+          <ProtectedRoute isLogin={true}>
+            <ChangePassword />
+          </ProtectedRoute>
+        } />
 
       <Route path="/dashboard" element={<ProtectedRoute isLogin={true}><Dashboard /></ProtectedRoute>}>
         <Route path="overview" element={<Overview />} />
@@ -132,6 +140,7 @@ const AdminRoute = () => {
         <Route path="announcement/new" element={<AddAnnouncement />} />
         <Route path="attendance/new/:classId" element={<AddAttendance />} />
         <Route path="classes/invoice/:classId" element={<Invoice />} />
+        
       </Route>
     </Routes>
   );
