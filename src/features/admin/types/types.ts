@@ -197,3 +197,10 @@ export interface AdminProfileType {
     updatedAt?: Date;
 }
 
+
+
+export interface ChangePasswordType {
+    newPassword: string;
+    oldPassword: string;
+    confirmPassword?: string;
+}

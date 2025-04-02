@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType, AdminProfileType } from "../types/types";
+import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType, AdminProfileType, ChangePasswordType } from "../types/types";
 import { OTPFormType } from "../types/types";
 import axiosInstance from '../../../app/api/axiosInstance'
 const envData = import.meta.env;
@@ -447,6 +447,22 @@ export const updateAdminProfile = async (id: string, profileData: Partial<AdminP
 export const fetchAdminProfile = async () => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/admin/admin-profile`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const changePassword = async (pwData: ChangePasswordType) => {
+    try{
+        const {data} = await axiosInstance.patch(`http://localhost:3000/auth/change-password`, pwData, {
             headers: {
                 'x-user-role': 'admin'
             }

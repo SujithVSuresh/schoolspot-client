@@ -26,6 +26,7 @@ const GoogleAuth = () => {
           role: response.data.role,
           status: response.data.status,
           accessToken: response.data.accessToken,
+          authProvider: response.data.authProvider
         })
       );
     }
