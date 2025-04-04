@@ -3,13 +3,12 @@ import { useDispatch } from "react-redux"
 import { useState } from "react"
 import {useForm} from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { teacherSigninValidationSchema } from "../validation/formValidation"
+import { teacherSigninValidationSchema } from "../../validation/formValidation"
 import toast from "react-hot-toast"
-import { setTeacher } from "../redux/teacherSlice"
-import { TeacherSigninFormType } from "../types/types" 
-import { signin } from "../api/api"
-import loadingGif from "../../../assets/images/loading.webp";
-import Header from "../components/AuthHeader"
+import { setTeacher } from "../../redux/teacherSlice"
+import { TeacherSigninFormType } from "../../types/types" 
+import { signin } from "../../api/api"
+import loadingGif from '../../../../assets/images/loading.webp'
 
 const TeacherSignin = () => {
    const dispatch = useDispatch()
@@ -67,7 +66,7 @@ const TeacherSignin = () => {
             };
   return (
     <>
-    <Header />
+    {/* <Header /> */}
 
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
 <div className="flex flex-col md:flex-row lg:flex-row justify-center items-start py-8 md:py-12 lg:py-20 px-4 sm:px-6 lg:px-8">

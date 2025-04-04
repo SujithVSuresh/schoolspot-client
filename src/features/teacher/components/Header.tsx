@@ -1,12 +1,14 @@
 import logo from "../../../assets/images/dotlogo.png";
 import { Bell } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const TeacherHome = () => {
+const Header = () => {
+  const location = useLocation()
 
+  const pathName = location.pathname.split("/")
 
   return (
-    <div className="bg-white">
-
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
         <div className="flex items-center space-x-4">
           <div className="flex space-x-2">
@@ -14,11 +16,9 @@ const TeacherHome = () => {
           </div>
         </div>
         <div className="flex space-x-8">
-          <a href="#" className="font-medium text-gray-900 border-b-2 border-gray-900 pb-1">Dashboard</a>
-          <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition-colors">Prepare</a>
-          <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition-colors">Teach</a>
-          <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition-colors">Assess</a>
-          <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition-colors">Monitor</a>
+          <Link to={'/teacher'} className={`font-medium ${location.pathname == "/teacher" ? "text-gray-900 border-b-2 border-gray-900 pb-1" : "text-gray-500 hover:text-gray-900 transition-colors"}`}>Home</Link>
+          <Link to={'/teacher/classes'} className={`font-medium ${pathName[2] == "classes" ? "text-gray-900 border-b-2 border-gray-900 pb-1" : "text-gray-500 hover:text-gray-900 transition-colors"}`}>Classes</Link>
+         
         </div>
         <div className="flex items-center space-x-6">
           <button className="text-gray-500 hover:text-gray-900 transition-colors">
@@ -28,10 +28,7 @@ const TeacherHome = () => {
           {/* <Avatar className="w-8 h-8 ring-2 ring-offset-2 ring-gray-200 cursor-pointer transition-all hover:ring-gray-300" /> */}
         </div>
       </nav>
-      <div className="min-h-screen">
-      </div>
-    </div>
-  )
-}
+  );
+};
 
-export default TeacherHome
+export default Header;

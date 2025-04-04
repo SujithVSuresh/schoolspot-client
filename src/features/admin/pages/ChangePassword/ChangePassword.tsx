@@ -44,7 +44,7 @@ const ChangePassword = () => {
               color: "black"
             }
           });
-        navigate("/otp", { state: response.data });
+        navigate("/profile");
       }, 1000);
     } else {
       setTimeout(() => {
