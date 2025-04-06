@@ -1,12 +1,26 @@
 import { Calendar, Clock, Hash, User } from "lucide-react"
 // import { useNavigate } from "react-router-dom"
+import Breadcrumb from "../../components/Breadcrumb";
+import { useLocation } from "react-router-dom";
 
 
 const AssignmentDetails = () => {
     // const navigate = useNavigate()
+    const location  = useLocation()
+
+  const classId = location.pathname.split("/")[3]
+  const assignmentId = location.pathname.split("/")[5]
+
+    const breadcrumbItems = [
+      { label: 'Classes', href: `/teacher/classes` },
+      { label: 'Assignments', href: `/teacher/classes/${classId}/assignments` },
+      { label: 'Details', href: `/teacher/classes/${classId}/assignments/${assignmentId}` }
+    ];
   return (
-    <div className="p-6">
+    <div className="p-5">
           <div className="overflow-hidden w-9/12">
+
+          <Breadcrumb items={breadcrumbItems} />
       <div>
         <div className="flex items-center gap-3 mb-4">
     

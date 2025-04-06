@@ -2,10 +2,10 @@ import { Users, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 type ClassData = {
-  className: string;
-  section: string;
-  strength: number;
-  id: number
+  _id: string,
+  name: string,
+  section: string,
+  strength: number
 };
 
 type ClassCardProps = {
@@ -16,15 +16,16 @@ const ClassCard = ({classData}: ClassCardProps) => {
   const navigate = useNavigate()
 
   return (
-    <div onClick={() => navigate(`/teacher/classes/${classData.id}/students`)} className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 border border-gray-100">
+    <div onClick={() => navigate(`/teacher/classes/${classData._id}/students`)} className="bg-white rounded-xl hover: cursor-pointer p-6 border">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="bg-blue-100 p-3 rounded-full">
-          <GraduationCap className="text-blue-600 w-6 h-6" />
-        </div>
+ 
+        <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
+        <GraduationCap className="text-gray-500 w-6 h-6" />
+              </div>
         <div>
           <h2 className="font-medium text-lg text-gray-800">
-            {classData.className} - {classData.section}
+            {classData.name} - {classData.section}
           </h2>
         </div>
       </div>

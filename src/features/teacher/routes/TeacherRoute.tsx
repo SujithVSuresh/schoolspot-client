@@ -10,6 +10,8 @@ import TeacherAssignments from "../pages/TeacherAssignments/TeacherAssignments";
 import TeacherStudyMaterials from "../pages/TeacherStudyMaterials/TeacherStudyMaterials";
 import AssignmentDetails from "../pages/AssignmentDetails/AssignmentDetails";
 import StudyMaterialDetails from "../pages/StudyMaterialDetails/StudyMaterialDetails";
+import TeacherAttendance from "../pages/TeacherAttendance/TeacherAttendance";
+import AddAssignment from "../pages/AddAssignment/AddAssignment";
 
 const TeacherRoute = () => {
   return (
@@ -26,10 +28,12 @@ const TeacherRoute = () => {
 
         <Route path="students"element={<ProtectedRoute isLogin={true}><TeacherStudents /></ProtectedRoute>}/>
         <Route path="assignments"element={<ProtectedRoute isLogin={true}><TeacherAssignments /></ProtectedRoute>}/>
+        <Route path="assignments/add"element={<ProtectedRoute isLogin={true}><AddAssignment /></ProtectedRoute>}/>
         <Route path="assignments/:id"element={<ProtectedRoute isLogin={true}><AssignmentDetails /></ProtectedRoute>}/>
         <Route path="study-materials"element={<ProtectedRoute isLogin={true}><TeacherStudyMaterials /></ProtectedRoute>}/>
         <Route path="study-materials/:id"element={<ProtectedRoute isLogin={true}><StudyMaterialDetails /></ProtectedRoute>}/>
 
+        <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>
       </Route>
 
       </Route>

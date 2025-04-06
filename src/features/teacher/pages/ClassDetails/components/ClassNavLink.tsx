@@ -4,7 +4,8 @@ const ClassNavLink = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const pathName = location.pathname.split("/")
-    console.log(pathName, "hoiiii")
+    
+    const classId = location.pathname.split("/")[3]
 
     const navItems = [
         { name: "Students", link: "students" },
@@ -12,6 +13,7 @@ const ClassNavLink = () => {
         { name: "Study Materials", link: "study-materials" },
         { name: "Class Tests", link: "class-tests" }, 
         { name: "Announcements", link: "announcements" },
+        { name: "Attendance", link: "attendance" },
       ];
 
       
@@ -23,7 +25,7 @@ const ClassNavLink = () => {
       {navItems.map((item, index) => (
         <li key={index}>
           <a
-          onClick={() => navigate(`/teacher/classes/2/${item.link}`)}
+          onClick={() => navigate(`/teacher/classes/${classId}/${item.link}`)}
             className={`inline-flex items-center px-1 py-4 text-sm font-medium hover:cursor-pointer ${
               pathName[4] === item.link
                 ? "text-blue-600 border-b-2 border-blue-600"

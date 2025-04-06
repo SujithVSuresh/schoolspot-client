@@ -7,8 +7,6 @@ const envData = import.meta.env;
 
 
 
-
-
 export const signup = async (userData: UserSignupFormType, schoolData: SchoolProfileType) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/auth/signup`, {userData, schoolData});
@@ -114,7 +112,7 @@ export const getAllStudents = async (page: number, search: string, sortBy: strin
 
 export const getStudentsByClassId = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students-by-class/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students/${classId}`, {
             headers: {
                 'x-user-role': 'admin'
             }

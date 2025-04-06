@@ -26,7 +26,7 @@ const schoolProfilePersistConfig = {
 };
 
 const teacherPersistConfig = {
-    key: "teacherProfile",
+    key: "teacher",
     version: 1,
     storage,
 };

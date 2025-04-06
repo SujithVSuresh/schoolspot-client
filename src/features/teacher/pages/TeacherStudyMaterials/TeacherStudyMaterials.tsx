@@ -1,11 +1,19 @@
 import { Calendar } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Breadcrumb from "../../components/Breadcrumb";
 
 
 const TeacherStudyMaterials = () => {
   const navigate = useNavigate()
+
+  const breadcrumbItems = [
+    { label: 'Classes', href: `/teacher/classes` },
+    { label: 'Study Materials', href: `/teacher/classes/dfasf/students` },
+  ];
   return (
-    <div>
+    <div className="p-5">
+
+      <Breadcrumb items={breadcrumbItems}/>
     
     <div className="grid grid-cols-4 gap-4 py-5">
     <div className="rounded-xl overflow-hidden w-full border-2">

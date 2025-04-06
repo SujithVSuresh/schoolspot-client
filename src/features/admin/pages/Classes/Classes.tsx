@@ -18,8 +18,6 @@ const Classes = () => {
     const fetchAllClasses = async () => {
       const response = await getAllClasses()
 
-      console.log(response, "this is the response....")
-
       if(response.success){
         setClasses(response.data?.data)
       }
