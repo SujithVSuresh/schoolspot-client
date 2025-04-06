@@ -39,7 +39,7 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
             Submissions
           </h2>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-4 gap-6">
         {
             submissions.length > 0 && submissions.map((submission) => (
                 <div className="p-6 rounded-xl border">

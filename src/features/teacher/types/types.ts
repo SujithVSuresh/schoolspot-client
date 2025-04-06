@@ -51,3 +51,13 @@ export interface AssignmentType {
   link?: string;
   createdAt: string;
 }
+
+
+export interface AddStudyMaterialType {
+  title: string;
+  description: string;
+  link?: string;
+  fileMaterial?: FileList; 
+  subjectId?: string; 
+  classId?: string;  
+}

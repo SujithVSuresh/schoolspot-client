@@ -29,3 +29,30 @@ export const assignmentValidationSchema = z.object({
         }
       ),
 });
+
+
+export const studyMaterialValidationSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
+  link: z
+      .string()
+      .url({ message: "Invalid URL format" })
+      .optional()
+      .or(z.literal("")), // allow empty string
+  fileMaterial: z
+      .instanceof(FileList)
+      .optional()
+      .refine(
+        (files) => !files || files.length === 0 || files[0]?.size < 5 * 1024 * 1024,
+        "File size must be under 5MB"
+      )
+      .refine(
+        (files) =>
+          !files || files.length === 0 || 
+          ["image/jpeg", "image/png", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(
+            files[0]?.type
+          ),
+        "Only JPEG, PNG, PDF, DOC, and DOCX files are allowed"
+      )
+
+});

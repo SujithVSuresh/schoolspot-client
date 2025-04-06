@@ -125,3 +125,36 @@ export const fetchAssignmentSubmissions = async (assignmentId: string) => {
         return { success: false, error: message }
     }
 }
+
+
+
+export const createStudyMaterial = async (formData: FormData) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/create/studymaterial`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                'x-user-role': 'teacher'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const fetchStudyMaterials = async (subjectId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/get-studymaterials/${subjectId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
