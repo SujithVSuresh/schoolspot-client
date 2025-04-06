@@ -94,3 +94,34 @@ export const fetchAssignments = async (subjectId: string) => {
         return { success: false, error: message }
     }
 }
+
+
+export const fetchAssignmentById = async (assignmentId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/get-assignment/${assignmentId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const fetchAssignmentSubmissions = async (assignmentId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/get-submissions/${assignmentId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}

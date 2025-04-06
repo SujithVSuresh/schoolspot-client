@@ -41,3 +41,13 @@ export interface AddAssignmentType {
   subjectId?: string; 
   classId?: string;  
 }
+
+export interface AssignmentType {
+  _id: string;
+  title: string;
+  description: string;
+  submissionType: 'text' | 'file' | 'link' | ""; 
+  dueDate: string; 
+  link?: string;
+  createdAt: string;
+}

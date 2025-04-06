@@ -5,6 +5,7 @@ import { getClassById } from "../../api/api";
 import { useEffect, useState } from "react";
 import { ClassType } from "../../types/types";
 import { useLocation } from "react-router-dom";
+import { textFormatter } from "../../../../app/utils/formatter";
 
 const ClassDetails = () => {
   const location = useLocation()
@@ -134,7 +135,7 @@ const ClassDetails = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Subject</p>
-                <p className="font-medium">{classDetails.subject.name}</p>
+                <p className="font-medium">{textFormatter(classDetails.subject.name)}</p>
               </div>
             </div>
         </div>

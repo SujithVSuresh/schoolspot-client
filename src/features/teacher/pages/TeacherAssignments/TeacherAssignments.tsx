@@ -5,6 +5,7 @@ import Breadcrumb from "../../components/Breadcrumb"
 import { useOutletContext } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { fetchAssignments } from "../../api/api"
+import { dateFormatter } from "../../../../app/utils/formatter"
 
 const TeacherAssignments = () => {
   const {subjectId, classId}: {subjectId: string, classId: string} = useOutletContext()
@@ -26,22 +27,6 @@ const TeacherAssignments = () => {
       setAssignments(response.data.data)
     }
   }
-
-  const dateFormatter = (date: string) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    })
-  }
-
-  // const timeFormatter = (time: string) => {
-  //   return new Date(time).toLocaleTimeString("en-US", {
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     hour12: true
-  //   })
-  // }
 
 
   const breadcrumbItems = [
