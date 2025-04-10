@@ -1,11 +1,44 @@
 import { User, Calendar, Pencil } from "lucide-react";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useEffect, useState } from "react";
+import { fetchStudyMaterialById } from "../../api/api";
+import { StudyMaterialType } from "../../types/types";
+import { dateFormatter } from "../../../../app/utils/formatter";
+import { ExternalLink, Eye, FileText } from "lucide-react";
 
 const StudyMaterialsDetails = () => {
+  const studyMaterialId = location.pathname.split("/")[5]
+
+  const [studyMaterial, setStudyMaterial] = useState<StudyMaterialType>({
+    _id: '',
+    title: '',
+    description: '',
+    createdAt: '',
+    fileUrl: '',
+    link: '',
+    viewers: []
+  });
+  
+  
+
+      useEffect(() => {
+        fetchAssignmentByIdHandler()
+  
+      }, [studyMaterialId])
+  
+      const fetchAssignmentByIdHandler = async () => {
+        const studyMaterial = await fetchStudyMaterialById(studyMaterialId)
+  
+        if(studyMaterial.success){
+          setStudyMaterial(studyMaterial.data.data)
+        }
+      }
+
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },
     { label: "Students", href: `/teacher/classes/dafdf/students` },
   ];
+
   return (
     <div className="p-5">
       <Breadcrumb items={breadcrumbItems}/>
@@ -15,53 +48,76 @@ const StudyMaterialsDetails = () => {
         <div>
           <div className="flex items-center gap-3 mb-4">
             <h2 className="text-2xl font-medium text-gray-700">
-              Photosynthesis: How Plants Make Their Own Food
+              {studyMaterial.title}
             </h2>
           </div>
 
           <div>
             <h5 className="text-gray-900">
-              Photosynthesis is one of the most important biological processes
-              on Earth. It is the process by which green plants, algae, and some
-              bacteria produce their own food using sunlight, carbon dioxide,
-              and water. This process not only provides food for plants but also
-              plays a crucial role in maintaining the balance of oxygen and
-              carbon dioxide in the atmosphere. Without photosynthesis, life on
-              Earth would not exist as we know it. How Photosynthesis Works
-              Photosynthesis takes place in the leaves of plants, where tiny
-              structures called chloroplasts contain a green pigment called
-              chlorophyll. This pigment captures sunlight, which is the primary
-              energy source for the process. The plant absorbs water (H₂O) from
-              the soil through its roots and takes in carbon dioxide (CO₂) from
-              the air through small openings in its leaves called stomata. When
-              sunlight strikes the chlorophyll, it triggers a chemical reaction
-              that combines water and carbon dioxide to produce glucose (a type
-              of sugar) and oxygen (O₂). The glucose is used by the plant as
-              food for growth, while the oxygen is released into the air as a
-              byproduct. The process of photosynthesis can be written in the
-              form of an equation: Sunlight + 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ This
-              means that six molecules of carbon dioxide and six molecules of
-              water, using sunlight, produce one molecule of glucose and six
-              molecules of oxygen. Importance of Photosynthesis Photosynthesis
-              is vital for life on Earth for several reasons: Production of
-              Oxygen: The oxygen released during photosynthesis is what humans
-              and animals need to breathe. Without it, life would not survive.
-              Food for Plants and Other Organisms: Plants use the glucose they
-              produce to grow and develop. Herbivores depend on plants for food,
-              and in turn, carnivores depend on herbivores, making
-              photosynthesis the foundation of the food chain. Regulation of
-              Carbon Dioxide Levels: Plants absorb carbon dioxide from the
-              atmosphere, reducing the amount of this greenhouse gas and helping
-              to combat global warming. Source of Energy: The energy stored in
-              plants through photosynthesis eventually supports all life forms,
-              from small insects to large mammals, through the food chain.
+              {studyMaterial.description}
             </h5>
           </div>
+
+          {studyMaterial.fileUrl && (
+       <div
+
+       className="bg-white rounded overflow-hidden border w-6/12 mt-5"
+     >
+       <div className="p-6">
+         <a className="flex items-start justify-between" href={studyMaterial.fileUrl}
+             target="_blank"
+             rel="noopener noreferrer">
+           <div className="flex-1">
+            
+             <h3 className="font-normal text-gray-700">
+              Click to view uploaded file
+             </h3>
+             <div className="flex items-center text-sm text-gray-500">
+               {/* {formatDate(pdf.date)} */}
+             </div>
+           </div>
+           <FileText className="w-5 h-5 text-gray-400" />
+         </a>
+         
+         {/* <div className="flex gap-2 mt-6">
+           <a
+             href={studyMaterial.fileUrl}
+             target="_blank"
+             rel="noopener noreferrer"
+             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg transition-colors duration-200"
+           >
+             <Eye className="w-4 h-4" />
+             <span className="text-sm font-medium">View</span>
+           </a>
+
+         </div> */}
+       </div>
+     </div>
+          )}
+
+{
+  studyMaterial.link && (
+    <div className="mt-5">
+    <a
+      href={"adfsd"}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2"
+    >
+      <span className="font-mono text-sm text-blue-700">
+        {"http://localhost:5173/teacher/classes/2/study-materials/adfsd"}
+      </span>
+      <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-indigo-700" />
+    </a>
+  </div>
+  )
+}
+
 
           <div className="flex mt-5 gap-5 justify-between">
             <div className="flex items-center text-gray-600">
               <Calendar className="w-5 h-5 mr-2 text-green-500" />
-              <span className="text-sm">Created: April 21, 2025</span>
+              <span className="text-sm">Created: {dateFormatter(studyMaterial.createdAt)}</span>
             </div>
             <div className="flex items-center text-gray-600">
               <button
@@ -76,24 +132,29 @@ const StudyMaterialsDetails = () => {
         </div>
       </div>
 
-      <div className="border-l sticky flex-1 p-5 border-gray-200">
+      <div className="border-l sticky flex-1 px-5 border-gray-200">
         <h2 className="text-2xl font-bold text-gray-700">Views</h2>
 
-        <div className="rounded-xl border-2 w-full mt-5">
-          <div className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center text-gray-700">
-                <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
-                  <User className="w-5 h-5 text-gray-500" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Student Name</p>
-                  <p className="font-medium">Emily Thompson</p>
-                </div>
-              </div>
-            </div>
+{
+  studyMaterial.viewers.map((viewer) => (
+    <div className="rounded-xl border-2 w-full mt-5">
+    <div className="p-6">
+      <div className="space-y-4">
+        <div className="flex items-center text-gray-700">
+          <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
+            <User className="w-5 h-5 text-gray-500" />
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Student Name</p>
+            <p className="font-medium">{viewer.fullName}</p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  ))
+}
+ 
       </div>
     </div>
     </div>

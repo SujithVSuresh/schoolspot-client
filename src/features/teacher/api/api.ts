@@ -1,6 +1,7 @@
 import { AddAssignmentType, TeacherSigninFormType } from "../types/types";
 import axiosInstance from "../../../app/api/axiosInstance";
 import axios from "axios";
+import { AttendanceType } from "../types/types";
 const envData = import.meta.env;
 
 
@@ -158,3 +159,62 @@ export const fetchStudyMaterials = async (subjectId: string) => {
         return { success: false, error: message }
     }
 }
+
+export const fetchStudyMaterialById = async (id: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/get-studymaterial/${id}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const addAttendance = async (attendanceData: AttendanceType[]) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/add-attendance`, {data: attendanceData}, {
+            headers: {
+                'x-user-role': 'teacher'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const getAttendanceByClass = async (classId: string, date: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/get-attendance?classId=${classId}&date=${date}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const changeAttendanceStatus = async (attendanceId: string, status: string) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/update-attendance-status`, {attendanceId, status}, {
+            headers: {
+                'x-user-role': 'teacher'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+

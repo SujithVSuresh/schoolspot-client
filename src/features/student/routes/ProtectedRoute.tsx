@@ -20,7 +20,6 @@ const ProtectedRoute = ({children, isLogin}: ProtectedRouteProps) => {
         return <Navigate to="/student" replace />;
       }
   
-    
       return (
       <>{children}</>
       );

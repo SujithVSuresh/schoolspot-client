@@ -6,6 +6,8 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
+
   return (
     <header
       className={`container mx-auto ${
@@ -35,6 +37,7 @@ const Header = () => {
             </span>
           </h5>
         ))}
+
     </header>
   );
 };

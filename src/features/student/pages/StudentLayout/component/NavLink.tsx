@@ -1,30 +1,36 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-const NavLink = () => {
-    const navigate = useNavigate()
-    const location = useLocation()
 
-    const selectedLink = location.pathname.split("/")[2];
-    const navItems = [
-        { name: "Dashboard", link: "/student/dashboard" },
-        { name: "Assignment", link: "/assignment" },
-        { name: "Attendance", link: "/student/attendance" },
-        { name: "Curriculum", link: "/curriculum" },
-        { name: "Exams", link: "/exams" },
-        { name: "News & Resources", link: "/news-resources" },
-        { name: "Mentors", link: "/mentors" },
-      ];
+const NavLink = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const pathName = location.pathname.split("/")
+  console.log(pathName, "shuiiiii")
+  
+  // const classId = location.pathname.split("/")[3]
+
+
+  const navItems = [
+      { name: "Home", link: "home" },
+      { name: "Subjects", link: "subjects" },
+      { name: "Attendance", link: "attendance" }, 
+      { name: "Invoices", link: "invoices" },
+      { name: "Exam Results", link: "exam-results" },
+      { name: "Announcements", link: "announcements" },
+    ];
+
+    
       
   return (
+  
     <nav className="border-b sticky top-0 bg-white border-gray-200">
     <ul className="flex space-x-8">
       {navItems.map((item, index) => (
         <li key={index}>
           <a
-          onClick={() => navigate(item.link)}
-            href="#"
-            className={`inline-flex items-center px-1 py-4 text-sm font-medium ${
-              selectedLink === item.link.split("/")[2]
+          onClick={() => navigate(`/student/${item.link}`)}
+            className={`inline-flex items-center px-1 py-4 text-sm font-medium hover:cursor-pointer ${
+              pathName[2] === item.link
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
             }`}

@@ -61,3 +61,55 @@ export interface AddStudyMaterialType {
   subjectId?: string; 
   classId?: string;  
 }
+
+
+export interface StudyMaterialType{
+  _id: string;
+  title: string;
+  description: string;
+  createdAt: string; 
+  fileUrl: string;
+  link: string;
+  viewers: {
+    _id: string;
+    fullName: string;
+  }[];
+}
+
+export interface AttendanceType {
+  student: string;
+  class: string;
+  status: "Present" | "Absent";
+  name?: string;
+  roll?: number;
+}
+
+
+export interface StudentDataResponseType {
+  _id?: string;
+  fullName: string;
+  class: string;
+  classId: string;
+  roll: number;
+  section: string;
+  profilePhoto: string;
+  schoolId?: string;
+  user: {
+      _id: string
+      email: string,
+      status: "active" | "inactive" | "deleted" | "blocked";
+  }
+}
+
+export interface AttendaceResponseType {
+  _id?: string;
+  student: {
+    _id: string;
+    name: string;
+    roll: number;
+  }
+  status: "Present" | "Absent";
+  createdAt?: Date;
+  updatedAt?: Date;  
+}
+

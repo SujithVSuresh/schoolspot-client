@@ -16,7 +16,7 @@ const ClassCard = ({classData}: ClassCardProps) => {
   const navigate = useNavigate()
 
   return (
-    <div onClick={() => navigate(`/teacher/classes/${classData._id}/students`)} className="bg-white rounded-xl hover: cursor-pointer p-6 border">
+    <div onClick={() => navigate(`/teacher/classes/${classData._id}/students`)} className="bg-white rounded-xl hover: cursor-pointer p-5 border">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
  

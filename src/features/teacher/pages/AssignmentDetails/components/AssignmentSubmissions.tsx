@@ -43,8 +43,6 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
         {
             submissions.length > 0 && submissions.map((submission) => (
                 <div className="p-6 rounded-xl border">
-      
-
                 <div className="space-y-4">
                   <div className="flex items-center text-gray-700">
                     <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">

@@ -26,6 +26,7 @@ const AttendanceRecord = ({ classId }: { classId: string }) => {
         value?.toISOString().split("T")[0] as string
       );
 
+
       setAttendanceData(response.data);
     };
 

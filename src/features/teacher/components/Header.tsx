@@ -2,11 +2,21 @@ import logo from "../../../assets/images/dotlogo.png";
 import { Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { removeTeacher } from "../redux/teacherSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const Header = () => {
+  const dispatch = useDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const pathName = location.pathname.split("/")
+
+  const handleLogout = () => {
+    dispatch(removeTeacher())
+  }
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
@@ -21,11 +31,12 @@ const Header = () => {
          
         </div>
         <div className="flex items-center space-x-6">
+          <a onClick={() => handleLogout()} className="underline">Logout</a>
           <button className="text-gray-500 hover:text-gray-900 transition-colors">
             <Bell className="w-5 h-5" />
           </button>
           
-          {/* <Avatar className="w-8 h-8 ring-2 ring-offset-2 ring-gray-200 cursor-pointer transition-all hover:ring-gray-300" /> */}
+            <img onClick={() => navigate('/teacher/profile')} className="w-8 h-8 ring-2 ring-offset-2 rounded-full ring-gray-200 cursor-pointer transition-all hover:ring-gray-300 object-cover" src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="" />
         </div>
       </nav>
   );

@@ -13,15 +13,21 @@ import StudyMaterialDetails from "../pages/StudyMaterialDetails/StudyMaterialDet
 import TeacherAttendance from "../pages/TeacherAttendance/TeacherAttendance";
 import AddAssignment from "../pages/AddAssignment/AddAssignment";
 import AddStudyMaterial from "../pages/AddStudyMaterial/AddStudyMaterial";
+import TeacherProfile from "../pages/TeacherProfile/TeacherProfile";
+import AddAttendance from "../pages/AddAttendance/AddAttendance";
+import Announcement from "../pages/Announcements/Announcements";
+import ExamResult from "../pages/ExamResult/ExamResult";
 
 const TeacherRoute = () => {
   return (
     <Routes>
+            <Route path="/teacher/signin" element={<ProtectedRoute isLogin={false}><TeacherSignin /></ProtectedRoute>}/>
+
        <Route path="/teacher" element={<TeacherLayout />}>
+       <Route path="profile" element={<ProtectedRoute isLogin={true}><TeacherProfile /></ProtectedRoute> } />
     
       <Route path="" element={<ProtectedRoute isLogin={true}><TeacherHome /></ProtectedRoute>}/>
 
-      <Route path="signin" element={<ProtectedRoute isLogin={false}><TeacherSignin /></ProtectedRoute>}/>
 
       <Route path="classes"element={<ProtectedRoute isLogin={true}><Classes /></ProtectedRoute>}/>
 
@@ -34,8 +40,12 @@ const TeacherRoute = () => {
         <Route path="study-materials"element={<ProtectedRoute isLogin={true}><TeacherStudyMaterials /></ProtectedRoute>}/>
         <Route path="study-materials/add"element={<ProtectedRoute isLogin={true}><AddStudyMaterial /></ProtectedRoute>}/>
         <Route path="study-materials/:id"element={<ProtectedRoute isLogin={true}><StudyMaterialDetails /></ProtectedRoute>}/>
+        <Route path="announcements"element={<ProtectedRoute isLogin={true}><Announcement /></ProtectedRoute>}/>
 
         <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>
+        <Route path="attendance/add"element={<ProtectedRoute isLogin={true}><AddAttendance /></ProtectedRoute>}/>
+
+        <Route path="exam-results"element={<ProtectedRoute isLogin={true}><ExamResult /></ProtectedRoute>}/>
       </Route>
 
       </Route>
