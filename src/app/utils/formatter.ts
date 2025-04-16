@@ -18,3 +18,10 @@ export const timeFormatter = (time: string) => {
 export const textFormatter = (text: string) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
+
+export const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'INR'
+    }).format(amount);
+  };

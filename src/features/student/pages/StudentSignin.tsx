@@ -134,6 +134,16 @@ const StudentSignin = () => {
                 Show password
               </span>
             </label>
+            <div className="flex justify-end mt-1">
+  <button
+    type="button"
+    onClick={() => navigate("/signin/forgot")}
+    className="text-sm text-blue-600 hover:underline"
+  >
+    Forgot password?
+  </button>
+</div>
+
 
 <button
              disabled={loading}

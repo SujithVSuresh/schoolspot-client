@@ -66,17 +66,14 @@ const AdminRoute = () => {
       <Route
         path="/signin/forgot"
         element={
-          <ProtectedRoute isLogin={false}>
             <ResetPassword />
-          </ProtectedRoute>
         }
       />
       <Route
         path="/signin/reset-password"
         element={
-          <ProtectedRoute isLogin={false}>
             <ResetPasswordForm />
-          </ProtectedRoute>
+   
         }
       />
 

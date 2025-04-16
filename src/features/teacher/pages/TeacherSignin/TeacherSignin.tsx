@@ -66,13 +66,11 @@ const TeacherSignin = () => {
             };
   return (
     <>
-    {/* <Header /> */}
 
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
 <div className="flex flex-col md:flex-row lg:flex-row justify-center items-start py-8 md:py-12 lg:py-20 px-4 sm:px-6 lg:px-8">
 
 
-  {/* Right Section */}
   <div className="mx-auto px-12 py-12 w-full lg:w-4/12 bg-white rounded border">
   <h1 className="font-medium text-2xl mb-6 text-center">Sign in as Teacher</h1>
 
@@ -132,6 +130,13 @@ const TeacherSignin = () => {
                 Show password
               </span>
             </label>
+             <button
+    type="button"
+    onClick={() => navigate("/signin/forgot")}
+    className="text-sm text-blue-600 hover:underline"
+  >
+    Forgot password?
+  </button>
 
 <button
              disabled={loading}

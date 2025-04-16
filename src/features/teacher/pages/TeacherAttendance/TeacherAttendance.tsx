@@ -16,13 +16,15 @@ const TeacherAttendance = () => {
   const [filterDate, setFilterDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [attendanceData, setAttendanceData] = useState<AttendaceResponseType[]>([])
+  const [attendanceData, setAttendanceData] = useState<AttendaceResponseType[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchAttendance = async () => {
       const response = await getAttendanceByClass(classId, filterDate);
 
-      console.log(response, "dfasdfdsfdsafsd")
+      console.log(response, "dfasdfdsfdsafsd");
 
       setAttendanceData(response.data);
     };
@@ -30,37 +32,36 @@ const TeacherAttendance = () => {
     fetchAttendance();
   }, [filterDate, classId]);
 
-    const handleAttendanceStatus = async (
-      attendanceId: string,
-      status: "Present" | "Absent"
-    ) => {
-      const response = await changeAttendanceStatus(attendanceId, status);
-  
-      if (response.success) {
-        const updatedAttendanceData = attendanceData.map((data) => {
-          if (data._id == response.data._id) {
-            return {
-              ...data,
-              status: response.data.status,
-            };
-          }
-          return data;
-        });
-        setAttendanceData(updatedAttendanceData);
-        
-              toast("Attendance status updated successfully", {
-                duration: 8000,
-                position: "bottom-right",
-                style: {
-                  backgroundColor: "#E7FEE2",
-                  border: "2px, solid, #16A34A",
-                  minWidth: "400px",
-                  color: "black",
-                },
-              });
-       
-      }
-    };
+  const handleAttendanceStatus = async (
+    attendanceId: string,
+    status: "Present" | "Absent"
+  ) => {
+    const response = await changeAttendanceStatus(attendanceId, status);
+
+    if (response.success) {
+      const updatedAttendanceData = attendanceData.map((data) => {
+        if (data._id == response.data._id) {
+          return {
+            ...data,
+            status: response.data.status,
+          };
+        }
+        return data;
+      });
+      setAttendanceData(updatedAttendanceData);
+
+      toast("Attendance status updated successfully", {
+        duration: 1000,
+        position: "bottom-right",
+        style: {
+          backgroundColor: "#E7FEE2",
+          border: "2px, solid, #16A34A",
+          minWidth: "400px",
+          color: "black",
+        },
+      });
+    }
+  };
 
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },
@@ -81,17 +82,19 @@ const TeacherAttendance = () => {
       <div className="max-w-5xl mx-auto">
         <div className="bg-white rounded-lg border p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="flex justify-start space-x-4 text-sm ">
+            <div className="flex justify-evenly rounded-lg space-x-4 text-sm bg-gray-50">
               <div className="flex items-center">
                 <div className="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
                 <span>
-                  Present: {attendanceData.filter((s) => s.status == "Present").length}
+                  Present:{" "}
+                  {attendanceData.filter((s) => s.status == "Present").length}
                 </span>
               </div>
               <div className="flex items-center">
                 <div className="h-3 w-3 bg-red-500 rounded-full mr-2"></div>
                 <span>
-                  Absent: {attendanceData.filter((s) => s.status == "Absent").length}
+                  Absent:{" "}
+                  {attendanceData.filter((s) => s.status == "Absent").length}
                 </span>
               </div>
             </div>
@@ -136,42 +139,54 @@ const TeacherAttendance = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {attendanceData.length > 0 && attendanceData.map((attendance) => (
-                  <tr key={attendance._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {attendance.student.roll}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {attendance.student.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          attendance.status == "Present" 
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {attendance.status == "Present" ? "Present" : "Absent"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <button
-                        onClick={() => handleAttendanceStatus(attendance._id as string, attendance.status == "Present" ? "Absent" : "Present")}
-                        className="flex items-center space-x-1 text-indigo-600 hover:text-indigo-900"
-                      >
-                        {attendance.status == "Present" ? (
-                          <XCircle className="h-5 w-5" />
-                        ) : (
-                          <CheckCircle className="h-5 w-5" />
-                        )}
-                        <span>
-                          {attendance.status == "Present" ? "Mark Absent" : "Mark Present"}
+                {attendanceData.length > 0 &&
+                  attendanceData.map((attendance) => (
+                    <tr key={attendance._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {attendance.student.roll}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {attendance.student.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            attendance.status == "Present"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {attendance.status == "Present"
+                            ? "Present"
+                            : "Absent"}
                         </span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <button
+                          onClick={() =>
+                            handleAttendanceStatus(
+                              attendance._id as string,
+                              attendance.status == "Present"
+                                ? "Absent"
+                                : "Present"
+                            )
+                          }
+                          className="flex items-center space-x-1 text-indigo-600 hover:text-indigo-900"
+                        >
+                          {attendance.status == "Present" ? (
+                            <XCircle className="h-5 w-5" />
+                          ) : (
+                            <CheckCircle className="h-5 w-5" />
+                          )}
+                          <span>
+                            {attendance.status == "Present"
+                              ? "Mark Absent"
+                              : "Mark Present"}
+                          </span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

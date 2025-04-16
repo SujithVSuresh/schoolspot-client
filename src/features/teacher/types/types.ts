@@ -16,16 +16,16 @@ export interface ClassType {
   strength: number;
   section: string;
   teacher: string;
-  school?: string;
+  school: string;
   subjects?: SubjectType[];
   createdAt?: string;
-  updatedAt?: string
+  updatedAt?: string;
   attendance: {
     presentCount: number;
     absentCount: number;
     date: Date;
   },
-  subject: {
+  subject?: {
     name: string,
     teacher: string,
     _id: string
@@ -113,3 +113,23 @@ export interface AttendaceResponseType {
   updatedAt?: Date;  
 }
 
+
+export interface AssignmentSubmissionType {
+  _id: string;
+  assignmentId: string;
+  description: string;
+  link: string;
+  fileUrl: string;
+  grade: string;
+  feedback: string;
+  status: string;
+  createdAt: string;
+  submittedAt: string | null;
+  student: {
+    _id: string;
+    fullName: string;
+    class: string;
+    section: string;
+    roll: number;
+  };
+}

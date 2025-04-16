@@ -6,16 +6,25 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { removeSubject } from "../../../api/api";
+import { fetchSubjects } from "../../../api/api";
+import { textFormatter } from "../../../../../app/utils/formatter";
 
-const SubjectList = ({data, classId}: {data:SubjectType[], classId: string}) => {
-  console.log("this is subjectlist componenet...")
+const SubjectList = ({classId}: {classId: string}) => {
   const navigate = useNavigate()
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
   const [menu, setMenu] = useState<number | null>(null);
 
   useEffect(() => {
-    setSubjects(data);
-  }, [data]);
+    handleFetchSubjects(classId)
+  }, [classId]);
+
+  const handleFetchSubjects = async (classId: string) => {
+    const response = await fetchSubjects(classId)
+
+    if(response.success){
+      setSubjects(response.data)
+    }
+  }
 
   const toggleMenu = (index: number) => {
     setMenu(menu === index ? null : index);
@@ -57,17 +66,17 @@ const SubjectList = ({data, classId}: {data:SubjectType[], classId: string}) => 
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-       {subjects && subjects.map((subject, index) => (
+       {subjects && subjects.length > 0 && subjects.map((subject, index) => (
               <div className="bg-gray-100 rounded-xl p-4 relative">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div>
                 <h3 className="font-medium mb-1 text-gray-700 text-sm sm:text-base">
-                  {subject.name}
+                  {textFormatter(subject.name)}
                 </h3>
-                {/* <p className="text-xs sm:text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-500">
                 {subject.teacher}
-                </p> */}
+                </p>
               </div>
             </div>
             {/* Menu Button */}

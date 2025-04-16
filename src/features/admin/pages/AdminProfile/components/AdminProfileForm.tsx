@@ -7,6 +7,7 @@ import { adminProfileValidationSchema } from "../../../validation/formValidation
 import loadingGif from '../../../../../assets/images/loading.webp'
 import { updateAdminProfile } from "../../../api/api";
 import toast from "react-hot-toast";
+import { textFormatter } from "../../../../../app/utils/formatter";
 
 interface AdminUserData {
         email: string;
@@ -145,7 +146,7 @@ const AdminProfileForm = () => {
           Role
         </label>
         <input
-        value={userData?.role}
+        value={textFormatter(userData?.role)}
         disabled={true}
           id="nameInput"
           type="text"
@@ -162,7 +163,7 @@ const AdminProfileForm = () => {
           Status
         </label>
         <input
-        value={userData?.status}
+        value={textFormatter(userData?.status as string)}
           disabled={true}
           id="nameInput"
           type="text"

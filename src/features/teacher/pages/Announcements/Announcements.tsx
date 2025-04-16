@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Bell, Pin, Calendar, Clock, Search, Filter, Plus, MoreVertical, Edit2, Trash2 } from 'lucide-react';
+
 
 const Announcements = () => {
     const [searchQuery, setSearchQuery] = useState('');

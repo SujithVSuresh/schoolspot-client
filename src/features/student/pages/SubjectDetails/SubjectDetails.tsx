@@ -30,7 +30,7 @@ const SubjectDetails = () => {
             
             {subjectItems.map((item) => (
                           <button
-                          onClick={() => navigate(`/student/subjects/sdf/${item.links}`)}
+                          onClick={() => navigate(`/student/subjects/${urlParts[3]}/${item.links}`)}
                           className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                             urlParts[4] === item.links
                               ? 'bg-indigo-600 text-white'

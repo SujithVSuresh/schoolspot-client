@@ -1,6 +1,11 @@
 import { User, Hash, Clock } from "lucide-react"
 import { useEffect, useState } from "react"
 import { fetchAssignmentSubmissions } from "../../../api/api"
+import { dateFormatter } from "../../../../../app/utils/formatter"
+import AssignmentSubmissionModal from "./AssignmentSubmissionModal"
+import { fetchAssignmentSubmissionById } from "../../../api/api"
+import { AssignmentSubmissionType } from "../../../types/types"
+import { addAssignmentSubmissionMark } from "../../../api/api"
 
 const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
 
@@ -18,6 +23,10 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
         submittedAt: Date | null
       }[]>([])
 
+      const [submissionById, setSubmissionById] = useState<AssignmentSubmissionType | null>(null);
+
+      const [isModalOpen, setIsModalOpen] = useState(false);
+    
     useEffect(() => {
 
         fetchAssignmentSubmissionsHandler()
@@ -28,21 +37,42 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
         const response = await fetchAssignmentSubmissions(assignmentId)
 
         if(response.success){
-            console.log(response.data, 'nnn')
             setSubmissions(response.data.data)
 
         }
     }
+
+    const handleSaveGrade = async (grade: string, feedback: string) => {
+
+      if(!grade) return
+
+      const response = await addAssignmentSubmissionMark(submissionById?._id as string, { grade: grade ? grade : "", feedback: feedback ? feedback : "" });
+      setSubmissionById(response.data.data)
+      setIsModalOpen(false);
+    };
+
+    const fetchAssignmentSubmissionByIdHandler = async (submissionId: string) => {
+      const response = await fetchAssignmentSubmissionById(submissionId)
+       
+      console.log(response, 'response of submiii')
+
+      if(response.success){
+          setSubmissionById(response.data.data)
+          setIsModalOpen(true)
+      }
+  }
+
   return (
     <div className="border-t sticky bg-white border-gray-200 mt-5">
     <h2 className="text-2xl font-bold my-5 text-gray-700">
             Submissions
           </h2>
 
-      <div className="grid grid-cols-4 gap-6">
+
+<div className="grid grid-cols-3 gap-6">
         {
-            submissions.length > 0 && submissions.map((submission) => (
-                <div className="p-6 rounded-xl border">
+            submissions.length > 0 && submissions.map((submission, index) => (
+                <div className="p-6 rounded-xl border" key={index}>
                 <div className="space-y-4">
                   <div className="flex items-center text-gray-700">
                     <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
@@ -70,7 +100,7 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Submission Time</p>
-                      <p className="font-medium">{!submission.submittedAt ? "---" : String(submission.submittedAt)}</p>
+                      <p className="font-medium">{!submission.submittedAt ? "---" : dateFormatter(String(submission.submittedAt))}</p>
                     </div>
                   </div>
       
@@ -79,7 +109,7 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
                   <span className={`px-3 py-1 ${submission.status == "Pending" ? "text-red-700 bg-red-100" : submission.status == "Submitted" ? "text-emerald-700 bg-emerald-100" : "text-yellow-700 bg-yellow-100"}  rounded-full text-sm font-medium`}>
                  {submission.status}
             </span>
-                    <button className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                    <button onClick={() => fetchAssignmentSubmissionByIdHandler(submission._id)} className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors text-sm">
                       View Details
                     </button>
                   </div>
@@ -90,11 +120,15 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
             </div>
             ))
         }
-
-        
-
-  
     </div>
+
+
+    <AssignmentSubmissionModal
+        submission={submissionById as AssignmentSubmissionType}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSaveGrade={handleSaveGrade}
+      />
 
     </div>
   )

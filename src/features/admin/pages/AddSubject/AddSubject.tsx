@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { getTeachersBySchool } from "../../api/api";
-import { useParams } from "react-router-dom";
-import { addSubject } from "../../api/api";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { createSubject } from "../../api/api";
 
 const AddSubject = () => {
     const navigate = useNavigate()
@@ -29,7 +28,7 @@ const AddSubject = () => {
 
         const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
-            const response = await addSubject({name: subjectName, teacher: teacherId, classId: classId as string})
+            const response = await createSubject({name: subjectName, teacher: teacherId, class: classId as string})
             if(response.success){
                 console.log("ressss", response)
                 navigate(`/dashboard/classes/profile/${classId}?section=students`)

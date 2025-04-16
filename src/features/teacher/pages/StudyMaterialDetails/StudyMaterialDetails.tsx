@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchStudyMaterialById } from "../../api/api";
 import { StudyMaterialType } from "../../types/types";
 import { dateFormatter } from "../../../../app/utils/formatter";
-import { ExternalLink, Eye, FileText } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 
 const StudyMaterialsDetails = () => {
   const studyMaterialId = location.pathname.split("/")[5]

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { fetchStudentProfile } from "../../api/api";
 import { removeStudent } from "../../redux/studentSlice";
 import { useDispatch } from "react-redux";
-import NavLink from "./component/NavLink";
+import NavLink from "./components/NavLink";
 
 
 const StudentLayout = () => {
@@ -16,31 +16,33 @@ const StudentLayout = () => {
     class: string,
     section: string,
     roll: number,
-    profilePhoto: string
+    profilePhoto: string,
+    classId: string
 }>({
   _id: "",
   fullName:"",
   class: "",
   section: "",
   roll: 0,
-  profilePhoto: ""
+  profilePhoto: "",
+  classId: ""
 })
 
 useEffect(() => {
   fetchStudentProfileHandler()
-
 }, [])
 
 
 const fetchStudentProfileHandler = async () => {
-  const response = await fetchStudentProfile("safsdafdf")
+  const response = await fetchStudentProfile("null")
   setStudentProfile({
     _id: response.data._id,
     fullName:response.data.fullName,
     class: response.data.class,
     section: response.data.section,
     roll: response.data.roll,
-    profilePhoto: response.data.profilePhoto
+    profilePhoto: response.data.profilePhoto,
+    classId: response.data.classId
   })
 }
 
@@ -67,16 +69,14 @@ const handleLogout = () => {
 
       <section>
         <div className="relative bg-purple-100">
-          {/* Cover Image */}
-          <div className="h-36  bg-gray-200 flex justify-center">
+          <div className="h-36  bg-gray-50 flex justify-end">
             {/* <img
-                  className="w-full h-full object-cover"
-                  src={cover}
+                  className="w-50 h-40 object-cover mr-20"
+                  src={studentsillu}
                   alt="Profile"
                 /> */}
           </div>
 
-          {/* Profile Section */}
           <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-end sm:space-x-5 mb-8">
               <div className="relative">
@@ -112,7 +112,7 @@ const handleLogout = () => {
             <NavLink />
 
             <div className="py-5 w-full flex justify-between border-t">
-              <Outlet />
+              <Outlet context={{classId: studentProfile.classId}}/>
             </div>
           </div>
         </div>

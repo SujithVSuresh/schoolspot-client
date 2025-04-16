@@ -128,14 +128,14 @@ const ClassProfile = () => {
           >
             Subjects
           </div>
-          <div
+          {/* <div
             onClick={() => updateSection("timetable")}
             className={`${
               section == "timetable" ? "bg-blue-200" : "bg-gray-200"
             } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Timetable
-          </div>
+          </div> */}
           <div
             onClick={() => updateSection("attendance")}
             className={`${

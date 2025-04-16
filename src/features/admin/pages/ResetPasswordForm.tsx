@@ -50,7 +50,7 @@ const ResetPasswordForm = () => {
             }
           );
           setLoading(false);
-          navigate("/signin");
+          // navigate("/signin");
         }, 1000);
       } else {
         setTimeout(() => {

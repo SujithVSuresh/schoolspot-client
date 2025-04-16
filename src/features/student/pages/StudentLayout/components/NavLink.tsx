@@ -5,7 +5,6 @@ const NavLink = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const pathName = location.pathname.split("/")
-  console.log(pathName, "shuiiiii")
   
   // const classId = location.pathname.split("/")[3]
 
@@ -17,13 +16,14 @@ const NavLink = () => {
       { name: "Invoices", link: "invoices" },
       { name: "Exam Results", link: "exam-results" },
       { name: "Announcements", link: "announcements" },
+      { name: "Profile", link: "profile" }
     ];
 
     
       
   return (
   
-    <nav className="border-b sticky top-0 bg-white border-gray-200">
+    <nav className="border-b sticky top-0 z-40 bg-white border-gray-200">
     <ul className="flex space-x-8">
       {navItems.map((item, index) => (
         <li key={index}>

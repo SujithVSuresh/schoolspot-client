@@ -44,6 +44,7 @@ const StudentRoute = () => {
         <Route path="invoices" element={<Invoices />} />
         <Route path="exam-results" element={<ExamResults />} />
         <Route path="announcements" element={<Announcements />} />
+        <Route path="profile" element={<StudentProfile />} />
       </Route>
     </Routes>
   );

@@ -19,21 +19,18 @@ const ClassDetails = () => {
     section: "",
     teacher: "",
     school: "",
-    subjects: [],
     createdAt: "",
     updatedAt: "",
+    subject: {
+      name: "",
+      teacher: "",
+      _id: "",
+    },
     attendance: {
       presentCount: 0,
       absentCount: 0,
       date: new Date()
-    },
-    subject: {
-      name: "",
-      teacher: "",
-      _id: ""
     }
-  
-
   })
 
   useEffect(() => {
@@ -135,7 +132,7 @@ const ClassDetails = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Subject</p>
-                <p className="font-medium">{textFormatter(classDetails.subject.name)}</p>
+                <p className="font-medium">{textFormatter(classDetails.subject ? classDetails.subject.name : "---")}</p>
               </div>
             </div>
         </div>
