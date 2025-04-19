@@ -1,9 +1,26 @@
-import { useState } from 'react';
-import { Bell, Pin, Calendar, Clock, Search, Filter, Plus, MoreVertical, Edit2, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Bell, Pin, Calendar, Clock, MoreVertical, Edit2, Trash2 } from 'lucide-react';
+import { announcementSocket } from '../../../../app/socket/socket';
 
 
 const Announcements = () => {
     const [searchQuery, setSearchQuery] = useState('');
+
+    const roomId = 'room123';
+
+    useEffect(() => {
+      announcementSocket.connect()
+
+      announcementSocket.on('connect', () => {
+        console.log('Connected:', announcementSocket.id);
+        announcementSocket.emit('join-room', roomId);
+      });
+
+      return () => {
+        announcementSocket.emit('leave-room', roomId);
+        announcementSocket.disconnect()
+      }
+    }, [])
   
     // Mock data for announcements
     const [announcements] = useState([
@@ -44,7 +61,7 @@ const Announcements = () => {
       announcement.content.toLowerCase().includes(searchQuery.toLowerCase())
     );
   
-    const pinnedAnnouncements = filteredAnnouncements.filter(a => a.isPinned);
+    // const pinnedAnnouncements = filteredAnnouncements.filter(a => a.isPinned);
     const regularAnnouncements = filteredAnnouncements.filter(a => !a.isPinned);
   return (
 <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
