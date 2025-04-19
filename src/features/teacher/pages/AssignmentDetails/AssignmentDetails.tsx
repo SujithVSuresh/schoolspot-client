@@ -1,6 +1,6 @@
-import { Calendar, Link, Text, File } from "lucide-react";
+import { Calendar, Link, Text, File, Pencil, Trash } from "lucide-react";
 import Breadcrumb from "../../components/Breadcrumb";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchAssignmentById } from "../../api/api";
 import { AssignmentType } from "../../types/types";
@@ -9,7 +9,7 @@ import { textFormatter } from "../../../../app/utils/formatter";
 import AssignmentSubmissions from "./components/AssignmentSubmissions";
 
 const AssignmentDetails = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation();
 
   const classId = location.pathname.split("/")[3];
@@ -76,6 +76,7 @@ const AssignmentDetails = () => {
             </span>
           </div>
 
+<div className="flex justify-between">
           <div className="flex mt-3 gap-5">
             <div className="flex items-center text-gray-600">
               <Calendar className="w-5 h-5 mr-2 text-purple-500" />
@@ -91,7 +92,34 @@ const AssignmentDetails = () => {
                 Created: {dateFormatter(assignment?.createdAt as string)}
               </span>
             </div>
+
+            
           </div>
+          <div className="flex items-center text-gray-600 gap-2">
+                <button
+                  onClick={() => {}}
+                  className="flex items-center gap-2 te border-red-500 text-red-500 border-2 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-sm"
+                >
+                  <Trash size={16} />
+                  <span>Delete</span>
+                </button>
+
+                <button
+                  onClick={() =>
+                    navigate(
+                      `/teacher/classes/${classId}/assignments/${assignmentId}/update`
+                    )
+                  }
+                  className="flex items-center gap-2 border-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-sm"
+                >
+                  <Pencil size={16} />
+                  <span>Edit</span>
+                </button>
+              </div>
+
+              </div>  
+
+
         </div>
       </div>
 

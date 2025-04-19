@@ -47,10 +47,10 @@ const Announcements = () => {
     const pinnedAnnouncements = filteredAnnouncements.filter(a => a.isPinned);
     const regularAnnouncements = filteredAnnouncements.filter(a => !a.isPinned);
   return (
-<div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+<div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        {/* <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Announcements</h1>
             <p className="mt-2 text-gray-600">View and manage school announcements</p>
@@ -59,10 +59,10 @@ const Announcements = () => {
             <Plus className="h-5 w-5" />
             <span>New Announcement</span>
           </button>
-        </div>
+        </div> */}
 
         {/* Search and Filter */}
-        <div className="mb-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* <div className="mb-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
@@ -77,10 +77,10 @@ const Announcements = () => {
             <Filter className="h-5 w-5" />
             <span>Filter</span>
           </button>
-        </div>
+        </div> */}
 
         {/* Pinned Announcements */}
-        {pinnedAnnouncements.length > 0 && (
+        {/* {pinnedAnnouncements.length > 0 && (
           <div className="mb-8">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">📌 Pinned Announcements</h2>
             <div className="space-y-4">
@@ -89,11 +89,11 @@ const Announcements = () => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Regular Announcements */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">All Announcements</h2>
+          {/* <h2 className="text-lg font-semibold text-gray-900 mb-4">All Announcements</h2> */}
           <div className="space-y-4">
             {regularAnnouncements.map((announcement) => (
               <AnnouncementCard key={announcement.id} announcement={announcement} />
@@ -109,11 +109,11 @@ function AnnouncementCard({ announcement }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg border border-gray-200 p-4">
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center space-x-2">
-            <h3 className="text-lg font-semibold text-gray-900">{announcement.title}</h3>
+            <h3 className="text-lg font-medium text-gray-900">{announcement.title}</h3>
             {announcement.isPinned && (
               <Pin className="h-4 w-4 text-indigo-600" />
             )}

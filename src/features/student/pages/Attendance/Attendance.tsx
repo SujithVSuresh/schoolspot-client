@@ -11,23 +11,22 @@ const Attendance = () => {
 
 
   return (
-    <div className="w-full min-h-screen">
-      <div className="mb-5">
+    <div className="w-full min-h-screen flex justify-center">
+
+    <div className="w-9/12">
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date as Date)}
           dateFormat="MM/yyyy"
           showMonthYearPicker
-          className="custom-datepicker-input"
+          className="custom-datepicker-input mb-5"
         />
-      </div>
-
-
-
+ 
       <div className="flex">
       <AttendanceList date={selectedDate.toISOString()} />
 
         <LeaveLetter date={selectedDate.toISOString()} classId={classId}/>
+      </div>
       </div>
     </div>
   );

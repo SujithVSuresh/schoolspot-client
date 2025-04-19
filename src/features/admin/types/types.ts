@@ -128,6 +128,17 @@ export interface TeacherProfileType {
     }
 }
 
+
+export interface TeacherProfileUserEntityType extends TeacherProfileType {
+    user: {
+        _id: string;
+        email: string;
+        status: "active" | "inactive" | "deleted" | "blocked";
+    }
+}
+
+
+
 export interface SubjectType {
     _id?: string;
     name: string;

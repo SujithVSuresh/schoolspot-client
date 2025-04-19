@@ -2,21 +2,14 @@ import logo from "../../../assets/images/dotlogo.png";
 import { Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { removeTeacher } from "../redux/teacherSlice";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
-  const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
 
   const pathName = location.pathname.split("/")
-
-  const handleLogout = () => {
-    dispatch(removeTeacher())
-  }
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
@@ -31,7 +24,6 @@ const Header = () => {
          
         </div>
         <div className="flex items-center space-x-6">
-          <a onClick={() => handleLogout()} className="underline">Logout</a>
           <button className="text-gray-500 hover:text-gray-900 transition-colors">
             <Bell className="w-5 h-5" />
           </button>

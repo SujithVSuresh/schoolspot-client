@@ -1,142 +1,205 @@
-import { Phone, GraduationCap, BookOpen, Clock, Building, User, Briefcase } from 'lucide-react';
+import {
+  Phone,
+  Mail,
+  User,
+  Info
+} from "lucide-react";
+import { Shield, Lock } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { fetchTeacherProfile } from "../../api/api";
+import { removeTeacher } from "../../redux/teacherSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+type TeacherProfile = {
+  _id: string;
+  fullName: string;
+  phoneNumber: string;
+  subjectSpecialized: string;
+  qualification: string;
+  experience: string;
+  profilePhoto: string;
+  schoolId?: string;
+  user: {
+    _id: string;
+    email: string;
+    status: "active" | "inactive" | "deleted" | "blocked";
+  };
+};
 
 const TeacherProfile = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [teacher, setTeacher] = useState<TeacherProfile | null>(null);
 
-    const teacherData = {
-        fullName: "Dr. Michael Anderson",
-        phoneNumber: "8590369084",
-        subjectSpecialized: "Physics",
-        qualification: "Ph.D. in Physics Education",
-        experience: "12 years",
-        profilePhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&h=256&q=80",
-      };
+  useEffect(() => {
+    const handleProfileFetch = async () => {
+      const teacher = await fetchTeacherProfile();
+      if (teacher.success) {
+        console.log(teacher.data, "this is the teacher profile");
+        setTeacher(teacher.data);
+      }
+    };
+
+    handleProfileFetch();
+  }, []);
+
+    const handleLogout = () => {
+      dispatch(removeTeacher())
+    }
+
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-    <div className="max-w-3xl mx-auto bg-white rounded-xl border overflow-hidden">
-      {/* Header/Banner Section */}
-      <div className="h-32 bg-gradient-to-r bg-gray-400"></div>
-      
-      {/* Profile Section */}
-      <div className="relative px-6 pb-8">
-        {/* Profile Image */}
-        <div className="relative -mt-16 mb-4">
-          <img
-            className="h-32 w-32 rounded-full border-4 border-white shadow-lg object-cover"
-            src={teacherData.profilePhoto}
-            alt={teacherData.fullName}
-          />
-        </div>
+      <div className="max-w-4xl mx-auto bg-white rounded-xl border overflow-hidden">
+        <div className="h-28 bg-gradient-to-r bg-gray-100"></div>
 
-        {/* Basic Info */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold my-5 text-gray-800">
-          {teacherData.fullName}
-          </h2>
-          <p className="text-lg text-indigo-600">{teacherData.subjectSpecialized} Specialist</p>
-        </div>
-
-        {/* Contact & Professional Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="space-y-4">
-            <div className="flex items-center text-gray-700">
-              <Phone className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>{teacherData.phoneNumber}</span>
-            </div>
-            <div className="flex items-center text-gray-700">
-              <GraduationCap className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>{teacherData.qualification}</span>
-            </div>
-            <div className="flex items-center text-gray-700">
-              <Briefcase className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>{teacherData.experience} of Teaching Experience</span>
-            </div>
+        <div className="relative px-7">
+          <div className="relative -mt-14 mb-4">
+            <img
+              className="h-32 w-32 rounded-full border-4 border-white shadow-lg object-cover"
+              src={teacher?.profilePhoto}
+              alt={teacher?.fullName}
+            />
           </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center text-gray-700">
-              <Building className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>Room 301, Science Building</span>
-            </div>
-            <div className="flex items-center text-gray-700">
-              <Clock className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>Office Hours: 2:30 PM - 4:00 PM</span>
-            </div>
-            <div className="flex items-center text-gray-700">
-              <User className="h-5 w-5 mr-3 text-indigo-600" />
-              <span>Department Head</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Current Classes */}
-        {/* <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Current Classes</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-start">
-                <BookOpen className="h-5 w-5 mr-2 text-indigo-600 mt-1" />
-                <div>
-                  <p className="font-medium text-gray-900">Advanced Physics</p>
-                  <p className="text-sm text-gray-600">Monday/Wednesday</p>
-                  <p className="text-sm text-gray-600">9:00 AM - 10:30 AM</p>
-                </div>
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold my-3 text-gray-800">
+              {teacher?.fullName}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pb-3 border-b">
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <User className="w-5 h-5 text-blue-500" />
               </div>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-start">
-                <BookOpen className="h-5 w-5 mr-2 text-indigo-600 mt-1" />
-                <div>
-                  <p className="font-medium text-gray-900">Physics Lab</p>
-                  <p className="text-sm text-gray-600">Tuesday/Thursday</p>
-                  <p className="text-sm text-gray-600">1:00 PM - 2:30 PM</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
-        {/* Expertise Areas */}
-        {/* <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Areas of Expertise</h2>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
-              Quantum Mechanics
-            </span>
-            <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
-              Electromagnetic Theory
-            </span>
-            <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
-              Modern Physics
-            </span>
-            <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
-              Laboratory Techniques
-            </span>
-          </div>
-        </div> */}
-
-        {/* Publications & Achievements */}
-        {/* <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Achievements</h2>
-          <div className="space-y-3">
-            <div className="flex items-start">
-              <GraduationCap className="h-5 w-5 mr-2 text-indigo-600 mt-1" />
               <div>
-                <p className="text-gray-700">Best Teacher Award 2023</p>
+                <p className="text-sm text-gray-500">Full Name</p>
+                <p className="text-gray-700">{teacher?.fullName}</p>
               </div>
             </div>
-            <div className="flex items-start">
-              <GraduationCap className="h-5 w-5 mr-2 text-indigo-600 mt-1" />
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <Phone className="w-5 h-5 text-blue-500" />
+              </div>
               <div>
-                <p className="text-gray-700">Published "Modern Physics Teaching Methods" in Education Journal</p>
+                <p className="text-sm text-gray-500">Phone Number</p>
+                <p className="text-gray-700">{teacher?.phoneNumber}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <Mail className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Email</p>
+                <p className="text-gray-700">{teacher?.user.email}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <User className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Specialized</p>
+                <p className="text-gray-700">{teacher?.subjectSpecialized}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <User className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Qualification</p>
+                <p className="text-gray-700">{teacher?.qualification}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <User className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Experience</p>
+                <p className="text-gray-700">{teacher?.experience}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-4 rounded-full">
+                <User className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Account Status</p>
+                <p className="text-gray-700">{teacher?.user.status}</p>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
+
+
+    
+          <div className="grid gap-6 md:grid-cols-2 p-7">
+            <div className="bg-white p-5 rounded-lg border border-gray-200">
+              <div className="flex items-center mb-4">
+                <div className="p-2 bg-blue-100 rounded-full mr-3">
+                  <Lock className="h-5 w-5 text-blue-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-700">Password Security</h2>
+              </div>
+              
+              <p className="text-gray-600 text-sm mb-4">
+                Change your password to keep your account secure.
+              </p>
+              
+              <div className="mt-4">
+              <span className="text-blue-700 underline hover:cursor-pointer" onClick={() => navigate('/teacher/change-password')}>Change Password</span>
+              </div>
+
+            </div>
+            
+            <div className="bg-white p-5 rounded-lg border border-gray-200">
+              <div className="flex items-center mb-4">
+                <div className="p-2 bg-indigo-100 rounded-full mr-3">
+                  <Shield className="h-5 w-5 text-indigo-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-700">Account Access</h2>
+              </div>
+              
+              <p className="text-gray-600 text-sm mb-4">
+                Logout from your device to make your account secure.
+              </p>
+              
+              <div className="mt-4">
+              <span className="text-blue-700 underline hover:cursor-pointer" onClick={() => handleLogout()}>Logout</span>
+              </div>
+            </div>
+
+            <div className="bg-white p-5 rounded-lg border border-gray-200">
+              <div className="flex items-center mb-4">
+                <div className="p-2 bg-indigo-100 rounded-full mr-3">
+                  <Info className="h-5 w-5 text-indigo-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-700">Info</h2>
+              </div>
+              
+              <p className="text-gray-600 text-sm mb-4">
+                Contact the school administrator to change any of your profile information.
+              </p>
+              
+              <div className="mt-4">
+                {/* <LogoutButton /> */}
+              </div>
+            </div>
+          </div>
+
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default TeacherProfile
+export default TeacherProfile;

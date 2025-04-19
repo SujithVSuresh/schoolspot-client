@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface InfoCardProps {
-    icon: React.ElementType; // or use React.FC or JSX.Element if rendering directly
+    icon: React.ElementType; 
     label: string;
     value: string;
   }

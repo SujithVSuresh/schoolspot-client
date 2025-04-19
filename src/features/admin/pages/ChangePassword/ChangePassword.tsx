@@ -3,7 +3,7 @@ import DashboardHeader from "../../components/DashboardHeader";
 import loadingGif from "../../../../assets/images/loading.webp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { changePasswordSchema } from "../../validation/formValidation";
+import { changePasswordSchema } from "../../../../app/validation/validatorSchema";
 import { useState } from "react";
 import { ChangePasswordType } from "../../types/types";
 import toast from "react-hot-toast";

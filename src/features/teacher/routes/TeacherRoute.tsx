@@ -17,15 +17,20 @@ import TeacherProfile from "../pages/TeacherProfile/TeacherProfile";
 import AddAttendance from "../pages/AddAttendance/AddAttendance";
 import Announcement from "../pages/Announcements/Announcements";
 import ExamResult from "../pages/ExamResult/ExamResult";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import UpdateStudyMaterial from "../pages/UpdateStudyMaterial/UpdateStudyMaterial";
+import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 
 const TeacherRoute = () => {
   return (
     <Routes>
-            <Route path="/teacher/signin" element={<ProtectedRoute isLogin={false}><TeacherSignin /></ProtectedRoute>}/>
+        <Route path="/teacher/signin" element={<ProtectedRoute isLogin={false}><TeacherSignin /></ProtectedRoute>}/>
 
        <Route path="/teacher" element={<TeacherLayout />}>
+
        <Route path="profile" element={<ProtectedRoute isLogin={true}><TeacherProfile /></ProtectedRoute> } />
-    
+       <Route path="change-password" element={<ProtectedRoute isLogin={true}><ChangePassword /></ProtectedRoute> } />
+
       <Route path="" element={<ProtectedRoute isLogin={true}><TeacherHome /></ProtectedRoute>}/>
 
 
@@ -37,9 +42,13 @@ const TeacherRoute = () => {
         <Route path="assignments"element={<ProtectedRoute isLogin={true}><TeacherAssignments /></ProtectedRoute>}/>
         <Route path="assignments/add"element={<ProtectedRoute isLogin={true}><AddAssignment /></ProtectedRoute>}/>
         <Route path="assignments/:id"element={<ProtectedRoute isLogin={true}><AssignmentDetails /></ProtectedRoute>}/>
+        <Route path="assignments/:id/update"element={<ProtectedRoute isLogin={true}><UpdateAssignment /></ProtectedRoute>}/>
+
         <Route path="study-materials"element={<ProtectedRoute isLogin={true}><TeacherStudyMaterials /></ProtectedRoute>}/>
         <Route path="study-materials/add"element={<ProtectedRoute isLogin={true}><AddStudyMaterial /></ProtectedRoute>}/>
         <Route path="study-materials/:id"element={<ProtectedRoute isLogin={true}><StudyMaterialDetails /></ProtectedRoute>}/>
+        <Route path="study-materials/:id/update"element={<ProtectedRoute isLogin={true}><UpdateStudyMaterial /></ProtectedRoute>}/>
+
         <Route path="announcements"element={<ProtectedRoute isLogin={true}><Announcement /></ProtectedRoute>}/>
 
         <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>

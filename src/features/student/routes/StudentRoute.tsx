@@ -15,6 +15,7 @@ import AssignmentDetails from "../pages/AssignmentDetails/AssignmentDetails";
 import StudyMaterialDetails from "../pages/StudyMaterialDetails/StudyMaterialDetails";
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import Announcements from "../pages/Announcements/Announcements";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 const StudentRoute = () => {
   return (
@@ -45,6 +46,7 @@ const StudentRoute = () => {
         <Route path="exam-results" element={<ExamResults />} />
         <Route path="announcements" element={<Announcements />} />
         <Route path="profile" element={<StudentProfile />} />
+        <Route path="change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
   );
