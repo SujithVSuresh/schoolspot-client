@@ -113,6 +113,21 @@ export const fetchAssignments = async (subjectId: string) => {
     }
 }
 
+export const deleteAssignment = async (assignmentId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/${assignmentId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 
 export const fetchAssignmentById = async (assignmentId: string) => {
     try{
@@ -339,9 +354,58 @@ export const fetchAnnouncementsByClass = async (classId: string) => {
 }
 
 
+export const fetchAnnouncementById = async (id: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${id}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const updateAnnouncement = async (id: string, announcementData: {title: string; content: string, sendTo: string[]}) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${id}`, announcementData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const addAnnouncement = async (announcementData: {title: string; content: string, sendTo: string[]}) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement`, announcementData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+export const deleteAnnouncement = async (announcementId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${announcementId}`, {
             headers: {
                 'x-user-role': 'teacher'
             }

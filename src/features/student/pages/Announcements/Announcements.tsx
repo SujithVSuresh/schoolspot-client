@@ -4,6 +4,7 @@ import AnnouncementCard from './components/AnnouncementCard';
 import { AnnouncementType } from '../../types/types';
 import { useOutletContext } from 'react-router-dom';
 import { fetchAnnouncementsByClass } from '../../api/api';
+import { Search, Filter, Plus } from 'lucide-react';
 
 
 const Announcements = () => {
@@ -39,7 +40,7 @@ const Announcements = () => {
 
   return (
 <div className="min-h-screen w-full p-5">
-
+  
       <div className="flex justify-center w-full">
           <div className="space-y-4 w-6/12">
             {announcements.map((announcement) => (

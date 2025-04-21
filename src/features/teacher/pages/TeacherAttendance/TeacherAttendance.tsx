@@ -81,8 +81,8 @@ const TeacherAttendance = () => {
       </div>
       <div className="max-w-5xl mx-auto">
         <div className="bg-white rounded-lg border p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="flex justify-evenly rounded-lg space-x-4 text-sm bg-gray-50">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 items-center">
+            <div className="flex justify-evenly rounded-lg h-full space-x-4 text-sm bg-gray-50">
               <div className="flex items-center">
                 <div className="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
                 <span>
@@ -109,7 +109,7 @@ const TeacherAttendance = () => {
               />
             </div>
 
-            <div className="relative">
+            <div className="relative h-12">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"

@@ -21,6 +21,7 @@ import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import UpdateStudyMaterial from "../pages/UpdateStudyMaterial/UpdateStudyMaterial";
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
+import UpdateAnnouncement from "../pages/UpdateAnnouncement/UpdateAnnouncement";
 
 const TeacherRoute = () => {
   return (
@@ -52,7 +53,7 @@ const TeacherRoute = () => {
 
         <Route path="announcements"element={<ProtectedRoute isLogin={true}><Announcement /></ProtectedRoute>}/>
         <Route path="announcements/add"element={<ProtectedRoute isLogin={true}><AddAnnouncement /></ProtectedRoute>}/>
-
+        <Route path="announcements/:id/update"element={<ProtectedRoute isLogin={true}><UpdateAnnouncement /></ProtectedRoute>}/>
 
         <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>
         <Route path="attendance/add"element={<ProtectedRoute isLogin={true}><AddAttendance /></ProtectedRoute>}/>

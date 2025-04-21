@@ -3,10 +3,12 @@ import { Plus } from 'lucide-react';
 import { announcementSocket } from '../../../../app/socket/socket';
 import Breadcrumb from '../../components/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
-import AnnouncementCard from './AnnouncementCard';
+import AnnouncementCard from './components/AnnouncementCard';
 import { AnnouncementType } from '../../types/types';
 import { useOutletContext } from 'react-router-dom';
 import { fetchAnnouncementsByClass } from '../../api/api';
+import { deleteAnnouncement } from '../../api/api';
+import toast from 'react-hot-toast';
 
 
 const Announcements = () => {
@@ -40,6 +42,31 @@ const Announcements = () => {
         setAnnouncements(response.data)
       }
     }
+
+    const deleteAnnouncementHandler = async (announcementId: string) => {
+      const response = await deleteAnnouncement(announcementId)
+      if(response.success){
+          console.log(response, "this is the resposnse........")
+          const filteredAnnouncements = await announcements.filter((announcement) => {
+            if(announcement._id !== announcementId){
+              return announcement
+            }
+          })
+                        toast("Announcement deleted successfully", {
+                              duration: 2000,
+                              position: "bottom-right",
+                              style: {
+                                backgroundColor: "#E7FEE2",
+                                border: "2px, solid, #16A34A",
+                                minWidth: "400px",
+                                color: "black",
+                              },
+                            });
+
+          setAnnouncements(filteredAnnouncements)
+      }
+  
+    }
   
     const breadcrumbItems = [
       { label: 'Classes', href: `/teacher/classes` },
@@ -60,7 +87,7 @@ const Announcements = () => {
       <div className="flex justify-center w-full">
           <div className="space-y-4 w-6/12">
             {announcements.map((announcement) => (
-              <AnnouncementCard key={announcement._id} announcement={announcement} />
+              <AnnouncementCard key={announcement._id} announcement={announcement} classId={classId} deleteAnnouncementHandler={deleteAnnouncementHandler}/>
             ))}
           </div>
 

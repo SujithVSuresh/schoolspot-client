@@ -1,64 +1,82 @@
-import { useState } from "react";
-import { addAnnouncement } from "../../api/api";
+import { useEffect, useState } from "react";
+import { updateAnnouncement, fetchAnnouncementById } from "../../api/api";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { announcementSchema } from "../../validation/formValidation";
 import { useOutletContext } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { announcementSocket } from "../../../../app/socket/socket";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AnnouncementType } from "../../types/types";
 import toast from "react-hot-toast";
 
+const UpdateAnnouncement = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { classId }: { classId: string } = useOutletContext();
+  const announcementId = location.pathname.split("/")[5];
 
+  const [loading, setLoading] = useState(false);
+  const [announcement, setAnnouncement] = useState<AnnouncementType | null>(
+    null
+  );
 
-const AddAnnouncement = () => {
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(false);
-    const { classId }: { classId: string } = useOutletContext();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(announcementSchema),
+  });
 
-  
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: zodResolver(announcementSchema),
-    });
+  useEffect(() => {
+    updateAnnouncementHandler(announcementId);
+  }, [announcementId]);
 
-    const onSubmit = async (data: {title: string; content: string}) => {
-        setLoading(true)
-        const announcement = {
-            ...data,
-            sendTo: [classId]
-        }
-        const response = await addAnnouncement(announcement)
-        if(response.success){
-            
-            announcementSocket.emit('send-announcement', { roomId: `room-${classId}`, message: response.data });
-                  toast("Announcement added successfully", {
-                    duration: 2000,
-                    position: "bottom-right",
-                    style: {
-                      backgroundColor: "#E7FEE2",
-                      border: "2px, solid, #16A34A",
-                      minWidth: "400px",
-                      color: "black",
-                    },
-                  });
-            navigate(`/teacher/classes/${classId}/announcements`)
-        }
-        setLoading(false)
+  const updateAnnouncementHandler = async (announcementId: string) => {
+    const response = await fetchAnnouncementById(announcementId);
+    if (response.success) {
+      setAnnouncement(response.data);
+      const data = response.data;
+      setValue("title", data.title);
+      setValue("content", data.content);
     }
-  
+  };
 
+  const onSubmit = async (data: { title: string; content: string }) => {
+    setLoading(true);
+    const announcementData = {
+      ...data,
+      sendTo: [classId],
+    };
+    const response = await updateAnnouncement(
+      announcement?._id as string,
+      announcementData
+    );
+
+    if (response.success) {
+        toast("Announcement updated successfully", {
+            duration: 2000,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#E7FEE2",
+              border: "2px, solid, #16A34A",
+              minWidth: "400px",
+              color: "black",
+            },
+          });
+      navigate(`/teacher/classes/${classId}/announcements`);
+    }
+    setLoading(false);
+  };
   return (
     <div className="w-full min-h-screen">
       <div className="flex justify-center items-center h-screen">
         <form
-            onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="bg-white rounded-xl p-6 w-5/12 sm:p-8 border"
         >
-          <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
-            Add Announcement
+          <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+            Update Announcement
           </h2>
 
           <div className="space-y-6">
@@ -70,7 +88,7 @@ const AddAnnouncement = () => {
                 Title
               </label>
               <input
-             {...register("title")}
+                {...register("title")}
                 type="text"
                 id="title"
                 name="title"
@@ -78,10 +96,10 @@ const AddAnnouncement = () => {
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
               />
               {errors.title && (
-            <span className="text-red-500 text-sm">
-              {errors.title.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.title.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -92,7 +110,7 @@ const AddAnnouncement = () => {
                 Content
               </label>
               <textarea
-                  {...register("content")}
+                {...register("content")}
                 id="content"
                 name="content"
                 rows={4}
@@ -100,10 +118,10 @@ const AddAnnouncement = () => {
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200"
               />
               {errors.content && (
-            <span className="text-red-500 text-sm">
-              {errors.content.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.content.message}
+                </span>
+              )}
             </div>
 
             <button
@@ -145,4 +163,4 @@ const AddAnnouncement = () => {
   );
 };
 
-export default AddAnnouncement;
+export default UpdateAnnouncement;

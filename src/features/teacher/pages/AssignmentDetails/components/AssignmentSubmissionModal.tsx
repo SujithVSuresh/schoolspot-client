@@ -61,33 +61,35 @@ export default function AssignmentSubmissionModal({ submission, isOpen, onClose,
            </p>
          </div>
             )}
-     
-     <div className="">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">Attachments</h3>
-              <div className="space-y-2">
-                {submission.link && (
-                  <a
-                    href={submission.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                  >
-                    View Submission Link
-                  </a>
-                )}
-                {submission.fileUrl && (
-                  <a
-                    href={submission.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                  >
-                    View Attached File
-                  </a>
-                )}
-              </div>
-            </div>
- 
+   
+   {(submission.link || submission.fileUrl) && (
+  <div>
+    <h3 className="text-sm font-medium text-gray-500 mb-2">Attachments</h3>
+    <div className="space-y-2">
+      {submission.link && (
+        <a
+          href={submission.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+        >
+          View Submission Link
+        </a>
+      )}
+      {submission.fileUrl && (
+        <a
+          href={submission.fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+        >
+          View Attached File
+        </a>
+      )}
+    </div>
+  </div>
+)}
+
 
             <div className="space-y-4">
               <div>

@@ -7,6 +7,7 @@ import { AssignmentType } from "../../types/types";
 import { dateFormatter, timeFormatter } from "../../../../app/utils/formatter";
 import { textFormatter } from "../../../../app/utils/formatter";
 import AssignmentSubmissions from "./components/AssignmentSubmissions";
+import { deleteAssignment } from "../../api/api";
 
 const AssignmentDetails = () => {
   const navigate = useNavigate()
@@ -35,16 +36,23 @@ const AssignmentDetails = () => {
   ];
 
   useEffect(() => {
+    const fetchAssignmentByIdHandler = async () => {
+      const assignment = await fetchAssignmentById(assignmentId);
+  
+      if (assignment.success) {
+        setAssignment(assignment.data.data);
+      }
+    };
     fetchAssignmentByIdHandler();
   }, [assignmentId]);
 
-  const fetchAssignmentByIdHandler = async () => {
-    const assignment = await fetchAssignmentById(assignmentId);
 
-    if (assignment.success) {
-      setAssignment(assignment.data.data);
+  const deleteAssignmentHandler = async (assignmentId: string) => {
+    const response = await deleteAssignment(assignmentId)
+    if(response.success){
+      navigate(`/teacher/classes/${classId}/assignments`)
     }
-  };
+  }
 
   return (
     <div className="p-5">
@@ -97,7 +105,7 @@ const AssignmentDetails = () => {
           </div>
           <div className="flex items-center text-gray-600 gap-2">
                 <button
-                  onClick={() => {}}
+                  onClick={() => deleteAssignmentHandler(assignment?._id as string)}
                   className="flex items-center gap-2 te border-red-500 text-red-500 border-2 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-sm"
                 >
                   <Trash size={16} />

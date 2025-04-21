@@ -109,9 +109,13 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
                   <span className={`px-3 py-1 ${submission.status == "Pending" ? "text-red-700 bg-red-100" : submission.status == "Submitted" ? "text-emerald-700 bg-emerald-100" : "text-yellow-700 bg-yellow-100"}  rounded-full text-sm font-medium`}>
                  {submission.status}
             </span>
-                    <button onClick={() => fetchAssignmentSubmissionByIdHandler(submission._id)} className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors text-sm">
-                      View Details
-                    </button>
+
+               {submission.status != "Pending" && (
+    <button onClick={() => fetchAssignmentSubmissionByIdHandler(submission._id)} className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+    View Details
+  </button>
+               )}
+                
                   </div>
                 </div>
               </div>
