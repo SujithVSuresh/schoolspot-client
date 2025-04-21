@@ -7,6 +7,7 @@ import { useOutletContext } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AnnouncementType } from "../../types/types";
 import toast from "react-hot-toast";
+import { announcementSocket } from "../../../../app/socket/socket";
 
 const UpdateAnnouncement = () => {
   const navigate = useNavigate();
@@ -54,6 +55,10 @@ const UpdateAnnouncement = () => {
     );
 
     if (response.success) {
+        announcementSocket.emit("edit-announcement", {
+            roomId: `room-${classId}`,
+            message: response.data,
+          });
         toast("Announcement updated successfully", {
             duration: 2000,
             position: "bottom-right",

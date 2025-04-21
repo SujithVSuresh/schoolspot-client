@@ -8,53 +8,51 @@ import { useNavigate } from "react-router-dom";
 import { announcementSocket } from "../../../../app/socket/socket";
 import toast from "react-hot-toast";
 
-
-
 const AddAnnouncement = () => {
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(false);
-    const { classId }: { classId: string } = useOutletContext();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { classId }: { classId: string } = useOutletContext();
 
-  
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: zodResolver(announcementSchema),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(announcementSchema),
+  });
 
-    const onSubmit = async (data: {title: string; content: string}) => {
-        setLoading(true)
-        const announcement = {
-            ...data,
-            sendTo: [classId]
-        }
-        const response = await addAnnouncement(announcement)
-        if(response.success){
-            
-            announcementSocket.emit('send-announcement', { roomId: `room-${classId}`, message: response.data });
-                  toast("Announcement added successfully", {
-                    duration: 2000,
-                    position: "bottom-right",
-                    style: {
-                      backgroundColor: "#E7FEE2",
-                      border: "2px, solid, #16A34A",
-                      minWidth: "400px",
-                      color: "black",
-                    },
-                  });
-            navigate(`/teacher/classes/${classId}/announcements`)
-        }
-        setLoading(false)
+  const onSubmit = async (data: { title: string; content: string }) => {
+    setLoading(true);
+    const announcement = {
+      ...data,
+      sendTo: [classId],
+    };
+    const response = await addAnnouncement(announcement);
+    if (response.success) {
+      announcementSocket.emit("send-announcement", {
+        roomId: `room-${classId}`,
+        message: response.data,
+      });
+      toast("Announcement added successfully", {
+        duration: 2000,
+        position: "bottom-right",
+        style: {
+          backgroundColor: "#E7FEE2",
+          border: "2px, solid, #16A34A",
+          minWidth: "400px",
+          color: "black",
+        },
+      });
+      navigate(`/teacher/classes/${classId}/announcements`);
     }
-  
+    setLoading(false);
+  };
 
   return (
     <div className="w-full min-h-screen">
       <div className="flex justify-center items-center h-screen">
         <form
-            onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="bg-white rounded-xl p-6 w-5/12 sm:p-8 border"
         >
           <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
@@ -70,7 +68,7 @@ const AddAnnouncement = () => {
                 Title
               </label>
               <input
-             {...register("title")}
+                {...register("title")}
                 type="text"
                 id="title"
                 name="title"
@@ -78,10 +76,10 @@ const AddAnnouncement = () => {
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
               />
               {errors.title && (
-            <span className="text-red-500 text-sm">
-              {errors.title.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.title.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -92,7 +90,7 @@ const AddAnnouncement = () => {
                 Content
               </label>
               <textarea
-                  {...register("content")}
+                {...register("content")}
                 id="content"
                 name="content"
                 rows={4}
@@ -100,10 +98,10 @@ const AddAnnouncement = () => {
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200"
               />
               {errors.content && (
-            <span className="text-red-500 text-sm">
-              {errors.content.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.content.message}
+                </span>
+              )}
             </div>
 
             <button
