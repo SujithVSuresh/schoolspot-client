@@ -27,11 +27,9 @@ const AddAssignment = () => {
   });
 
   const onSubmit = async (data: AddAssignmentType) => {
-    console.log(data, "shiyoooooooo");
     const response = await addAssignment({...data, subjectId, classId})
 
     if(response.success){
-      console.log(response, "response shuu")
       navigate(`/teacher/classes/${classId}/assignments`)
     }
   }

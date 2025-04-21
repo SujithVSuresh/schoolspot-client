@@ -20,6 +20,7 @@ import ExamResult from "../pages/ExamResult/ExamResult";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import UpdateStudyMaterial from "../pages/UpdateStudyMaterial/UpdateStudyMaterial";
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
+import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
 
 const TeacherRoute = () => {
   return (
@@ -50,6 +51,8 @@ const TeacherRoute = () => {
         <Route path="study-materials/:id/update"element={<ProtectedRoute isLogin={true}><UpdateStudyMaterial /></ProtectedRoute>}/>
 
         <Route path="announcements"element={<ProtectedRoute isLogin={true}><Announcement /></ProtectedRoute>}/>
+        <Route path="announcements/add"element={<ProtectedRoute isLogin={true}><AddAnnouncement /></ProtectedRoute>}/>
+
 
         <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>
         <Route path="attendance/add"element={<ProtectedRoute isLogin={true}><AddAttendance /></ProtectedRoute>}/>

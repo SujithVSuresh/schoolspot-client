@@ -133,3 +133,11 @@ export interface AssignmentSubmissionType {
     roll: number;
   };
 }
+
+export interface AnnouncementType {
+  _id: string;
+  title: string;
+  content: string;
+  author: string;
+  createdAt: string;
+}

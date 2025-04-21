@@ -1,4 +1,4 @@
-import { AddAssignmentType, TeacherSigninFormType } from "../types/types";
+import { AddAssignmentType, TeacherSigninFormType, AnnouncementType } from "../types/types";
 import axiosInstance from "../../../app/api/axiosInstance";
 import axios from "axios";
 import { AttendanceType } from "../types/types";
@@ -311,6 +311,37 @@ export const fetchTeacherProfile = async () => {
 export const changePassword = async (pwData: ChangePasswordType) => {
     try{
         const {data} = await axiosInstance.patch(`http://localhost:3000/auth/change-password`, pwData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const fetchAnnouncementsByClass = async (classId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/${classId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const addAnnouncement = async (announcementData: AnnouncementType) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement`, announcementData, {
             headers: {
                 'x-user-role': 'teacher'
             }
