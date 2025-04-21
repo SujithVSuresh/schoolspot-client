@@ -232,3 +232,18 @@ export const fetchInvoicesByStudentId = async () => {
     }
 }
 
+
+export const fetchAnnouncementsByClass = async (classId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/${classId}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}

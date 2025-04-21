@@ -13,10 +13,7 @@ const Announcements = () => {
   const navigate = useNavigate()
   const { classId }: { classId: string } = useOutletContext();
 
-    // const [searchQuery, setSearchQuery] = useState('');
     const [announcements, setAnnouncements] = useState<AnnouncementType[]>([])
-
-    const roomId = 'room123';
 
     useEffect(() => {
        fetchAnnouncementsHandler(classId)
@@ -28,12 +25,12 @@ const Announcements = () => {
 
       announcementSocket.on('connect', () => {
         console.log('Connected:', announcementSocket.id);
-        announcementSocket.emit('join-room', roomId);
+        announcementSocket.emit('join-room', `room-${classId}`);
       });
 
       return () => {
-        announcementSocket.emit('leave-room', roomId);
-        announcementSocket.disconnect()
+        // announcementSocket.emit('leave-room', `room-${classId}`);
+        // announcementSocket.disconnect()
       }
     }, [])
 
@@ -41,7 +38,6 @@ const Announcements = () => {
       const response = await fetchAnnouncementsByClass(classId)
       if(response.success){
         setAnnouncements(response.data)
-
       }
     }
   
@@ -61,8 +57,8 @@ const Announcements = () => {
         <span>Add</span>
       </button>
       </div>
-      <div className="flex justify-center">
-          <div className="space-y-4">
+      <div className="flex justify-center w-full">
+          <div className="space-y-4 w-6/12">
             {announcements.map((announcement) => (
               <AnnouncementCard key={announcement._id} announcement={announcement} />
             ))}

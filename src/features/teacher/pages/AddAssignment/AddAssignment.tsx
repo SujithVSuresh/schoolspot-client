@@ -8,6 +8,7 @@ import { AddAssignmentType } from "../../types/types";
 import { addAssignment } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
+
 const AddAssignment = () => {
   const navigate = useNavigate()
   const {subjectId, classId}: {subjectId: string, classId: string} = useOutletContext()

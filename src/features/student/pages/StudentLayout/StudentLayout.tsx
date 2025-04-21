@@ -6,49 +6,72 @@ import { fetchStudentProfile } from "../../api/api";
 import { removeStudent } from "../../redux/studentSlice";
 import { useDispatch } from "react-redux";
 import NavLink from "./components/NavLink";
-
+import { announcementSocket } from "../../../../app/socket/socket";
 
 const StudentLayout = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [studentProfile, setStudentProfile] = useState<{
-    _id: string,
-    fullName: string,
-    class: string,
-    section: string,
-    roll: number,
-    profilePhoto: string,
-    classId: string
-}>({
-  _id: "",
-  fullName:"",
-  class: "",
-  section: "",
-  roll: 0,
-  profilePhoto: "",
-  classId: ""
-})
+    _id: string;
+    fullName: string;
+    class: string;
+    section: string;
+    roll: number;
+    profilePhoto: string;
+    classId: string;
+  } | null>(null);
+  const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
 
-useEffect(() => {
-  fetchStudentProfileHandler()
-}, [])
+  useEffect(() => {
+    fetchStudentProfileHandler();
+  }, []);
 
+  useEffect(() => {
+    if (studentProfile?.classId) {
+      announcementSocket.connect();
 
-const fetchStudentProfileHandler = async () => {
-  const response = await fetchStudentProfile("null")
-  setStudentProfile({
-    _id: response.data._id,
-    fullName:response.data.fullName,
-    class: response.data.class,
-    section: response.data.section,
-    roll: response.data.roll,
-    profilePhoto: response.data.profilePhoto,
-    classId: response.data.classId
-  })
-}
+      announcementSocket.on("connect", () => {
+        console.log("Connected:", announcementSocket.id);
+        announcementSocket.emit("join-room", `room-${studentProfile?.classId}`);
+      });
 
-const handleLogout = () => {
-  dispatch(removeStudent());
-};
+      announcementSocket.on("receive-announcement", (message) => {
+        console.log("vavava", message);
+        if (message) {
+          setNewAnnouncementBadgeCount((prev) => prev + 1);
+        }
+      });
+
+      return () => {
+        announcementSocket.emit(
+          "leave-room",
+          `room-${studentProfile?.classId}`
+        );
+        announcementSocket.off("receive-announcement");
+        announcementSocket.disconnect();
+      };
+    }
+  }, [studentProfile?.classId]);
+
+  const fetchStudentProfileHandler = async () => {
+    const response = await fetchStudentProfile("null");
+    setStudentProfile({
+      _id: response.data._id,
+      fullName: response.data.fullName,
+      class: response.data.class,
+      section: response.data.section,
+      roll: response.data.roll,
+      profilePhoto: response.data.profilePhoto,
+      classId: response.data.classId,
+    });
+  };
+
+  const handleLogout = () => {
+    dispatch(removeStudent());
+  };
+
+  const setAnnouncementBadgeHandler = (value: number) => {
+    setNewAnnouncementBadgeCount(value);
+  };
 
   return (
     <>
@@ -63,8 +86,9 @@ const handleLogout = () => {
         >
           Logout
         </button> */}
-        <a onClick={() => handleLogout()} className="underline">Logout</a>
-
+        <a onClick={() => handleLogout()} className="underline">
+          Logout
+        </a>
       </header>
 
       <section>
@@ -82,7 +106,7 @@ const handleLogout = () => {
               <div className="relative">
                 <img
                   className="h-32 w-32 rounded-full object-cover ring-4 ring-white bg-white"
-                  src={studentProfile.profilePhoto}
+                  src={studentProfile?.profilePhoto}
                   alt="Profile"
                 />
               </div>
@@ -90,10 +114,13 @@ const handleLogout = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h1 className="text-2xl font-semibold text-gray-900 truncate">
-                      {studentProfile.fullName}
+                      {studentProfile?.fullName}
                     </h1>
                     <div className="flex items-center mt-1 text-gray-500 text-sm">
-                      <span>Class: {studentProfile.class} {studentProfile.section} - Roll no: {studentProfile.roll}</span>
+                      <span>
+                        Class: {studentProfile?.class} {studentProfile?.section}{" "}
+                        - Roll no: {studentProfile?.roll}
+                      </span>
                       <span className="mx-2">•</span>
                       <div className="flex items-center">
                         <School className="w-4 h-4 mr-1" />
@@ -109,10 +136,13 @@ const handleLogout = () => {
             </div>
 
             {/* Navigation */}
-            <NavLink />
+            <NavLink
+              announcementBadge={newAnnouncementBadgeCount}
+              setAnnouncementBadge={setAnnouncementBadgeHandler}
+            />
 
             <div className="py-5 w-full flex justify-between border-t">
-              <Outlet context={{classId: studentProfile.classId}}/>
+              <Outlet context={{ classId: studentProfile?.classId }} />
             </div>
           </div>
         </div>

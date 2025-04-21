@@ -1,4 +1,4 @@
-import { AddAssignmentType, TeacherSigninFormType, AnnouncementType } from "../types/types";
+import { AddAssignmentType, TeacherSigninFormType } from "../types/types";
 import axiosInstance from "../../../app/api/axiosInstance";
 import axios from "axios";
 import { AttendanceType } from "../types/types";
@@ -339,7 +339,7 @@ export const fetchAnnouncementsByClass = async (classId: string) => {
 }
 
 
-export const addAnnouncement = async (announcementData: AnnouncementType) => {
+export const addAnnouncement = async (announcementData: {title: string; content: string, sendTo: string[]}) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement`, announcementData, {
             headers: {

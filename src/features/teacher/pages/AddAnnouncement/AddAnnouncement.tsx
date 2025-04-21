@@ -1,13 +1,48 @@
 import { useState } from "react";
 import { addAnnouncement } from "../../api/api";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { announcementSchema } from "../../validation/formValidation";
+import { useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { announcementSocket } from "../../../../app/socket/socket";
 
 const AddAnnouncement = () => {
-  const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const { classId }: { classId: string } = useOutletContext();
+
+  
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      resolver: zodResolver(announcementSchema),
+    });
+
+    const onSubmit = async (data: {title: string; content: string}) => {
+        setLoading(true)
+        const announcement = {
+            ...data,
+            sendTo: [classId]
+        }
+        const response = await addAnnouncement(announcement)
+        console.log("ressss", response)
+
+        if(response.success){
+            announcementSocket.emit('send-announcement', { roomId: `room-${classId}`, message: response.data });
+            navigate(`/teacher/classes/${classId}/announcements`)
+        }
+        setLoading(false)
+    }
+  
+
   return (
     <div className="w-full min-h-screen">
       <div className="flex justify-center items-center h-screen">
         <form
-          //   onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
           className="bg-white rounded-xl p-6 w-5/12 sm:p-8 border"
         >
           <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
@@ -23,17 +58,18 @@ const AddAnnouncement = () => {
                 Title
               </label>
               <input
+             {...register("title")}
                 type="text"
                 id="title"
                 name="title"
                 placeholder="Enter announcement title"
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
               />
-              {/* {errors.title && (
+              {errors.title && (
             <span className="text-red-500 text-sm">
               {errors.title.message}
             </span>
-          )} */}
+          )}
             </div>
 
             <div>
@@ -44,18 +80,18 @@ const AddAnnouncement = () => {
                 Content
               </label>
               <textarea
-                //   {...register("description")}
+                  {...register("content")}
                 id="content"
                 name="content"
                 rows={4}
                 placeholder="Enter announcement content"
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200"
               />
-              {/* {errors.description && (
+              {errors.content && (
             <span className="text-red-500 text-sm">
-              {errors.description.message}
+              {errors.content.message}
             </span>
-          )} */}
+          )}
             </div>
 
             <button
@@ -84,10 +120,10 @@ const AddAnnouncement = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Changing Password...
+                  Submitting...
                 </span>
               ) : (
-                "Change Password"
+                "Submit"
               )}
             </button>
           </div>
