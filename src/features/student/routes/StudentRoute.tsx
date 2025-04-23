@@ -16,6 +16,7 @@ import StudyMaterialDetails from "../pages/StudyMaterialDetails/StudyMaterialDet
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import Announcements from "../pages/Announcements/Announcements";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import InvoiceDetailsPage from "../pages/InvoiceDetails/InvoiceDetails";
 
 const StudentRoute = () => {
   return (
@@ -43,6 +44,7 @@ const StudentRoute = () => {
         
         <Route path="attendance" element={<Attendance />} />
         <Route path="invoices" element={<Invoices />} />
+        <Route path="invoices/:invoiceId" element={<InvoiceDetailsPage />} />
         <Route path="exam-results" element={<ExamResults />} />
         <Route path="announcements" element={<Announcements />} />
         <Route path="profile" element={<StudentProfile />} />

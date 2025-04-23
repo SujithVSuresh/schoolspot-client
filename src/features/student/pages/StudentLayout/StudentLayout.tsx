@@ -92,7 +92,7 @@ const StudentLayout = () => {
 
       <section>
         <div className="relative bg-purple-100">
-          <div className="h-36  bg-gray-50 flex justify-end">
+          <div className="h-28 bg-blue-100 flex justify-end">
             {/* <img
                   className="w-50 h-40 object-cover mr-20"
                   src={studentsillu}
@@ -100,7 +100,7 @@ const StudentLayout = () => {
                 /> */}
           </div>
 
-          <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl absolute w-full top-16 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-end sm:space-x-5 mb-8">
               <div className="relative">
                 <img

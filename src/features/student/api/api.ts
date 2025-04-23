@@ -293,3 +293,19 @@ export const announcementPinHandler = async (announcementId: string, status: "pi
         return { success: false, error: message }
     }
 }
+
+export const createPaymentRequest = async (invoiceId: string, amount: number) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/invoice/invoice-session`, {invoiceId, amount}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+

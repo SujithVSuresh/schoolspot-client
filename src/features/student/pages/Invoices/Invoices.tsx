@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { 
   Search, 
   ChevronDown, 
-  Download,
-  ExternalLink,
   CheckCircle,
   Clock,
   AlertCircle,
@@ -11,6 +9,7 @@ import {
 } from 'lucide-react';
 import { fetchInvoicesByStudentId } from '../../api/api';
 import { dateFormatter, formatCurrency } from '../../../../app/utils/formatter';
+import { createPaymentRequest } from '../../api/api';
 
 type Status = 'Paid' | 'Unpaid' | 'overdue';
 
@@ -71,6 +70,14 @@ const Invoices = () => {
           return <AlertCircle className="w-4 h-4" />;
       }
     };
+
+    const handlePayment = async (invoiceId: string, amount: number) => {
+      const response = await createPaymentRequest(invoiceId, amount)
+      console.log(response)
+      if(response.success){
+        window.location.href = response.data.url
+      }
+    }
   
 
 
@@ -78,8 +85,8 @@ const Invoices = () => {
     <div className="min-h-screen w-full">
 
 <div className='w-full'>
-      <div className="mx-auto px-4 mt-10">
-        <div className="rounded-xl mb-6">
+      <div className="mx-auto px-4 mt-5">
+        <div className="rounded-xl mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
   
             <div className="flex items-center space-x-4">
@@ -149,14 +156,17 @@ const Invoices = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end space-x-3">
+                      {/* <div className="flex justify-end space-x-3">
                         <button className="text-gray-400 hover:text-gray-500">
                           <Download className="w-5 h-5" />
                         </button>
                         <button className="text-indigo-600 hover:text-indigo-700">
                           <ExternalLink className="w-5 h-5" />
                         </button>
-                      </div>
+                      </div> */}
+                      <button onClick={() => handlePayment(invoice.invoiceNumber, invoice.totalAmount)} className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600">
+                        Pay
+                      </button>
                     </td>
                   </tr>
                 ))}
