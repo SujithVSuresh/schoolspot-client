@@ -48,41 +48,7 @@ const Invoices = () => {
         setInvoices(invoices.data)
       }
     }
-  
-    // const invoices: Invoice[] = [
-    //   {
-    //     id: 'INV-2024-001',
-    //     date: '2024-01-15',
-    //     dueDate: '2024-02-15',
-    //     amount: 9500.00,
-    //     description: 'Spring Semester 2024 Tuition and Fees',
-    //     status: 'paid'
-    //   },
-    //   {
-    //     id: 'INV-2024-002',
-    //     date: '2024-02-01',
-    //     dueDate: '2024-03-01',
-    //     amount: 350.00,
-    //     description: 'Laboratory Equipment Fee',
-    //     status: 'pending'
-    //   },
-    //   {
-    //     id: 'INV-2023-012',
-    //     date: '2023-12-15',
-    //     dueDate: '2024-01-15',
-    //     amount: 250.00,
-    //     description: 'Library Access Fee',
-    //     status: 'overdue'
-    //   },
-    //   {
-    //     id: 'INV-2023-011',
-    //     date: '2023-11-01',
-    //     dueDate: '2023-12-01',
-    //     amount: 8500.00,
-    //     description: 'Fall Semester 2023 Tuition',
-    //     status: 'paid'
-    //   }
-    // ];
+
   
     const getStatusColor = (status: Status) => {
       switch (status) {
@@ -106,23 +72,13 @@ const Invoices = () => {
       }
     };
   
-    // const filteredInvoices = invoices
-    //   .filter(invoice => 
-    //     invoice.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //     invoice.description.toLowerCase().includes(searchTerm.toLowerCase())
-    //   )
-    //   .filter(invoice => 
-    //     statusFilter === 'all' ? true : invoice.status === statusFilter
-    //   );
-  
 
-  
 
   return (
-    <div className="min-h-screen py- w-full">
+    <div className="min-h-screen w-full">
 
-<div className='w-full flex justify-center'>
-      <div className="max-w-7xl mx-auto px-4 mt-10">
+<div className='w-full'>
+      <div className="mx-auto px-4 mt-10">
         <div className="rounded-xl mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
   

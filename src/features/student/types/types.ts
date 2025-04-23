@@ -13,3 +13,7 @@ export interface AnnouncementType {
     author: string;
     createdAt: string;
   }
+
+  export type AnnouncementDetailsType = AnnouncementType & {
+    isPinned: boolean
+  }

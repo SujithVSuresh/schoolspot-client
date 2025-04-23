@@ -8,8 +8,8 @@ interface InfoCardProps {
 
 const ProfileCard = ({label, value, icon: Icon}: InfoCardProps) => {
   return (
-    <div className="flex items-center gap-3 p-4 rounded-lg overflow-hidden">
-    <div className='bg-gray-100 p-4 rounded-full'>
+    <div className="flex items-center gap-3 py-4 rounded-lg overflow-hidden">
+    <div className='bg-gray-50 p-4 rounded-full'>
     <Icon className="w-5 h-5 text-blue-500" />
     </div>
     <div>

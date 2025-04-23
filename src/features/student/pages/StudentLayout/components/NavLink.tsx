@@ -5,6 +5,8 @@ const NavLink = ({announcementBadge, setAnnouncementBadge}: {announcementBadge: 
   const navigate = useNavigate()
   const pathName = location.pathname.split("/")
 
+  console.log(announcementBadge, "laavuu123")
+
   const navItems = [
       { name: "Home", link: "home" },
       { name: "Subjects", link: "subjects" },

@@ -6,8 +6,9 @@ import {
   import { useEffect, useState } from 'react';
   import { fetchAttendanceByMonth } from '../../../api/api';
   import { dateFormatter } from '../../../../../app/utils/formatter';
+  import DatePicker from "react-datepicker";
 
-const AttendanceList = ({date}: {date: string}) => {
+const AttendanceList = ({date, setSelectedDate}: {date: string; setSelectedDate: (data: Date) => void}) => {
 
     const [attendanceData, setAttendanceData] = useState<{
         _id: string;
@@ -54,6 +55,18 @@ const AttendanceList = ({date}: {date: string}) => {
 
   return (
     <div>
+                    <div className="flex justify-between">
+        <h2 className="text-xl font-medium text-gray-700">Attendance</h2>
+        <DatePicker
+          selected={new Date(date)}
+          onChange={(date) => setSelectedDate(date as Date)}
+          dateFormat="MM/yyyy"
+          showMonthYearPicker
+          className="custom-datepicker-input mb-5"
+        />
+      </div>
+
+  
     <div className="overflow-hidden rounded-xl border border-gray-200">
 
     <table className="min-w-full divide-y divide-gray-200">

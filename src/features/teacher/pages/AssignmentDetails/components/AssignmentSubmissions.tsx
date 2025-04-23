@@ -54,8 +54,6 @@ const AssignmentSubmissions = ({assignmentId}: {assignmentId: string}) => {
     const fetchAssignmentSubmissionByIdHandler = async (submissionId: string) => {
       const response = await fetchAssignmentSubmissionById(submissionId)
        
-      console.log(response, 'response of submiii')
-
       if(response.success){
           setSubmissionById(response.data.data)
           setIsModalOpen(true)

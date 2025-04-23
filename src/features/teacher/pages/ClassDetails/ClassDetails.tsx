@@ -1,14 +1,20 @@
 import ClassNavLink from "./components/ClassNavLink"
 import { Outlet } from "react-router-dom";
-import { Users, UserCircle, School, UserCheck, UserX, Calendar, BookOpen } from 'lucide-react';
+import { Users, UserCircle, School, UserCheck, Info, UserX, Calendar, BookOpen } from 'lucide-react';
 import { getClassById } from "../../api/api";
 import { useEffect, useState } from "react";
 import { ClassType } from "../../types/types";
 import { useLocation } from "react-router-dom";
 import { textFormatter } from "../../../../app/utils/formatter";
+import { useDispatch, useSelector } from "react-redux";
+import { setAttendanceCount } from "../../redux/attendanceSlice";
+import { RootState } from "../../../../app/store";
+
 
 const ClassDetails = () => {
+  const dispatch = useDispatch()
   const location = useLocation()
+  const attendance = useSelector((state: RootState) => state.attendance)
 
   const classId = location.pathname.split("/")[3]
 
@@ -34,16 +40,19 @@ const ClassDetails = () => {
   })
 
   useEffect(() => {
+    const fetchClassDetails = async () => {
+      const response = await getClassById(classId)
+      if(response.success){
+        const data = response.data.data
+        dispatch(setAttendanceCount({presentCount: data.attendance.presentCount, absentCount: data.attendance.absentCount}))
+        setClassDetails(data)
+    }
+  }
     fetchClassDetails()
 
-  }, [classId])
+  }, [classId, dispatch])
 
-  const fetchClassDetails = async () => {
-    const response = await getClassById(classId)
-    if(response.success){
-      setClassDetails(response.data.data)
-  }
-}
+
 
   return (
     <>
@@ -84,18 +93,21 @@ const ClassDetails = () => {
         </div>
       </div>
 
+    {(attendance.presentCount != 0 && attendance.absentCount != 0) && (
       <div className="space-y-4 border p-5 rounded-lg">
-        <div className="flex items-center text-gray-700">
-          <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
-            <UserCheck className="w-5 h-5 text-gray-500" />
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Present</p>
-            <p className="font-medium">{classDetails.attendance.presentCount}</p>
-          </div>
+      <div className="flex items-center text-gray-700">
+        <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
+          <UserCheck className="w-5 h-5 text-gray-500" />
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Present</p>
+          <p className="font-medium">{attendance.presentCount}</p>
         </div>
       </div>
+    </div>
+    ) }
 
+{(attendance.presentCount != 0 && attendance.absentCount != 0) && (
       <div className="space-y-4 border p-5 rounded-lg">
         <div className="flex items-center text-gray-700">
           <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
@@ -103,10 +115,12 @@ const ClassDetails = () => {
           </div>
           <div>
             <p className="text-sm text-gray-500">Absent</p>
-            <p className="font-medium">{classDetails.attendance.absentCount}</p>
+            <p className="font-medium">{attendance.absentCount}</p>
           </div>
         </div>
       </div>
+          ) }
+
 
       <div className="space-y-4 border p-5 rounded-lg">
         <div className="flex items-center text-gray-700">
@@ -131,6 +145,20 @@ const ClassDetails = () => {
           </div>
         </div>
       </div>
+
+      {(attendance.presentCount == 0 && attendance.absentCount == 0) && (
+      <div className="space-y-4 border p-5 rounded-lg">
+        <div className="flex items-center text-gray-700">
+          <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
+            <Info className="w-5 h-5 text-gray-500" />
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Info</p>
+            <p className="font-medium">Attendance not taken</p>
+          </div>
+        </div>
+      </div>
+          ) }
     </div>
       <ClassNavLink />
 

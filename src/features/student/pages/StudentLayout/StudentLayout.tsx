@@ -3,13 +3,13 @@ import { School } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchStudentProfile } from "../../api/api";
-import { removeStudent } from "../../redux/studentSlice";
-import { useDispatch } from "react-redux";
 import NavLink from "./components/NavLink";
 import { announcementSocket } from "../../../../app/socket/socket";
+import { useNavigate } from "react-router-dom";
 
 const StudentLayout = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  
   const [studentProfile, setStudentProfile] = useState<{
     _id: string;
     fullName: string;
@@ -19,6 +19,7 @@ const StudentLayout = () => {
     profilePhoto: string;
     classId: string;
   } | null>(null);
+
   const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
 
   useEffect(() => {
@@ -65,9 +66,7 @@ const StudentLayout = () => {
     });
   };
 
-  const handleLogout = () => {
-    dispatch(removeStudent());
-  };
+
 
   const setAnnouncementBadgeHandler = (value: number) => {
     setNewAnnouncementBadgeCount(value);
@@ -86,9 +85,9 @@ const StudentLayout = () => {
         >
           Logout
         </button> */}
-        <a onClick={() => handleLogout()} className="underline">
+        {/* <a onClick={() => handleLogout()} className="underline">
           Logout
-        </a>
+        </a> */}
       </header>
 
       <section>
@@ -128,7 +127,7 @@ const StudentLayout = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
+                  <button onClick={() => navigate('/student/profile')} className="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
                     View Profile
                   </button>
                 </div>

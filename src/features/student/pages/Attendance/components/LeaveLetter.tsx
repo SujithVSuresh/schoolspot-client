@@ -4,25 +4,25 @@ import { useState, useEffect } from "react";
 import { dateFormatter } from "../../../../../app/utils/formatter";
 import { createLeaveLetter } from "../../../api/api";
 
-const getStatusConfig = (status: string) => {
-  switch (status) {
-    case 'approved':
-      return {
-        icon: <CheckCircle className="w-4 h-4" />,
-        color: 'bg-green-50 text-green-700 border-green-100'
-      };
-    case 'rejected':
-      return {
-        icon: <XCircle className="w-4 h-4" />,
-        color: 'bg-red-50 text-red-700 border-red-100'
-      };
-    default:
-      return {
-        icon: <Clock className="w-4 h-4" />,
-        color: 'bg-yellow-50 text-yellow-700 border-yellow-100'
-      };
-  }
-};
+// const getStatusConfig = (status: string) => {
+//   switch (status) {
+//     case 'approved':
+//       return {
+//         icon: <CheckCircle className="w-4 h-4" />,
+//         color: 'bg-green-50 text-green-700 border-green-100'
+//       };
+//     case 'rejected':
+//       return {
+//         icon: <XCircle className="w-4 h-4" />,
+//         color: 'bg-red-50 text-red-700 border-red-100'
+//       };
+//     default:
+//       return {
+//         icon: <Clock className="w-4 h-4" />,
+//         color: 'bg-yellow-50 text-yellow-700 border-yellow-100'
+//       };
+//   }
+// };
 
 const LeaveLetter = ({date, classId}: {date:string, classId: string}) => {
 
@@ -71,7 +71,7 @@ const LeaveLetter = ({date, classId}: {date:string, classId: string}) => {
 
    
   return (
-    <div className="flex-1 w-full border-l px-5 ml-10 pl-10">
+    <div className="flex-1 w-full border-l px-5 ml-10 pr-10 pl-10">
       <div className="mb-5 flex justify-between">
         <h2 className="text-xl font-medium text-gray-700">Leave Letters</h2>
         <button

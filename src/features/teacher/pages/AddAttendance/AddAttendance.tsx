@@ -8,8 +8,11 @@ import { StudentDataResponseType } from "../../types/types";
 import { dateFormatter } from "../../../../app/utils/formatter";
 import toast from "react-hot-toast";
 import { addAttendance } from "../../api/api";
+import { useDispatch } from "react-redux";
+import { setAttendanceCount } from "../../redux/attendanceSlice";
 
 const AddAttendance = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const { classId }: { classId: string } = useOutletContext();
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +39,7 @@ const AddAttendance = () => {
     };
 
     fetchStudents();
-  }, []);
+  }, [classId]);
 
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },
@@ -66,7 +69,7 @@ const AddAttendance = () => {
   };
 
   const handleAttendanceSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
     setLoading(true);
@@ -81,9 +84,11 @@ const AddAttendance = () => {
 
     const response = await addAttendance(data);
 
-    console.log(response, "vaaaa");
+    console.log(response, "this is the attendance response......");
 
     if (response.success) {
+      dispatch(setAttendanceCount({presentCount: response.data.presentCount, absentCount: response.data.absentCount}))
+      
       toast("Attendance marked successfully", {
         duration: 8000,
         position: "bottom-right",

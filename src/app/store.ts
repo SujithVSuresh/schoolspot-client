@@ -6,6 +6,7 @@ import {adminReducer} from '../features/admin/redux/adminSlice.ts'
 import { schoolProfileReducer } from "../features/admin/redux/schoolProfileSlice.ts";
 import { studentReducer } from "../features/student/redux/studentSlice.tsx";
 import { teacherReducer } from "../features/teacher/redux/teacherSlice.ts";
+import { attendanceReducer } from "../features/teacher/redux/attendanceSlice.ts";
 
 const adminPersistConfig = {
     key: "admin",
@@ -41,7 +42,8 @@ export const store = configureStore({
         admin: persistedAdminReducer,
         student: persistedStudentReducer,
         teacher: persistedTeacherReducer,
-        schoolProfile: persistedSchoolProfileReducer
+        schoolProfile: persistedSchoolProfileReducer,
+        attendance: attendanceReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

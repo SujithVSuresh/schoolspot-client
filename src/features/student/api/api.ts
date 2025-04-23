@@ -247,3 +247,49 @@ export const fetchAnnouncementsByClass = async (classId: string) => {
         return { success: false, error: message }
     }
 }
+
+export const fetchPinnedAnnouncements = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/pin`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const fetchAnnouncementById = async (announcementId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${announcementId}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const announcementPinHandler = async (announcementId: string, status: "pin" | "unpin") => {
+    console.log(announcementId, status, "chiriii")
+    try{
+        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${announcementId}/pin`, {status}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
