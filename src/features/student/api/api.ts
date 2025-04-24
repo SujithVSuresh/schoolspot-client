@@ -233,6 +233,22 @@ export const fetchInvoicesByStudentId = async () => {
 }
 
 
+export const fetchInvoiceById = async (invoiceId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/invoice/${invoiceId}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const fetchAnnouncementsByClass = async (classId: string) => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/${classId}`, {
@@ -297,6 +313,21 @@ export const announcementPinHandler = async (announcementId: string, status: "pi
 export const createPaymentRequest = async (invoiceId: string, amount: number) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/invoice/invoice-session`, {invoiceId, amount}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const fetchPaymentsByInvoiceId = async (invoiceId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/payment/invoice/${invoiceId}`, {
             headers: {
                 'x-user-role': 'student'
             }

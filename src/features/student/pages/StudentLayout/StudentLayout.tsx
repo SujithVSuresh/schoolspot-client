@@ -1,4 +1,5 @@
 import logo from "../../../../assets/images/dotlogo.png";
+import cover from "../../../../assets/images/coverimg.jpg";
 import { School } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -75,7 +76,7 @@ const StudentLayout = () => {
   return (
     <>
       <header
-        className={`bg-blue-20w-full py-4 px-10 flex items-center justify-between`}
+        className={`bg-blue-50 border-b w-full py-4 px-10 flex items-center justify-between`}
       >
         <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
 
@@ -92,15 +93,15 @@ const StudentLayout = () => {
 
       <section>
         <div className="relative bg-purple-100">
-          <div className="h-28 bg-blue-100 flex justify-end">
+          <div className="h-36 bg-blue-100 flex justify-end">
             {/* <img
-                  className="w-50 h-40 object-cover mr-20"
-                  src={studentsillu}
+                  className="w-full object-cover"
+                  src={cover}
                   alt="Profile"
                 /> */}
           </div>
 
-          <div className="max-w-7xl absolute w-full top-16 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-end sm:space-x-5 mb-8">
               <div className="relative">
                 <img

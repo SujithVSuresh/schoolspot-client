@@ -30,7 +30,7 @@ const Attendance = () => {
 
   return (
     <div className="w-full min-h-screen">
-              <div className="bg-white rounded-lg p-1 border inline-flex space-x-1">
+              {/* <div className="bg-white rounded-lg p-1 border inline-flex space-x-1">
           {subjectItems.map((item) => (
             <button
               onClick={() =>
@@ -45,7 +45,7 @@ const Attendance = () => {
               {item.name}
             </button>
           ))}
-        </div>
+        </div> */}
         <div className="flex w-full">
           <div className="w-5/12">
             <AttendanceList date={selectedDate.toISOString()} setSelectedDate={setSelectedDate} />

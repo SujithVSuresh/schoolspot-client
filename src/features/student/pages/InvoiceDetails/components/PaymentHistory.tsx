@@ -1,49 +1,19 @@
-import React from 'react';
 import { CreditCard, Calendar, ChevronsUp } from 'lucide-react';
+import { PaymentType } from '../../../types/types';
+import StatusBadge from './StatusBadge';
+import { dateFormatter } from '../../../../../app/utils/formatter';
 
-const PaymentHistory: React.FC = () => {
-  const totalPaid = 1500;
-  const totalAmount = 2000;
-  const remainingAmount = totalAmount - totalPaid;
-  const paymentPercentage = ((totalPaid / totalAmount) * 100).toFixed(0);
-
-  const formatCurrency = (amount: number) =>
-    `$${amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-
-  const formatDate = (date: string) =>
-    new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+const PaymentHistory = ({paymentHistory}: {paymentHistory: PaymentType[]}) => {
 
   const getPaymentMethodIcon = (method: string) => {
     switch (method) {
-      case 'Credit Card':
+      case 'Card':
         return <CreditCard size={16} className="text-gray-500" />;
       default:
         return <ChevronsUp size={16} className="text-gray-500" />;
     }
   };
 
-  const payments = [
-    {
-      _id: '1',
-      paymentDate: '2025-03-10',
-      paymentMethod: 'Credit Card',
-      transactionId: 'TXN123456789',
-      amountPaid: 1000,
-      status: 'Completed',
-    },
-    {
-      _id: '2',
-      paymentDate: '2025-04-05',
-      paymentMethod: 'Credit Card',
-      transactionId: 'TXN987654321',
-      amountPaid: 500,
-      status: 'Completed',
-    },
-  ];
 
   return (
     <div className="bg-white rounded-lg border p-6 mb-6">
@@ -51,7 +21,7 @@ const PaymentHistory: React.FC = () => {
 
 
 
-      {payments.length > 0 ? (
+      {paymentHistory.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -74,7 +44,7 @@ const PaymentHistory: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment) => (
+              {paymentHistory.map((payment) => (
                 <tr
                   key={payment._id}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150"
@@ -82,7 +52,7 @@ const PaymentHistory: React.FC = () => {
                   <td className="py-3 px-4 text-gray-800">
                     <div className="flex items-center">
                       <Calendar size={16} className="text-gray-500 mr-2" />
-                      {formatDate(payment.paymentDate)}
+                      {dateFormatter(String(payment?.paymentDate))}
                     </div>
                   </td>
                   <td className="py-3 px-4 text-gray-800">
@@ -91,12 +61,12 @@ const PaymentHistory: React.FC = () => {
                       <span className="ml-2">{payment.paymentMethod}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-gray-800">{payment.transactionId}</td>
+                  <td className="py-3 px-4 text-gray-800">{payment.transactionId?.slice(0, 20)}</td>
                   <td className="py-3 px-4 text-right text-gray-800">
-                    {formatCurrency(payment.amountPaid)}
+                  ₹ {(payment.amountPaid)}
                   </td>
                   <td className="py-3 px-4 text-right">
-                    {/* <StatusBadge status={payment.status} type="payment" /> */}
+                    <StatusBadge status={payment.status} type="payment" />
                   </td>
                 </tr>
               ))}
@@ -109,13 +79,13 @@ const PaymentHistory: React.FC = () => {
         </div>
       )}
 
-      {remainingAmount > 0 && (
+      {/* {remainingAmount > 0 && (
         <div className="mt-6 flex justify-end">
           <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-medium transition-colors duration-200">
             Make Payment
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

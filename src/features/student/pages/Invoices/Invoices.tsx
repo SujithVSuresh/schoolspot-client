@@ -10,6 +10,7 @@ import {
 import { fetchInvoicesByStudentId } from '../../api/api';
 import { dateFormatter, formatCurrency } from '../../../../app/utils/formatter';
 import { createPaymentRequest } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 type Status = 'Paid' | 'Unpaid' | 'overdue';
 
@@ -31,6 +32,7 @@ interface InvoiceType {
 }
 
 const Invoices = () => {
+  const navigate = useNavigate()
     const [searchTerm, setSearchTerm] = useState('');
     // const [statusFilter, setStatusFilter] = useState<Status | 'all'>('all');
     const [invoices, setInvoices] = useState<InvoiceType[]>([]);
@@ -71,15 +73,6 @@ const Invoices = () => {
       }
     };
 
-    const handlePayment = async (invoiceId: string, amount: number) => {
-      const response = await createPaymentRequest(invoiceId, amount)
-      console.log(response)
-      if(response.success){
-        window.location.href = response.data.url
-      }
-    }
-  
-
 
   return (
     <div className="min-h-screen w-full">
@@ -87,9 +80,9 @@ const Invoices = () => {
 <div className='w-full'>
       <div className="mx-auto px-4 mt-5">
         <div className="rounded-xl mb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 sm:space-y-0">
   
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mr-2">
               <div className="relative">
                 <Filter className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                 <select
@@ -164,8 +157,9 @@ const Invoices = () => {
                           <ExternalLink className="w-5 h-5" />
                         </button>
                       </div> */}
-                      <button onClick={() => handlePayment(invoice.invoiceNumber, invoice.totalAmount)} className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600">
-                        Pay
+                      {/* onClick={() => handlePayment(invoice.invoiceNumber, invoice.totalAmount)}  */}
+                      <button onClick={() => navigate(`/student/invoices/${invoice._id}`)} className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600">
+                        View
                       </button>
                     </td>
                   </tr>
