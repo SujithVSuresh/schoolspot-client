@@ -30,18 +30,19 @@ const UpdateAnnouncement = () => {
   });
 
   useEffect(() => {
+    const updateAnnouncementHandler = async (announcementId: string) => {
+      const response = await fetchAnnouncementById(announcementId);
+      if (response.success) {
+        setAnnouncement(response.data);
+        const data = response.data;
+        setValue("title", data.title);
+        setValue("content", data.content);
+      }
+    };
     updateAnnouncementHandler(announcementId);
-  }, [announcementId]);
+  }, [announcementId, setValue]);
 
-  const updateAnnouncementHandler = async (announcementId: string) => {
-    const response = await fetchAnnouncementById(announcementId);
-    if (response.success) {
-      setAnnouncement(response.data);
-      const data = response.data;
-      setValue("title", data.title);
-      setValue("content", data.content);
-    }
-  };
+
 
   const onSubmit = async (data: { title: string; content: string }) => {
     setLoading(true);

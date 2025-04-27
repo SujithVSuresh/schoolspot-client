@@ -1,7 +1,5 @@
-
-
-import React from 'react'
-
+import { dateFormatter } from "../../../../../app/utils/formatter";
+import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
 const ProfileAttendanceRecord = () => {
   const attendanceData = [
     { date: "2024-03-01", status: "present" },
@@ -59,8 +57,30 @@ const ProfileAttendanceRecord = () => {
     { date: "2024-03-30", status: "present" },
   ];
   
+  
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'present':
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
+      case 'absent':
+        return <XCircle className="w-5 h-5 text-red-500" />;
+      default:
+        return <AlertCircle className="w-5 h-5 text-gray-500" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'present':
+        return 'bg-green-50 text-green-700 border-green-200';
+      case 'absent':
+        return 'bg-red-50 text-red-700 border-red-200';
+      default:
+        return 'bg-gray-50 text-gray-700 border-gray-200';
+    }
+  };
   return (
-    <>
+    <div className='min-h-screen'>
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
       <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
         Attendance Record
@@ -70,26 +90,51 @@ const ProfileAttendanceRecord = () => {
       </div>
     </div>
 
-    <div className="flex">
-      <div className="w-9/12">
-
-       <div className='flex flex-wrap bg-white rounded p-2 gap-1'>
-
-      {attendanceData.map((data) => (
-        <div className={`w-10 h-10 rounded ${data.status == "absent" ? "bg-red-400" : "bg-green-400"}`}>
-          
-        </div>
-      ))}
-              
-       </div>
+     <div className="flex justify-center">
+        <div className="overflow-hidden rounded-xl border border-gray-200 w-4/12">
     
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Time
+              </th> */}
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Notes
+              </th> */}
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {attendanceData.map((record, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-12 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {dateFormatter(record.date.toString())}
+                </td>
+                <td className="px-12 py-4 whitespace-nowrap">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(record.status)}`}>
+                    {getStatusIcon(record.status)}
+                    <span className="ml-1 capitalize">{record.status}</span>
+                  </span>
+                </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {record.time}
+                </td> */}
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {record.note || '-'}
+                </td> */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      <div className="flex-1 flex justify-center bg-red-400 items-start">
-        {/* <Calendar onChange={onChange} value={value} /> */}
       </div>
-    </div>
-  </>
+  </div>
   )
 }
 

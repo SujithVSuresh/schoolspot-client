@@ -55,7 +55,7 @@ const StudentList = ({classId} : {classId: string}) => {
           <h3 className="font-medium mb-1 text-gray-700 text-sm sm:text-base">
             {student.fullName}
           </h3>
-          <p className="text-xs sm:text-sm text-gray-500">Roll no: 28</p>
+          <p className="text-xs sm:text-sm text-gray-500">Roll no: {student.roll}</p>
         </div>
       </div>
       {/* Menu Button */}

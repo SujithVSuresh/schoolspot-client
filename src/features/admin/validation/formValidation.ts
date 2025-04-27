@@ -316,3 +316,10 @@ export const studentValidationSchema = z
       .regex(phoneNumberRegex, { message: "Enter a valid phone number" }),
   })
 
+
+
+  export const announcementSchema = z.object({
+    title: z.string().trim().min(1, { message: "Title is required" }),
+    content: z.string().trim().min(1, { message: "Content is required" }),
+    sendTo: z.array(z.string()).min(1, { message: "At least one tag is required" }).optional()
+  });

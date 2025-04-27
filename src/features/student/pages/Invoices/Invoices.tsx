@@ -168,11 +168,11 @@ const Invoices = () => {
             </table>
           </div>
 
-          {/* {filteredInvoices.length === 0 && (
+          {invoices.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500">No invoices found matching your criteria</p>
             </div>
-          )} */}
+          )}
         </div>
 
       </div>

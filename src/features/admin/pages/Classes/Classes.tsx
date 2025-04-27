@@ -1,4 +1,3 @@
-import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Heading from "../../components/Heading";
@@ -33,7 +32,7 @@ const Classes = () => {
   return (
     <>
       <Heading headingValue="Classes">
-        <div className="relative">
+        {/* <div className="relative">
           <input
             // onChange={(e) => setSearchClass(e.target.value)}
             type="text"
@@ -43,7 +42,7 @@ const Classes = () => {
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="h-5 w-5 text-gray-400" />
           </div>
-        </div>
+        </div> */}
         <button
           onClick={() => navigate("/dashboard/classes/new")}
           className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
@@ -54,27 +53,21 @@ const Classes = () => {
       </Heading>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-4 sm:gap-6">
+ 
        {classes.length > 0 && classes.map((value) => (
-        <div className="bg-gray-100 rounded-xl p-4 relative" onClick={() => navigate(`/dashboard/classes/profile/${value._id}?section=students`)}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="space-y-4 p-5 rounded-lg bg-gray-100" onClick={() => navigate(`/dashboard/classes/profile/${value._id}`)}>
+          <div className="flex items-center justify-between text-gray-700">
+    
             <div>
-              <div className="flex items-center">
-                <h3 className="font-medium text-gray-700 text-sm sm:text-base">
-                  {value.name} {value.section}
-                </h3>
-              </div>
-
-              <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                Strength: {value.strength}
-              </p>
+              <p className="text-sm text-gray-500">Class</p>
+              <p className="font-medium">{value.name} {value.section}</p>
             </div>
+  
+            <button className="text-gray-400 hover:text-gray-600 transition-colors relative">
+              <ChevronRight className="h-5 w-5" />
+            </button>
           </div>
-          <button className="text-gray-400 hover:text-gray-600 transition-colors relative">
-            <ChevronRight className="h-5 w-5" />
-          </button>
         </div>
-      </div>
        ))}
 
 

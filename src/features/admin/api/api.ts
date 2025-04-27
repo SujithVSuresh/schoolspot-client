@@ -93,14 +93,13 @@ export const signin = async (userData: AdminSigninFormType) => {
 }
 
 
-export const getAllStudents = async (page: number, search: string, sortBy: string, sortOrder: string, classfilter: string) => {
+export const getAllStudents = async (page: number, search: string, sortBy: string, sortOrder: string, classFilter: string, statusFilter: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}&classfilter=${classfilter}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/students?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}&classFilter=${classFilter}&statusFilter=${statusFilter}`, {
             headers: {
                 'x-user-role': 'admin'
             }
         });
-
         return { success: true, data }
     }catch(error){
         console.log(error, "this is the error")
@@ -112,7 +111,7 @@ export const getAllStudents = async (page: number, search: string, sortBy: strin
 
 export const getStudentsByClassId = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-students/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/students/${classId}`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -129,7 +128,7 @@ export const getStudentsByClassId = async (classId: string) => {
 
 export const getStudentProfile = async (userId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-student/${userId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/${userId}`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -322,7 +321,7 @@ export const changeAttendanceStatus = async (attendanceId: string, status: strin
 
 export const createAnnouncement = async (announcementData: AnnouncementCreateType) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/add-announcement`, {announcementData}, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement`, {...announcementData}, {
             headers: {
                 'x-user-role': 'admin'
             },
@@ -334,9 +333,41 @@ export const createAnnouncement = async (announcementData: AnnouncementCreateTyp
     }
 }
 
+export const updateAnnouncement = async (id: string, announcementData: {title: string; content: string, sendTo: string[]}) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${id}`, announcementData, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+export const deleteAnnouncement = async (announcementId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${announcementId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 export const fetchAnnouncements = async () => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/get-announcements`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/author`, {
             headers: {
                 'x-user-role': 'admin'
             },
@@ -347,6 +378,23 @@ export const fetchAnnouncements = async () => {
         return { success: false, error: message }
     }
 }
+
+
+export const fetchAnnouncementById = async (id: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcement/${id}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 
 export const addSubject = async (subjectData: {name: string, teacher: string, classId: string}) => {
     try{

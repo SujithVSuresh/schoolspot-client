@@ -28,6 +28,8 @@ import Invoice from "../pages/Invoice/Invoice";
 import UpdateStudentProfile from "../pages/UpdateStudentProfile/UpdateStudentProfile";
 import SignupProfile from "../pages/SignupProfile/SignupProfile";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import UpdateAnnouncement from "../pages/UpdateAnnouncement/UpdateAnnouncement";
+
 
 const AdminRoute = () => {
   return (
@@ -135,6 +137,7 @@ const AdminRoute = () => {
         <Route path="classes/profile/:id" element={<ClassProfile />} />
         <Route path="announcement" element={<Announcement />} />
         <Route path="announcement/new" element={<AddAnnouncement />} />
+        <Route path="announcement/:announcementId/update" element={< UpdateAnnouncement/>} />
         <Route path="attendance/new/:classId" element={<AddAttendance />} />
         <Route path="classes/invoice/:classId" element={<Invoice />} />
         

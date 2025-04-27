@@ -188,6 +188,8 @@ export interface AnnouncementCreateType {
     sendTo: string[]
 }
 
+
+
 export interface AnnouncementResponseType {
     _id: string;
     title: string;

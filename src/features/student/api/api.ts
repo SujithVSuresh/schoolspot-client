@@ -21,7 +21,7 @@ export const signin = async (userData: StudentSigninFormType) => {
 
 export const fetchStudentProfile = async (id?: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/get-student/${id}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/${id}`, {
             headers: {
                 'x-user-role': 'student'
             }
