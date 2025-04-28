@@ -11,7 +11,7 @@ const ClassNavLink = () => {
         { name: "Students", link: "students" },
         { name: "Assignments", link: "assignments" },
         { name: "Study Materials", link: "study-materials" },
-        { name: "Exam Results", link: "exam-results" }, 
+        // { name: "Exam Results", link: "exam-results" }, 
         { name: "Announcements", link: "announcements" },
         { name: "Attendance", link: "attendance" },
       ];

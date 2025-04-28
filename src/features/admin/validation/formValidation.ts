@@ -219,6 +219,48 @@ export const studentValidationSchema = z
   });
 
 
+  export const studentUpdateValidationSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .regex(emailRegex, { message: "Enter a valid email address" }),
+    fullName: z
+      .string()
+      .min(1, { message: "Full name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    profilePhoto: z
+      .instanceof(FileList)
+      .optional(),
+    gender: z.enum(["male", "female"], {
+        errorMap: () => ({ message: "Gender is required" }),
+      }),
+    dob: z  
+      .string()
+      .min(1, { message: "Date of birth is required" }),
+    fatherName: z  
+      .string()
+      .min(1, { message: "Father's name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    motherName: z  
+      .string()
+      .min(1, { message: "Mother's name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    contactNumber: z  
+      .string()
+      .min(1, { message: "Phone number is required" })
+      .regex(phoneNumberRegex, { message: "Enter a valid email phone number" }),
+    roll: z.coerce  
+      .number({ invalid_type_error: "Enter a valid roll number" })
+      .min(1, { message: "This field is required" })
+      .max(100, { message: "Enter a valid experience" }),
+    address: z
+      .string()
+      .min(1, { message: "Address is required" })
+  })
+
+
+
   export const teacherValidationSchema = z
   .object({
     email: z
@@ -283,35 +325,68 @@ export const studentValidationSchema = z
   });
 
 
+  
+  export const teacherUpdateValidationSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .regex(emailRegex, { message: "Enter a valid email address" }),
+    fullName: z
+      .string()
+      .min(1, { message: "Full name is required" })
+      .regex(nameRegex, { message: "Enter a valid name" }),
+    profilePhoto: z
+      .instanceof(FileList)
+      .optional(),
+    subjectSpecialized: z  
+      .string()
+      .min(1, { message: "Subject specialized is required" })
+      .regex(nameRegex, { message: "Enter a valid subject" }),
+    qualification: z  
+      .string()
+      .min(1, { message: "Qualification is required" })
+      .regex(nameRegex, { message: "Enter a valid qualification" }),
+    experience: z.coerce
+      .number({ invalid_type_error: "Enter a valid experience" })
+      .min(1, { message: "This field is required" })
+      .max(50, { message: "Enter a valid experience" }),
+    phoneNumber: z  
+      .string()
+      .min(1, { message: "Phone number is required" })
+      .regex(phoneNumberRegex, { message: "Enter a valid email phone number" }),
+  })
+
+
   export const classValidationSchema = z
   .object({
     name: z
       .string()
+      .trim()
       .min(1, { message: "Class name is required" })
       .regex(classRegex, { message: "Enter a valid class" }),
     section: z
       .string()
+      .trim()
       .min(1, { message: "Section is required" })
       .regex(nameRegex, { message: "Enter a valid section" }),
-    strength: z.coerce
-      .number({ invalid_type_error: "Enter a valid class strength" })
-      .min(1, { message: "This field is required" })
-      .max(100, { message: "Enter a valid experience" }),
     teacher: z  
       .string()
+      .trim()
       .min(1, { message: "This field is required" })
   })
-
 
 
   export const adminProfileValidationSchema = z
   .object({
     fullName: z
       .string()
+      .trim()
       .min(1, { message: "Full name is required" })
       .regex(nameRegex, { message: "Enter a valid name" }),
     phoneNumber: z
       .string()
+      .trim()
       .min(1, { message: "Phone number is required" })
       .regex(phoneNumberRegex, { message: "Enter a valid phone number" }),
   })
@@ -322,4 +397,26 @@ export const studentValidationSchema = z
     title: z.string().trim().min(1, { message: "Title is required" }),
     content: z.string().trim().min(1, { message: "Content is required" }),
     sendTo: z.array(z.string()).min(1, { message: "At least one tag is required" }).optional()
+  });
+
+
+  export const subjectSchema = z.object({
+    name: z.string().trim().min(1, { message: "Subject name is required" }),
+    teacher: z.string().trim().min(1, { message: "Choose a teacher for the subject" }),
+  });
+
+
+  export const invoiceSchema = z.object({
+    title: z.string().min(1, "Title is required"),
+    dueDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+      message: "Invalid date format",
+    }),
+    feeBreakdown: z.array(
+      z.object({
+        feeType: z.string().min(1, "Fee type is required"),
+        amount: z.number().min(0, "Amount must be at least 0"),
+      })
+    ).min(1, "At least one fee breakdown item is required").optional(),
+    totalAmount: z.number().min(0, "Total amount must be at least 0"),
+    remarks: z.string().optional(),
   });

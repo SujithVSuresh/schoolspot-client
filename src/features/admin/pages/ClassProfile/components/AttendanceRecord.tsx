@@ -1,4 +1,4 @@
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, XCircle, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { Plus } from "lucide-react";
@@ -68,77 +68,95 @@ const AttendanceRecord = ({ classId }: { classId: string }) => {
       </div>
 
       <div className="flex">
-        <div className="w-8/12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
-          {attendanceData.map((student, index) => (
-            <div
-              className={`${
-                student.status == "Absent" ? "bg-red-100" : "bg-green-100"
-              } rounded-xl p-4 relative h-20`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <h3 className="font-medium mb-1 text-gray-700 text-sm sm:text-base">
-                      {student.student.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      Roll no: {student.student.roll}
-                    </p>
-                  </div>
-                </div>
-                {/* Menu Button */}
-                <button
-                  onClick={() => toggleMenu(index)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors relative"
-                >
-                  <MoreVertical className="h-5 w-5" />
-                </button>
-                {/* Dropdown Menu */}
-                {menu == index && (
-                  <div className="absolute right-8 top-12 w-20 shadow-lg rounded-md border bg-white z-50">
-                    {student.status == "Absent" ? (
-                      <button
-                        onClick={() =>
-                          handleAttendanceStatus(
-                            student._id as string,
-                            "Present"
-                          )
-                        }
-                        className="w-full py-2 text-sm text-green-600 hover:bg-gray-100 text-center"
-                      >
-                        Present
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          handleAttendanceStatus(
-                            student._id as string,
-                            "Absent"
-                          )
-                        }
-                        className="w-full py-2 text-sm text-red-600 hover:bg-gray-100 text-center"
-                      >
-                        Absent
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+        <div className="w-8/12 ">
+          
+           <div className="overflow-x-auto w-full rounded-sm">
+                      <table className="w-full divide-y divide-gray-200 border rounded-lg">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Roll No
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Student Name
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Status
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {attendanceData.length > 0 &&
+                            attendanceData.map((attendance) => (
+                              <tr key={attendance._id} className="hover:bg-gray-50">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                  {attendance.student.roll}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                  {attendance.student.name}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <span
+                                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                      attendance.status == "Present"
+                                        ? "bg-green-100 text-green-800"
+                                        : "bg-red-100 text-red-800"
+                                    }`}
+                                  >
+                                    {attendance.status == "Present"
+                                      ? "Present"
+                                      : "Absent"}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                  <button
+                                    onClick={() =>
+                                      handleAttendanceStatus(
+                                        attendance._id as string,
+                                        attendance.status == "Present"
+                                          ? "Absent"
+                                          : "Present"
+                                      )
+                                    }
+                                    className="flex items-center space-x-1 text-indigo-600 hover:text-indigo-900"
+                                  >
+                                    {attendance.status == "Present" ? (
+                                      <XCircle className="h-5 w-5" />
+                                    ) : (
+                                      <CheckCircle className="h-5 w-5" />
+                                    )}
+                                    <span>
+                                      {attendance.status == "Present"
+                                        ? "Mark Absent"
+                                        : "Mark Present"}
+                                    </span>
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+          
+          
         </div>
 
-        <div className="flex-1 flex flex-col items-center">
+        <div className="flex-1 flex flex-col items-center px-20">
+
+        <button
+            onClick={() => navigate(`/dashboard/attendance/new/${classId}`)}
+            className="flex w-full items-center justify-center gap-2 mb-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="h-5 w-5 mr-3" />
+            <span>Add attendance</span>
+          </button>
 
           <Calendar onChange={onChange} value={value} />
 
-          <button
-            onClick={() => navigate(`/dashboard/attendance/new/${classId}`)}
-            className="flex items-center justify-center gap-2 mt-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
-          >
-            <Plus className="h-5 w-5" />
-            Add attendance
-          </button>
+
         </div>
       </div>
     </>

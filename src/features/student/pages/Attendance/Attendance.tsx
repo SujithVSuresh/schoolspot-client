@@ -47,13 +47,13 @@ const Attendance = () => {
           ))}
         </div> */}
         <div className="flex w-full">
-          <div className="w-5/12">
+          <div className="w-full">
             <AttendanceList date={selectedDate.toISOString()} setSelectedDate={setSelectedDate} />
           </div>
 
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <LeaveLetter date={selectedDate.toISOString()} classId={classId} />
-          </div>
+          </div> */}
         </div>
     
     </div>

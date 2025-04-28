@@ -13,11 +13,11 @@ import Announcement from "../pages/Announcement/Announcement";
 import Dashboard from "../pages/Dashboard";
 import Overview from "../pages/Overview";
 import Student from "../pages/Student/Student";
-import Teacher from "../pages/Teacher";
+import Teacher from "../pages/Teacher/Teacher";
 import AddStudent from "../pages/AddStudent/AddStudent";
 import AddTeacher from "../pages/AddTeacher";
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
-import TeacherProfile from "../pages/TeacherProfile";
+import TeacherProfile from "../pages/TeacherProfile/TeacherProfile";
 import Classes from "../pages/Classes/Classes";
 import AddClass from "../pages/AddClass/AddClass";
 import ClassProfile from "../pages/ClassProfile/ClassProfile";
@@ -29,6 +29,10 @@ import UpdateStudentProfile from "../pages/UpdateStudentProfile/UpdateStudentPro
 import SignupProfile from "../pages/SignupProfile/SignupProfile";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import UpdateAnnouncement from "../pages/UpdateAnnouncement/UpdateAnnouncement";
+import UpdateClass from "../pages/UpdateClass/UpdateClass";
+import UpdateSubject from "../pages/UpdateSubject/UpdateSubject";
+import CreateInvoice from "../pages/CreateInvoice/CreateInvoice";
+import UpdateTeacherProfile from "../pages/UpdateTeacherProfile/UpdateTeacherProfile";
 
 
 const AdminRoute = () => {
@@ -131,15 +135,20 @@ const AdminRoute = () => {
         <Route path="teachers" element={<Teacher />} />
         <Route path="teachers/new" element={<AddTeacher />} />
         <Route path="teachers/profile/:id" element={<TeacherProfile />} />
+        <Route path="teachers/profile/:id/update" element={<UpdateTeacherProfile />} />
         <Route path="classes" element={<Classes />} />
         <Route path="classes/new" element={<AddClass />} />
+        <Route path="classes/:classId/update" element={<UpdateClass />} />
         <Route path="classes/subject/new/:classId" element={<AddSubject />} />
+        <Route path="classes/subject/:subjectId/update/:classId" element={<UpdateSubject />} />
         <Route path="classes/profile/:id" element={<ClassProfile />} />
         <Route path="announcement" element={<Announcement />} />
         <Route path="announcement/new" element={<AddAnnouncement />} />
         <Route path="announcement/:announcementId/update" element={< UpdateAnnouncement/>} />
         <Route path="attendance/new/:classId" element={<AddAttendance />} />
+        <Route path="classes/:classId/invoice/new" element={<CreateInvoice />} />
         <Route path="classes/invoice/:classId" element={<Invoice />} />
+        
         
       </Route>
     </Routes>

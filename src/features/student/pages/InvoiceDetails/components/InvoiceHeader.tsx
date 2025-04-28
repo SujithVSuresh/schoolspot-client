@@ -65,7 +65,7 @@ const InvoiceHeader = ({invoice, paymentHandler}: {
           <p className={`font-medium ${isOverdue ? 'text-red-600' : 'text-gray-800'}`}>
             {formatDate(invoice?.dueDate)}
           </p>
-          {isOverdue && <p className="text-red-500 text-sm font-medium">Overdue</p>}
+          {/* {isOverdue && <p className="text-red-500 text-sm font-medium">Overdue</p>} */}
         </div>
       </div>
 

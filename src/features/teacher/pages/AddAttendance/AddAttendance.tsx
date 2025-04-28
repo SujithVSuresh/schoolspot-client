@@ -84,8 +84,6 @@ const AddAttendance = () => {
 
     const response = await addAttendance(data);
 
-    console.log(response, "this is the attendance response......");
-
     if (response.success) {
       dispatch(setAttendanceCount({presentCount: response.data.presentCount, absentCount: response.data.absentCount}))
       

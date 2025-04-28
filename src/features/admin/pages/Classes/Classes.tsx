@@ -55,7 +55,7 @@ const Classes = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-4 sm:gap-6">
  
        {classes.length > 0 && classes.map((value) => (
-          <div className="space-y-4 p-5 rounded-lg bg-gray-100" onClick={() => navigate(`/dashboard/classes/profile/${value._id}`)}>
+          <div className="space-y-4 p-5 rounded-lg bg-gray-100" onClick={() => navigate(`/dashboard/classes/profile/${value._id}?section=students`)}>
           <div className="flex items-center justify-between text-gray-700">
     
             <div>

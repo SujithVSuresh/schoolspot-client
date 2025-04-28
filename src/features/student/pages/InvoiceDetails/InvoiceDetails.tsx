@@ -1,5 +1,5 @@
 import InvoiceHeader from "./components/InvoiceHeader";
-import { ArrowLeft } from "lucide-react";
+// import { ArrowLeft } from "lucide-react";
 import FeeBreakdown from "./components/FeeBreakdown";
 import PaymentHistory from "./components/PaymentHistory";
 import { fetchInvoiceById, fetchPaymentsByInvoiceId } from "../../api/api";
@@ -49,12 +49,12 @@ const InvoiceDetailsPage: React.FC = () => {
   return (
     <div className="w-full min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <button className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">
             <ArrowLeft size={16} className="mr-1" />
             <span>Back to Invoices</span>
           </button>
-        </div>
+        </div> */}
 
         <InvoiceHeader invoice={invoice as InvoiceDetailsType} paymentHandler={handlePayment}/>
 

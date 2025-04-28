@@ -1,5 +1,5 @@
 import logo from "../../../../assets/images/dotlogo.png";
-import cover from "../../../../assets/images/coverimg.jpg";
+// import cover from "../../../../assets/images/coverimg.jpg";
 import { School } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -19,11 +19,27 @@ const StudentLayout = () => {
     roll: number;
     profilePhoto: string;
     classId: string;
+    school: string
   } | null>(null);
 
   const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
 
   useEffect(() => {
+    const fetchStudentProfileHandler = async () => {
+      const response = await fetchStudentProfile("null");
+      console.log(response, "stuuuuuuuuuuuuuuuuuuuuuu")
+      setStudentProfile({
+        _id: response.data._id,
+        fullName: response.data.fullName,
+        class: response.data.class,
+        section: response.data.section,
+        roll: response.data.roll,
+        profilePhoto: response.data.profilePhoto,
+        classId: response.data.classId,
+        school: response.data.school
+      
+      });
+    };
     fetchStudentProfileHandler();
   }, []);
 
@@ -54,20 +70,6 @@ const StudentLayout = () => {
     }
   }, [studentProfile?.classId]);
 
-  const fetchStudentProfileHandler = async () => {
-    const response = await fetchStudentProfile("null");
-    setStudentProfile({
-      _id: response.data._id,
-      fullName: response.data.fullName,
-      class: response.data.class,
-      section: response.data.section,
-      roll: response.data.roll,
-      profilePhoto: response.data.profilePhoto,
-      classId: response.data.classId,
-    });
-  };
-
-
 
   const setAnnouncementBadgeHandler = (value: number) => {
     setNewAnnouncementBadgeCount(value);
@@ -79,16 +81,6 @@ const StudentLayout = () => {
         className={`bg-blue-50 border-b w-full py-4 px-10 flex items-center justify-between`}
       >
         <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
-
-        {/* <button
-          onClick={() => dispatch(removeStudent())}
-          className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
-        >
-          Logout
-        </button> */}
-        {/* <a onClick={() => handleLogout()} className="underline">
-          Logout
-        </a> */}
       </header>
 
       <section>

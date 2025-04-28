@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { removeSubject } from "../../../api/api";
-import { fetchSubjects } from "../../../api/api";
+import { fetchSubjects, deleteSubject } from "../../../api/api";
 import { textFormatter } from "../../../../../app/utils/formatter";
+import { Edit2, Trash2 } from "lucide-react";
 
 const SubjectList = ({classId}: {classId: string}) => {
   const navigate = useNavigate()
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
-  const [menu, setMenu] = useState<number | null>(null);
+  const [showMenu, setShowMenu] = useState("");
 
   useEffect(() => {
     handleFetchSubjects(classId)
@@ -26,30 +26,31 @@ const SubjectList = ({classId}: {classId: string}) => {
     }
   }
 
-  const toggleMenu = (index: number) => {
-    setMenu(menu === index ? null : index);
+  const toggleMenu = (subjectId: string) => {
+    setShowMenu((prev) => {
+      if(prev && prev == subjectId){
+        return ""
+      }else{
+        return subjectId
+      }
+    })
   };
 
-  const handleRemoveSubject = async (subjectId: string) => {
-    const response = await removeSubject(subjectId, classId)
+  const handleDeleteSubject = async (subjectId: string) => {
+    const response = await deleteSubject(subjectId)
+    console.log(response, "kkooii")
 
     if(response.success){
       console.log(response.data.data)
-      const filteredSubjects = subjects.filter((subject) => {
-        if(subject._id != response.data.data){
-          return subject
-        }
-      })
+      const filteredSubjects = subjects.filter((subject) => subject._id != response.data._id)
 
       setSubjects(filteredSubjects)
-
-      setMenu(null)
+      setShowMenu("")
     }
   }
 
   return (
     <div>
-      {/* <AddSubjectModal /> */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Subjects
@@ -66,7 +67,7 @@ const SubjectList = ({classId}: {classId: string}) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-       {subjects && subjects.length > 0 && subjects.map((subject, index) => (
+       {subjects && subjects.length > 0 && subjects.map((subject) => (
               <div className="bg-gray-100 rounded-xl p-4 relative">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -79,21 +80,21 @@ const SubjectList = ({classId}: {classId: string}) => {
                 </p>
               </div>
             </div>
-            {/* Menu Button */}
-            <button onClick={() => toggleMenu(index)} className="text-gray-400 hover:text-gray-600 transition-colors relative">
+            <button onClick={() => toggleMenu(String(subject._id))} className="text-gray-400 hover:text-gray-600 transition-colors relative">
               <MoreVertical className="h-5 w-5" />
             </button>
-            {/* Dropdown Menu */}
-            {menu == index && (
-                  <div className="absolute right-8 top-12 w-20 shadow-lg rounded-md border bg-white z-50">
-     
-                      <button
-                      onClick={() => handleRemoveSubject(subject._id as string)}
-                        className="w-full py-2 text-sm text-red-600 hover:bg-gray-100 text-center"
-                      >
+            {showMenu == subject._id && (
+                  <div className="absolute right-9 mt-20 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1">
+                      <button onClick={() => navigate(`/dashboard/classes/subject/${subject._id}/update/${classId}`)} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+                        <Edit2 className="h-4 w-4 mr-2" />
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteSubject(subject._id as string)}  className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full">
+                        <Trash2 className="h-4 w-4 mr-2" />
                         Delete
                       </button>
-           
+                    </div>
                   </div>
                 )}
           </div>

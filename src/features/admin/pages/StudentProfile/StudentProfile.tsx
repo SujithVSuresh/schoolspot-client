@@ -13,8 +13,10 @@ import { GoNumber } from "react-icons/go";
 import { GrStatusInfo } from "react-icons/gr";
 import { PiGenderIntersexLight } from "react-icons/pi";
 import { changeAccountStatus } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const StudentProfile = () => {
+  const navigate = useNavigate()
   const { id: userId } = useParams();
 
   const [selectedBtn, setSelectedBtn] = useState("students");
@@ -209,26 +211,26 @@ const StudentProfile = () => {
       </div>
 
       <div className="flex border-b mt-5 pb-5 border-gray-200">
-        <div
+        {/* <div
           onClick={() => setSelectedBtn("attendance")}
           className={`${
             selectedBtn == "attendance" ? "bg-blue-200" : "bg-gray-200"
           } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
         >
           Attendance Record
-        </div>
+        </div> */}
 
-        <div
+        {/* <div
           onClick={() => setSelectedBtn("attendance")}
           className={`${
             selectedBtn == "exam" ? "bg-blue-200" : "bg-gray-200"
           } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
         >
           Exam Results
-        </div>
+        </div> */}
 
         <div
-          onClick={() => setSelectedBtn("attendance")}
+          onClick={() => navigate(`/dashboard/students/profile/${student?.user._id}/update`)}
           className={`${
             selectedBtn == "exam" ? "bg-blue-200" : "bg-gray-200"
           } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}

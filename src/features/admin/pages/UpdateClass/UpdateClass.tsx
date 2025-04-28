@@ -1,65 +1,91 @@
+import { useEffect, useState } from "react";
+import { getTeachersBySchool } from "../../api/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { classValidationSchema } from "../../validation/formValidation";
-import { createClass } from "../../api/api";
-import { useEffect } from "react";
-import { getTeachersBySchool } from "../../api/api";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getClassById, updateClass } from "../../api/api";
 import toast from "react-hot-toast";
 
-const AddClass = () => {
-  const navigate = useNavigate()
-  const [teachers, setTeachers] = useState<
-    { _id: string; userId: string; fullName: string }[]
-  >([]);
+const UpdateClass = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(classValidationSchema),
-  });
+    const classId = location.pathname.split("/")[3]
 
-  useEffect(() => {
-    const fetchTeachersList = async () => {
-      const response = await getTeachersBySchool();
+      const [teachers, setTeachers] = useState<
+        { _id: string; userId: string; fullName: string }[]
+      >([]);
 
-      if (response.success) {
-        setTeachers(response.data);
-      }
-    };
-
-    fetchTeachersList();
-  }, []);
-
-  const onSubmit = async ({
-    name,
-    section,
-    teacher,
-  }: {
-    name: string;
-    section: string;
-    teacher: string;
-  }) => {
-    const response = await createClass({ name, section, teacher });
-    console.log(response, "kk")
-    if(response.success){
-      navigate("/dashboard/classes")
-    }else{
-      toast(response.error.message, {
-        duration: 8000,
-        position: "bottom-right",
-        style: {
-          backgroundColor: "#FEE2E2",
-          border: "2px, solid, #DC2626",
-          minWidth: "400px",
-          color: "black",
-        },
+      const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+      } = useForm({
+        resolver: zodResolver(classValidationSchema),
       });
-    }
-  };
+
+
+      useEffect(() => {
+        const fetchTeachersList = async () => {
+          const response = await getTeachersBySchool();
+
+          console.log(response, "daa")
+    
+          if (response.success) {
+            setTeachers(response.data);
+          }
+        };
+    
+        fetchTeachersList();
+      }, []);
+
+      useEffect(() => {
+        const fetchClassDetailsHandler = async (classId: string) => {
+          const response = await getClassById(classId);
+
+    
+          if (response.success) {
+              setValue("name", response.data.data.name)
+              setValue("section", response.data.data.section)
+              const teacher = teachers.filter((value) => {
+                return value.fullName == response.data.data.teacher
+              })
+              console.log(teacher, "jijiji")
+              setValue("teacher", teacher[0].userId)
+          }
+        };
+    
+        fetchClassDetailsHandler(classId);
+      }, [classId, setValue, teachers]);
+
+
+        const onSubmit = async ({
+          name,
+          section,
+          teacher,
+        }: {
+          name: string;
+          section: string;
+          teacher: string;
+        }) => {
+          const response = await updateClass(classId, { name, section, teacher });
+          if(response.success){
+            navigate("/dashboard/classes")
+          }else{
+            toast(response.error.message, {
+              duration: 8000,
+              position: "bottom-right",
+              style: {
+                backgroundColor: "#FEE2E2",
+                border: "2px, solid, #DC2626",
+                minWidth: "400px",
+                color: "black",
+              },
+            });
+          }
+        };
 
   return (
     <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10 w-full">
@@ -69,7 +95,7 @@ const AddClass = () => {
         className="space-y-4 w-5/12 mt-6 p-6 rounded-lg border border-gray-400"
       >
         <h1 className="text-xl font-medium text-gray-800 text-center">
-          Add Class
+          Update Class
         </h1>
 
         <div>
@@ -128,7 +154,7 @@ const AddClass = () => {
 
         <div className="flex justify-end space-x-3">
           <button
-          onClick={() => navigate('/dashboard/classes')}
+          onClick={() => navigate(`/dashboard/classes/profile/${classId}?section=students`)}
             type="button"
             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
@@ -143,7 +169,7 @@ const AddClass = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AddClass;
+export default UpdateClass

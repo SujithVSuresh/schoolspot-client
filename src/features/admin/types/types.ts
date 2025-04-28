@@ -97,18 +97,60 @@ export interface StudentProfileResponseType extends StudentProfileType {
 export interface StudentUserProfileType extends StudentProfileType, UserSignupFormType {}
 
 
+
+export interface StudentProfileUpdateType {
+    fullName: string;
+    email: string;
+    gender: "male" | "female";
+    dob: string; 
+    roll: number;
+    address: string;
+    fatherName: string;
+    motherName: string;
+    contactNumber: string;
+    profilePhoto?: FileList | string;
+  }
+  
+
 export interface TeacherProfileType {
     fullName: string;
     phoneNumber: string;
     subjectSpecialized: string;
     qualification: string;
     experience: number;
-    profilePhoto: FileList;
+    profilePhoto: string;
     userId?: string;
     schoolId?: string;
     createdAt?: Date;
     updatedAt?: Date;
   }
+
+
+  export interface TeacherProfileUpdateType {
+    fullName: string;
+    phoneNumber: string;
+    email: string;
+    subjectSpecialized: string;
+    qualification: string;
+    experience: number;
+    profilePhoto?: string | FileList;
+  }
+
+  export interface TeacherProfileWithUser {
+    _id: string;
+    fullName: string;
+    phoneNumber: string;
+    profilePhoto?: string | FileList;
+    qualification: string;
+    schoolId: string;
+    subjectSpecialized: string;
+    experience: string;
+    user: {
+      _id: string;
+      email: string;
+      status: string;
+    };
+  };
 
 
   export interface TeacherUserProfileType extends TeacherProfileType, UserSignupFormType {}
@@ -217,3 +259,19 @@ export interface ChangePasswordType {
     oldPassword: string;
     confirmPassword?: string;
 }
+
+
+
+export interface FeeItem {
+    feeType: string;
+    amount: number;
+  }
+  
+  export interface FeeData {
+    class?: string;
+    dueDate: string;
+    title: string;
+    feeBreakdown?: FeeItem[];
+    totalAmount: number;
+    remarks?: string;
+  }

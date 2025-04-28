@@ -13,7 +13,6 @@ const TeacherClasses = () => {
   }[]>([])
 
   useEffect(() => {
-
         const fetchAllClasses = async () => {
           const response = await getAllClassesForTeacher()
     
@@ -21,14 +20,13 @@ const TeacherClasses = () => {
             setClasses(response.data?.data)
           }
         }
-    
         fetchAllClasses()
 
   }, [])
 
   return (
     <div className="grid grid-cols-4 gap-3">
-      {classes.map((classData) => (
+      {classes?.map((classData) => (
         <ClassCard classData={classData}/>
       ))}
       </div>

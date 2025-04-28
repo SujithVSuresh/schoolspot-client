@@ -97,19 +97,37 @@ const StudyMaterialDetails = () => {
 
 {
   studyMaterial.link && (
-    <div className="mt-5">
-    <a
-      href={"adfsd"}
+  //   <div className="mt-5 bg-gray-100 w-auto">
+  //   <a
+  //     href={"adfsd"}
+  //     target="_blank"
+  //     rel="noopener noreferrer"
+  //     className="flex items-center gap-2"
+  //   >
+  //     <span className="font-mono text-sm text-blue-700">
+  //       {"http://localhost:5173/teacher/classes/2/study-materials/adfsd"}
+  //     </span>
+  //     <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-indigo-700" />
+  //   </a>
+  // </div>
+
+<div className="bg-white rounded overflow-hidden border w-6/12 mt-5">
+<div className="p-6">
+  <a className="flex items-start justify-between" href={studyMaterial.link}
       target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-2"
-    >
-      <span className="font-mono text-sm text-blue-700">
-        {"http://localhost:5173/teacher/classes/2/study-materials/adfsd"}
-      </span>
-      <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-indigo-700" />
-    </a>
-  </div>
+      rel="noopener noreferrer">
+    <div className="flex-1">
+     
+      <h3 className="font-normal text-gray-700">
+       View reference link
+      </h3>
+      <div className="flex items-center text-sm text-gray-500">
+      </div>
+    </div>
+    <ExternalLink className="w-5 h-5 text-gray-400" />
+  </a>
+</div>
+</div>
   )
 }
 

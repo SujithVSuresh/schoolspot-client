@@ -15,7 +15,6 @@ function Student() {
   const [students, setStudents] = useState<StudentDataResponseType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [openMenu, setOpenMenu] = useState<number | null>(null);
 
   const [openSideMenu, setOpenSideMenu] = useState(false);
 
@@ -56,34 +55,6 @@ function Student() {
 
     fetchUserData();
   }, [page, search, sort, classfilter, statusFilter]);
-
-  // const toggleMenu = (index: number) => {
-  //   setOpenMenu(openMenu === index ? null : index);
-  // };
-
-  // const onBlockClick = async (
-  //   userId: string,
-  //   status: "active" | "blocked" | "deleted" | "inactive"
-  // ) => {
-  //   const response = await changeAccountStatus(userId, status);
-  //   console.log(response);
-
-  //   if (response.success) {
-  //     setOpenMenu(null);
-
-  //     const updatedStudents = students.map((student) => {
-  //       if (student.user._id === response.data.userId) {
-  //         return {
-  //           ...student,
-  //           user: { ...student.user, status: response.data.status },
-  //         };
-  //       }
-  //       return student;
-  //     });
-
-  //     setStudents(updatedStudents);
-  //   }
-  // };
 
   const updatePage = (value: number) => {
     if (value) {

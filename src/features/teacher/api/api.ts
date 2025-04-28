@@ -22,7 +22,7 @@ export const signin = async (userData: TeacherSigninFormType) => {
 
 export const getAllClassesForTeacher = async () => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/get-classes/teacher`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/classes/teacher`, {
             headers: {
                 'x-user-role': 'teacher'
             }
@@ -54,7 +54,7 @@ export const getStudentsByClassId = async (classId: string) => {
 
 export const getClassById = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/get-class/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/${classId}`, {
             headers: {
                 'x-user-role': 'teacher'
             }

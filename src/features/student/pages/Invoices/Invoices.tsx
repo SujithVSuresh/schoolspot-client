@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { 
-  Search, 
-  ChevronDown, 
+  // Search, 
+  // ChevronDown, 
   CheckCircle,
   Clock,
   AlertCircle,
-  Filter
+  // Filter
 } from 'lucide-react';
 import { fetchInvoicesByStudentId } from '../../api/api';
 import { dateFormatter, formatCurrency } from '../../../../app/utils/formatter';
-import { createPaymentRequest } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
 type Status = 'Paid' | 'Unpaid' | 'overdue';
@@ -33,8 +32,7 @@ interface InvoiceType {
 
 const Invoices = () => {
   const navigate = useNavigate()
-    const [searchTerm, setSearchTerm] = useState('');
-    // const [statusFilter, setStatusFilter] = useState<Status | 'all'>('all');
+    // const [searchTerm, setSearchTerm] = useState('');
     const [invoices, setInvoices] = useState<InvoiceType[]>([]);
 
     useEffect(() => {
@@ -82,7 +80,7 @@ const Invoices = () => {
         <div className="rounded-xl mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 sm:space-y-0">
   
-            <div className="flex items-center space-x-4 mr-2">
+            {/* <div className="flex items-center space-x-4 mr-2">
               <div className="relative">
                 <Filter className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                 <select
@@ -97,8 +95,8 @@ const Invoices = () => {
                 </select>
                 <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
               </div>
-            </div>
-            <div className="relative">
+            </div> */}
+            {/* <div className="relative">
               <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
               <input
                 type="text"
@@ -107,7 +105,7 @@ const Invoices = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full sm:w-80 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -170,7 +168,7 @@ const Invoices = () => {
 
           {invoices.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">No invoices found matching your criteria</p>
+              <p className="text-gray-500">No invoices found.</p>
             </div>
           )}
         </div>

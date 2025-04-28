@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType, AdminProfileType, ChangePasswordType } from "../types/types";
+import { UserSignupFormType, AdminSigninFormType, SchoolProfileType, AttendanceType, AnnouncementCreateType, AdminProfileType, ChangePasswordType, FeeData } from "../types/types";
 import { OTPFormType } from "../types/types";
 import axiosInstance from '../../../app/api/axiosInstance'
 const envData = import.meta.env;
@@ -31,7 +31,22 @@ export const verify = async (otpData: OTPFormType) => {
 
 export const createStudent = async (formData: FormData) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/student/add-student`, formData, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/student`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                'x-user-role': 'admin'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const updateStudent = async (formData: FormData, studentId: string) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/student/${studentId}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 'x-user-role': 'admin'
@@ -184,7 +199,22 @@ export const changeAccountStatus = async (userId: string, status: "active" | "bl
 
 export const createTeacher = async (formData: FormData) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/add-teacher`, formData, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/teacher`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data", 
+                'x-user-role': 'admin'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const updateTeacher = async (userId: string, formData: FormData) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/${userId}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data", 
                 'x-user-role': 'admin'
@@ -198,9 +228,24 @@ export const createTeacher = async (formData: FormData) => {
 }
 
 
-export const getAllTeachers = async (page: number, search: string, sortBy: string, sortOrder: string) => {
+export const getAllTeachers = async (search: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/get-teachers?page=${page}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/teachers?search=${search}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const getTeacherProfileById = async (userId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/profile/${userId}`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -215,7 +260,7 @@ export const getAllTeachers = async (page: number, search: string, sortBy: strin
 
 export const getTeachersBySchool = async () => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/get-teachers/school`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/teachers/school`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -228,9 +273,37 @@ export const getTeachersBySchool = async () => {
     }
 }
 
-export const createClass = async (classData: {name: string, section: string, strength: number, teacher: string}) => {
+export const createClass = async (classData: {name: string, section: string, teacher: string}) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/add-class`, classData, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class`, classData, {
+            headers: {
+                'x-user-role': 'admin'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const updateClass = async (classId: string, classData: {name: string, section: string, teacher: string}) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/class/${classId}`, classData, {
+            headers: {
+                'x-user-role': 'admin'
+            },
+        });
+        return { success: true, data }
+    }catch(error){
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const deleteClass = async (classId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/class/${classId}`, {
             headers: {
                 'x-user-role': 'admin'
             },
@@ -260,7 +333,7 @@ export const getAllClasses = async () => {
 
 export const getClassById = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/get-class/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/${classId}`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -396,33 +469,6 @@ export const fetchAnnouncementById = async (id: string) => {
 }
 
 
-export const addSubject = async (subjectData: {name: string, teacher: string, classId: string}) => {
-    try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/class/add-subject`, {...subjectData}, {
-            headers: {
-                'x-user-role': 'admin'
-            },
-        });
-        return { success: true, data }
-    }catch(error){
-        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
-        return { success: false, error: message }
-    }
-}
-
-export const removeSubject = async (subjectId: string, classId: string) => {
-    try{
-        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/class/remove-subject?subjectId=${subjectId}&classId=${classId}`, {
-            headers: {
-                'x-user-role': 'admin'
-            },
-        });
-        return { success: true, data }
-    }catch(error){
-        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
-        return { success: false, error: message }
-    }
-}
 
 
 
@@ -541,7 +587,7 @@ export const fetchSubjects = async (classId: string) => {
 
 export const createSubject = async (classData: {name: string; teacher: string; class: string}) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/subject/`, classData, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/subject`, classData, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -553,5 +599,104 @@ export const createSubject = async (classData: {name: string; teacher: string; c
         return { success: false, error: message }
     }
 }
+
+
+export const updateSubject = async (subjectId: string, classData: {name: string; teacher: string; class: string}) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/subject/${subjectId}`, classData, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const fetchSubjectById = async (subjectId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/subject/${subjectId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const deleteSubject = async (subjectId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/subject/${subjectId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+export const fetchInvoicesByClass = async (classId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/invoice/class/${classId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const createInvoice = async (invoiceData: FeeData) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/invoice`, {...invoiceData}, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const deleteInvoice = async (invoiceId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/invoice/${invoiceId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+
 
 

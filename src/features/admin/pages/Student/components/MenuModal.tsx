@@ -108,7 +108,7 @@ const MenuModal = ({closeSideMenu}: {closeSideMenu: () => void}) => {
         </div>
 
         <div className="mt-5">
-        <span className="text-sm text-gray-600">Sort by Class</span>
+        <span className="text-sm text-gray-600">Filter by Class</span>
         <div className="flex flex-wrap gap-2 mt-2">
         
           {classes.map((value, index) => (

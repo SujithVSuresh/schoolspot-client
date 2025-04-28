@@ -57,6 +57,7 @@ const AttendanceList = ({date, setSelectedDate}: {date: string; setSelectedDate:
     <div>
                     <div className="flex justify-between">
         <h2 className="text-xl font-medium text-gray-700">Attendance</h2>
+        <div>
         <DatePicker
           selected={new Date(date)}
           onChange={(date) => setSelectedDate(date as Date)}
@@ -64,10 +65,12 @@ const AttendanceList = ({date, setSelectedDate}: {date: string; setSelectedDate:
           showMonthYearPicker
           className="custom-datepicker-input mb-5"
         />
+        </div>
+
       </div>
 
   
-    <div className="overflow-hidden rounded-xl border border-gray-200">
+    <div className="overflow-hidden w-5/12 rounded-xl border border-gray-200">
 
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
