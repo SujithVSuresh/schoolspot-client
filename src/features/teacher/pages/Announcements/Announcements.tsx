@@ -36,6 +36,7 @@ const Announcements = () => {
 
   const fetchAnnouncementsHandler = async (classId: string) => {
     const response = await fetchAnnouncementsByClass(classId);
+  
     if (response.success) {
       setAnnouncements(response.data);
     }

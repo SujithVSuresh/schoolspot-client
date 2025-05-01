@@ -32,6 +32,7 @@ const UpdateAnnouncement = () => {
   useEffect(() => {
     const updateAnnouncementHandler = async (announcementId: string) => {
       const response = await fetchAnnouncementById(announcementId);
+      console.log(response, "annn respppp")
       if (response.success) {
         setAnnouncement(response.data);
         const data = response.data;

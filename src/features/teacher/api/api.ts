@@ -268,7 +268,7 @@ export const fetchStudyMaterialById = async (id: string) => {
 
 export const addAttendance = async (attendanceData: AttendanceType[]) => {
     try{
-        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/add-attendance`, {data: attendanceData}, {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/attendance`, {data: attendanceData}, {
             headers: {
                 'x-user-role': 'teacher'
             },
@@ -282,7 +282,7 @@ export const addAttendance = async (attendanceData: AttendanceType[]) => {
 
 export const getAttendanceByClass = async (classId: string, date: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/get-attendance?classId=${classId}&date=${date}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance?classId=${classId}&date=${date}`, {
             headers: {
                 'x-user-role': 'teacher'
             },
@@ -296,7 +296,7 @@ export const getAttendanceByClass = async (classId: string, date: string) => {
 
 export const changeAttendanceStatus = async (attendanceId: string, status: string) => {
     try{
-        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/update-attendance-status`, {attendanceId, status}, {
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/status`, {attendanceId, status}, {
             headers: {
                 'x-user-role': 'teacher'
             },

@@ -17,6 +17,8 @@ import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import Announcements from "../pages/Announcements/Announcements";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import InvoiceDetailsPage from "../pages/InvoiceDetails/InvoiceDetails";
+import AttendanceList from "../pages/AttendanceList/AttendanceList";
+import LeaveLetters from "../pages/LeaveLetters/LeaveLetters";
 
 const StudentRoute = () => {
   return (
@@ -42,7 +44,11 @@ const StudentRoute = () => {
             <Route path="chapters" element={<Chapters />} />
         </Route>
         
-        <Route path="attendance" element={<Attendance />} />
+        <Route path="attendance" element={<Attendance />} >
+            <Route path="" element={<AttendanceList />} />
+            <Route path="leave-letter" element={<LeaveLetters />} />
+        </Route>
+
         <Route path="invoices" element={<Invoices />} />
         <Route path="invoices/:invoiceId" element={<InvoiceDetailsPage />} />
         <Route path="exam-results" element={<ExamResults />} />

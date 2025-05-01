@@ -22,6 +22,7 @@ import UpdateStudyMaterial from "../pages/UpdateStudyMaterial/UpdateStudyMateria
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
 import UpdateAnnouncement from "../pages/UpdateAnnouncement/UpdateAnnouncement";
+import Chat from "../pages/Chat/Chat";
 
 const TeacherRoute = () => {
   return (
@@ -34,7 +35,6 @@ const TeacherRoute = () => {
        <Route path="change-password" element={<ProtectedRoute isLogin={true}><ChangePassword /></ProtectedRoute> } />
 
       <Route path="" element={<ProtectedRoute isLogin={true}><TeacherHome /></ProtectedRoute>}/>
-
 
       <Route path="classes"element={<ProtectedRoute isLogin={true}><Classes /></ProtectedRoute>}/>
 
@@ -59,6 +59,10 @@ const TeacherRoute = () => {
         <Route path="attendance/add"element={<ProtectedRoute isLogin={true}><AddAttendance /></ProtectedRoute>}/>
 
         <Route path="exam-results"element={<ProtectedRoute isLogin={true}><ExamResult /></ProtectedRoute>}/>
+
+        <Route path="chat"element={<ProtectedRoute isLogin={true}><Chat /></ProtectedRoute>}/>
+
+       
       </Route>
 
       </Route>

@@ -132,7 +132,7 @@ export const addStudyMaterialViewer = async (materialId: string) => {
 
 export const fetchAttendanceByMonth = async (date: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/monthly-attendance`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/monthly`, {
             headers: {
                 'x-user-role': 'student'
             },

@@ -7,20 +7,20 @@ const ClassNavLink = () => {
     
     const classId = location.pathname.split("/")[3]
 
+    const pageType = location.pathname.split("/")[4]
+
     const navItems = [
         { name: "Students", link: "students" },
         { name: "Assignments", link: "assignments" },
         { name: "Study Materials", link: "study-materials" },
-        // { name: "Exam Results", link: "exam-results" }, 
+        { name: "Chapters", link: "chapters" }, 
         { name: "Announcements", link: "announcements" },
         { name: "Attendance", link: "attendance" },
+        { name: "Chat", link: "chat" },
       ];
-
-      
-      
       
   return (
-    <nav className="border-b sticky top-0 bg-white border-gray-200">
+    <nav className={`border-b ${pageType !== "chat" ? "sticky top-0" : ""} bg-white border-gray-200`}>
     <ul className="flex space-x-8">
       {navItems.map((item, index) => (
         <li key={index}>
