@@ -1,16 +1,21 @@
 import logo from "../../../../assets/images/dotlogo.png";
-// import cover from "../../../../assets/images/coverimg.jpg";
-import { School } from "lucide-react";
+import cover from "../../../../assets/images/coverimg.jpg";
+import { School, Bell } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchStudentProfile } from "../../api/api";
+import { fetchConversations, fetchStudentProfile } from "../../api/api";
 import NavLink from "./components/NavLink";
-import { announcementSocket } from "../../../../app/socket/socket";
+import {
+  announcementSocket,
+  chatSocket,
+  notificationSocket,
+} from "../../../../app/socket/socket";
 import { useNavigate } from "react-router-dom";
+import { Conversation } from "../../types/types";
 
 const StudentLayout = () => {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const [studentProfile, setStudentProfile] = useState<{
     _id: string;
     fullName: string;
@@ -19,7 +24,11 @@ const StudentLayout = () => {
     roll: number;
     profilePhoto: string;
     classId: string;
-    school: string
+    user: {
+      _id: string;
+      email: string;
+    }
+    school: string;
   } | null>(null);
 
   const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
@@ -27,7 +36,6 @@ const StudentLayout = () => {
   useEffect(() => {
     const fetchStudentProfileHandler = async () => {
       const response = await fetchStudentProfile("null");
-      console.log(response, "stuuuuuuuuuuuuuuuuuuuuuu")
       setStudentProfile({
         _id: response.data._id,
         fullName: response.data.fullName,
@@ -36,8 +44,11 @@ const StudentLayout = () => {
         roll: response.data.roll,
         profilePhoto: response.data.profilePhoto,
         classId: response.data.classId,
-        school: response.data.school
-      
+        school: response.data.school,
+        user: {
+          _id: response.data.user._id,
+          email: response.data.user.email
+        }
       });
     };
     fetchStudentProfileHandler();
@@ -53,7 +64,6 @@ const StudentLayout = () => {
       });
 
       announcementSocket.on("receive-announcement", (message) => {
-        console.log("vavava", message);
         if (message) {
           setNewAnnouncementBadgeCount((prev) => prev + 1);
         }
@@ -70,6 +80,55 @@ const StudentLayout = () => {
     }
   }, [studentProfile?.classId]);
 
+  useEffect(() => {
+    const fetchConversationHandler = async () => {
+      const response = await fetchConversations();
+
+      if (response.success && response.data) {
+        chatSocket.connect();
+
+        chatSocket.on("connect", () => {
+          console.log("Connected:", chatSocket.id);
+
+          response.data.forEach((conversation: Conversation) => {
+            chatSocket.emit("join-room", `conversation-${conversation._id}`);
+          });
+        });
+      }
+    };
+
+    fetchConversationHandler();
+
+    // return () => {
+    // announcementSocket.emit('leave-room', `room-${classId}`);
+    // announcementSocket.disconnect()
+
+    // response.data.forEach((conversation: Conversation) => {
+    //   chatSocket.emit("leave-room", `conversation-${conversation._id}`);
+    // })
+    // };
+  }, []);
+
+  useEffect(() => {
+    if (studentProfile?.user._id) {
+      notificationSocket.connect();
+
+      notificationSocket.on("connect", () => {
+        console.log("Connected:", notificationSocket.id);
+        notificationSocket.emit("join-room", `notification-${studentProfile?.user._id}`);
+      });
+
+
+      return () => {
+        notificationSocket.emit(
+          "leave-room",
+          `notification-${studentProfile?.user._id}`
+        );
+        notificationSocket.disconnect();
+      };
+    }
+
+  }, [studentProfile?.user._id]);
 
   const setAnnouncementBadgeHandler = (value: number) => {
     setNewAnnouncementBadgeCount(value);
@@ -78,7 +137,7 @@ const StudentLayout = () => {
   return (
     <>
       <header
-        className={`bg-blue-50 border-b w-full py-4 px-10 flex items-center justify-between`}
+        className={`bg-white border-b w-full py-4 px-10 flex items-center justify-between`}
       >
         <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
       </header>
@@ -86,11 +145,8 @@ const StudentLayout = () => {
       <section>
         <div className="relative bg-purple-100">
           <div className="h-36 bg-blue-100 flex justify-end">
-            {/* <img
-                  className="w-full object-cover"
-                  src={cover}
-                  alt="Profile"
-                /> */}
+            <div className="w-full h-full bg-blue-200 opacity-60 absolute"></div>
+            <img className="w-full object-cover" src={cover} alt="Profile" />
           </div>
 
           <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,8 +176,14 @@ const StudentLayout = () => {
                       </div>
                     </div>
                   </div>
-                  <button onClick={() => navigate('/student/profile')} className="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
+                  {/* <button onClick={() => navigate('/student/profile')} className="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
                     View Profile
+                  </button> */}
+                  <button
+                    onClick={() => navigate("/student/notification")}
+                    className="text-gray-500 bg-blue-50 p-3 rounded-full hover:text-gray-900 transition-colors"
+                  >
+                    <Bell className="w-5 h-5" />
                   </button>
                 </div>
               </div>

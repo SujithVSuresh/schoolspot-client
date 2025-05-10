@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { fetchLeaveLettersByMonth } from "../../api/api";
+import { fetchLeaveLettersByMonth, deleteLeaveLetter } from "../../api/api";
 import { dateFormatter } from "../../../../app/utils/formatter";
-import { Calendar } from "lucide-react";
+import { Calendar, Trash } from "lucide-react";
 
-type ContextType = {
-    selectedDate: string;
-  };
+
 const LeaveLetters = () => {
-    const { selectedDate } = useOutletContext<ContextType>();
+  const { selectedDate } = useOutletContext<{selectedDate: string}>();
 
   const [leaveLetterData, setLeaveLetterData] = useState<
     {
@@ -27,32 +25,35 @@ const LeaveLetters = () => {
 
   const fetchLeaveLetterHandler = async (date: string) => {
     const response = await fetchLeaveLettersByMonth(date);
-
     if (response.success) {
       setLeaveLetterData(response.data);
     }
   };
+
+  const handleLeaveLetterDelete = async (id: string) => {
+    const response = await deleteLeaveLetter(id)
+
+    if(response.success){
+      const leaveLetters = leaveLetterData.filter((letter) => letter._id != id)
+      setLeaveLetterData(leaveLetters)
+    }
+  }
+
   return (
-    <div>
-       {leaveLetterData.map((leave, index) => {
-            // const statusConfig = getStatusConfig(leave.status);
-    
+    <div className="p-10 w-full flex justify-center">
+
+      <div className="w-6/12">
+       {leaveLetterData.map((leave, index) => {    
             return (
               <div
                 key={index}
-                className="bg-white p-5 mb-5 rounded-xl border"
+                className="bg-white mb-5 p-4 rounded-xl border"
               >
-                <div className="flex justify-between items-start gap-4">
+                {/* <div className="flex justify-between items-start gap-4"> */}
                   {/* <h2 className="text-lg font-semibold text-gray-800">
                 {leave.subject}
               </h2> */}
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span className="text-sm">
-                      {new Date(leave.fromDate).toLocaleDateString()} -{" "}
-                      {new Date(leave.toDate).toLocaleDateString()}
-                    </span>
-                  </div>
+       
     
                   {/* <div
                     className={`flex items-center gap-1 px-3 py-1 rounded-full ${statusConfig.color}`}
@@ -62,16 +63,30 @@ const LeaveLetters = () => {
                       {leave.status}
                     </span>
                   </div> */}
-                </div>
-                <p className="mt-3 text-gray-600 text-sm">Reason: {leave.reason}</p>
+                {/* </div> */}
+                <p className="text-gray-600">Reason: {leave.reason}</p>
+
+                <div className="flex items-center mt-3 gap-2 text-gray-600">
+                    {/* <Calendar className="w-4 h-4" /> */}
+                    <span className="text-sm">Leave Date: </span>
+                    <span className="text-sm">
+                      {new Date(leave.fromDate).toLocaleDateString()} -{" "}
+                      {new Date(leave.toDate).toLocaleDateString()}
+                    </span>
+                  </div>
     
-                   <div className="flex items-center mt-5 text-gray-600">
-                     <Calendar className="w-5 h-5 mr-2 text-green-500" />
+                 <div className="flex justify-between items-end">
+                 <div className="flex items-center mt-5 text-gray-600">
+                     <Calendar className="w-4 h-4 mr-2 text-green-500" />
                      <span className="text-sm">{dateFormatter(String(leave.createdAt))}</span>
                    </div>
+                 <Trash onClick={() => handleLeaveLetterDelete(leave._id)} className="w-4 h-5 hover:cursor-pointer"/>
+                 </div>
+            
               </div>
             );
           })}
+          </div>
           </div>
   );
 };

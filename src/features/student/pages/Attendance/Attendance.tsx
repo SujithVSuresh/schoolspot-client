@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { Outlet } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 const subjectItems = [
   {
@@ -24,6 +25,16 @@ const Attendance = () => {
   return (
     <div className="w-full min-h-screen">
       <div className="w-full flex justify-between">
+      <div>
+      <DatePicker
+            selected={new Date(selectedDate)}
+            onChange={(date) => setSelectedDate(date as Date)}
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
+            className="custom-datepicker-input ml-2"
+          />
+          </div>
+       
         <div className="bg-white rounded-lg p-1 border inline-flex space-x-1">
           {subjectItems.map((item) => (
             <button
@@ -38,16 +49,19 @@ const Attendance = () => {
             </button>
           ))}
         </div>
-        <div className="flex">
-          <DatePicker
-            selected={new Date(selectedDate)}
-            onChange={(date) => setSelectedDate(date as Date)}
-            dateFormat="MM/yyyy"
-            showMonthYearPicker
-            className="custom-datepicker-input"
-          />
+  
+        <button
+        onClick={() => (navigate(`/student/attendance/leave-letter/add`))}
+        className="flex items-center gap-2 h-10 bg-blue-500 hover:bg-blue-600 text-white px-3 py-0 rounded-md transition-colors duration-200 shadow-sm"
+      >
+        <Plus size={16} />
+        <span className="text-sm">Add</span>
+      </button>
+
+  
+
         </div>
-      </div>
+
 
       <Outlet context={{ selectedDate }} />
     </div>

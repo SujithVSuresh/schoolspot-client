@@ -12,8 +12,9 @@ const NavLink = ({announcementBadge, setAnnouncementBadge}: {announcementBadge: 
       { name: "Subjects", link: "subjects" },
       { name: "Attendance", link: "attendance" }, 
       { name: "Invoices", link: "invoices" },
-      // { name: "Exam Results", link: "exam-results" },
+      { name: "Exam Results", link: "exam-results" },
       { name: "Announcements", link: "announcements" },
+      { name: "Chat", link: "chat" },
       { name: "Profile", link: "profile" }
     ];
 

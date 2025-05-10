@@ -89,7 +89,7 @@ const AttendanceRecord = ({ classId }: { classId: string }) => {
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                          {attendanceData.length > 0 &&
+                          {attendanceData?.length > 0 &&
                             attendanceData.map((attendance) => (
                               <tr key={attendance._id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

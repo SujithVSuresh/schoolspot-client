@@ -23,6 +23,8 @@ import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
 import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
 import UpdateAnnouncement from "../pages/UpdateAnnouncement/UpdateAnnouncement";
 import Chat from "../pages/Chat/Chat";
+import Notification from "../pages/Notification/Notification";
+import Exam from "../pages/Exam/Exam";
 
 const TeacherRoute = () => {
   return (
@@ -37,7 +39,7 @@ const TeacherRoute = () => {
       <Route path="" element={<ProtectedRoute isLogin={true}><TeacherHome /></ProtectedRoute>}/>
 
       <Route path="classes"element={<ProtectedRoute isLogin={true}><Classes /></ProtectedRoute>}/>
-
+<Route path="notification"element={<ProtectedRoute isLogin={true}><Notification /></ProtectedRoute>}/>
       <Route path="classes/:id"element={<ProtectedRoute isLogin={true}><ClassDetails /></ProtectedRoute>}>
 
         <Route path="students"element={<ProtectedRoute isLogin={true}><TeacherStudents /></ProtectedRoute>}/>
@@ -58,7 +60,7 @@ const TeacherRoute = () => {
         <Route path="attendance"element={<ProtectedRoute isLogin={true}><TeacherAttendance /></ProtectedRoute>}/>
         <Route path="attendance/add"element={<ProtectedRoute isLogin={true}><AddAttendance /></ProtectedRoute>}/>
 
-        <Route path="exam-results"element={<ProtectedRoute isLogin={true}><ExamResult /></ProtectedRoute>}/>
+        <Route path="exams"element={<ProtectedRoute isLogin={true}><Exam /></ProtectedRoute>}/>
 
         <Route path="chat"element={<ProtectedRoute isLogin={true}><Chat /></ProtectedRoute>}/>
 

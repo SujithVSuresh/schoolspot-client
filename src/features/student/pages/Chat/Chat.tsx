@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle } from "lucide-react";
-import { useOutletContext } from "react-router-dom";
-import {EllipsisVertical, Users, Info} from 'lucide-react'
+import { MessageCircle, Users, Info, ChevronDown, EllipsisVertical } from "lucide-react";
 import {
   createMessage,
-  fetchConversationsBySubjects,
+  fetchConversations,
   fetchMessagesByConversation,
 } from "../../api/api";
 import { dateFormatter } from "../../../../app/utils/formatter";
@@ -12,15 +10,12 @@ import { Conversation } from "../../types/types";
 import { MessageListType } from "../../types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
-import { chatSocket, notificationSocket } from "../../../../app/socket/socket";
+import { chatSocket } from "../../../../app/socket/socket";
 
 const Chat = () => {
-  const { subjectId }: { subjectId: string } = useOutletContext();
-
   const [conversations, setConversations] = useState<Conversation[]>([]);
 
-  const [activeConversation, setActiveConversation] =
-    useState<Conversation | null>(null);
+  const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
 
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
@@ -28,19 +23,19 @@ const Chat = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const teacher = useSelector((state: RootState) => state.teacher);
+  const student = useSelector((state: RootState) => state.student);
 
   useEffect(() => {
-    const fetchConversationHandler = async (subjectId: string) => {
-      const response = await fetchConversationsBySubjects(subjectId);
+    const fetchConversationHandler = async () => {
+      const response = await fetchConversations();
 
       if (response.success) {
         setConversations(response.data);
       }
     };
 
-    fetchConversationHandler(subjectId);
-  }, [subjectId]);
+    fetchConversationHandler();
+  }, []);
 
   useEffect(() => {
     if (!activeConversation) return;
@@ -71,63 +66,51 @@ const Chat = () => {
     };
   }, []);
 
-  useEffect(() => {
-    notificationSocket.connect();
 
-    notificationSocket.on("connect", () => {
-      console.log("Connected:", notificationSocket.id);
-      activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("join-room", `notification-${userId}`);
-      });
-    });
-
-    return () => {
-      activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("leave-room", `notification-${userId}`);
-      });
-      notificationSocket.disconnect();
-    };
-  }, [activeConversation]);
 
   const handleSendMessage = async () => {
     const response = await createMessage({
-      conversationId: activeConversation?._id as string,
+      conversationId: String(activeConversation?._id),
       messageType: "text",
       content: inputValue,
     });
 
     if (response.success) {
       console.log(response.data, "message send successfully");
-      setMessages((prev) => [...prev, response?.data]);
       setInputValue("");
+      setMessages((prev) => [...prev, response?.data]);
       chatSocket.emit("send-message", {
         roomId: `conversation-${activeConversation?._id}`,
-        message: response.data,
+        message: response.data
       });
 
       activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("send-notification", {
+        chatSocket.emit("send-notification", {
           roomId: `notification-${userId}`,
           message: {
             _id: "",
             notificationType: "message",
             message: `You have a new message: ${response.data.content}`,
-            createdAt: new Date(),
-          },
+            createdAt: new Date()
+
+          }
         });
-      });
+
+      })
+
     }
   };
 
   return (
-    <div className="flex h-screen mt-5 border top-50 sticky bg-white">
+    <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
+      {/* Sidebar */}
       <div
         className={`${
           isSidebarOpen ? "w-96" : "w-0"
         } bg-white border-r transition-all duration-300 overflow-hidden`}
       >
         <div className="h-16 border-b flex items-center px-5">
-        <div className="flex items-center w-full justify-between">
+          <div className="flex items-center w-full justify-between">
             <div className="flex items-center">
             <MessageCircle className="text-gray-800 h-5 w-5" />
             <h2 className="text-xl text-gray-800 font-bold ml-1">Chat</h2>
@@ -159,8 +142,10 @@ const Chat = () => {
         </div>
       </div>
 
+      {/* Main chat area */}
       <div className="flex-1 flex flex-col">
-      <div className=" h-16 border-b flex items-center justify-between p-5">
+        {/* Header with sidebar toggle */}
+        <div className=" h-16 border-b flex items-center justify-between p-5">
           <div className="flex">
          <div className="bg-gray-50 p-3 rounded-full">
          <Users className="w-5 h-5"/>
@@ -181,31 +166,33 @@ const Chat = () => {
           {messages?.length > 0 &&
             messages.map((message) => (
               <div
-                key={message?._id}
+                key={message._id}
                 className={`flex ${
-                  message?.senderId?._id === teacher?._id
+                  message?.senderId?._id === student._id
                     ? "justify-end"
                     : "justify-start"
                 }`}
               >
                 <div
                   className={`max-w-xs md:max-w-md lg:max-w-lg rounded-lg px-4 py-2 ${
-                    message.senderId?._id === teacher?._id
+                    message?.senderId?._id === student?._id
                       ? "bg-blue-500 text-white rounded-br-none"
                       : "bg-gray-200 text-gray-800 rounded-bl-none"
                   }`}
                 >
-                  {message.senderId?._id !== teacher?._id ? (
-                    <div className="text-sm mb-1">
-                      ~{message.senderId.email.split("@")[0]}
+                             {message.senderId?._id !== student?._id ? (
+                    <div className="text-sm">
+                      ~ {message.senderId.email.split("@")[0]}
                     </div>
                   ) : (
-                    ""
+                  <div className="w-full flex justify-end">
+                    <ChevronDown className="w-4 h-4"/>
+                  </div>
                   )}
                   <div>{message.content}</div>
                   <div
                     className={`text-xs mt-1 ${
-                      message.senderId._id === teacher._id
+                      message?.senderId?._id === student?._id
                         ? "text-blue-100"
                         : "text-gray-500"
                     }`}

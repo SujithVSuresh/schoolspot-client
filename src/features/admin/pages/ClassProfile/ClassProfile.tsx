@@ -8,7 +8,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Invoice from "./components/Invoice";
 import { dateFormatter } from "../../../../app/utils/formatter";
-
+import Exam from "./components/Exam";
 import TimeTable from "./components/TimeTable";
 
 
@@ -173,6 +173,15 @@ const ClassProfile = () => {
           </div>
 
           <div
+            onClick={() => updateSection("exam")}
+            className={`${
+              section == "exam" ? "bg-blue-200" : "bg-gray-200"
+            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          >
+            Exam
+          </div>
+
+          <div
             onClick={() => updateSection("fees")}
             className={`${
               section == "fees" ? "bg-blue-200" : "bg-gray-200"
@@ -215,6 +224,8 @@ const ClassProfile = () => {
         <Invoice classId={classId as string}/>
       ) : section == "timetable" ? (
         <TimeTable />
+      ) : section == "exam" ? (
+        <Exam />
       ) : (
         <></>
       )}

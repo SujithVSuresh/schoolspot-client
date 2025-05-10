@@ -19,6 +19,9 @@ import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import InvoiceDetailsPage from "../pages/InvoiceDetails/InvoiceDetails";
 import AttendanceList from "../pages/AttendanceList/AttendanceList";
 import LeaveLetters from "../pages/LeaveLetters/LeaveLetters";
+import Chat from "../pages/Chat/Chat";
+import Notifications from "../pages/Notifications/Notifications";
+import CreateLeaveLetter from "../pages/CreateLeaveLetter/CreateLeaveLetter";
 
 const StudentRoute = () => {
   return (
@@ -32,6 +35,7 @@ const StudentRoute = () => {
         }
       />
 
+
       <Route path="/student" element={<ProtectedRoute isLogin={true}><StudentLayout /></ProtectedRoute>}>
         <Route path="home" element={<Home />} />
         <Route path="subjects" element={<Subjects />} />
@@ -44,15 +48,27 @@ const StudentRoute = () => {
             <Route path="chapters" element={<Chapters />} />
         </Route>
         
+        <Route path="attendance/leave-letter/add" element={<CreateLeaveLetter />} />
+
         <Route path="attendance" element={<Attendance />} >
             <Route path="" element={<AttendanceList />} />
             <Route path="leave-letter" element={<LeaveLetters />} />
+            
         </Route>
+        <Route
+        path="notification"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <Notifications />
+          </ProtectedRoute>
+        }
+      />
 
         <Route path="invoices" element={<Invoices />} />
         <Route path="invoices/:invoiceId" element={<InvoiceDetailsPage />} />
         <Route path="exam-results" element={<ExamResults />} />
         <Route path="announcements" element={<Announcements />} />
+        <Route path="chat" element={<Chat />} />
         <Route path="profile" element={<StudentProfile />} />
         <Route path="change-password" element={<ChangePassword />} />
       </Route>
