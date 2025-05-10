@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { dateFormatter } from "../../../../app/utils/formatter"
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { fetchExams } from "../../api/api";
 
 const Exam = () => {
+    const navigate = useNavigate()
     const { classId }: { classId: string } = useOutletContext();
 
     const [exams, setExams] = useState<{
@@ -32,8 +33,8 @@ const Exam = () => {
         <div className="grid grid-cols-4 gap-3">
 
             {exams.map((exam) => (
-                              <div className="rounded-xl overflow-hidden w-full border-2">
-      <div className="p-5" onClick={() => {}}>
+                              <div className="rounded-xl overflow-hidden w-full border-2 hover: cursor-pointer">
+      <div className="p-5" onClick={() => navigate(`/teacher/classes/${classId}/exams/${exam._id}`)}>
         <div className="flex items-center gap-3 mb-4">
     
           <h2 className="text-lg font-medium text-gray-700">
