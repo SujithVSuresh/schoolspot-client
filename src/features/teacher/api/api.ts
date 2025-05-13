@@ -434,6 +434,30 @@ export const fetchConversationsBySubjects = async (subjectId: string) => {
     }
 }
 
+
+export interface CreateConversationType {
+    isGroup: boolean,
+    participants: string[],
+    name: string,
+    subjectId: string
+}
+
+export const createConversation = async (conversationData: CreateConversationType) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/chat/conversation`, conversationData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const fetchMessagesByConversation = async (conversationId: string) => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/chat/messages/${conversationId}`, {

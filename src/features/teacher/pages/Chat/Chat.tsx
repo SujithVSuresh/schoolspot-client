@@ -127,7 +127,7 @@ const Chat = () => {
       {/* Sidebar */}
       
 
-      {isCreateGroup ? <CreateGroup setIsCreateGroup={setIsCreateGroup}/> : <ChatSidebar
+      {isCreateGroup ? <CreateGroup setIsCreateGroup={setIsCreateGroup} subjectId={subjectId}/> : <ChatSidebar
         conversations={conversations}
         activeConversation={activeConversation}
         setActiveConversation={setActiveConversation}

@@ -8,8 +8,6 @@ import { RootState } from "../../../../app/store"
 const TeacherStudents = () => {
     const students = useSelector((state: RootState) => state.studentList);
 
-    console.log(students, "gaaaaalllllllll")
-
   const location = useLocation()
 
   const classId = location.pathname.split("/")[3]
