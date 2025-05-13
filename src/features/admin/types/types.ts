@@ -275,3 +275,57 @@ export interface FeeItem {
     totalAmount: number;
     remarks?: string;
   }
+
+
+  export interface PlanType {
+ _id?: string;
+  name: "Free" | "3 Month" | "6 Month";
+  price: number;
+  durationInDays: 30 | 90 | 180;
+  createdAt?: Date;
+  updatedAt?: Date;
+  }
+
+  export type SubscriptionStatusType = "pending" | "active" | "expired" | "cancelled"
+
+  export interface SubscriptionType {
+  _id: string
+  planId: string;
+  planPrice: number;
+  startDate: Date;
+  endDate: Date;
+  status: SubscriptionStatusType;
+  createdAt: Date;
+  updatedAt: Date;
+  }
+
+
+
+export interface ExamTimetableType {
+  subject: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface ExamType {
+  name: string;
+  classId: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  examTimetable: ExamTimetableType[];
+}
+
+
+
+export interface PeriodType {
+  subject: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface TimetableType {
+  day: string;
+  periods: PeriodType[];
+}

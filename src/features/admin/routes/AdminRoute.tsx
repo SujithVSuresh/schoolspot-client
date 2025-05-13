@@ -33,7 +33,11 @@ import UpdateClass from "../pages/UpdateClass/UpdateClass";
 import UpdateSubject from "../pages/UpdateSubject/UpdateSubject";
 import CreateInvoice from "../pages/CreateInvoice/CreateInvoice";
 import UpdateTeacherProfile from "../pages/UpdateTeacherProfile/UpdateTeacherProfile";
-
+import Subscription from "../pages/Subscription/Subscription";
+import CreateExam from "../pages/CreateExam/CreateExam";
+import ExamDetails from "../pages/ExamDetails/ExamDetails";
+import AddMarks from "../pages/AddMarks/AddMarks";
+import AddTimetable from "../pages/AddTimetable/AddTimetable";
 
 const AdminRoute = () => {
   return (
@@ -122,16 +126,20 @@ const AdminRoute = () => {
             <ChangePassword />
           </ProtectedRoute>
         } />
+              <Route 
+        path="/profile/subscription" 
+        element={
+          <ProtectedRoute isLogin={true}>
+            <Subscription />
+          </ProtectedRoute>
+        } />
 
       <Route path="/dashboard" element={<ProtectedRoute isLogin={true}><Dashboard /></ProtectedRoute>}>
         <Route path="overview" element={<Overview />} />
         <Route path="students" element={<Student />} />
         <Route path="students/new/:classId" element={<AddStudent />} />
         <Route path="students/profile/:id" element={<StudentProfile />} />
-        <Route
-          path="students/profile/:id/update"
-          element={<UpdateStudentProfile />}
-        />
+        <Route path="students/profile/:id/update" element={<UpdateStudentProfile />}/>
         <Route path="teachers" element={<Teacher />} />
         <Route path="teachers/new" element={<AddTeacher />} />
         <Route path="teachers/profile/:id" element={<TeacherProfile />} />
@@ -148,8 +156,11 @@ const AdminRoute = () => {
         <Route path="attendance/new/:classId" element={<AddAttendance />} />
         <Route path="classes/:classId/invoice/new" element={<CreateInvoice />} />
         <Route path="classes/invoice/:classId" element={<Invoice />} />
+        <Route path="classes/:classId/exam/new" element={<CreateExam />} />
+        <Route path="classes/:classId/exam/:examId" element={<ExamDetails />} />
+        <Route path="classes/:classId/exam/:examId/marks/new" element={<AddMarks />} />
         
-        
+        <Route path="classes/:classId/timetable/new" element={<AddTimetable />} />
       </Route>
     </Routes>
   );

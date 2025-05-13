@@ -1,6 +1,7 @@
 import {
   KeyRound,
   LogOut,
+  CircleDollarSign
 } from "lucide-react";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/DashboardHeader";
@@ -34,10 +35,10 @@ const AdminProfile = () => {
                 <KeyRound className="h-4 w-4" />
                 Change Password
               </button>
-              {/* <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition-colors">
-                <Power className="h-4 w-4" />
-                Deactivate Account
-              </button> */}
+              <button onClick={() => navigate('/profile/subscription')} className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors">
+                <CircleDollarSign className="h-4 w-4" />
+                Subscription
+              </button>
               <button
                 onClick={() => logoutHandler()}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"

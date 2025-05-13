@@ -52,7 +52,7 @@ const Signin = () => {
       setTimeout(() => {
         setLoading(false);
         toast(
-          "We don't have any record of a SchoolSpot account with this credentials",
+          response?.error?.message,
           {
             duration: 8000,
             position: "bottom-right",

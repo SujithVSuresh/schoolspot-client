@@ -37,7 +37,6 @@ const ClassProfile = () => {
     const fetchClassProfileData = async () => {
       if(classId){
       const response = await getClassById(classId)
-      console.log(response, "ha respoooo")
       if(response.success){
         setClassData(response.data?.data)
        }
@@ -190,6 +189,15 @@ const ClassProfile = () => {
             Invoice
           </div>
 
+                    <div
+            onClick={() => updateSection("timetable")}
+            className={`${
+              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
+            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          >
+            Timetable
+          </div>
+
           <div
             onClick={() => navigate(`/dashboard/classes/${classId}/update`)}
             className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
@@ -223,9 +231,9 @@ const ClassProfile = () => {
       ) : section == "fees" ? (
         <Invoice classId={classId as string}/>
       ) : section == "timetable" ? (
-        <TimeTable />
+        <TimeTable classId={classId as string}/>
       ) : section == "exam" ? (
-        <Exam />
+        <Exam classId={classId as string}/>
       ) : (
         <></>
       )}

@@ -1,236 +1,90 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchTimetableByClass } from "../../../api/api";
 
-type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
 
-type SubjectDetails = {
-    period: number;
-    subject: string;
-    teacher: string;
-    time: string;
-  };
+interface Period {
+  subject: string;
+  startTime: string;
+  endTime: string;
+}
 
-const TimeTable = () => {
-  const schoolTimetable: Record<Day, SubjectDetails[]> = {
-    Monday: [
-      {
-        period: 1,
-        subject: "Mathematics",
-        teacher: "Mr. Sharma",
-        time: "9:00 AM - 9:45 AM",
-      },
-      {
-        period: 2,
-        subject: "Science",
-        teacher: "Ms. Gupta",
-        time: "9:45 AM - 10:30 AM",
-      },
-      {
-        period: 3,
-        subject: "English",
-        teacher: "Mrs. Das",
-        time: "10:30 AM - 11:15 AM",
-      },
-      {
-        period: 4,
-        subject: "History",
-        teacher: "Mr. Roy",
-        time: "11:30 AM - 12:15 PM",
-      },
-      {
-        period: 5,
-        subject: "Physical Education",
-        teacher: "Coach Kumar",
-        time: "12:15 PM - 1:00 PM",
-      },
-    ],
-    Tuesday: [
-      {
-        period: 1,
-        subject: "Science",
-        teacher: "Ms. Gupta",
-        time: "9:00 AM - 9:45 AM",
-      },
-      {
-        period: 2,
-        subject: "Mathematics",
-        teacher: "Mr. Sharma",
-        time: "9:45 AM - 10:30 AM",
-      },
-      {
-        period: 3,
-        subject: "Geography",
-        teacher: "Ms. Rani",
-        time: "10:30 AM - 11:15 AM",
-      },
-      {
-        period: 4,
-        subject: "English",
-        teacher: "Mrs. Das",
-        time: "11:30 AM - 12:15 PM",
-      },
-      {
-        period: 5,
-        subject: "Art",
-        teacher: "Mr. Singh",
-        time: "12:15 PM - 1:00 PM",
-      },
-    ],
-    Wednesday: [
-      {
-        period: 1,
-        subject: "English",
-        teacher: "Mrs. Das",
-        time: "9:00 AM - 9:45 AM",
-      },
-      {
-        period: 2,
-        subject: "History",
-        teacher: "Mr. Roy",
-        time: "9:45 AM - 10:30 AM",
-      },
-      {
-        period: 3,
-        subject: "Mathematics",
-        teacher: "Mr. Sharma",
-        time: "10:30 AM - 11:15 AM",
-      },
-      {
-        period: 4,
-        subject: "Science",
-        teacher: "Ms. Gupta",
-        time: "11:30 AM - 12:15 PM",
-      },
-      {
-        period: 5,
-        subject: "Music",
-        teacher: "Ms. Iyer",
-        time: "12:15 PM - 1:00 PM",
-      },
-    ],
-    Thursday: [
-      {
-        period: 1,
-        subject: "Science",
-        teacher: "Ms. Gupta",
-        time: "9:00 AM - 9:45 AM",
-      },
-      {
-        period: 2,
-        subject: "Mathematics",
-        teacher: "Mr. Sharma",
-        time: "9:45 AM - 10:30 AM",
-      },
-      {
-        period: 3,
-        subject: "English",
-        teacher: "Mrs. Das",
-        time: "10:30 AM - 11:15 AM",
-      },
-      {
-        period: 4,
-        subject: "Geography",
-        teacher: "Ms. Rani",
-        time: "11:30 AM - 12:15 PM",
-      },
-      {
-        period: 5,
-        subject: "Physical Education",
-        teacher: "Coach Kumar",
-        time: "12:15 PM - 1:00 PM",
-      },
-    ],
-    Friday: [
-      {
-        period: 1,
-        subject: "History",
-        teacher: "Mr. Roy",
-        time: "9:00 AM - 9:45 AM",
-      },
-      {
-        period: 2,
-        subject: "Mathematics",
-        teacher: "Mr. Sharma",
-        time: "9:45 AM - 10:30 AM",
-      },
-      {
-        period: 3,
-        subject: "Science",
-        teacher: "Ms. Gupta",
-        time: "10:30 AM - 11:15 AM",
-      },
-      {
-        period: 4,
-        subject: "English",
-        teacher: "Mrs. Das",
-        time: "11:30 AM - 12:15 PM",
-      },
-      {
-        period: 5,
-        subject: "Art",
-        teacher: "Mr. Singh",
-        time: "12:15 PM - 1:00 PM",
-      },
-    ],
-  };
+interface DaySchedule {
+  day: string;
+  periods: Period[];
+}
+
+const Timetable = ({classId}: {classId: string}) => {
+  const navigate = useNavigate();
+  const [timetable, setTimetable] = useState<DaySchedule[]>([]);
+
+  useEffect(() => {
+    const fetchTimetable = async () => {
+      if (!classId) return;
+
+      const response = await fetchTimetableByClass(classId);
+
+      if (response.success) {
+        setTimetable(response.data.timetable);
+      }
+    };
+
+    fetchTimetable();
+  }, [classId]);
+
+
+
+  if (!timetable.length) {
+    return <div className="text-center mt-10 text-gray-500">No timetable available.</div>;
+  }
+
   return (
-    <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
+    <>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
-          Timetable
+          Subjects
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          {/* <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-      <input
-        value={searchStudent}
-        onChange={(e) => setSearchStudent(e.target.value)}
-        type="text"
-        placeholder="Search..."
-        className="w-full sm:w-40 pl-4 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-0 focus:border-transparent"
-      />
-      <select
-        value={sortStudent}
-        onChange={(e) => setSortStudent(e.target.value)}
-        className="w-full sm:w-40 pl-4 pr-8 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-0 focus:border-transparent appearance-none bg-white"
-      >
-        <option value="">Sort</option>
-        <option value="name-asc">Name - a to z</option>
-        <option value="name-desc">Name - z to a</option>
-      </select>
-      <button
-        onClick={() => updateQuery({ search: searchStudent, page: 1, sort: sortStudent })}
-        className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
-      >
-        <Search className="h-5 w-5" />
-      </button>
-    </div>
-    <button
-      onClick={() => navigate('/add-student')}
-      className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
-    >
-      <UserPlus className="h-5 w-5" />
-      Add
-    </button> */}
+        <button
+              onClick={() => navigate(`/dashboard/classes/${classId}/timetable/new`)}
+              className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
+            >
+              Add
+            </button>
         </div>
       </div>
-<div className="flex">
-        <div className="flex bg-white rounded-e w-auto">
-          {Object.keys(schoolTimetable).map((value) => {
-           const validDay = value as Day; 
 
-          return(
-            <div className="flex flex-col">
-              <div className="w-36 h-16 flex justify-center items-center font-medium bg-blue-100">{value}</div>
-        
-                {schoolTimetable[validDay].map((subject: SubjectDetails) => (
-                  <div className="w-36 h-16 border-t flex justify-center items-center text-center text-sm">{subject.subject}</div>
-                ))}
+    <div className="flex flex-col items-center min-h-screen ">
+    <div className="w-6/12 mt-10 px-8 py-5 bg-white border rounded">
+      {/* <h2 className="text-2xl font-bold text-center mb-6">Timetable</h2> */}
+
+      {timetable.map((dayEntry, index) => (
+        <div key={index} className="mb-8">
+          <h3 className="text-xl font-medium text-gray-800 mb-2">{dayEntry.day}</h3>
+          <div className="grid grid-cols-1 gap-4">
+            {dayEntry.periods.map((period, idx) => (
+              <div
+                key={idx}
+                className="grid grid-cols-1 md:grid-cols-3 gap-4 border p-4 rounded bg-gray-50"
+              >
+                <div>
+                  <strong></strong> {period.subject}
+                </div>
+                <div>
+                  <strong>Start:</strong> {period.startTime}
+                </div>
+                <div>
+                  <strong>End:</strong> {period.endTime}
+                </div>
               </div>
-          )
-           })}
+            ))}
+          </div>
         </div>
-        </div>
- 
+      ))}
     </div>
+    </div>
+        </>
   );
 };
 
-export default TimeTable;
+export default Timetable;

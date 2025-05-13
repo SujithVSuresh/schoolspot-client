@@ -20,7 +20,6 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
   const [inputValue, setInputValue] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const student = useSelector((state: RootState) => state.student);
@@ -105,9 +104,7 @@ const Chat = () => {
     <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
       {/* Sidebar */}
       <div
-        className={`${
-          isSidebarOpen ? "w-96" : "w-0"
-        } bg-white border-r transition-all duration-300 overflow-hidden`}
+        className={`bg-white border-r transition-all duration-300 overflow-hidden`}
       >
         <div className="h-16 border-b flex items-center px-5">
           <div className="flex items-center w-full justify-between">

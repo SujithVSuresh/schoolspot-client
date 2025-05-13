@@ -30,6 +30,8 @@ const TeacherSignin = () => {
               setLoading(true);
           
               const response = await signin(data);
+
+              console.log(response)
           
               if (response.success) {
                 dispatch(
@@ -49,7 +51,7 @@ const TeacherSignin = () => {
                 setTimeout(() => {
                   setLoading(false);
                   toast(
-                    "We don't have any record of a teacher account with this credentials",
+                    response?.error?.message,
                     {
                       duration: 8000,
                       position: "bottom-right",
