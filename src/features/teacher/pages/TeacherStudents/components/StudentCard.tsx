@@ -4,7 +4,7 @@ import { User, Hash } from "lucide-react"
 interface StudentCardProps {
     _id: string
     fullName: string,
-    roll: string
+    roll: number
   }
 
 const StudentCard = ({student}: {student: StudentCardProps}) => {

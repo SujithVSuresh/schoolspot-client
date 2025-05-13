@@ -21,6 +21,8 @@ import { RootState } from "../../../../app/store";
 import { chatSocket } from "../../../../app/socket/socket";
 import { fetchConversationsBySubjects } from "../../api/api";
 import { Conversation } from "../../types/types";
+import { setStudentList } from "../../redux/studentListSlice";
+import { getStudentsByClassId } from "../../api/api";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
@@ -64,7 +66,20 @@ const ClassDetails = () => {
         setClassDetails(data);
       }
     };
-    fetchClassDetails();
+    
+
+        const fetchStudentsByClassId = async () => {
+    const response = await getStudentsByClassId(classId)
+    console.log(response, "response1223123123")
+    if (response.success) {
+      dispatch(setStudentList(response.data))
+    } else {
+      console.log(response.error)
+    }
+  }
+
+  fetchClassDetails();
+    fetchStudentsByClassId()
   }, [classId, dispatch]);
 
   useEffect(() => {
@@ -100,21 +115,7 @@ const ClassDetails = () => {
     // };
   }, [classDetails.subject?._id]);
 
-  // useEffect(() => {
-  //   chatSocket.connect();
 
-  //   chatSocket.on("connect", () => {
-  //     console.log("Connected:", chatSocket.id);
-
-  //     chatSocket.emit("join-room", `room-${classId}`);
-
-  //   });
-
-  //   return () => {
-  //     // announcementSocket.emit('leave-room', `room-${classId}`);
-  //     // announcementSocket.disconnect()
-  //   };
-  // }, []);
 
   return (
     <>

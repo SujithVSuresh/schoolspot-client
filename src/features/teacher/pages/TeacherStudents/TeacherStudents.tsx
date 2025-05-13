@@ -1,33 +1,19 @@
-import { useEffect, useState } from "react"
-import { getStudentsByClassId } from "../../api/api"
+
 import { useLocation } from "react-router-dom"
 import StudentCard from "./components/StudentCard"
 import Breadcrumb from "../../components/Breadcrumb"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../../app/store"
 
 const TeacherStudents = () => {
+    const students = useSelector((state: RootState) => state.studentList);
+
+    console.log(students, "gaaaaalllllllll")
+
   const location = useLocation()
 
   const classId = location.pathname.split("/")[3]
 
-  const [students, setStudents] = useState<{
-    _id: string
-    fullName: string,
-    roll: string
-  }[]>([])
-
-  useEffect(() => {
-    fetchStudentsByClassId()
-  }, [classId])
-
-  const fetchStudentsByClassId = async () => {
-    const response = await getStudentsByClassId(classId)
-    if (response.success) {
-      setStudents(response.data)
-      console.log(response.data)
-    } else {
-      console.log(response.error)
-    }
-  }
 
   const breadcrumbItems = [
     { label: 'Classes', href: `/teacher/classes` },
@@ -39,7 +25,7 @@ const TeacherStudents = () => {
       <div className="grid grid-cols-4 gap-4 py-5">
         {students.map((student, index) => (
           <StudentCard student={{
-            _id: student._id,
+            _id: student?._id as string,
             fullName: student.fullName,
             roll: student.roll
           }} key={index}/>

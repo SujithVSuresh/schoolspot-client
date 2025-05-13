@@ -11,7 +11,7 @@ const initialState: UserStoreType = {
 }
 
 
-const superadminSlice = createSlice({
+const superAdminSlice = createSlice({
     name: 'superadmin',
     initialState,
     reducers: {
@@ -25,5 +25,5 @@ const superadminSlice = createSlice({
 })
 
 
-export const {setSuperAdmin, removeSuperAdmin} = superadminSlice.actions;
-export const superAdminReducer = superadminSlice.reducer;
+export const {setSuperAdmin, removeSuperAdmin} = superAdminSlice.actions;
+export const superAdminReducer = superAdminSlice.reducer;
