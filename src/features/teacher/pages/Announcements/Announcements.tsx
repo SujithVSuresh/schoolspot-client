@@ -15,6 +15,7 @@ const Announcements = () => {
   const { classId }: { classId: string } = useOutletContext();
 
   const [announcements, setAnnouncements] = useState<AnnouncementType[]>([]);
+  const [showMenu, setShowMenu] = useState("");
 
   useEffect(() => {
     fetchAnnouncementsHandler(classId);
@@ -41,6 +42,18 @@ const Announcements = () => {
       setAnnouncements(response.data);
     }
   };
+
+
+  const handleMenu = (id: string) => {
+    if(id == showMenu){
+      setShowMenu("")
+    }else{
+      setShowMenu(id)
+    }
+
+  }
+
+  
 
   const deleteAnnouncementHandler = async (announcementId: string) => {
     const response = await deleteAnnouncement(announcementId);
@@ -97,6 +110,8 @@ const Announcements = () => {
               announcement={announcement}
               classId={classId}
               deleteAnnouncementHandler={deleteAnnouncementHandler}
+              showMenu={showMenu}
+              handleMenu={handleMenu}
             />
           ))}
         </div>

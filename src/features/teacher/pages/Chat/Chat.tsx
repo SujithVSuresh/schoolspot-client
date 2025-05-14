@@ -28,12 +28,15 @@ const Chat = () => {
 
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
+  const [messageMenu, setMessageMenu] = useState("")
+
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const teacher = useSelector((state: RootState) => state.teacher);
 
   useEffect(() => {
+    // Fetch conversations by subjects
     const fetchConversationHandler = async (subjectId: string) => {
       const response = await fetchConversationsBySubjects(subjectId);
 
@@ -46,6 +49,7 @@ const Chat = () => {
   }, [subjectId]);
 
   useEffect(() => {
+    // fetch messages of active conversation
     if (!activeConversation) return;
 
     const fetchMessages = async (activeConversation: string) => {
@@ -91,6 +95,14 @@ const Chat = () => {
       notificationSocket.disconnect();
     };
   }, [activeConversation]);
+
+  const handleMessageMenu = (id: string) => {
+    if(messageMenu == id){
+      setMessageMenu("")
+    }else{
+      setMessageMenu(id)
+    }
+  }
 
   const handleSendMessage = async () => {
     const response = await createMessage({
@@ -145,7 +157,7 @@ const Chat = () => {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages?.length > 0 &&
             messages.map((message) => (
-              <ChatMessageCard message={message} user={teacher} />
+              <ChatMessageCard message={message} user={teacher} messageMenu={messageMenu} handleMessageMenu={handleMessageMenu}/>
             ))}
           <div ref={messagesEndRef} />
         </div>

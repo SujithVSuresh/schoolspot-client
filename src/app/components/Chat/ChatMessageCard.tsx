@@ -1,13 +1,18 @@
 import { ChevronDown } from "lucide-react";
 import { dateFormatter } from "../../utils/formatter";
 import { MessageListType } from "../../../features/student/types/types";
+import ChatMessageMenu from "./ChatMessageMenu";
 
 const ChatMessageCard = ({
   message,
   user,
+  messageMenu, 
+  handleMessageMenu
 }: {
   message: MessageListType;
   user: { _id?: string };
+  messageMenu: string;
+  handleMessageMenu: (id: string) => void
 }) => {
 
   console.log(message, "this is the message in chat message card");
@@ -30,11 +35,29 @@ const ChatMessageCard = ({
             ~ {message.senderId.email.split("@")[0]}
           </div>
         ) : (
-          <div className="w-full flex justify-end">
-            <ChevronDown className="w-4 h-4" />
+          message.status == "active" && (
+          <div className="w-full flex justify-end relative">
+
+             {
+              messageMenu == message._id && (
+                <ChatMessageMenu />
+              )
+             }
+              
+
+            
+            <ChevronDown onClick={() => handleMessageMenu(message._id)} className="w-4 h-4 hover: cursor-pointer" />
           </div>
+          )
+
         )}
-        <div>{message.content}</div>
+        {message.status == "deleted" ? (
+<span className="text-xs">Message deleted</span>
+        ) : (
+     <span>{message.content}</span>
+        )}
+        
+   
         <div
           className={`text-xs mt-1 ${
             message?.senderId?._id === user?._id

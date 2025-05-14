@@ -117,6 +117,7 @@ export interface Message {
         role: 'superadmin' | 'admin' | 'teacher' | 'student';
     };
     messageType: "text" | "file";
+    status?: "active" | "deleted";
     content: string;
     createdAt: Date;
     updatedAt: Date;
