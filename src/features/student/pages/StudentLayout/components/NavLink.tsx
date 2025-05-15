@@ -26,7 +26,7 @@ const NavLink = ({announcementBadge, setAnnouncementBadge}: {announcementBadge: 
     }
       
   return (
-    <nav className="border-b sticky top-0 z-40 bg-white border-gray-200">
+    <nav className="border-b sticky top-0 z-40 bg-white border-gray-50">
       <ul className="flex space-x-8">
         {navItems.map((item, index) => (
           <li key={index} className="relative">

@@ -1,6 +1,6 @@
 import { MessageCircle, EllipsisVertical } from "lucide-react"
 import { dateFormatter } from "../../utils/formatter"
-import { Conversation } from "../../../features/student/types/types"
+import { Conversation } from "../../types/chatType"
 
 const ChatSidebar = ({conversations, activeConversation, setActiveConversation, setIsCreateGroup}: {
     conversations: Conversation[],

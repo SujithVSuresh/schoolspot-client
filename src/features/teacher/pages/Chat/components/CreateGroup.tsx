@@ -4,43 +4,43 @@ import { RootState } from "../../../../../app/store";
 import { useState } from "react";
 import { createConversation } from "../../../api/api";
 
-
 const CreateGroup = ({
   setIsCreateGroup,
-  subjectId
+  subjectId,
 }: {
   setIsCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
-  subjectId: string
+  subjectId: string;
 }) => {
   const students = useSelector((state: RootState) => state.studentList);
 
-  const [groupName, setGroupName] = useState("")
-  const [members, setMembers] = useState<string[]>([])
+  const [groupName, setGroupName] = useState("");
+  const [members, setMembers] = useState<string[]>([]);
 
   const handleAddMember = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(e.target.checked){
-      setMembers((prev) => [...prev, e?.target.value])
-    }else{
-      const filterIds = members.filter((studentId) => studentId !== e.target.value)
-      setMembers(filterIds)
-
+    if (e.target.checked) {
+      setMembers((prev) => [...prev, e?.target.value]);
+    } else {
+      const filterIds = members.filter(
+        (studentId) => studentId !== e.target.value
+      );
+      setMembers(filterIds);
     }
-  }
+  };
 
   const handleAddSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const response = await createConversation({
       isGroup: true,
       name: groupName,
       participants: members,
-      subjectId: subjectId
-    })
+      subjectId: subjectId,
+    });
 
-    if(response.success){
-      console.log(response.data, "group added successfully...")
+    if (response.success) {
+      console.log(response.data, "group added successfully...");
     }
-  }
+  };
 
   return (
     <div className="w-96 bg-white border-r transition-all duration-300 overflow-hidden">
@@ -60,7 +60,10 @@ const CreateGroup = ({
       </div>
 
       <div>
-        <form className="max-w-md mx-auto p-4" onSubmit={(e) => handleAddSubmit(e)}>
+        <form
+          className="max-w-md mx-auto p-4"
+          onSubmit={(e) => handleAddSubmit(e)}
+        >
           <label
             htmlFor="name"
             className="block text-sm font-medium text-gray-700 mb-1"
@@ -84,45 +87,43 @@ const CreateGroup = ({
               Add Members
             </label>
 
-  <div className="space-y-3 max-h-80 overflow-y-auto">
-    {students.map((student) => (
-      <label
-        key={student._id}
-        className="flex items-center justify-between gap-3 p-3 border rounded-md hover:bg-gray-50 cursor-pointer"
-      >
-      <div className="flex items-center">
-        <img
-          src={student.profilePhoto}
-          alt={student.fullName}
-          className="w-10 h-10 rounded-full object-cover mr-3"
-        />
-        <div>
-          <p className="font-medium">{student.fullName}</p>
-          <p className="text-sm text-gray-500">Roll No: {student.roll}</p>
-        </div>
-        </div>
-        <input
-          type="checkbox"
-          name="selectedStudents"
-          value={student?.user?._id}
-          className="accent-blue-600 w-4 h-4"
-          onChange={(e) => handleAddMember(e)}
-        />
-      </label>
-    ))}
-  </div>
-
-
-
-
+            <div className="space-y-3 max-h-80 overflow-y-auto">
+              {students.map((student) => (
+                <label
+                  key={student._id}
+                  className="flex items-center justify-between gap-3 p-3 border rounded-md hover:bg-gray-50 cursor-pointer"
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={student.profilePhoto}
+                      alt={student.fullName}
+                      className="w-10 h-10 rounded-full object-cover mr-3"
+                    />
+                    <div>
+                      <p className="font-medium">{student.fullName}</p>
+                      <p className="text-sm text-gray-500">
+                        Roll No: {student.roll}
+                      </p>
+                    </div>
+                  </div>
+                  <input
+                    type="checkbox"
+                    name="selectedStudents"
+                    value={student?.user?._id}
+                    className="accent-blue-600 w-4 h-4"
+                    onChange={(e) => handleAddMember(e)}
+                  />
+                </label>
+              ))}
+            </div>
           </div>
 
-        <button
-        type="submit"
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-      >
-        Submit
-      </button> 
+          <button
+            type="submit"
+            className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </div>

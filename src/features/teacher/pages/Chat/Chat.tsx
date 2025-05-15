@@ -5,8 +5,8 @@ import {
   fetchConversationsBySubjects,
   fetchMessagesByConversation,
 } from "../../api/api";
-import { Conversation } from "../../types/types";
-import { MessageListType } from "../../types/types";
+import { Conversation } from "../../../../app/types/chatType";
+import { MessageListType } from "../../../../app/types/chatType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { chatSocket, notificationSocket } from "../../../../app/socket/socket";
@@ -15,6 +15,8 @@ import ChatHeader from "../../../../app/components/Chat/ChatHeader";
 import ChatInputArea from "../../../../app/components/Chat/ChatInputArea";
 import ChatMessageCard from "../../../../app/components/Chat/ChatMessageCard";
 import CreateGroup from "./components/CreateGroup";
+import { deleteMessage } from "../../api/api";
+import ConversationDetails from "../../../../app/components/Chat/ConversationDetails";
 
 const Chat = () => {
   const { subjectId }: { subjectId: string } = useOutletContext();
@@ -28,9 +30,12 @@ const Chat = () => {
 
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
-  const [messageMenu, setMessageMenu] = useState("")
+  const [messageMenu, setMessageMenu] = useState("");
 
   const [inputValue, setInputValue] = useState("");
+
+  const [viewGroupDetails, setViewGroupDetails] = useState(false)
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const teacher = useSelector((state: RootState) => state.teacher);
@@ -97,12 +102,30 @@ const Chat = () => {
   }, [activeConversation]);
 
   const handleMessageMenu = (id: string) => {
-    if(messageMenu == id){
-      setMessageMenu("")
-    }else{
-      setMessageMenu(id)
+    if (messageMenu == id) {
+      setMessageMenu("");
+    } else {
+      setMessageMenu(id);
     }
-  }
+  };
+
+  const handleMessageDelete = async (id: string) => {
+    const response = await deleteMessage(id);
+    console.log(response.data)
+
+    if (response.success) {
+      const msgs = messages.map((item) => {
+        if (item._id == response.data._id) {
+          return {
+            ...item,
+            status: "deleted",
+          };
+        }
+        return item;
+      });
+      setMessages(msgs);
+    }
+  };
 
   const handleSendMessage = async () => {
     const response = await createMessage({
@@ -134,40 +157,67 @@ const Chat = () => {
     }
   };
 
+  const handleViewGroupDetails = () => {
+    setViewGroupDetails((prev) => !prev)
+  }
+
   return (
-       <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
+    <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
       {/* Sidebar */}
-      
 
-      {isCreateGroup ? <CreateGroup setIsCreateGroup={setIsCreateGroup} subjectId={subjectId}/> : <ChatSidebar
-        conversations={conversations}
-        activeConversation={activeConversation}
-        setActiveConversation={setActiveConversation}
-         setIsCreateGroup={setIsCreateGroup}
-      />}
-      
-
+      {isCreateGroup ? (
+        <CreateGroup
+          setIsCreateGroup={setIsCreateGroup}
+          subjectId={subjectId}
+        />
+      ) : (
+        <ChatSidebar
+          conversations={conversations}
+          activeConversation={activeConversation}
+          setActiveConversation={setActiveConversation}
+          setIsCreateGroup={setIsCreateGroup}
+        />
+      )}
 
       {/* Main chat area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header with sidebar toggle */}
-        <ChatHeader activeConversation={activeConversation}/>
+      <div className="flex-1 flex flex-row">
+
+        <div className="flex-1 flex flex-col">
+          {activeConversation && (
+      <ChatHeader activeConversation={activeConversation} handleViewGroupDetails={handleViewGroupDetails}/>
+          )}
+  
 
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages?.length > 0 &&
             messages.map((message) => (
-              <ChatMessageCard message={message} user={teacher} messageMenu={messageMenu} handleMessageMenu={handleMessageMenu}/>
+              <ChatMessageCard
+                message={message}
+                user={teacher}
+                messageMenu={messageMenu}
+                handleMessageMenu={handleMessageMenu}
+                handleMessageDelete={handleMessageDelete}
+              />
             ))}
           <div ref={messagesEndRef} />
         </div>
 
         {/* Input area */}
+        {activeConversation && (
         <ChatInputArea
           inputValue={inputValue}
           setInputValue={setInputValue}
           handleSendMessage={handleSendMessage}
         />
+        )}
+
+        </div>
+     {viewGroupDetails && (
+     <ConversationDetails conversation={activeConversation as Conversation} handleViewGroupDetails={handleViewGroupDetails}/>
+
+     )}
+ 
       </div>
     </div>
   );

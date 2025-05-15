@@ -1,18 +1,20 @@
 import { ChevronDown } from "lucide-react";
 import { dateFormatter } from "../../utils/formatter";
-import { MessageListType } from "../../../features/student/types/types";
 import ChatMessageMenu from "./ChatMessageMenu";
+import { MessageListType } from "../../types/chatType";
 
 const ChatMessageCard = ({
   message,
   user,
   messageMenu, 
-  handleMessageMenu
+  handleMessageMenu,
+  handleMessageDelete
 }: {
   message: MessageListType;
   user: { _id?: string };
   messageMenu: string;
   handleMessageMenu: (id: string) => void
+  handleMessageDelete: (id: string) => void
 }) => {
 
   console.log(message, "this is the message in chat message card");
@@ -40,7 +42,7 @@ const ChatMessageCard = ({
 
              {
               messageMenu == message._id && (
-                <ChatMessageMenu />
+                <ChatMessageMenu handleMessageDelete={handleMessageDelete} id={message._id}/>
               )
              }
               

@@ -458,6 +458,28 @@ export const createConversation = async (conversationData: CreateConversationTyp
 }
 
 
+
+export interface UpdateConversationType {
+    participants: string[],
+    name: string,
+}
+
+export const updateConversation = async (conversationId: string, conversationData: UpdateConversationType) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/chat/conversation/${conversationId}`, conversationData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const fetchMessagesByConversation = async (conversationId: string) => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/chat/messages/${conversationId}`, {
@@ -538,6 +560,23 @@ export const fetchExamById = async (examId: string) => {
         return { success: false, error: message }
     }
 }
+
+
+export const deleteMessage = async (messageId: string) => {
+    try{
+        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/chat/message/${messageId}/delete`, {}, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 
 
 
