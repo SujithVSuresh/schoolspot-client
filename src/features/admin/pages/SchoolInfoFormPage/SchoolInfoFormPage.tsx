@@ -1,6 +1,6 @@
 import { CircleCheck } from "lucide-react";
-import SchoolInfoForm from "../components/SchoolInfoForm";
-import Header from "../components/AuthHeader";
+import SchoolInfoForm from "./components/SchoolInfoForm";
+import Header from "../../components/AuthHeader";
 
 const SchoolInfoFormPage = () => {
   return (

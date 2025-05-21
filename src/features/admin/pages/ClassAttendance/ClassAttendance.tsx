@@ -1,16 +1,15 @@
-import { MoreVertical, XCircle, CheckCircle } from "lucide-react";
+import { XCircle, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { changeAttendanceStatus } from "../../../api/api";
-
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { changeAttendanceStatus, getAttendanceByClass } from "../../api/api";
 import "react-calendar/dist/Calendar.css";
-import { getAttendanceByClass } from "../../../api/api";
-import { AttendaceResponseType } from "../../../types/types";
+import { AttendaceResponseType } from "../../types/types";
 
-const AttendanceRecord = ({ classId }: { classId: string }) => {
-  const navigate = useNavigate();
+const ClassAttendance = () => {
+     const { classId }: { classId: string } = useOutletContext();
+      const navigate = useNavigate();
 
   type Value = Date | null;
 
@@ -57,9 +56,8 @@ const AttendanceRecord = ({ classId }: { classId: string }) => {
       setAttendanceData(updatedAttendanceData);
     }
   };
-
   return (
-    <>
+  <>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Attendance
@@ -160,7 +158,7 @@ const AttendanceRecord = ({ classId }: { classId: string }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AttendanceRecord;
+export default ClassAttendance

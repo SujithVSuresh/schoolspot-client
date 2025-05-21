@@ -149,7 +149,7 @@ const StudentLayout = () => {
             <img className="w-full object-cover" src={cover} alt="Profile" />
           </div>
 
-          <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto">
             <div className="sm:flex sm:items-end sm:space-x-5 mb-8">
               <div className="relative">
                 <img
@@ -195,9 +195,10 @@ const StudentLayout = () => {
               setAnnouncementBadge={setAnnouncementBadgeHandler}
             />
 
-            <div className="py-5 w-full flex justify-between border-t">
+            <div className="py-5 w-full flex justify-between">
               <Outlet context={{ classId: studentProfile?.classId }} />
             </div>
+            
           </div>
         </div>
       </section>

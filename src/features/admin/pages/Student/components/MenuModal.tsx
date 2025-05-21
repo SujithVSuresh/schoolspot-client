@@ -1,10 +1,6 @@
 import { X } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 
-// interface ModalProps {
-//   onClose: () => void;
-// }
-
 const MenuModal = ({closeSideMenu}: {closeSideMenu: () => void}) => {
 
   const [searchParams, setSearchParams] = useSearchParams();

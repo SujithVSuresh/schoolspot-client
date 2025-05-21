@@ -45,7 +45,7 @@ function Teacher() {
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0 md:ml-4">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
           Teachers
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">

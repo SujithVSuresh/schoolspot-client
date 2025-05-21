@@ -42,7 +42,7 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
   
     }
   return (
-    <div className="w-7/12">
+    <div className="w-7/12 mr-5">
     <div className="flex items-center gap-3 mb-4">
       <h2 className="text-2xl font-medium text-gray-700">
         {assignmentData.title}

@@ -75,8 +75,8 @@ const Invoices = () => {
   return (
     <div className="min-h-screen w-full">
 
-<div className='w-full'>
-      <div className="mx-auto px-4 mt-5">
+
+      <div className="mt-5">
         <div className="rounded-xl mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 sm:space-y-0">
   
@@ -174,7 +174,7 @@ const Invoices = () => {
         </div>
 
       </div>
-      </div>
+
 
     </div>
   )

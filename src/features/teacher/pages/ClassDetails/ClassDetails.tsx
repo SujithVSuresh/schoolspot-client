@@ -66,20 +66,18 @@ const ClassDetails = () => {
         setClassDetails(data);
       }
     };
-    
 
-        const fetchStudentsByClassId = async () => {
-    const response = await getStudentsByClassId(classId)
-    console.log(response, "response1223123123")
-    if (response.success) {
-      dispatch(setStudentList(response.data))
-    } else {
-      console.log(response.error)
-    }
-  }
+    const fetchStudentsByClassId = async () => {
+      const response = await getStudentsByClassId(classId);
+      if (response.success) {
+        dispatch(setStudentList(response.data));
+      } else {
+        console.log(response.error);
+      }
+    };
 
-  fetchClassDetails();
-    fetchStudentsByClassId()
+    fetchClassDetails();
+    fetchStudentsByClassId();
   }, [classId, dispatch]);
 
   useEffect(() => {
@@ -114,8 +112,6 @@ const ClassDetails = () => {
     // })
     // };
   }, [classDetails.subject?._id]);
-
-
 
   return (
     <>

@@ -6,7 +6,7 @@ import GoogleAuth from "../components/GoogleAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupValidationSchema } from "../validation/formValidation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loadingGif from "../../../assets/images/loading.webp";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -28,6 +28,13 @@ const Signup = () => {
   } = useForm({
     resolver: zodResolver(signupValidationSchema),
   });
+
+  useEffect(() => {
+    if(!schoolData){
+      navigate('/school-info')
+    }
+
+  }, [schoolData, navigate])
 
   const onSubmit = async (userData: UserSignupFormType) => {
     setLoading(true);

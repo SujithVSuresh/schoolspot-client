@@ -14,6 +14,7 @@ const initialState: SchoolProfileType = {
     city: '',
     country: '',
     state: '',
+    academicYear: '',
     postalCode: '',
     websiteUrl: ''
 }

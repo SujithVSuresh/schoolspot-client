@@ -1,4 +1,3 @@
-import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Settings,
@@ -6,13 +5,39 @@ import {
   GraduationCap,
   Users,
   School,
-  Megaphone
+  Megaphone,
 } from "lucide-react";
 import dotlogo from "../../../assets/images/dotlogo.png";
+import SidebarItem from "./SidebarItem";
 
 const Sidebar = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const sidebarItem = [
+    {
+      name: "Overview",
+      url: "overview",
+      Icon: LayoutDashboard,
+    },
+    {
+      name: "Students",
+      url: "students",
+      Icon: GraduationCap,
+    },
+    {
+      name: "Teachers",
+      url: "teachers",
+      Icon: Users,
+    },
+    {
+      name: "Classes",
+      url: "classes",
+      Icon: School,
+    },
+    {
+      name: "Announcement",
+      url: "announcement",
+      Icon: Megaphone,
+    },
+  ];
 
   return (
     <div className="fixed min-h-screen inset-y-0 left-0 z-30 w-20 h-full bg-blue-800 text-white transform transition duration-300 md:translate-x-0">
@@ -24,36 +49,9 @@ const Sidebar = () => {
 
       <nav className="mt-5 px-2">
         <div className="space-y-1">
-          <a
-            onClick={() => navigate('/dashboard/overview')}
-            className={`flex hover:cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/overview' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
-          >
-            <LayoutDashboard className="h-5 w-5" />
-          </a>
-          <a
-            onClick={() => navigate('/dashboard/students')}
-            className={`flex hover:cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/students' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
-          >
-            <GraduationCap className="h-5 w-5" />
-          </a>
-          <a
-            onClick={() => navigate('/dashboard/teachers')}
-            className={`flex hover:cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/teachers' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
-          >
-            <Users className="h-5 w-5" />
-          </a>
-          <a
-            onClick={() => navigate('/dashboard/classes')}
-            className={`flex hover:cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/classes' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
-          >
-            <School className="h-5 w-5" />
-          </a>
-          <a
-            onClick={() => navigate('/dashboard/announcement')}
-            className={`flex hover:cursor-pointer items-center justify-center p-5 ${location.pathname == '/dashboard/announcement' && 'bg-blue-600'} hover:bg-blue-700 rounded-md group`}
-          >
-            <Megaphone className="h-5 w-5" />
-          </a>
+          {sidebarItem.map((item) => (
+            <SidebarItem item={item} />
+          ))}
         </div>
 
         <div className="mt-10 pt-6 border-t border-indigo-800">

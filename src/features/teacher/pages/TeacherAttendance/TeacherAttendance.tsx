@@ -7,6 +7,7 @@ import { getAttendanceByClass } from "../../api/api";
 import { AttendaceResponseType } from "../../types/types";
 import { changeAttendanceStatus } from "../../api/api";
 import toast from "react-hot-toast";
+import { successToast } from "../../../../app/utils/toastMessage";
 
 const TeacherAttendance = () => {
   const { classId }: { subjectId: string; classId: string } =
@@ -50,16 +51,7 @@ const TeacherAttendance = () => {
       });
       setAttendanceData(updatedAttendanceData);
 
-      toast("Attendance status updated successfully", {
-        duration: 1000,
-        position: "bottom-right",
-        style: {
-          backgroundColor: "#E7FEE2",
-          border: "2px, solid, #16A34A",
-          minWidth: "400px",
-          color: "black",
-        },
-      });
+      successToast("Attendance status updated successfully")
     }
   };
 
@@ -99,7 +91,7 @@ const TeacherAttendance = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg w-full max-w-md">
+            <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg w-full max-w-md">
               <Calendar className="h-5 w-5 text-indigo-600 mr-3 flex-shrink-0" />
               <input
                 type="date"

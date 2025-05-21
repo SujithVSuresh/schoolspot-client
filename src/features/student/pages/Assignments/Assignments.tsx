@@ -37,7 +37,7 @@ const Assignments = () => {
   return (
     <div className='w-full min-h-screen'>
 
-        <div className='grid grid-cols-4 w-full gap-5'>
+        <div className='grid grid-cols-3 w-full gap-5'>
 
      {assignments.map((assignment) => (
 
@@ -53,12 +53,12 @@ const Assignments = () => {
 
   <div className="space-y-3">
     <div className="flex items-center text-gray-600">
-      <Calendar className="w-5 h-5 mr-2 text-purple-500" />
+      <Calendar className="w-4 h-4 mr-2 text-purple-500" />
       <span className="text-sm">Due: {dateFormatter(String(assignment.dueDate))}</span>
     </div>
 
     <div className="flex items-center text-gray-600">
-      <Calendar className="w-5 h-5 mr-2 text-green-500" />
+      <Calendar className="w-4 h-4 mr-2 text-green-500" />
       <span className="text-sm">Created: {dateFormatter(String(assignment.createdAt))}</span>
     </div>
   </div>

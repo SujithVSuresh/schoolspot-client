@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../app/store";
 import { useState } from "react";
 import { createConversation } from "../../../api/api";
+import { successToast } from "../../../../../app/utils/toastMessage";
+
 
 const CreateGroup = ({
   setIsCreateGroup,
@@ -38,6 +40,8 @@ const CreateGroup = ({
     });
 
     if (response.success) {
+      successToast("Group created succcessfully")
+      setIsCreateGroup(false)
       console.log(response.data, "group added successfully...");
     }
   };

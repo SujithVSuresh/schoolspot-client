@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
   addressRegex,
-  alphabetOnlyRegex,
+  // alphabetOnlyRegex,
   emailRegex,
   nameRegex,
   passwordRegex,
@@ -90,15 +90,17 @@ export const schoolInfoValidationSchema = z.object({
   totalStudents: z.coerce
     .number({ invalid_type_error: "Enter a valid number" })
     .min(1, { message: "This field is required" })
-    .max(500, { message: "Cannot exceed 500 teachers" }),
+    .max(3000, { message: "Cannot exceed 3000 teachers" }),
   totalTeachers: z.coerce
     .number({ invalid_type_error: "Enter a valid number" })
     .min(1, { message: "This field is required" })
-    .max(3000, { message: "Cannot exceed 3000 teachers" }),
+    .max(500, { message: "Cannot exceed 500 teachers" }),
   board: z
     .string()
-    .min(1, { message: "Board's name is required" })
-    .regex(alphabetOnlyRegex, { message: "Enter a valid board name" }),
+    .min(1, { message: "Board's name is required" }),
+  academicYear: z
+    .string()
+    .min(1, { message: "Academic Year is required" }),
   city: z
     .string()
     .min(1, { message: "City name is required" })

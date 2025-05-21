@@ -7,11 +7,11 @@ import ResetPasswordForm from "../pages/ResetPasswordForm";
 import Otp from "../pages/Otp";
 import AdminProfile from "../pages/AdminProfile/AdminProfile";
 import Pricing from "../pages/Pricing";
-import SchoolInfoFormPage from "../pages/SchoolInfoFormPage";
+import SchoolInfoFormPage from "../pages/SchoolInfoFormPage/SchoolInfoFormPage";
 import Home from "../pages/Home";
 import Announcement from "../pages/Announcement/Announcement";
 import Dashboard from "../pages/Dashboard";
-import Overview from "../pages/Overview";
+import Overview from "../pages/Overview/Overview";
 import Student from "../pages/Student/Student";
 import Teacher from "../pages/Teacher/Teacher";
 import AddStudent from "../pages/AddStudent/AddStudent";
@@ -38,6 +38,12 @@ import CreateExam from "../pages/CreateExam/CreateExam";
 import ExamDetails from "../pages/ExamDetails/ExamDetails";
 import AddMarks from "../pages/AddMarks/AddMarks";
 import AddTimetable from "../pages/AddTimetable/AddTimetable";
+import ClassStudents from "../pages/ClassStudents/ClassStudents";
+import ClassSubjects from "../pages/ClassSubjects/ClassSubjects";
+import ClassAttendance from "../pages/ClassAttendance/ClassAttendance";
+import ClassExams from "../pages/ClassExams/ClassExams";
+import ClassInvoices from "../pages/ClassInvoices/ClassInvoices";
+import ClassTimetable from "../pages/ClassTimetable/ClassTimetable";
 
 const AdminRoute = () => {
   return (
@@ -46,7 +52,8 @@ const AdminRoute = () => {
         path="/"
         element={
           <ProtectedRoute isLogin={false}>
-            <Home />
+            {" "}
+            <Home />{" "}
           </ProtectedRoute>
         }
       />
@@ -58,13 +65,14 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/signup/profile" element={
-     <ProtectedRoute isLogin={true}>
-        <SignupProfile />
-        </ProtectedRoute>
-   
-        } 
-        />
+      <Route
+        path="/signup/profile"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <SignupProfile />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/signin"
         element={
@@ -73,19 +81,8 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/signin/forgot"
-        element={
-            <ResetPassword />
-        }
-      />
-      <Route
-        path="/signin/reset-password"
-        element={
-            <ResetPasswordForm />
-   
-        }
-      />
+      <Route path="/signin/forgot" element={<ResetPassword />} />
+      <Route path="/signin/reset-password" element={<ResetPasswordForm />} />
 
       <Route
         path="/pricing"
@@ -119,48 +116,87 @@ const AdminRoute = () => {
           </ProtectedRoute>
         }
       />
-      <Route 
-        path="/profile/change-password" 
+      <Route
+        path="/profile/change-password"
         element={
           <ProtectedRoute isLogin={true}>
             <ChangePassword />
           </ProtectedRoute>
-        } />
-              <Route 
-        path="/profile/subscription" 
+        }
+      />
+      <Route
+        path="/profile/subscription"
         element={
           <ProtectedRoute isLogin={true}>
             <Subscription />
           </ProtectedRoute>
-        } />
+        }
+      />
 
-      <Route path="/dashboard" element={<ProtectedRoute isLogin={true}><Dashboard /></ProtectedRoute>}>
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute isLogin={true}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      >
         <Route path="overview" element={<Overview />} />
         <Route path="students" element={<Student />} />
         <Route path="students/new/:classId" element={<AddStudent />} />
         <Route path="students/profile/:id" element={<StudentProfile />} />
-        <Route path="students/profile/:id/update" element={<UpdateStudentProfile />}/>
+        <Route
+          path="students/profile/:id/update"
+          element={<UpdateStudentProfile />}
+        />
         <Route path="teachers" element={<Teacher />} />
         <Route path="teachers/new" element={<AddTeacher />} />
         <Route path="teachers/profile/:id" element={<TeacherProfile />} />
-        <Route path="teachers/profile/:id/update" element={<UpdateTeacherProfile />} />
+        <Route
+          path="teachers/profile/:id/update"
+          element={<UpdateTeacherProfile />}
+        />
         <Route path="classes" element={<Classes />} />
         <Route path="classes/new" element={<AddClass />} />
         <Route path="classes/:classId/update" element={<UpdateClass />} />
         <Route path="classes/subject/new/:classId" element={<AddSubject />} />
-        <Route path="classes/subject/:subjectId/update/:classId" element={<UpdateSubject />} />
-        <Route path="classes/profile/:id" element={<ClassProfile />} />
+        <Route
+          path="classes/subject/:subjectId/update/:classId"
+          element={<UpdateSubject />}
+        />
+
+        <Route path="classes/profile/:id" element={<ClassProfile />}>
+          <Route path="students" element={<ClassStudents />} />
+          <Route path="subjects" element={<ClassSubjects />} />
+          <Route path="attendance" element={<ClassAttendance />} />
+          <Route path="exams" element={<ClassExams />} />
+          <Route path="invoices" element={<ClassInvoices />} />
+          <Route path="timetable" element={<ClassTimetable />} />
+        </Route>
+
         <Route path="announcement" element={<Announcement />} />
         <Route path="announcement/new" element={<AddAnnouncement />} />
-        <Route path="announcement/:announcementId/update" element={< UpdateAnnouncement/>} />
+        <Route
+          path="announcement/:announcementId/update"
+          element={<UpdateAnnouncement />}
+        />
         <Route path="attendance/new/:classId" element={<AddAttendance />} />
-        <Route path="classes/:classId/invoice/new" element={<CreateInvoice />} />
+        <Route
+          path="classes/:classId/invoice/new"
+          element={<CreateInvoice />}
+        />
         <Route path="classes/invoice/:classId" element={<Invoice />} />
         <Route path="classes/:classId/exam/new" element={<CreateExam />} />
         <Route path="classes/:classId/exam/:examId" element={<ExamDetails />} />
-        <Route path="classes/:classId/exam/:examId/marks/new" element={<AddMarks />} />
-        
-        <Route path="classes/:classId/timetable/new" element={<AddTimetable />} />
+        <Route
+          path="classes/:classId/exam/:examId/marks/new"
+          element={<AddMarks />}
+        />
+
+        <Route
+          path="classes/:classId/timetable/new"
+          element={<AddTimetable />}
+        />
       </Route>
     </Routes>
   );

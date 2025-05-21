@@ -45,7 +45,6 @@ const SchoolProfileForm = () => {
             setValue('country', response.data.address.country)
             setValue('postalCode', response.data.address.postalCode)
             setSchoolId(response.data._id)
-        
         }
     }
 

@@ -1,16 +1,18 @@
 import { MoreVertical } from "lucide-react";
 // import AddSubjectModal from "../modal/AddSubjectModal";
-import { SubjectType } from "../../../types/types";
+import { SubjectType } from "../../types/types";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { fetchSubjects, deleteSubject } from "../../../api/api";
-import { textFormatter } from "../../../../../app/utils/formatter";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { fetchSubjects, deleteSubject } from "../../api/api";
+import { textFormatter } from "../../../../app/utils/formatter";
 import { Edit2, Trash2 } from "lucide-react";
 
-const SubjectList = ({classId}: {classId: string}) => {
-  const navigate = useNavigate()
+const ClassSubjects = () => {
+      const navigate = useNavigate()
+      const { classId }: { classId: string } = useOutletContext();
+
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
   const [showMenu, setShowMenu] = useState("");
 
@@ -48,9 +50,8 @@ const SubjectList = ({classId}: {classId: string}) => {
       setShowMenu("")
     }
   }
-
   return (
-    <div>
+ <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Subjects
@@ -104,7 +105,7 @@ const SubjectList = ({classId}: {classId: string}) => {
 
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SubjectList;
+export default ClassSubjects

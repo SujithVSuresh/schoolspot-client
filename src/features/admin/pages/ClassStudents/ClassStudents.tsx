@@ -1,29 +1,31 @@
 import { UserPlus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { getStudentsByClassId } from "../../../api/api";
-import { useEffect, useState } from "react";
-import { StudentUserProfileType } from "../../../types/types";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../app/store";
+// import { getStudentsByClassId } from "../../api/api";
+// import { useEffect, useState } from "react";
+// import { StudentUserProfileType } from "../../types/types";
 
 
+const ClassStudents = () => {
+      const navigate = useNavigate()
+        const students = useSelector((state: RootState) => state.studentListAdmin);
+       const { classId }: { classId: string } = useOutletContext();
 
-const StudentList = ({classId} : {classId: string}) => {
-  const navigate = useNavigate()
+  // const [students, setStudents] = useState<StudentUserProfileType[]>([])
 
-  const [students, setStudents] = useState<StudentUserProfileType[]>([])
+  // useEffect(() => {
+  //   const fetchStudents = async () => {
 
-  useEffect(() => {
-    const fetchStudents = async () => {
+  //     const response = await getStudentsByClassId(classId)
 
-      const response = await getStudentsByClassId(classId)
+  //     setStudents(response.data)
+  //   }
 
-      setStudents(response.data)
-    }
-
-    fetchStudents()
-  }, [classId])
-
+  //   fetchStudents()
+  // }, [classId])
   return (
-    <div>
+ <>
          <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
     <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
       Students
@@ -72,8 +74,8 @@ const StudentList = ({classId} : {classId: string}) => {
 
   </div>
       
-    </div>
+    </>
   )
 }
 
-export default StudentList
+export default ClassStudents

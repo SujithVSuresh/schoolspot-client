@@ -1,4 +1,4 @@
-import { Save, PlusCircle, MinusCircle } from "lucide-react";
+import { PlusCircle, MinusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { FeeData, FeeItem } from "../../types/types";
 import { useForm } from "react-hook-form";
@@ -7,13 +7,19 @@ import { invoiceSchema } from "../../validation/formValidation";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { createInvoice } from "../../api/api";
+import StudentList from "./components/StudentList";
 
 const CreateInvoice = () => {
     const {classId} = useParams()
   const navigate = useNavigate();
 
-  const [feeBreakdown, setFeeBreakdown] = useState<FeeItem[]>([]);
+  const [feeBreakdown, setFeeBreakdown] = useState<FeeItem[]>([{
+        feeType: "",
+        amount: 0,
+      }]);
   const [feeBreakdownError, setFeeBreakdownError] = useState<string>("");
+
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([])
 
   const {
     register,
@@ -60,7 +66,13 @@ const CreateInvoice = () => {
     setValue("totalAmount", total);
   }, [feeBreakdown, setValue]);
 
+
+
   const onSubmit = async (data: FeeData) => {
+    if(selectedStudents.length == 0){
+      return
+    }
+
     const feeBreakdownData = feeBreakdown.filter((fee) => fee.feeType.trim() !== "");
 
     if (feeBreakdownData.length === 0) {
@@ -74,7 +86,7 @@ const CreateInvoice = () => {
       ...data,
       class: classId,
       feeBreakdown: feeBreakdownData,
-    });
+    }, selectedStudents);
 
     if (response.success) {
       toast.success("Invoice created successfully!", {
@@ -204,6 +216,15 @@ const CreateInvoice = () => {
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg"
             />
+          </div>
+
+          <div>
+            <label htmlFor="remarks" className="block text-sm font-medium text-gray-700 mb-1">
+              Select Students
+            </label>
+
+            <StudentList selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>
+ 
           </div>
 
           <button

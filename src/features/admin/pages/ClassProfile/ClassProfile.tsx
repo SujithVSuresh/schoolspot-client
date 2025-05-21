@@ -1,202 +1,162 @@
-import { BarChart3 } from "lucide-react";
-import SubjectList from "./components/SubjectList";
 import { useEffect, useState } from "react";
-import AttendanceRecord from "./components/AttendanceRecord";
-import StudentList from "./components/StudentList";
-import { getClassById, deleteClass } from "../../api/api";
+import { getClassById, deleteClass, getStudentsByClassId } from "../../api/api";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
-import Invoice from "./components/Invoice";
 import { dateFormatter } from "../../../../app/utils/formatter";
-import Exam from "./components/Exam";
-import TimeTable from "./components/TimeTable";
-
+import ClassInfoCard from "./components/ClassInfoCard";
+import { Outlet, useLocation } from "react-router-dom";
+import {
+  GraduationCap,
+  User,
+  Calendar,
+  Users,
+  UserCheck,
+  UserX,
+} from "lucide-react";
+import SectionButton from "./components/SectionButton";
+import { useDispatch } from "react-redux";
+import { setStudentList } from "../../redux/studentListAdminSlice";
 
 const ClassProfile = () => {
-  const navigate = useNavigate()
-  const {id: classId} = useParams()
+  const dispatch = useDispatch()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { id: classId } = useParams();
   const [classData, setClassData] = useState<{
-    _id?:string;
+    _id?: string;
     name: string;
     strength: number;
     section: string;
     teacher: string;
     attendance: {
-      presentCount: number,
-      absentCount: number,
-      date: string
-    }
-} | null>(null)
+      presentCount: number;
+      absentCount: number;
+      date: string;
+    };
+  } | null>(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const urlSection = location.pathname.split("/")[5];
 
-  const section = searchParams.get("section") || "";
-
-   useEffect(() => {
-
+  useEffect(() => {
     const fetchClassProfileData = async () => {
-      if(classId){
-      const response = await getClassById(classId)
-      if(response.success){
-        setClassData(response.data?.data)
-       }
-     } 
-    }
-
-    fetchClassProfileData()
-
-  }, [classId])
+      if (classId) {
+        const response = await getClassById(classId);
+        if (response.success) {
+          setClassData(response.data?.data);
+        }
+      }
+    };
 
 
+   const fetchStudentsByClassId = async () => {
+        const response = await getStudentsByClassId(classId as string);
+        if (response.success) {
+          dispatch(setStudentList(response.data));
+        } else {
+          console.log(response.error);
+        }
+      };
+  
+      fetchStudentsByClassId();
 
-  const updateSection = (value: string) => {
-    searchParams.set("section", value);
-    setSearchParams(searchParams);
-  }
+    fetchClassProfileData();
+  }, [classId, dispatch]);
+
+
+
 
   const deleteClassHandler = async (classId: string) => {
-    if(!classId){
-      return
+    if (!classId) {
+      return;
     }
-    const response = await deleteClass(classId)
+    const response = await deleteClass(classId);
 
-    if(response.success){
-      console.log(response, "this is the response... delete")
-      navigate(`/dashboard/classes`)
+    if (response.success) {
+      console.log(response, "this is the response... delete");
+      navigate(`/dashboard/classes`);
     }
+  };
 
-  }
+  const classInfo = [
+    {
+      heading: "Class",
+      data: `${classData?.name} ${classData?.section}`,
+      icon: GraduationCap,
+    },
+    {
+      heading: "Class Teacher",
+      data: classData?.teacher as string,
+      icon: User,
+    },
+    {
+      heading: "Date",
+      data: dateFormatter(classData?.attendance.date as string),
+      icon: Calendar,
+    },
+    {
+      heading: "Strength",
+      data: String(classData?.strength),
+      icon: Users,
+    },
+    {
+      heading: "Present",
+      data: String(classData?.attendance.presentCount),
+      icon: UserCheck,
+    },
+    {
+      heading: "Absent",
+      data: String(classData?.attendance.absentCount),
+      icon: UserX,
+    },
+  ];
+
+  const sectionInfo = [
+    {
+      name: "Students",
+      urlName: "students",
+    },
+    {
+      name: "Subjects",
+      urlName: "subjects",
+    },
+    {
+      name: "Attendance",
+      urlName: "attendance",
+    },
+    {
+      name: "Exams",
+      urlName: "exams",
+    },
+    {
+      name: "Invoices",
+      urlName: "invoices",
+    },
+    {
+      name: "Timetable",
+      urlName: "timetable",
+    },
+  ];
 
   return (
     <div className="pt-5">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">Class</div>
-            <div className="text-lg font-medium text-gray-900">{classData?.name} {classData?.section}</div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">
-              Class Teacher
-            </div>
-            <div className="text-lg font-medium text-gray-900">
-              {classData?.teacher}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">Date</div>
-            <div className="text-lg font-medium text-gray-900">
-              {dateFormatter(classData?.attendance.date as string)}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">Strength</div>
-            <div className="text-lg font-medium text-gray-900">{classData?.strength}</div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">Present</div>
-            <div className="text-lg font-meedium text-gray-900">{classData?.attendance.presentCount}</div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm flex flex-row p-4 w-full items-center gap-3">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div>
-            <div className="text-xs text-gray-500 font-medium">Absent</div>
-            <div className="text-lg font-medium text-gray-900">{classData?.attendance.absentCount}</div>
-          </div>
-        </div>
+        {classInfo.map((info) => (
+          <ClassInfoCard
+            heading={info.heading}
+            data={info.data}
+            Icon={info.icon}
+          />
+        ))}
       </div>
+
       <div className="mt-10">
         <div className="flex border-b pb-5 border-gray-200">
-          <div
-            onClick={() => updateSection("students")}
-            className={`${
-              section == "students" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Students
-          </div>
-          <div
-            onClick={() => updateSection("subjects")}
-            className={`${
-              section == "subjects" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Subjects
-          </div>
-          {/* <div
-            onClick={() => updateSection("timetable")}
-            className={`${
-              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Timetable
-          </div> */}
-          <div
-            onClick={() => updateSection("attendance")}
-            className={`${
-              section == "attendance" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Attendance Record
-          </div>
-
-          <div
-            onClick={() => updateSection("exam")}
-            className={`${
-              section == "exam" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Exam
-          </div>
-
-          <div
-            onClick={() => updateSection("fees")}
-            className={`${
-              section == "fees" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Invoice
-          </div>
-
-                    <div
-            onClick={() => updateSection("timetable")}
-            className={`${
-              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Timetable
-          </div>
+          {sectionInfo.map((section) => (
+            <SectionButton
+              classId={classId as string}
+              section={section}
+              urlSection={urlSection}
+            />
+          ))}
 
           <div
             onClick={() => navigate(`/dashboard/classes/${classId}/update`)}
@@ -211,32 +171,12 @@ const ClassProfile = () => {
           >
             Delete Class
           </div>
-          {/* <div
-            onClick={() => updateSection("timetable")}
-            className={`${
-              section == "timetable" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Timetable
-          </div> */}
         </div>
       </div>
 
-      {section == "students" ? (
-        <StudentList classId={classId as string} />
-      ) : section == "subjects" ? (
-        <SubjectList classId={classId as string}/>
-      ) : section == "attendance" ? (
-        <AttendanceRecord classId={classId as string}/>
-      ) : section == "fees" ? (
-        <Invoice classId={classId as string}/>
-      ) : section == "timetable" ? (
-        <TimeTable classId={classId as string}/>
-      ) : section == "exam" ? (
-        <Exam classId={classId as string}/>
-      ) : (
-        <></>
-      )}
+      <div className="min-h-screen">
+        <Outlet context={{ classId: classId }} />
+      </div>
     </div>
   );
 };

@@ -3,15 +3,12 @@ import { useEffect, useState } from "react";
 import { getAllStudents } from "../../api/api";
 import { useSearchParams } from "react-router-dom";
 import { StudentDataResponseType } from "../../types/types";
-import { changeAccountStatus } from "../../api/api";
 import Heading from "../../components/Heading";
 import { SlidersHorizontal } from "lucide-react";
 import MenuModal from "./components/MenuModal";
-import { textFormatter } from "../../../../app/utils/formatter";
-import { useNavigate } from "react-router-dom";
+import TableItem from "./components/TableItem";
 
 function Student() {
-  const navigate = useNavigate()
   const [students, setStudents] = useState<StudentDataResponseType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,53 +64,26 @@ function Student() {
     setOpenSideMenu(false);
   };
 
-  const accountStatus = (status: "active" | "inactive" | "blocked" | "deleted") => {
-    return (
-      <span className={`${status == "active" ? "text-green-500" : "text-red-500"}`}>
-        {textFormatter(status)}
-      </span>
-      
-    )
-  }
 
   return (
     <>
       {openSideMenu && <MenuModal closeSideMenu={closeSideMenu} />}
 
       <Heading headingValue="Students">
-  
-  <div className="bg-gray-200 p-3 rounded-full">
-  <SlidersHorizontal 
-        className="hover: cursor-pointer h-5 w-5"
-        onClick={() => setOpenSideMenu(true)}
-        />
-  </div>
- 
+        <div className="bg-gray-200 p-3 rounded-full">
+          <SlidersHorizontal
+            className="hover: cursor-pointer h-5 w-5"
+            onClick={() => setOpenSideMenu(true)}
+          />
+        </div>
       </Heading>
-
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        {students.length > 0 &&
-          students.map((student, index) => (
-            <StudentCard
-              student={student}
-              user={student?.user}
-              key={index}
-              index={index}
-              onBlockClick={onBlockClick}
-              toggleMenu={toggleMenu}
-              openMenu={openMenu}
-            />
-          ))}
-      </div> */}
 
       <div className="bg-white rounded-lg border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 h-12">
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  
-                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   NAME
                 </th>
@@ -129,46 +99,12 @@ function Student() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   STATUS
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  
-                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {students.map((student) => (
-                <tr key={student._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <img
-                      src={student.profilePhoto as string}
-                      alt={student.fullName}
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
-                    />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {student.fullName}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {student.class}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {student.section}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {student.roll}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {accountStatus(student.user.status)}
-                  </td>
-         
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                      onClick={() => navigate(`/dashboard/students/profile/${student.user._id}`)}
-                      className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
+               <TableItem student={student}/>
               ))}
             </tbody>
           </table>
@@ -176,9 +112,7 @@ function Student() {
 
         {students.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500">
-              No students found.
-            </p>
+            <p className="text-gray-500">No students found.</p>
           </div>
         )}
       </div>

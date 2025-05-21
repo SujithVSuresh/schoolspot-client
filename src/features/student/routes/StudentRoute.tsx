@@ -6,7 +6,6 @@ import Subjects from "../pages/Subjects/Subjects";
 import Home from "../pages/Home/Home";
 import Attendance from "../pages/Attendance/Attendance";
 import Invoices from "../pages/Invoices/Invoices";
-import ExamResults from "../pages/ExamResults/ExamResults";
 import SubjectDetails from "../pages/SubjectDetails/SubjectDetails";
 import Assignments from "../pages/Assignments/Assignments";
 import StudyMaterials from "../pages/StudyMaterials/StudyMaterials";
@@ -22,6 +21,8 @@ import LeaveLetters from "../pages/LeaveLetters/LeaveLetters";
 import Chat from "../pages/Chat/Chat";
 import Notifications from "../pages/Notifications/Notifications";
 import CreateLeaveLetter from "../pages/CreateLeaveLetter/CreateLeaveLetter";
+import Exam from "../pages/Exam/Exam";
+import ExamDetails from "../pages/ExamDetails/ExamDetails";
 
 const StudentRoute = () => {
   return (
@@ -53,7 +54,6 @@ const StudentRoute = () => {
         <Route path="attendance" element={<Attendance />} >
             <Route path="" element={<AttendanceList />} />
             <Route path="leave-letter" element={<LeaveLetters />} />
-            
         </Route>
         <Route
         path="notification"
@@ -66,7 +66,8 @@ const StudentRoute = () => {
 
         <Route path="invoices" element={<Invoices />} />
         <Route path="invoices/:invoiceId" element={<InvoiceDetailsPage />} />
-        <Route path="exam-results" element={<ExamResults />} />
+        <Route path="exams" element={<Exam />} />
+        <Route path="exams/:examId" element={<ExamDetails />} />
         <Route path="announcements" element={<Announcements />} />
         <Route path="chat" element={<Chat />} />
         <Route path="profile" element={<StudentProfile />} />

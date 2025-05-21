@@ -45,6 +45,7 @@ export interface SchoolProfileType {
     state: string;
     country: string;
     postalCode: string;
+    academicYear?: string;
 }
 
 
@@ -328,4 +329,12 @@ export interface PeriodType {
 export interface TimetableType {
   day: string;
   periods: PeriodType[];
+}
+
+
+export interface AcademicYearType {
+  _id?: string;     
+  schoolId: string; 
+  name: "2023-24" | "2024-25" | "2025-26";  
+  isActive: boolean;   
 }

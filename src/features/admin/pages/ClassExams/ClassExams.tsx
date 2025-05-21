@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { dateFormatter } from "../../../../../app/utils/formatter";
-import { useNavigate } from "react-router-dom";
-import { fetchExams } from "../../../api/api";
+import { dateFormatter } from "../../../../app/utils/formatter";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { fetchExams } from "../../api/api";
 import { Plus } from "lucide-react";
 
-const Exam = ({classId}: {classId: string}) => {
+const ClassExams = () => {
     const navigate = useNavigate()
+    const { classId }: { classId: string } = useOutletContext();
 
      console.log(classId, "dsafsadf")
 
@@ -74,4 +75,4 @@ const Exam = ({classId}: {classId: string}) => {
   )
 }
 
-export default Exam
+export default ClassExams

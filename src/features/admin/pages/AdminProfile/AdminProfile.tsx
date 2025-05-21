@@ -10,6 +10,7 @@ import { removeAdmin } from "../../redux/adminSlice";
 import SchoolProfileForm from "./components/SchoolProfileForm";
 import AdminProfileForm from "./components/AdminProfileForm";
 import { useNavigate } from "react-router-dom";
+import AcademicYear from "./components/AcademicYear";
 
 
 const AdminProfile = () => {
@@ -30,6 +31,8 @@ const AdminProfile = () => {
           <AdminProfileForm />
 
            <SchoolProfileForm />
+
+           <AcademicYear />
             <div className="flex flex-wrap gap-4 px-28 py-10">
               <button onClick={() => navigate('/profile/change-password')} className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors">
                 <KeyRound className="h-4 w-4" />

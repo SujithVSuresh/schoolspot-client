@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchTimetableByClass } from "../../../api/api";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { fetchTimetableByClass } from "../../api/api";
 
 
 interface Period {
@@ -14,8 +14,10 @@ interface DaySchedule {
   periods: Period[];
 }
 
-const Timetable = ({classId}: {classId: string}) => {
+const ClassTimetable = () => {
   const navigate = useNavigate();
+         const { classId }: { classId: string } = useOutletContext();
+
   const [timetable, setTimetable] = useState<DaySchedule[]>([]);
 
   useEffect(() => {
@@ -87,4 +89,4 @@ const Timetable = ({classId}: {classId: string}) => {
   );
 };
 
-export default Timetable;
+export default ClassTimetable;

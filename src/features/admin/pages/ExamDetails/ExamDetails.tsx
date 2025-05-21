@@ -28,7 +28,7 @@ const ExamDetails = () => {
       <div className="flex flex-col items-center">
         <div className="flex mt-5 flex-col gap-3 mb-3 text-center">
           <h2 className="text-2xl font-medium text-gray-700">{exam?.name}</h2>
-          <span className="text-sm text-gray-600">{exam?.description}</span>
+          <span className="text-lg text-gray-600">{exam?.description}</span>
           <span className="text-sm text-gray-600">
             {dateFormatter(String(exam?.startDate))} -{" "}
             {dateFormatter(String(exam?.endDate))}

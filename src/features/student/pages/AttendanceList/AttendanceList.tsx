@@ -58,24 +58,7 @@ const AttendanceList = () => {
     <div className='w-full flex justify-center p-10'>
     <div className="overflow-hidden w-5/12 rounded-xl border border-gray-200">
 
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Date
-          </th>
-          <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Status
-          </th>
-          {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Time
-          </th> */}
-          {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Notes
-          </th> */}
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
+          {/* <tbody className="bg-white divide-y divide-gray-200">
         {attendanceData.map((record, index) => (
           <tr key={index} className="hover:bg-gray-50">
             <td className="px-12 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -86,17 +69,36 @@ const AttendanceList = () => {
                 {getStatusIcon(record.status)}
                 <span className="ml-1 capitalize">{record.status}</span>
               </span>
-            </td>
+            </td> */}
             {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               {record.time}
             </td> */}
             {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               {record.note || '-'}
             </td> */}
-          </tr>
+          {/* </tr>
         ))}
-      </tbody>
-    </table>
+      </tbody> */}
+{/* 
+    <table className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-50">
+        <tr>
+          <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Date
+          </th>
+          <th className="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Status
+          </th> */}
+          {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Time
+          </th> */}
+          {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Notes
+          </th> */}
+        {/* </tr>
+      </thead>
+
+    </table> */}
   </div>
   </div>
   )

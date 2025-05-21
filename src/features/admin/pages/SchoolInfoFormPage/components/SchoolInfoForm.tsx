@@ -1,19 +1,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { schoolInfoValidationSchema } from "../validation/formValidation";
+import { schoolInfoValidationSchema } from "../../../validation/formValidation";
 import { useDispatch, useSelector } from "react-redux";
-import { setSchoolProfile } from "../redux/schoolProfileSlice";
-import { RootState } from '../../../app/store'
+import { setSchoolProfile } from "../../../redux/schoolProfileSlice";
+import { RootState } from "../../../../../app/store";
 import { useNavigate } from "react-router-dom";
-import { SchoolProfileType } from "../types/types";
-import loadingGif from '../../../assets/images/loading.webp'
+import { SchoolProfileType } from "../../../types/types";
+import loadingGif from "../../../../../assets/images/loading.webp";
 import { useState } from "react";
 
 const SchoolInfoForm = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const schoolProfileData = useSelector((state: RootState) => state.schoolProfile)
-    const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const schoolProfileData = useSelector(
+    (state: RootState) => state.schoolProfile
+  );
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -35,18 +37,18 @@ const SchoolInfoForm = () => {
       websiteUrl: schoolProfileData.websiteUrl,
       yearEstablished: schoolProfileData.yearEstablished,
       totalStudents: schoolProfileData.totalStudents,
-      totalTeachers: schoolProfileData.totalTeachers
-
-    }
+      totalTeachers: schoolProfileData.totalTeachers,
+      academicYear: schoolProfileData.academicYear
+    },
   });
 
   const onSubmit = (data: SchoolProfileType) => {
-    setLoading(true)
-    dispatch(setSchoolProfile(data))
-    setTimeout(( )=> {
-      setLoading(false)
-      navigate('/signup')
-    }, 1000)
+    setLoading(true);
+    dispatch(setSchoolProfile(data));
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/signup");
+    }, 1000);
   };
   return (
     <div className="mx-auto px-12 py-12 bg-white rounded border">
@@ -239,22 +241,63 @@ const SchoolInfoForm = () => {
           </div>
         </div>
 
-        <div>
-          <label
-            htmlFor="board"
-            className="block text-sm mb-1 font-medium text-gray-700"
-          >
-            Board
-          </label>
-          <input
-            type="text"
-            placeholder="board"
-            className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
-            {...register("board")}
-          />
-          {errors.board && (
-            <span className="text-red-500 text-sm">{errors.board.message}</span>
-          )}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="board"
+              className="block text-sm mb-1 font-medium text-gray-700"
+            >
+              Board
+            </label>
+            <select
+              className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
+              {...register("board")}
+            >
+              <option value="">-- Choose a board --</option>
+              <option value="CBSE">
+                CBSE (Central Board of Secondary Education)
+              </option>
+              <option value="ICSE">
+                ICSE / ISC (Council for the Indian School Certificate
+                Examinations)
+              </option>
+              <option value="STATE">State Board</option>
+              <option value="NIOS">
+                NIOS (National Institute of Open Schooling)
+              </option>
+              <option value="IB">IB (International Baccalaureate)</option>
+              <option value="IGCSE">IGCSE / Cambridge</option>
+            </select>
+
+            {errors.board && (
+              <span className="text-red-500 text-sm">
+                {errors.board.message}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="academicYear"
+              className="block text-sm mb-1 font-medium text-gray-700"
+             >
+              Academic Year
+            </label>
+           <select
+              className="w-full outline-none focus:ring-0 p-2 border border-gray-400 rounded"
+               {...register("academicYear")}
+            >
+              <option value="">--Choose Academic Year --</option>
+              <option value="2023-24">2023-24</option>
+              <option value="2024-25">2024-25</option>
+              <option value="2025-26">2025-26</option>
+            </select>
+            {errors.board && (
+              <span className="text-red-500 text-sm">
+                {errors.board.message}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -341,13 +384,15 @@ const SchoolInfoForm = () => {
 
         <div className="flex justify-center">
           <button
-           disabled={loading}
+            disabled={loading}
             type="submit"
             className="bg-indigo-600 w-full mt-5 text-white h-12 px-5 flex justify-center items-center rounded-lg font-medium hover:bg-indigo-700"
-          >{
-            loading ? <img className="w-10 h-10" src={loadingGif} alt="" /> : "Get your free demo"
-          }
-            
+          >
+            {loading ? (
+              <img className="w-10 h-10" src={loadingGif} alt="" />
+            ) : (
+              "Get your free demo"
+            )}
           </button>
         </div>
       </form>

@@ -114,7 +114,7 @@ const SubmissionDetails = ({
     <div className="flex-1 border-l px-5">
       {/* <h2 className="text-2xl font-medium text-gray-700">Submission</h2> */}
 
-      <div className="flex justify-center mt-5">
+      <div className="flex justify-center">
         <form onSubmit={assignmentSubmissionHandler} className="space-y-6 border p-8 w-full rounded-lg">
           {submissionType === "file" ? (
             <div className="space-y-2">

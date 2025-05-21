@@ -87,8 +87,8 @@ axiosInstance.interceptors.response.use((response) => response, async (error) =>
             status: data.status,
             accessToken: data.accessToken,
           }));
-        }else{
-                    store.dispatch(setSuperAdmin({
+        }else if(data.role == "superAdmin"){
+          store.dispatch(setSuperAdmin({
             _id: data._id,
             email: data.email,
             role: data.role,
