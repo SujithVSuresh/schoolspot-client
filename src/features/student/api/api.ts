@@ -450,3 +450,36 @@ export const fetchExamById = async (examId: string) => {
         return { success: false, error: message }
     }
 }
+
+
+export const clearNotification = async (notificationId: string) => {
+    try{
+        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/notification/${notificationId}/clear`, {}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+export const clearAllNotifications = async () => {
+    try{
+        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/notification/clear`, {}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
