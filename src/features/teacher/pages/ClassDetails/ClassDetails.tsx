@@ -23,11 +23,17 @@ import { fetchConversationsBySubjects } from "../../api/api";
 import { Conversation } from "../../types/types";
 import { setStudentList } from "../../redux/studentListSlice";
 import { getStudentsByClassId } from "../../api/api";
+import { notificationSocket } from "../../../../app/socket/socket";
+import { StudentUserProfileType } from "../../../../app/types/UserType";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const attendance = useSelector((state: RootState) => state.attendance);
+
+  const students = useSelector((state: RootState) => state.studentList);
+
+  console.log(students, "this is the students...");
 
   const classId = location.pathname.split("/")[3];
 
@@ -112,6 +118,31 @@ const ClassDetails = () => {
     // })
     // };
   }, [classDetails.subject?._id]);
+
+  // Joins the notification rooms of all the students in the classs
+  useEffect(() => {
+    if (students && students.length == 0) {
+      return;
+    }
+    notificationSocket.connect();
+
+    notificationSocket.on("connect", () => {
+      console.log("Connected:", notificationSocket.id);
+      students?.forEach((item: StudentUserProfileType) => {
+        notificationSocket.emit("join-room", `notification-${item?.user?._id}`);
+      });
+    });
+
+    return () => {
+      students?.forEach((item: StudentUserProfileType) => {
+        notificationSocket.emit(
+          "leave-room",
+          `notification-${item?.user?._id}`
+        );
+      });
+      notificationSocket.disconnect();
+    };
+  }, [students]);
 
   return (
     <>

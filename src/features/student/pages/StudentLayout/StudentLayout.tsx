@@ -109,6 +109,7 @@ const StudentLayout = () => {
     // };
   }, []);
 
+  // student joining their own notification room
   useEffect(() => {
     if (studentProfile?.user._id) {
       notificationSocket.connect();

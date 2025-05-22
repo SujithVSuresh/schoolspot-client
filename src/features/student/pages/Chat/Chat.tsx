@@ -84,17 +84,17 @@ const Chat = () => {
         message: response.data,
       });
 
-      activeConversation?.participants.forEach((userId: string) => {
-        chatSocket.emit("send-notification", {
-          roomId: `notification-${userId}`,
-          message: {
-            _id: "",
-            notificationType: "message",
-            message: `You have a new message: ${response.data.content}`,
-            createdAt: new Date(),
-          },
-        });
-      });
+      // activeConversation?.participants.forEach((userId: string) => {
+      //   chatSocket.emit("send-notification", {
+      //     roomId: `notification-${userId}`,
+      //     message: {
+      //       _id: "",
+      //       notificationType: "message",
+      //       message: `You have a new message: ${response.data.content}`,
+      //       createdAt: new Date(),
+      //     },
+      //   });
+      // });
     }
   };
 

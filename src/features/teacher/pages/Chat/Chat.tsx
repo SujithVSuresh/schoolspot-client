@@ -83,23 +83,23 @@ const Chat = () => {
     };
   }, []);
 
-  useEffect(() => {
-    notificationSocket.connect();
+  // useEffect(() => {
+  //   notificationSocket.connect();
 
-    notificationSocket.on("connect", () => {
-      console.log("Connected:", notificationSocket.id);
-      activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("join-room", `notification-${userId}`);
-      });
-    });
+  //   notificationSocket.on("connect", () => {
+  //     console.log("Connected:", notificationSocket.id);
+  //     activeConversation?.participants.forEach((userId: string) => {
+  //       notificationSocket.emit("join-room", `notification-${userId}`);
+  //     });
+  //   });
 
-    return () => {
-      activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("leave-room", `notification-${userId}`);
-      });
-      notificationSocket.disconnect();
-    };
-  }, [activeConversation]);
+  //   return () => {
+  //     activeConversation?.participants.forEach((userId: string) => {
+  //       notificationSocket.emit("leave-room", `notification-${userId}`);
+  //     });
+  //     notificationSocket.disconnect();
+  //   };
+  // }, [activeConversation]);
 
   const handleMessageMenu = (id: string) => {
     if (messageMenu == id) {
@@ -143,17 +143,17 @@ const Chat = () => {
         message: response.data,
       });
 
-      activeConversation?.participants.forEach((userId: string) => {
-        notificationSocket.emit("send-notification", {
-          roomId: `notification-${userId}`,
-          message: {
-            _id: "",
-            notificationType: "message",
-            message: `You have a new message: ${response.data.content}`,
-            createdAt: new Date(),
-          },
-        });
-      });
+      // activeConversation?.participants.forEach((userId: string) => {
+      //   notificationSocket.emit("send-notification", {
+      //     roomId: `notification-${userId}`,
+      //     message: {
+      //       _id: "",
+      //       notificationType: "message",
+      //       message: `You have a new message: ${response.data.content}`,
+      //       createdAt: new Date(),
+      //     },
+      //   });
+      // });
     }
   };
 
