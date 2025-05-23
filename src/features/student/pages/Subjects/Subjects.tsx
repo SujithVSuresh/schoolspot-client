@@ -33,10 +33,10 @@ const Subjects = () => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen">
       <div className="grid grid-cols-4 gap-3">
         {subjects.map((subject) => (
-          <div key={subject._id} onClick={() => navigate(`/student/subjects/${subject._id}/assignments`)} className="space-y-4 flex justify-between border p-5 rounded-lg w-full">
+          <div key={subject._id} onClick={() => navigate(`/student/subjects/${subject._id}/assignments`)} className="space-y-4 flex justify-between border p-5 hover: cursor-pointer rounded-lg w-full">
             <div className="flex items-center text-gray-700">
               {/* <div className="bg-gray-100 p-3 rounded-full flex justify-center mr-3">
               <Book className="w-5 h-5 text-gray-500" />

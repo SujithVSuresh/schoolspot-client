@@ -23,6 +23,7 @@ import Notifications from "../pages/Notifications/Notifications";
 import CreateLeaveLetter from "../pages/CreateLeaveLetter/CreateLeaveLetter";
 import Exam from "../pages/Exam/Exam";
 import ExamDetails from "../pages/ExamDetails/ExamDetails";
+import ExamResults from "../pages/ExamResults/ExamResults";
 
 const StudentRoute = () => {
   return (
@@ -68,6 +69,7 @@ const StudentRoute = () => {
         <Route path="invoices/:invoiceId" element={<InvoiceDetailsPage />} />
         <Route path="exams" element={<Exam />} />
         <Route path="exams/:examId" element={<ExamDetails />} />
+        <Route path="exams/:examId/result" element={<ExamResults />} />
         <Route path="announcements" element={<Announcements />} />
         <Route path="chat" element={<Chat />} />
         <Route path="profile" element={<StudentProfile />} />

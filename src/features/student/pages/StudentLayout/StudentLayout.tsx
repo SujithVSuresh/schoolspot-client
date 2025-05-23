@@ -27,7 +27,7 @@ const StudentLayout = () => {
     user: {
       _id: string;
       email: string;
-    }
+    };
     school: string;
   } | null>(null);
 
@@ -47,8 +47,8 @@ const StudentLayout = () => {
         school: response.data.school,
         user: {
           _id: response.data.user._id,
-          email: response.data.user.email
-        }
+          email: response.data.user.email,
+        },
       });
     };
     fetchStudentProfileHandler();
@@ -116,9 +116,11 @@ const StudentLayout = () => {
 
       notificationSocket.on("connect", () => {
         console.log("Connected:", notificationSocket.id);
-        notificationSocket.emit("join-room", `notification-${studentProfile?.user._id}`);
+        notificationSocket.emit(
+          "join-room",
+          `notification-${studentProfile?.user._id}`
+        );
       });
-
 
       return () => {
         notificationSocket.emit(
@@ -128,7 +130,6 @@ const StudentLayout = () => {
         notificationSocket.disconnect();
       };
     }
-
   }, [studentProfile?.user._id]);
 
   const setAnnouncementBadgeHandler = (value: number) => {
@@ -137,11 +138,11 @@ const StudentLayout = () => {
 
   return (
     <>
-      <header
+      {/* <header
         className={`bg-white border-b w-full py-4 px-10 flex items-center justify-between`}
       >
         <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
-      </header>
+      </header> */}
 
       <section>
         <div className="relative bg-purple-100">
@@ -182,9 +183,13 @@ const StudentLayout = () => {
                   </button> */}
                   <button
                     onClick={() => navigate("/student/notification")}
-                    className="text-gray-500 bg-blue-50 p-3 rounded-full hover:text-gray-900 transition-colors"
+                    className="relative text-gray-500 bg-blue-50 p-3 rounded-full hover:text-gray-900 transition-colors"
                   >
                     <Bell className="w-5 h-5" />
+                    {/* Notification badge */}
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                      3
+                    </span>
                   </button>
                 </div>
               </div>
@@ -199,7 +204,6 @@ const StudentLayout = () => {
             <div className="py-5 w-full flex justify-between">
               <Outlet context={{ classId: studentProfile?.classId }} />
             </div>
-            
           </div>
         </div>
       </section>

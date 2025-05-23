@@ -1,6 +1,6 @@
 import ExamHeader from "./components/ExamHeader"
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchExamById } from "../../api/api";
 // import { useOutletContext } from "react-router-dom";
@@ -8,6 +8,7 @@ import { ChevronRight } from "lucide-react";
 
 
 const ExamDetails = () => {
+  const navigate = useNavigate()
       const { examId: id } = useParams();
 //   const { classId }: { classId: string } = useOutletContext();
 
@@ -37,6 +38,8 @@ const ExamDetails = () => {
 
     fetchExamHandler(id as string);
   }, [id]);
+
+ 
   return (
  <div className="py-8 w-full">
       <ExamHeader />
@@ -93,7 +96,7 @@ const ExamDetails = () => {
         </div>
         
         <div>
-          <button className="px-4 py-3 w-full bg-blue-600 justify-between hover:bg-blue-700 rounded text-white text-sm transition-colors duration-200 flex items-center">
+          <button onClick={() => navigate(`/student/exams/${id}/result`)} className="px-4 py-3 w-full bg-blue-600 justify-between hover:bg-blue-700 rounded text-white text-sm transition-colors duration-200 flex items-center">
             <span>View Marks</span>
             <ChevronRight />
           </button>
