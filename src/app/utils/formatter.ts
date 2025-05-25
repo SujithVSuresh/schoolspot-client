@@ -14,6 +14,22 @@ export const timeFormatter = (time: string) => {
     })
   }
 
+export const dayFormatter = (date: string) => {
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  return days[new Date(date).getDay()]
+}
+
+export const monthFormatter = (date: string) => {
+  const months = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+return months[new Date(date).getMonth()]
+
+}
+
 
 export const textFormatter = (text: string) => {
     return text?.charAt(0)?.toUpperCase() + text?.slice(1);
