@@ -18,6 +18,7 @@ const ConversationDetails = ({
   const [name, setName] = useState<string>("");
   const [participants, setParticipants] = useState<string[]>([]);
 
+  console.log(participants, "parrrrr", students)
   useEffect(() => {
     setName(conversation.name as string);
     setParticipants(conversation?.participants);
@@ -33,6 +34,7 @@ const ConversationDetails = ({
       setParticipants(filterIds);
     }
   };
+
 
   const handleGroupUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

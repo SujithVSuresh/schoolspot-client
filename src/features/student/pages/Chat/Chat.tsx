@@ -3,9 +3,10 @@ import {
   createMessage,
   fetchConversations,
   fetchMessagesByConversation,
+  deleteMessage
 } from "../../api/api";
-import { Conversation } from "../../types/types";
-import { MessageListType } from "../../types/types";
+import { Conversation } from "../../../../app/types/chatType";
+import { MessageListType } from "../../../../app/types/chatType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { chatSocket } from "../../../../app/socket/socket";
@@ -13,6 +14,8 @@ import ChatSidebar from "../../../../app/components/Chat/ChatSidebar";
 import ChatHeader from "../../../../app/components/Chat/ChatHeader";
 import ChatInputArea from "../../../../app/components/Chat/ChatInputArea";
 import ChatMessageCard from "../../../../app/components/Chat/ChatMessageCard";
+import ConversationDetails from "../../../../app/components/Chat/ConversationDetails";
+
 
 const Chat = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -20,7 +23,17 @@ const Chat = () => {
   const [activeConversation, setActiveConversation] =
     useState<Conversation | null>(null);
 
+    console.log(activeConversation, "convvvvvvvvvv123123")
+
   const [messages, setMessages] = useState<MessageListType[]>([]);
+
+    const [isCreateGroup, setIsCreateGroup] = useState(false);
+
+
+  const [messageMenu, setMessageMenu] = useState("");
+
+    const [viewGroupDetails, setViewGroupDetails] = useState(false)
+
 
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -58,15 +71,58 @@ const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    chatSocket.on("receive-message", (message) => {
-      setMessages((prev) => [...prev, message]);
-    });
+useEffect(() => {
+  chatSocket.on("receive-message", (message) => {
+    setMessages((prev) => [...prev, message]);
 
-    return () => {
-      chatSocket.off("receive-message");
-    };
-  }, []);
+    setConversations((prev) => {
+      const conversationToUpdate = prev.find(c => c._id === message.conversationId);
+
+      if (conversationToUpdate) {
+        return [
+          {
+            ...conversationToUpdate,
+            lastMessage: message,
+          },
+          ...prev.filter((item) => item._id !== message.conversationId),
+        ];
+      }
+
+      return prev;
+    });
+  });
+
+  return () => {
+    chatSocket.off("receive-message");
+  };
+}, []);
+
+
+  const handleMessageMenu = (id: string) => {
+    if (messageMenu == id) {
+      setMessageMenu("");
+    } else {
+      setMessageMenu(id);
+    }
+  };
+
+  // const handleMessageDelete = async (id: string) => {
+  //   const response = await deleteMessage(id);
+  //   console.log(response.data)
+
+  //   if (response.success) {
+  //     const msgs = messages.map((item) => {
+  //       if (item._id == response.data._id) {
+  //         return {
+  //           ...item,
+  //           status: "deleted",
+  //         };
+  //       }
+  //       return item;
+  //     });
+  //     setMessages(msgs);
+  //   }
+  // };
 
   const handleSendMessage = async () => {
     const response = await createMessage({
@@ -76,27 +132,44 @@ const Chat = () => {
     });
 
     if (response.success) {
-      console.log(response.data, "message send successfully");
+      console.log(response.data, "message send successfully...");
       setInputValue("");
       setMessages((prev) => [...prev, response?.data]);
+
+  if (activeConversation && activeConversation._id) {
+
+      setConversations([{
+    ...activeConversation,
+    lastMessage: response.data,
+  }, ...conversations.filter((item) => item._id !== activeConversation?._id)])
+  }
       chatSocket.emit("send-message", {
         roomId: `conversation-${activeConversation?._id}`,
         message: response.data,
       });
-
-      // activeConversation?.participants.forEach((userId: string) => {
-      //   chatSocket.emit("send-notification", {
-      //     roomId: `notification-${userId}`,
-      //     message: {
-      //       _id: "",
-      //       notificationType: "message",
-      //       message: `You have a new message: ${response.data.content}`,
-      //       createdAt: new Date(),
-      //     },
-      //   });
-      // });
     }
   };
+
+    const handleViewGroupDetails = () => {
+    setViewGroupDetails((prev) => !prev)
+  }
+
+    const handleMessageDelete = async (id: string) => {
+      const response = await deleteMessage(id);
+  
+      if (response.success) {
+        const msgs = messages.map((item) => {
+          if (item._id == response.data._id) {
+            return {
+              ...item,
+              status: "deleted",
+            };
+          }
+          return item;
+        });
+        setMessages(msgs);
+      }
+    };
 
   return (
     <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
@@ -105,29 +178,49 @@ const Chat = () => {
         conversations={conversations}
         activeConversation={activeConversation}
         setActiveConversation={setActiveConversation}
+        setIsCreateGroup={setIsCreateGroup}
+
       />
 
       {/* Main chat area */}
       <div className="flex-1 flex flex-col">
         {/* Header with sidebar toggle */}
-        <ChatHeader activeConversation={activeConversation} />
+        <ChatHeader
+          activeConversation={activeConversation}
+          handleViewGroupDetails={handleViewGroupDetails}
+        />
 
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages?.length > 0 &&
-            messages.map((message) => (
-              <ChatMessageCard message={message} user={student} />
+            messages.map((message, index) => (
+              <ChatMessageCard 
+              key={index}
+              message={message} 
+              user={student}
+                  messageMenu={messageMenu}
+                handleMessageMenu={handleMessageMenu}
+                handleMessageDelete={handleMessageDelete} 
+              />
             ))}
           <div ref={messagesEndRef} />
         </div>
 
         {/* Input area */}
+        {activeConversation && (
         <ChatInputArea
           inputValue={inputValue}
           setInputValue={setInputValue}
           handleSendMessage={handleSendMessage}
         />
+        )}
       </div>
+
+           {viewGroupDetails && (
+     <ConversationDetails conversation={activeConversation as Conversation} handleViewGroupDetails={handleViewGroupDetails}/>
+
+     )}
+ 
     </div>
   );
 };

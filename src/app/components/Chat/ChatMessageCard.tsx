@@ -17,7 +17,6 @@ const ChatMessageCard = ({
   handleMessageDelete: (id: string) => void
 }) => {
 
-  console.log(message, "this is the message in chat message card");
   return (
     <div
       key={message._id}

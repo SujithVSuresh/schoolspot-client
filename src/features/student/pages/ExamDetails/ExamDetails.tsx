@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { fetchExamById } from "../../api/api";
 // import { useOutletContext } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import { dateFormatter } from "../../../../app/utils/formatter";
 
 
 const ExamDetails = () => {
@@ -63,8 +64,8 @@ const ExamDetails = () => {
         <span className="text-xs">May</span>
       </div>
       <div>
-        <h3 className="text-lg font-medium text-gray-900">Mathematics</h3>
-        <p className="text-sm text-gray-500 mt-1">Tuesday, May 20, 2025</p>
+        <h3 className="text-lg font-medium text-gray-900">{timetable.subject}</h3>
+        <p className="text-sm text-gray-500 mt-1">{new Date(timetable.date).getDay()}, {dateFormatter(timetable.date)}</p>
       </div>
     </div>
 

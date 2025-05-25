@@ -18,7 +18,7 @@ const ChatHeader = ({
         <div className="flex flex-col ml-3">
           <h1 className="font-semibold">{activeConversation?.name}</h1>
           <span className="text-xs text-gray-500">
-            {activeConversation?.participants.length} Members
+            {activeConversation?.participants?.length} Members
           </span>
         </div>
       </div>

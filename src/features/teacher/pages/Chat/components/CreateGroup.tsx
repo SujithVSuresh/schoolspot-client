@@ -4,14 +4,17 @@ import { RootState } from "../../../../../app/store";
 import { useState } from "react";
 import { createConversation } from "../../../api/api";
 import { successToast } from "../../../../../app/utils/toastMessage";
+import { Conversation } from "../../../../../app/types/chatType";
 
 
 const CreateGroup = ({
   setIsCreateGroup,
   subjectId,
+  setConversations,
 }: {
   setIsCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
   subjectId: string;
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>
 }) => {
   const students = useSelector((state: RootState) => state.studentList);
 
@@ -29,7 +32,7 @@ const CreateGroup = ({
     }
   };
 
-  const handleAddSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCreateGroupSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const response = await createConversation({
@@ -42,6 +45,7 @@ const CreateGroup = ({
     if (response.success) {
       successToast("Group created succcessfully")
       setIsCreateGroup(false)
+      setConversations((prev) => [response.data, ...prev])
       console.log(response.data, "group added successfully...");
     }
   };
@@ -66,7 +70,7 @@ const CreateGroup = ({
       <div>
         <form
           className="max-w-md mx-auto p-4"
-          onSubmit={(e) => handleAddSubmit(e)}
+          onSubmit={(e) => handleCreateGroupSubmit(e)}
         >
           <label
             htmlFor="name"

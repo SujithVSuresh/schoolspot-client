@@ -70,10 +70,12 @@ const Chat = () => {
   }, [activeConversation]);
 
   useEffect(() => {
+    // Scroll to the bottom
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   useEffect(() => {
+    // Handling message receiving with socket
     chatSocket.on("receive-message", (message) => {
       setMessages((prev) => [...prev, message]);
     });
@@ -169,6 +171,7 @@ const Chat = () => {
         <CreateGroup
           setIsCreateGroup={setIsCreateGroup}
           subjectId={subjectId}
+          setConversations={setConversations}
         />
       ) : (
         <ChatSidebar

@@ -141,8 +141,8 @@ const TimeTable = () => {
         </div>
         
         <div className="grid grid-cols-2 gap-3">
-          {timetableData[selectedDay].length > 0 ? (
-            timetableData[selectedDay].map((session, index) => (
+          {timetableData[selectedDay]?.length > 0 ? (
+            timetableData[selectedDay]?.map((session, index) => (
               <div 
                 key={index}
                 className={`flex items-center p-3 rounded-lg border ${

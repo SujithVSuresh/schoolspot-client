@@ -3,20 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 const ExamCard = ({
   exam,
-  classId,
+  navigationPath
 }: {
   exam: { _id: string; name: string; startDate: string; endDate: string };
-  classId: string;
+  navigationPath: string;
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="rounded-xl overflow-hidden w-full border-2 hover: cursor-pointer">
+    <div className="rounded-xl overflow-hidden w-full border hover: cursor-pointer">
       <div
         className="p-5"
-        onClick={() =>
-          navigate(`/teacher/classes/${classId}/exams/${exam._id}`)
-        }
+        onClick={() => navigate(navigationPath)}
       >
+        {/* navigate(`/teacher/classes/${classId}/exams/${exam._id}`) */}
         <div className="flex items-center gap-3 mb-4">
           <h2 className="text-lg font-medium text-gray-700">{exam.name}</h2>
         </div>
