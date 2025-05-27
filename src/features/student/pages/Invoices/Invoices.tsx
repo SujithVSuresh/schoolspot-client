@@ -76,7 +76,7 @@ const Invoices = () => {
     <div className="min-h-screen w-full">
 
 
-      <div className="mt-5">
+      <div>
         <div className="rounded-xl mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 sm:space-y-0">
   

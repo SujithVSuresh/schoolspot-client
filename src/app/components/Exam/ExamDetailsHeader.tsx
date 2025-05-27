@@ -17,7 +17,7 @@ const ExamDetailsHeader = ({examData}: {examData: {name: string; startDate: stri
           <div className="flex items-center mb-3 sm:mb-0">
             <Calendar className="h-4 w-4 text-blue-500" />
             <span className="ml-2 text-sm font-medium text-gray-700">
-              Exam Period Ends: {dateFormatter(examData.endDate)}
+              Exam Period: {dateFormatter(examData.startDate)} - {dateFormatter(examData.endDate)}
             </span>
           </div>
           <div className="flex items-center">

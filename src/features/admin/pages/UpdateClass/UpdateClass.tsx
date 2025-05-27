@@ -52,7 +52,6 @@ const UpdateClass = () => {
               const teacher = teachers.filter((value) => {
                 return value.fullName == response.data.data.teacher
               })
-              console.log(teacher, "jijiji")
               setValue("teacher", teacher[0].userId)
           }
         };

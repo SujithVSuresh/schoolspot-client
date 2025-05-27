@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { createInvoice } from "../../api/api";
 import StudentList from "./components/StudentList";
+import { errorToast, successToast } from "../../../../app/utils/toastMessage";
 
 const CreateInvoice = () => {
     const {classId} = useParams()
@@ -89,17 +90,10 @@ const CreateInvoice = () => {
     }, selectedStudents);
 
     if (response.success) {
-      toast.success("Invoice created successfully!", {
-        duration: 2000,
-        position: "bottom-right",
-        style: {
-          backgroundColor: "#E7FEE2",
-          border: "2px solid #16A34A",
-          minWidth: "400px",
-          color: "black",
-        },
-      });
-      navigate(`/dashboard/classes/profile/${classId}?section=fees`);
+    successToast("Invoice created successfully!")
+      navigate(`/dashboard/classes/profile/${classId}/invoices`);
+    }else{
+      errorToast(response.error.message)
     }
   };
 

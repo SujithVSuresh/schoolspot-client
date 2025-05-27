@@ -26,8 +26,9 @@
         role: 'superadmin' | 'admin' | 'teacher' | 'student';
     };
     status: "active" | "deleted"
-    messageType: "text" | "file";
-    content: string;
+    messageType: "text" | "file" | "file-text";
+    content?: string;
+    fileUrl?: string;
     createdAt: Date;
     updatedAt: Date;
   }

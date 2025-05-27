@@ -37,9 +37,8 @@ const TeacherRoute = () => {
        <Route path="profile" element={<ProtectedRoute isLogin={true}><TeacherProfile /></ProtectedRoute> } />
        <Route path="change-password" element={<ProtectedRoute isLogin={true}><ChangePassword /></ProtectedRoute> } />
 
-      <Route path="" element={<ProtectedRoute isLogin={true}><TeacherHome /></ProtectedRoute>}/>
 
-      <Route path="classes"element={<ProtectedRoute isLogin={true}><Classes /></ProtectedRoute>}/>
+      <Route path=""element={<ProtectedRoute isLogin={true}><Classes /></ProtectedRoute>}/>
 <Route path="notification"element={<ProtectedRoute isLogin={true}><Notification /></ProtectedRoute>}/>
       <Route path="classes/:id"element={<ProtectedRoute isLogin={true}><ClassDetails /></ProtectedRoute>}>
 

@@ -59,7 +59,7 @@ const CreateExam = () => {
     const response = await createExams({...examData, classId: classId as string});
 
     if(response.success){
-      navigate(`/dashboard/classes/profile/${classId}?section=exam`)
+      navigate(`/dashboard/classes/profile/${classId}/exams`)
     }
 
   };

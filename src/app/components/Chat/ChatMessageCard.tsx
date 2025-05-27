@@ -6,15 +6,15 @@ import { MessageListType } from "../../types/chatType";
 const ChatMessageCard = ({
   message,
   user,
-  messageMenu, 
+  messageMenu,
   handleMessageMenu,
-  handleMessageDelete
+  handleMessageDelete,
 }: {
   message: MessageListType;
   user: { _id?: string };
   messageMenu: string;
-  handleMessageMenu: (id: string) => void
-  handleMessageDelete: (id: string) => void
+  handleMessageMenu: (id: string) => void;
+  handleMessageDelete: (id: string) => void;
 }) => {
 
   return (
@@ -37,28 +37,47 @@ const ChatMessageCard = ({
           </div>
         ) : (
           message.status == "active" && (
-          <div className="w-full flex justify-end relative">
+            <div className="w-full flex justify-end relative">
+              {messageMenu == message._id && (
+                <ChatMessageMenu
+                  handleMessageDelete={handleMessageDelete}
+                  id={message._id}
+                />
+              )}
 
-             {
-              messageMenu == message._id && (
-                <ChatMessageMenu handleMessageDelete={handleMessageDelete} id={message._id}/>
-              )
-             }
-              
-
-            
-            <ChevronDown onClick={() => handleMessageMenu(message._id)} className="w-4 h-4 hover: cursor-pointer" />
-          </div>
+              <ChevronDown
+                onClick={() => handleMessageMenu(message._id)}
+                className="w-4 h-4 hover: cursor-pointer"
+              />
+            </div>
           )
+        )}
 
-        )}
-        {message.status == "deleted" ? (
-<span className="text-xs">Message deleted</span>
-        ) : (
-     <span>{message.content}</span>
-        )}
-        
-   
+
+        {message.status === "deleted" ? (
+  <span className="text-xs italic">Message deleted</span>
+) : (
+  <div className="flex flex-col gap-1">
+    {(message.messageType === "text" || message.messageType === "file-text") && (
+      <span>{message.content}</span>
+    )}
+
+    {(message.messageType === "file" || message.messageType === "file-text") &&
+      message.fileUrl && (
+        <a
+          href={message.fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+          className="text-sm text-blue-200 underline"
+        >
+          View Attachment
+        </a>
+      )}
+  </div>
+)}
+
+
         <div
           className={`text-xs mt-1 ${
             message?.senderId?._id === user?._id

@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
-import { createTimetable, fetchSubjects } from "../../api/api";
+import { upsertTimetable, fetchSubjects } from "../../api/api";
 import { useParams } from "react-router-dom";
+import { PlusCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const AddTimetable = () => {
+  const navigate = useNavigate();
   const { classId } = useParams();
 
   const [timetable, setTimetable] = useState([
     {
-      day: "",
+      day: "Mon",
+      periods: [{ subject: "", startTime: "", endTime: "" }],
+    },
+    {
+      day: "Tue",
+      periods: [{ subject: "", startTime: "", endTime: "" }],
+    },
+    {
+      day: "Wed",
+      periods: [{ subject: "", startTime: "", endTime: "" }],
+    },
+    {
+      day: "Thu",
+      periods: [{ subject: "", startTime: "", endTime: "" }],
+    },
+    {
+      day: "Fri",
       periods: [{ subject: "", startTime: "", endTime: "" }],
     },
   ]);
@@ -41,7 +60,7 @@ const AddTimetable = () => {
   const handlePeriodChange = (
     dayIndex: number,
     periodIndex: number,
-    field: string,
+    field: 'subject' | 'startTime' | 'endTime',
     value: string
   ) => {
     const updated = [...timetable];
@@ -49,12 +68,12 @@ const AddTimetable = () => {
     setTimetable(updated);
   };
 
-  const addDay = () => {
-    setTimetable([
-      ...timetable,
-      { day: "", periods: [{ subject: "", startTime: "", endTime: "" }] },
-    ]);
-  };
+  // const addDay = () => {
+  //   setTimetable([
+  //     ...timetable,
+  //     { day: "", periods: [{ subject: "", startTime: "", endTime: "" }] },
+  //   ]);
+  // };
 
   const addPeriod = (dayIndex: number) => {
     const updated = [...timetable];
@@ -66,47 +85,52 @@ const AddTimetable = () => {
     setTimetable(updated);
   };
 
-  const removeDay = (index: number) => {
-    const updated = [...timetable];
-    updated.splice(index, 1);
-    setTimetable(updated);
-  };
+  // const removeDay = (index: number) => {
+  //   const updated = [...timetable];
+  //   updated.splice(index, 1);
+  //   setTimetable(updated);
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log({ timetable });
 
-    const response = await createTimetable({
-      classId: classId as string,
+    const response = await upsertTimetable({
       timetable,
-    });
+    }, classId as string);
+
+    console.log(response, "response from upsertTimetable");
 
     if (response.success) {
       console.log("Timetable created successfully");
+      navigate(`/dashboard/classes/profile/${response?.data?.classId}/timetable`)
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen py-10 flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="p-6 bg-white shadow rounded space-y-6"
+        className="p-6 bg-white shadow rounded space-y-6 w-5/12"
       >
-        <h2 className="text-2xl font-semibold text-center">Add Timetable</h2>
+           <div className="w-full text-center mb-5">
+        <span className="font-semibold text-lg">Create Timetable</span>
+        </div>
 
         {timetable.map((dayEntry, dayIndex) => (
           <div key={dayIndex} className="border p-4 rounded space-y-4">
             <div className="flex justify-between items-center">
               <input
                 type="text"
+                disabled={dayIndex < 5}
                 placeholder="Day (e.g., Monday)"
                 value={dayEntry.day}
                 onChange={(e) => handleDayChange(dayIndex, e.target.value)}
-                className="border p-2 rounded w-full"
+                className="border p-2 rounded flex-1"
                 required
               />
-              <div className="flex gap-4 ml-4">
-                <button
+              <div className="flex w-auto gap-4 ml-4">
+                {/* <button
                   type="button"
                   onClick={() => addPeriod(dayIndex)}
                   className="text-blue-600 underline"
@@ -120,7 +144,18 @@ const AddTimetable = () => {
                 >
                   Remove Day
                 </button>
+                 */}
+
+                             <button
+                              type="button"
+                              onClick={() => addPeriod(dayIndex)}
+                              className="text-blue-600 hover:text-blue-700 flex items-center text-sm"
+                            >
+                              <PlusCircle size={16} className="mr-1" />
+                              Add Period
+                            </button>
               </div>
+          
             </div>
 
             {dayEntry.periods.map((period, periodIndex) => (
@@ -141,7 +176,7 @@ const AddTimetable = () => {
                   className="border p-2 rounded"
                   required
                 >
-                  <option value="">Select Subject</option>
+                  <option value="">Subject</option>
                   {subjects.map((subject) => (
                     <option key={subject.name} value={subject.name}>
                       {subject.name}
@@ -181,13 +216,13 @@ const AddTimetable = () => {
           </div>
         ))}
 
-        <button
+        {/* <button
           type="button"
           onClick={addDay}
           className="text-green-600 underline"
         >
           + Add Day
-        </button>
+        </button> */}
 
         <div className="flex justify-end">
           <button

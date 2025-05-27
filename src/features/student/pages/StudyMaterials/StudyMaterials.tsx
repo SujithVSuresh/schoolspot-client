@@ -36,9 +36,9 @@ const StudyMaterials = () => {
 
   return (
     <div className="min-h-screen w-full">
-         <div className="grid grid-cols-4 gap-4 pb-5">
+         <div className="grid grid-cols-3 gap-4 pb-5">
         {studyMaterials.map((studyMaterial) => (
-                      <div key={studyMaterial._id} className="rounded-xl overflow-hidden w-full border-2" onClick={() => navigate(`/student/subjects/${subjectId}/study-materials/${studyMaterial._id}`)}>
+                      <div key={studyMaterial._id} className="rounded-xl overflow-hidden w-full border hover:cursor-pointer" onClick={() => navigate(`/student/subjects/${subjectId}/study-materials/${studyMaterial._id}`)}>
                       <div className="p-5">
                         <div className="flex items-center gap-3 mb-4">
                     

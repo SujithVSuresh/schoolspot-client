@@ -183,6 +183,21 @@ export const fetchAssignmentSubmission = async (assidnmentId: string) => {
     }
 }
 
+export const fetchPendingAssignments = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/submission/pending`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 export const addAssignmentSubmission = async (submissionId: string, submissionData: {link?: string; description?: string}) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/assignment/submission/${submissionId}`, submissionData, {
@@ -309,6 +324,22 @@ export const fetchAnnouncementById = async (announcementId: string) => {
     }
 }
 
+
+export const fetchAnnouncementsByCount = async (classId: string, count: number) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/class/announcements/${classId}/${count}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 export const announcementPinHandler = async (announcementId: string, status: "pin" | "unpin") => {
     console.log(announcementId, status, "chiriii")
     try{
@@ -386,10 +417,11 @@ export const fetchMessagesByConversation = async (conversationId: string) => {
 }
 
 
-export const createMessage = async (message: {conversationId: string, messageType: string, content: string}) => {
+export const createMessage = async (message: FormData) => {
     try{
         const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/chat/message`, message, {
             headers: {
+                "Content-Type": "multipart/form-data",
                 'x-user-role': 'student'
             }
         });
@@ -505,6 +537,39 @@ export const fetchExamResult = async (examId: string) => {
 export const deleteMessage = async (messageId: string) => {
     try{
         const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/chat/message/${messageId}/delete`, {}, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const fetchTimetableByClass = async (classId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/timetable/${classId}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+
+export const fetchAttendanceOverview = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/attendance/overview`, {
             headers: {
                 'x-user-role': 'student'
             }

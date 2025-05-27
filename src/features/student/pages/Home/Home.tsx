@@ -1,53 +1,26 @@
 import TimeTable from "./components/TimeTable";
 import Attendance from "./components/Attendance";
-import { ChevronRight } from "lucide-react";
 import Announcements from "./components/Announcements";
+import Assignments from "./components/Assignments";
 import Exams from "./components/Exams";
+import { useOutletContext } from "react-router-dom";
 
 const Home = () => {
-  const announcements = [
-    {
-      id: 1,
-      title: "Holiday Break",
-      message: "Holiday break for the session is going...",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
-      count: 2,
-    },
-    {
-      id: 2,
-      title: "Holiday Break",
-      message: "To succeed in this course, please kee...",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
-      count: 2,
-    },
-    {
-      id: 3,
-      title: "Holiday Break",
-      message: "Dear Students,...",
-      avatar:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
-      count: 2,
-    },
-  ];
-
+  const { classId }: { classId: string } = useOutletContext();
   return (
     <div className="min-h-screen w-full">
       <div className="flex w-full gap-4">
         <div className="w-8/12">
-          <TimeTable />
+          <TimeTable classId={classId}/>
           <div className="flex gap-4 mt-4">
- <Announcements />
-  <Announcements />
+            <Assignments classId={classId}/>
+            <Announcements classId={classId}/>
           </div>
-         
         </div>
 
         <div className="flex-1">
           <Attendance />
-          <Exams />
-
+          {/* <Exams /> */}
         </div>
       </div>
     </div>

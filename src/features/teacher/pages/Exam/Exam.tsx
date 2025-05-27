@@ -32,7 +32,7 @@ const Exam = () => {
         <div className="grid grid-cols-4 gap-3">
 
             {exams.map((exam) => (
-              <ExamCard exam={exam} classId={classId}/>
+              <ExamCard exam={exam} navigationPath={`/teacher/classes/${classId}/exams/${exam._id}`}/>
             ))}
 
             </div>

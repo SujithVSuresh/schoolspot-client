@@ -16,7 +16,6 @@ import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import Announcements from "../pages/Announcements/Announcements";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import InvoiceDetailsPage from "../pages/InvoiceDetails/InvoiceDetails";
-import AttendanceList from "../pages/AttendanceList/AttendanceList";
 import LeaveLetters from "../pages/LeaveLetters/LeaveLetters";
 import Chat from "../pages/Chat/Chat";
 import Notifications from "../pages/Notifications/Notifications";
@@ -52,10 +51,7 @@ const StudentRoute = () => {
         
         <Route path="attendance/leave-letter/add" element={<CreateLeaveLetter />} />
 
-        <Route path="attendance" element={<Attendance />} >
-            <Route path="" element={<AttendanceList />} />
-            <Route path="leave-letter" element={<LeaveLetters />} />
-        </Route>
+        <Route path="attendance" element={<Attendance />} />
         <Route
         path="notification"
         element={

@@ -7,6 +7,7 @@ import { useOutletContext } from "react-router-dom";
 import { AddAssignmentType } from "../../types/types";
 import { addAssignment } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { errorToast, successToast } from "../../../../app/utils/toastMessage";
 
 
 const AddAssignment = () => {
@@ -32,6 +33,9 @@ const AddAssignment = () => {
 
     if(response.success){
       navigate(`/teacher/classes/${classId}/assignments`)
+      successToast("Assignment added successfully")
+    }else{
+      errorToast(response.error.message)
     }
   }
 

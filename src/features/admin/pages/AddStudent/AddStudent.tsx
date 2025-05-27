@@ -18,7 +18,6 @@ const AddStudent = () => {
   });
 
   const onSubmit = async (data: StudentUserProfileType) => {
-    console.log(data, "this is the data....")
     const formData = new FormData();
     formData.append("profilePhoto", data.profilePhoto[0]);
     formData.append("fullName", data.fullName);
@@ -43,7 +42,7 @@ const AddStudent = () => {
     console.log(response, "this is the response")
 
     if(response.success){
-      navigate(`/dashboard/classes/profile/${response.data.classId}?section=students`)
+      navigate(`/dashboard/classes/profile/${response?.data?.classId}/students`)
     }
  
   };

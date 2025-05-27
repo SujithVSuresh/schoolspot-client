@@ -1,6 +1,7 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import { createLeaveLetter } from "../../api/api";
+import { errorToast, successToast } from "../../../../app/utils/toastMessage";
 
 const CreateLeaveLetter = () => {
   const navigate = useNavigate();
@@ -27,9 +28,13 @@ const CreateLeaveLetter = () => {
     });
 
     if (response.success) {
-      console.log(response, "response of leave letter, success");
-      navigate('/student/attendance/leave-letter')
+      successToast("Leave letter submitted successfully");
+      navigate('/student/attendance')
 
+    }else{
+      console.log(response)
+      errorToast(response?.error?.message);
+      
     }
   };
 
@@ -75,7 +80,7 @@ const CreateLeaveLetter = () => {
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              onClick={() => navigate("/student/attendance/leave-letter")}
+              onClick={() => navigate("/student/attendance")}
               className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
             >
               Cancel

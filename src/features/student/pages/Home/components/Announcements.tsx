@@ -1,35 +1,35 @@
-import { Star, Bell } from "lucide-react";
+import { fetchAnnouncementsByCount } from "../../../api/api";
+import { useEffect, useState } from "react";
+import { AnnouncementType } from "../../../types/types";
+import { timeFormatter } from "../../../../../app/utils/formatter";
+import { useNavigate } from "react-router-dom";
 
- const announcementsData = [
-  {
-    title: "Campus-wide Internet Maintenance",
-    content: "The campus WiFi will be unavailable on Saturday from 10 PM to 2 AM due to system upgrades. Please plan accordingly.",
-    time: "1h ago",
-    read: false,
-    important: true,
-    department: "IT Services"
-  },
-  {
-    title: "Mid-term Exam Schedule Released",
-    content: "The mid-term examination schedule has been published. Please check your student portal for details about dates, times, and venues.",
-    time: "3h ago",
-    read: false,
-    important: false,
-    department: "Examination Office"
-  },
-  {
-    title: "Career Fair Next Week",
-    content: "Don't miss the opportunity to meet with representatives from leading companies in the industry. Bring your resume and dress professionally.",
-    time: "Yesterday",
-    read: true,
-    important: false,
-    department: "Career Center"
-  }
-];
    
-   const Announcements = () => {
+   const Announcements = ({classId}: {classId: string}) => {
+    const navigate = useNavigate();
+
+    const [announcementsData, setAnnouncementsData] = useState<AnnouncementType[]>([])
+
+    useEffect(() => {
+   const fetchAnnouncementsHandler = async () => {
+      const response = await fetchAnnouncementsByCount(classId, 3);
+          console.log(response, "this is the response for announcements");
+
+
+      if (response.success) {
+        setAnnouncementsData(response.data);
+      }
+    }
+
+
+    fetchAnnouncementsHandler();
+    }, [classId]);
+
+
+
+
      return (
-     <div className="bg-white rounded-lg overflow-hidden border h-full">
+     <div className="bg-white rounded-lg overflow-hidden border h-full flex-1">
       <div className="px-6 py-5 border-b">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-800">Announcements</h2>
@@ -48,39 +48,28 @@ import { Star, Bell } from "lucide-react";
             >
               <div className="flex items-start">
                 <div className="flex-shrink-0 pt-1">
-                  {announcement.important ? (
-                    <Star className="h-5 w-5 text-amber-400" fill="#FCD34D" />
-                  ) : (
-                    <Bell className={`h-5 w-5 ${announcement.read ? 'text-gray-400' : 'text-indigo-500'}`} />
-                  )}
                 </div>
                 
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
-                    <p className={`text-sm font-medium ${announcement.read ? 'text-gray-600' : 'text-gray-900'}`}>
+                    <p className={`text-sm font-medium text-gray-800`}>
                       {announcement.title}
                     </p>
-                    <span className="text-xs text-gray-500">{announcement.time}</span>
+                    <span className="text-xs text-gray-500">{timeFormatter(announcement.createdAt)}</span>
                   </div>
                   
                   <p className="mt-1 text-sm text-gray-500 line-clamp-2">
                     {announcement.content}
                   </p>
                   
-                  {announcement.department && (
-                    <p className="mt-1">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                        {announcement.department}
-                      </span>
-                    </p>
-                  )}
+
                 </div>
               </div>
             </div>
           ))}
         </div>
         
-        <button className="mt-2 w-full py-2 px-4 bg-white border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+        <button onClick={() => navigate('/student/announcements')} className="mt-2 w-full py-2 px-4 bg-white border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
           View All Announcements
         </button>
       </div>

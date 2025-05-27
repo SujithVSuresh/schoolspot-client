@@ -7,7 +7,7 @@ import { ExamType } from "../../types/types";
 
 
 const ExamDetails = () => {
-  const { examId } = useParams();
+  const { examId, classId } = useParams();
 
   const [exam, setExam] = useState<ExamType | null>(null);
 
@@ -72,15 +72,23 @@ const ExamDetails = () => {
               </div>
 
               <div className="mt-4 sm:mt-0 flex flex-col items-end">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium}`}>
+                {/* <span className={`px-2 py-1 rounded-full text-xs font-medium}`}>
                   Upcoming
-                </span>
+                </span> */}
                 <div className="mt-2 flex items-center">
                   <Clock className="h-4 w-4 text-gray-400 mr-1" />
                   <span className="text-sm text-gray-500">
                     {String(item.startTime)} - {String(item.endTime)}
                   </span>
                 </div>
+                {new Date() > new Date(item.date) && (
+                      <Link
+        to={`/dashboard/classes/${classId}/exam/${exam?._id}/marks/${item?.subject}`}
+        className="text-blue-600 underline hover:text-blue-800 text-sm transition duration-200"
+      >
+        Marks
+      </Link>
+      )}
               </div>
             </div>
           </div>

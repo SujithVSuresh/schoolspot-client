@@ -69,7 +69,7 @@ const AddAttendance = () => {
     const response = await addAttendance(data);
 
     if (response.success) {
-      navigate(`/dashboard/classes/profile/${classId}?section=attendance`);
+      navigate(`/dashboard/classes/profile/${classId}/attendance`);
     } else {
       setTimeout(() => {
         toast(response.error.message, {

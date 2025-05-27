@@ -23,11 +23,11 @@ const Chat = () => {
   const [activeConversation, setActiveConversation] =
     useState<Conversation | null>(null);
 
-    console.log(activeConversation, "convvvvvvvvvv123123")
-
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
     const [isCreateGroup, setIsCreateGroup] = useState(false);
+      const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    
 
 
   const [messageMenu, setMessageMenu] = useState("");
@@ -125,15 +125,31 @@ useEffect(() => {
   // };
 
   const handleSendMessage = async () => {
-    const response = await createMessage({
-      conversationId: String(activeConversation?._id),
-      messageType: "text",
-      content: inputValue,
-    });
+    const formData = new FormData()
+
+    const fileAvailable = selectedFile && !inputValue;
+    const fileTextAvailable = selectedFile && inputValue
+    const textAvailable = !selectedFile && inputValue;
+
+    formData.append("conversationId", activeConversation?._id as string);
+    formData.append("messageType", fileAvailable ? "file" : fileTextAvailable ? "file-text": "text");
+
+
+    if( fileTextAvailable) {
+      formData.append("content", inputValue);
+      formData.append("attachment", selectedFile);
+    }else if( fileAvailable) {
+      formData.append("attachment", selectedFile);
+    }else if(textAvailable) {
+      formData.append("content", inputValue);
+    }
+
+    const response = await createMessage(formData);
 
     if (response.success) {
       console.log(response.data, "message send successfully...");
       setInputValue("");
+      setSelectedFile(null);
       setMessages((prev) => [...prev, response?.data]);
 
   if (activeConversation && activeConversation._id) {
@@ -175,6 +191,7 @@ useEffect(() => {
     <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
       {/* Sidebar */}
       <ChatSidebar
+        userType="Student"
         conversations={conversations}
         activeConversation={activeConversation}
         setActiveConversation={setActiveConversation}
@@ -185,10 +202,13 @@ useEffect(() => {
       {/* Main chat area */}
       <div className="flex-1 flex flex-col">
         {/* Header with sidebar toggle */}
+             {activeConversation && (
         <ChatHeader
+          userType="Student"
           activeConversation={activeConversation}
           handleViewGroupDetails={handleViewGroupDetails}
         />
+             )}
 
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -212,6 +232,8 @@ useEffect(() => {
           inputValue={inputValue}
           setInputValue={setInputValue}
           handleSendMessage={handleSendMessage}
+          selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
         />
         )}
       </div>

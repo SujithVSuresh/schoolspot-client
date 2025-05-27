@@ -13,3 +13,17 @@ export const successToast = (msg: string) => {
         },
       });
 }
+
+export const errorToast = (msg: string) => {
+        toast(msg, {
+          duration: 8000,
+          position: "bottom-right",
+          style: {
+            backgroundColor: "#FEE2E2",
+            border: "2px, solid, #DC2626",
+            minWidth: "400px",
+            color: "black",
+          },
+        })
+
+      }

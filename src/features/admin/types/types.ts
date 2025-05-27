@@ -310,6 +310,7 @@ export interface ExamTimetableType {
 }
 
 export interface ExamType {
+  _id?: string;
   name: string;
   classId: string;
   description: string;

@@ -28,6 +28,9 @@ const Chat = () => {
   const [activeConversation, setActiveConversation] =
     useState<Conversation | null>(null);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
   const [messageMenu, setMessageMenu] = useState("");
@@ -129,35 +132,77 @@ const Chat = () => {
     }
   };
 
-  const handleSendMessage = async () => {
-    const response = await createMessage({
-      conversationId: activeConversation?._id as string,
-      messageType: "text",
-      content: inputValue,
-    });
+  // const handleSendMessage = async () => {
+  //   const response = await createMessage({
+  //     conversationId: activeConversation?._id as string,
+  //     messageType: "text",
+  //     content: inputValue,
+  //   });
 
-    if (response.success) {
-      console.log(response.data, "message send successfully");
-      setMessages((prev) => [...prev, response?.data]);
-      setInputValue("");
-      chatSocket.emit("send-message", {
-        roomId: `conversation-${activeConversation?._id}`,
-        message: response.data,
-      });
+  //   if (response.success) {
+  //     console.log(response.data, "message send successfully");
+  //     setMessages((prev) => [...prev, response?.data]);
+  //     setInputValue("");
+  //     chatSocket.emit("send-message", {
+  //       roomId: `conversation-${activeConversation?._id}`,
+  //       message: response.data,
+  //     });
 
-      // activeConversation?.participants.forEach((userId: string) => {
-      //   notificationSocket.emit("send-notification", {
-      //     roomId: `notification-${userId}`,
-      //     message: {
-      //       _id: "",
-      //       notificationType: "message",
-      //       message: `You have a new message: ${response.data.content}`,
-      //       createdAt: new Date(),
-      //     },
-      //   });
-      // });
+  //     // activeConversation?.participants.forEach((userId: string) => {
+  //     //   notificationSocket.emit("send-notification", {
+  //     //     roomId: `notification-${userId}`,
+  //     //     message: {
+  //     //       _id: "",
+  //     //       notificationType: "message",
+  //     //       message: `You have a new message: ${response.data.content}`,
+  //     //       createdAt: new Date(),
+  //     //     },
+  //     //   });
+  //     // });
+  //   }
+  // };
+
+   const handleSendMessage = async () => {
+      const formData = new FormData()
+  
+      const fileAvailable = selectedFile && !inputValue;
+      const fileTextAvailable = selectedFile && inputValue
+      const textAvailable = !selectedFile && inputValue;
+  
+      formData.append("conversationId", activeConversation?._id as string);
+      formData.append("messageType", fileAvailable ? "file" : fileTextAvailable ? "file-text": "text");
+  
+  
+      if( fileTextAvailable) {
+        formData.append("content", inputValue);
+        formData.append("attachment", selectedFile);
+      }else if( fileAvailable) {
+        formData.append("attachment", selectedFile);
+      }else if(textAvailable) {
+        formData.append("content", inputValue);
+      }
+  
+      const response = await createMessage(formData);
+  
+      if (response.success) {
+        console.log(response.data, "message send successfully...");
+        setInputValue("");
+        setSelectedFile(null);
+        setMessages((prev) => [...prev, response?.data]);
+  
+    if (activeConversation && activeConversation._id) {
+  
+        setConversations([{
+      ...activeConversation,
+      lastMessage: response.data,
+    }, ...conversations.filter((item) => item._id !== activeConversation?._id)])
     }
-  };
+        chatSocket.emit("send-message", {
+          roomId: `conversation-${activeConversation?._id}`,
+          message: response.data,
+        });
+      }
+    };
 
   const handleViewGroupDetails = () => {
     setViewGroupDetails((prev) => !prev)
@@ -175,6 +220,7 @@ const Chat = () => {
         />
       ) : (
         <ChatSidebar
+        userType="Student"
           conversations={conversations}
           activeConversation={activeConversation}
           setActiveConversation={setActiveConversation}
@@ -187,7 +233,7 @@ const Chat = () => {
 
         <div className="flex-1 flex flex-col">
           {activeConversation && (
-      <ChatHeader activeConversation={activeConversation} handleViewGroupDetails={handleViewGroupDetails}/>
+      <ChatHeader userType="Student" activeConversation={activeConversation} handleViewGroupDetails={handleViewGroupDetails}/>
           )}
   
 
@@ -212,6 +258,8 @@ const Chat = () => {
           inputValue={inputValue}
           setInputValue={setInputValue}
           handleSendMessage={handleSendMessage}
+                selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
         />
         )}
 

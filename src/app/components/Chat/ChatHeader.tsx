@@ -2,9 +2,11 @@ import { Users, Info } from "lucide-react";
 import { Conversation } from "../../types/chatType";
 
 const ChatHeader = ({
+  userType,
   activeConversation,
   handleViewGroupDetails
 }: {
+  userType: "Teacher" | "Student"
   activeConversation: Conversation | null;
   handleViewGroupDetails: () => void
 }) => {
@@ -22,8 +24,9 @@ const ChatHeader = ({
           </span>
         </div>
       </div>
-
-      <Info className="w-5 h-5 hover: cursor-pointer" onClick={() => handleViewGroupDetails()}/>
+      {userType == "Teacher" && (
+              <Info className="w-5 h-5 hover: cursor-pointer" onClick={() => handleViewGroupDetails()}/>
+      )}
     </div>
   );
 };

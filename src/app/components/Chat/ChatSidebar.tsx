@@ -1,8 +1,10 @@
-import { MessageCircle, EllipsisVertical } from "lucide-react"
+import { MessageCircle, CirclePlus } from "lucide-react"
 import { dateFormatter } from "../../utils/formatter"
 import { Conversation } from "../../types/chatType"
 
-const ChatSidebar = ({conversations, activeConversation, setActiveConversation, setIsCreateGroup}: {
+
+const ChatSidebar = ({userType, conversations, activeConversation, setActiveConversation, setIsCreateGroup}: {
+  userType: "Teacher" | "Student"
     conversations: Conversation[],
     activeConversation: Conversation | null,
     setActiveConversation: (conv: Conversation) => void,
@@ -18,8 +20,10 @@ const ChatSidebar = ({conversations, activeConversation, setActiveConversation, 
             <MessageCircle className="text-gray-800 h-5 w-5" />
             <h2 className="text-xl text-gray-800 font-bold ml-1">Chat</h2>
             </div>
+            {userType == "Teacher" && (
+            <CirclePlus className="w-4 h-4 hover: cursor-pointer" onClick={() => setIsCreateGroup(true)}/>
 
-            <EllipsisVertical className="w-4 h-4 hover: cursor-pointer" onClick={() => setIsCreateGroup(true)}/>
+            )}
           </div>
         </div>
         <div className="overflow-y-auto h-[calc(100%-120px)]">

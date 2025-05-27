@@ -27,7 +27,7 @@ const ExamResults = () => {
 
   return (
     <div className="w-full min-h-screen">
-      <ExamResultOverviewCard />
+      {/* <ExamResultOverviewCard /> */}
 
       <ExamResultCard examResults={examResults} />
     </div>

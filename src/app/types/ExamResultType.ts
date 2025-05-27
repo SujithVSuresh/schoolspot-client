@@ -1,6 +1,6 @@
 
   export interface ExamType {
-    _id: string;
+    _id?: string;
     name: string;
     description?: string;
     startDate: Date;
@@ -9,8 +9,8 @@
 
 
 export interface ExamResultType {
-    _id: string;
-    examId: ExamType;
+    _id?: string;
+    examId: ExamType | string;
     classId: string;
     subject: string;
     studentId: string;

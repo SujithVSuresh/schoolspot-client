@@ -41,9 +41,9 @@ const ExamTimetable = ({timetable}: {timetable: {
                     </div>
 
                     <div className="mt-4 sm:mt-0 flex flex-col items-end justify-between">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {/* <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                         Upcoming
-                      </span>
+                      </span> */}
 
                       <div className="mt-2 flex flex-col items-end">
                         <div className="flex items-center mb-1">

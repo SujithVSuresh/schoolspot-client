@@ -40,7 +40,6 @@ const ClassSubjects = () => {
 
   const handleDeleteSubject = async (subjectId: string) => {
     const response = await deleteSubject(subjectId)
-    console.log(response, "kkooii")
 
     if(response.success){
       console.log(response.data.data)

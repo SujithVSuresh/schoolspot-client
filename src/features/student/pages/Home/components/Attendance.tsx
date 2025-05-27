@@ -1,39 +1,26 @@
-import { CheckCircle, XCircle } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { fetchAttendanceOverview } from "../../../api/api";
+
 
 const Attendance = () => {
 
-    const attendanceData = {
-  overallPercentage: 89,
-  subjects: [
-    {
-      name: "Mathematics",
-      time: "09:00 AM - 10:30 AM",
-      present: true,
-      absent: false
-    },
-    {
-      name: "Physics",
-      time: "11:00 AM - 12:30 PM",
-      present: true,
-      absent: false
-    },
-    {
-      name: "Computer Science",
-      time: "01:30 PM - 03:00 PM",
-      present: false,
-      absent: false
-    },
-    {
-      name: "English Literature",
-      time: "03:30 PM - 05:00 PM",
-      present: false,
-      absent: false
-    }
-  ]
-};
+  const [attendanceOverview, setAttendanceOverview] = useState<{
+    present: number;
+    absent: number;
+    presentPercentage: number;
+  } | null>(null)
 
-
-      const { overallPercentage, subjects } = attendanceData;
+      useEffect(() => {
+     const fetchAttendanceOverviewHandler = async () => {
+        const response = await fetchAttendanceOverview();  
+  
+        if (response.success) {
+          setAttendanceOverview(response.data);
+        }
+      }
+  
+      fetchAttendanceOverviewHandler();
+      }, []);
   
   // Determine color based on attendance percentage
   const getAttendanceColor = (percentage: number) => {
@@ -58,12 +45,12 @@ const Attendance = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-sm text-gray-500">Overall Attendance</p>
-            <p className={`text-2xl font-bold ${getAttendanceColor(overallPercentage)}`}>
-              {overallPercentage}%
+            <p className={`text-2xl font-bold ${getAttendanceColor(attendanceOverview?.presentPercentage ?? 0)}`}>
+              {attendanceOverview?.presentPercentage}%
             </p>
             <p className="text-xs font-medium mt-1">
-              <span className={`${getAttendanceColor(overallPercentage)}`}>
-                {getAttendanceStatus(overallPercentage)}
+              <span className={`${getAttendanceColor(attendanceOverview?.presentPercentage ?? 0)}`}>
+                {getAttendanceStatus(attendanceOverview?.presentPercentage ?? 0)}
               </span>
               <span className="text-gray-500"> status</span>
             </p>
@@ -80,9 +67,9 @@ const Attendance = () => {
               <path
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
-                stroke={overallPercentage >= 90 ? '#10B981' : overallPercentage >= 75 ? '#F59E0B' : '#EF4444'}
+                stroke={attendanceOverview?.presentPercentage ?? 0 >= 90 ? '#10B981' : attendanceOverview?.presentPercentage ?? 0 >= 75 ? '#F59E0B' : '#EF4444'}
                 strokeWidth="3"
-                strokeDasharray={`${overallPercentage}, 100`}
+                strokeDasharray={`${attendanceOverview?.presentPercentage}, 100`}
                 strokeLinecap="round"
               />
             </svg>

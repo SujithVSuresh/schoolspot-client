@@ -189,7 +189,7 @@ const AdminRoute = () => {
         <Route path="classes/:classId/exam/new" element={<CreateExam />} />
         <Route path="classes/:classId/exam/:examId" element={<ExamDetails />} />
         <Route
-          path="classes/:classId/exam/:examId/marks/new"
+          path="classes/:classId/exam/:examId/marks/:subject"
           element={<AddMarks />}
         />
 

@@ -56,7 +56,7 @@ const AddSubject = () => {
             color: "black",
           },
         });
-        navigate(`/dashboard/classes/profile/${classId}?section=subjects`);
+        navigate(`/dashboard/classes/profile/${classId}/subjects`);
       }
     };
 

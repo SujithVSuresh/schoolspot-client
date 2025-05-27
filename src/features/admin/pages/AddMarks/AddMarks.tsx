@@ -1,35 +1,98 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../app/store";
+import { fetchExamResultsBySubjects, upsertExamResult } from "../../api/api";
+import { ExamResultType } from "../../../../app/types/ExamResultType";
+import { successToast } from "../../../../app/utils/toastMessage";
+
+type ResultInput = {
+  studentId: string;
+  studentName: string;
+  marksObtained: string;
+  grade: string;
+};
 
 const AddMarks = () => {
-  // Predefined list of subjects
-  const subjects = ["Mathematics", "Science", "English", "History", "Geography"];
+  const { subject: subjectParams, classId, examId } = useParams();
+  const students = useSelector((state: RootState) => state.studentListAdmin);
 
-  // State for subject and total marks (single fields at the top)
+  console.log(students, "this is the student data...")
+
   const [subject, setSubject] = useState("");
   const [totalMarks, setTotalMarks] = useState("");
+  const [results, setResults] = useState<ResultInput[]>([]);
 
-  // Prefetched students data without subject and totalMarks
-  const [results, setResults] = useState([
-    { studentId: "1", studentName: "Alice", marksObtained: "", grade: "" },
-    { studentId: "2", studentName: "Bob", marksObtained: "", grade: "" },
-    { studentId: "3", studentName: "Charlie", marksObtained: "", grade: "" },
-  ]);
+  useEffect(() => {
+    setSubject(subjectParams ?? "");
+  }, [subjectParams]);
 
-  const handleChange = (index, field, value) => {
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!examId || !subject) return;
+
+      const response = await fetchExamResultsBySubjects(examId, subject);
+
+      if (response.success && Array.isArray(response.data)) {
+        const updatedResults = response.data.map((item) => ({
+          studentId: item.studentId.userId,
+          studentName: item.studentId.fullName,
+          marksObtained: item.marksObtained.toString(),
+          grade: item.grade,
+        }));
+        setTotalMarks(response.data[0].totalMarks?.toString() ?? "");
+        setResults(updatedResults);
+      }
+    };
+
+    fetchResults();
+  }, [examId, subject]);
+
+    useEffect(() => {
+    if (students.length > 0) {
+      const updatedResults = students.map((student) => ({
+        studentId: student.user._id,
+        studentName: student.fullName,
+        marksObtained: "",
+        grade: "",
+      }));
+      setResults(updatedResults);
+    }
+  }, [students]);
+
+  const handleChange = (
+    index: number,
+    field: keyof ResultInput,
+    value: string
+  ) => {
     const updated = [...results];
     updated[index][field] = value;
     setResults(updated);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add subject and totalMarks to each result
-    const submittedResults = results.map((result) => ({
-      ...result,
+
+    if (!subject || !totalMarks || !classId || !examId) {
+      return;
+    }
+
+    const submittedResults: ExamResultType[] = results.map((result) => ({
+      marksObtained: parseFloat(result.marksObtained),
+      grade: result.grade || "N/A",
       subject,
-      totalMarks,
+      totalMarks: parseFloat(totalMarks),
+      classId,
+      examId,
+      studentId: result.studentId,
     }));
-    console.log({ results: submittedResults });
+
+
+    const response = await upsertExamResult(submittedResults);
+
+    if (response.success) {
+      successToast("Exam result added successfully");
+    }
   };
 
   return (
@@ -40,22 +103,14 @@ const AddMarks = () => {
       >
         <h2 className="text-xl text-center font-semibold mb-6">Exam Results</h2>
 
-        {/* Subject and Total Marks fields at the top */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <select
+          <input
+            disabled
+            type="text"
+            placeholder="Subject"
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            className="border p-2 rounded w-full"
-          >
-            <option value="" disabled>
-              Select Subject
-            </option>
-            {subjects.map((subj) => (
-              <option key={subj} value={subj}>
-                {subj}
-              </option>
-            ))}
-          </select>
+            className="border p-2 rounded w-full bg-gray-100"
+          />
           <input
             type="number"
             placeholder="Total Marks"
@@ -65,38 +120,37 @@ const AddMarks = () => {
           />
         </div>
 
-        {/* Student list */}
-        <div className="mt-6">
-          {results.map((result, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
-            >
-              <input
-                type="text"
-                value={result.studentName}
-                readOnly
-                className="border p-2 rounded w-full bg-gray-100"
-              />
-              <input
-                type="number"
-                placeholder="Marks Obtained"
-                value={result.marksObtained}
-                onChange={(e) =>
-                  handleChange(index, "marksObtained", e.target.value)
-                }
-                className="border p-2 rounded w-full"
-              />
-              <input
-                type="text"
-                placeholder="Grade"
-                value={result.grade}
-                onChange={(e) => handleChange(index, "grade", e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
-          ))}
-        </div>
+        {results.map((result, index) => (
+          <div
+            key={result.studentId}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
+          >
+            <input
+              type="text"
+              value={result.studentName}
+              readOnly
+              className="border p-2 rounded w-full bg-gray-100"
+            />
+            <input
+              type="number"
+              placeholder="Marks Obtained"
+              value={result.marksObtained}
+              onChange={(e) =>
+                handleChange(index, "marksObtained", e.target.value)
+              }
+              className="border p-2 rounded w-full"
+            />
+            <input
+              type="text"
+              placeholder="Grade"
+              value={result.grade}
+              onChange={(e) =>
+                handleChange(index, "grade", e.target.value)
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+        ))}
 
         <button
           type="submit"
