@@ -10,6 +10,8 @@ const Attendance = () => {
     presentPercentage: number;
   } | null>(null)
 
+  console.log(attendanceOverview, "attendance......")
+
       useEffect(() => {
      const fetchAttendanceOverviewHandler = async () => {
         const response = await fetchAttendanceOverview();  

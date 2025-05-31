@@ -1,28 +1,51 @@
-
 import Card from "./components/Card"
+import { fetchAllPlans } from "../../api/api"
+import { useEffect, useState } from "react"
+import { PlanType } from "../../types/types"
+import { useNavigate } from "react-router-dom"
 
 
 const Plans = () => {
+  const navigate = useNavigate()
+
+  const [plans, setPlans] = useState<PlanType[]>([])
+
+
+  useEffect(() => {
+    const fetchPlansHandler = async () => {
+      const response = await fetchAllPlans()
+
+      if(response.success){
+        setPlans(response.data)
+      }
+    }
+
+    fetchPlansHandler()
+  }, [])
   return (
-    <>
-<div className="w-full px-6 py-4">
+    <div className="p-5">
+<div className="w-full">
   <div className="flex items-center justify-between">
-    <div className="flex-1 text-center">
-      <h1 className="text-2xl font-bold text-gray-800">SUBSCRIPTION PLANS</h1>
-    </div>
+
+      <h1 className="text-2xl font-bold text-gray-800">Plans</h1>
+
     <div className="flex-none">
-      <button className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow hover:bg-blue-700 transition duration-200">
+      <button onClick={() => navigate('/superadmin/plans/add')} className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow hover:bg-blue-700 transition duration-200">
         Add Plan
       </button>
     </div>
   </div>
 </div>
       
-      <div className="pt-5">
-
+      <div className="pt-5 grid grid-cols-3 gap-3">
+        {
+          plans.map((plan) => (
+            <Card plan={plan}/>
+          ))
+        }
       </div>
-      <Card />
-    </>
+   
+    </div>
   )
 }
 

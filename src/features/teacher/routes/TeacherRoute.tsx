@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import TeacherSignin from "../pages/TeacherSignin/TeacherSignin";
 import ProtectedRoute from "./ProtectedRoute";
-import TeacherHome from "../pages/Home/Home";
 import Classes from "../pages/Classes/Classes";
 import TeacherLayout from "../pages/TeacherLayout/TeacherLayout";
 import ClassDetails from "../pages/ClassDetails/ClassDetails";
@@ -16,7 +15,6 @@ import AddStudyMaterial from "../pages/AddStudyMaterial/AddStudyMaterial";
 import TeacherProfile from "../pages/TeacherProfile/TeacherProfile";
 import AddAttendance from "../pages/AddAttendance/AddAttendance";
 import Announcement from "../pages/Announcements/Announcements";
-import ExamResult from "../pages/ExamResult/ExamResult";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import UpdateStudyMaterial from "../pages/UpdateStudyMaterial/UpdateStudyMaterial";
 import UpdateAssignment from "../pages/UpdateAssignment/UpdateAssignment";
@@ -26,6 +24,9 @@ import Chat from "../pages/Chat/Chat";
 import Notification from "../pages/Notification/Notification";
 import Exam from "../pages/Exam/Exam";
 import ExamDetails from "../pages/ExamDetails/ExamDetails";
+import Chapter from "../pages/Chapter/Chapter";
+import CreateChapter from "../pages/CreateChapter/CreateChapter";
+import UpdateChapter from "../pages/UpdateChapter/UpdateChapter";
 
 const TeacherRoute = () => {
   return (
@@ -52,6 +53,10 @@ const TeacherRoute = () => {
         <Route path="study-materials/add"element={<ProtectedRoute isLogin={true}><AddStudyMaterial /></ProtectedRoute>}/>
         <Route path="study-materials/:id"element={<ProtectedRoute isLogin={true}><StudyMaterialDetails /></ProtectedRoute>}/>
         <Route path="study-materials/:id/update"element={<ProtectedRoute isLogin={true}><UpdateStudyMaterial /></ProtectedRoute>}/>
+
+        <Route path="chapters"element={<ProtectedRoute isLogin={true}><Chapter /></ProtectedRoute>}/>
+        <Route path="chapters/add"element={<ProtectedRoute isLogin={true}><CreateChapter /></ProtectedRoute>}/>
+        <Route path="chapters/:chapterId/update"element={<ProtectedRoute isLogin={true}><UpdateChapter /></ProtectedRoute>}/>
 
         <Route path="announcements"element={<ProtectedRoute isLogin={true}><Announcement /></ProtectedRoute>}/>
         <Route path="announcements/add"element={<ProtectedRoute isLogin={true}><AddAnnouncement /></ProtectedRoute>}/>

@@ -1,9 +1,31 @@
-
+import { createPlan } from "../../api/api"
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const AddPlan = () => {
+  const navigate = useNavigate()
+  const [name, setName] = useState<string>("")
+  const [duration, setDuration] = useState<number | null>(null)
+  const [price, setPrice] = useState<number | null>(null)
+
+
+  const createPlanHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if(!name || !duration || !price) return
+    const response = await createPlan({
+      name,
+      durationInDays: duration,
+      price
+    })
+
+    if(response.success){
+      navigate('/superadmin/plans')
+    }
+  }
   return (
     <div className='min-h-screen flex items-center justify-center'>
-      <form onSubmit={() => {}} className="bg-white w-4/12 p-7 rounded border">
+      <form onSubmit={(e) => createPlanHandler(e)} className="bg-white w-4/12 p-7 rounded border">
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">ADD PLAN</h2>
 
       <div className="mb-4">
@@ -12,8 +34,8 @@ const AddPlan = () => {
           type="text"
           id="name"
           name="name"
-        //   value={formData.name}
-        //   onChange={handleChange}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="w-full border border-gray-300 p-2 rounded-md focus:outline-none"
           placeholder="e.g. 6 Month"
           required
@@ -26,8 +48,8 @@ const AddPlan = () => {
           type="number"
           id="durationInDays"
           name="durationInDays"
-        //   value={formData.durationInDays}
-        //   onChange={handleChange}
+          value={duration ?? ""}
+          onChange={(e) => setDuration(Number(e.target.value))}
           className="w-full border border-gray-300 p-2 rounded-md focus:outline-none"
           placeholder="e.g. 180"
           required
@@ -40,8 +62,8 @@ const AddPlan = () => {
           type="number"
           id="price"
           name="price"
-        //   value={formData.price}
-        //   onChange={handleChange}
+          value={price ?? ""}
+          onChange={(e) => setPrice(Number(e.target.value))}
           className="w-full border border-gray-300 p-2 rounded-md focus:outline-none"
           placeholder="e.g. 9999"
           required

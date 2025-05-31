@@ -20,7 +20,9 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const userRole = config.headers['x-user-role']
 
-    const {admin, student, teacher} = store.getState();
+    console.log(userRole, "gagaga123123123")
+
+    const {admin, student, teacher, superAdmin} = store.getState();
 
     let token 
 
@@ -31,7 +33,7 @@ axiosInstance.interceptors.request.use(
     }else if(userRole == "teacher"){
       token = teacher?.accessToken
     }else if(userRole == "superadmin"){
-      token = admin?.accessToken
+      token = superAdmin?.accessToken
     }
 
     if (token) {

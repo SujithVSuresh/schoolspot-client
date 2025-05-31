@@ -78,12 +78,10 @@ const StudentProfile = () => {
           <ProfileCard icon={Calendar} label="Date of birth" value={dateFormatter(profileData.dob)} />
           <ProfileCard icon={User} label="Account Status" value={textFormatter(profileData.user.status)} />
           <ProfileCard icon={MapPin} label="Address" value={profileData.address} />
-
-         
           </div>
 
           <h2 className="text-xl font-medium text-gray-800 my-5">Settings</h2>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <div className="bg-white p-5 rounded-lg border border-gray-200">
               <div className="flex items-center mb-4">
                 <div className="p-2 bg-blue-100 rounded-full mr-3">

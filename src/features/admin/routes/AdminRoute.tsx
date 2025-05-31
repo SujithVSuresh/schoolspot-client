@@ -24,7 +24,6 @@ import ClassProfile from "../pages/ClassProfile/ClassProfile";
 import AddAttendance from "../pages/AddAttendance/AddAttendance";
 import AddAnnouncement from "../pages/AddAnnouncement/AddAnnouncement";
 import AddSubject from "../pages/AddSubject/AddSubject";
-import Invoice from "../pages/Invoice/Invoice";
 import UpdateStudentProfile from "../pages/UpdateStudentProfile/UpdateStudentProfile";
 import SignupProfile from "../pages/SignupProfile/SignupProfile";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
@@ -185,7 +184,6 @@ const AdminRoute = () => {
           path="classes/:classId/invoice/new"
           element={<CreateInvoice />}
         />
-        <Route path="classes/invoice/:classId" element={<Invoice />} />
         <Route path="classes/:classId/exam/new" element={<CreateExam />} />
         <Route path="classes/:classId/exam/:examId" element={<ExamDetails />} />
         <Route

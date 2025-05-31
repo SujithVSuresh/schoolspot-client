@@ -73,7 +73,7 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
 
     <div className="flex mt-6 gap-5">
       <div className="flex items-center text-gray-600">
-        <Calendar className="w-5 h-5 mr-2 text-purple-500" />
+        <Calendar className="w-4 h-4 mr-2 text-purple-500" />
         <span className="text-sm">
           Due: {dateFormatter(assignmentData.dueDate)} -{" "}
           {timeFormatter(assignmentData.dueDate)}
@@ -81,7 +81,7 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
       </div>
 
       <div className="flex items-center text-gray-600">
-        <Calendar className="w-5 h-5 mr-2 text-green-500" />
+        <Calendar className="w-4 h-4 mr-2 text-green-500" />
         <span className="text-sm">
           Created: {dateFormatter(String(new Date()))}
         </span>

@@ -826,6 +826,22 @@ export const upsertTimetable = async (timetableData: {timetable: TimetableType[]
 }
 
 
+export const deleteTimetable = async (id: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/timetable/${id}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
 export const fetchTimetableByClass = async (classId: string) => {
     try{
         const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/timetable/${classId}`, {

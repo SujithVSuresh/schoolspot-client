@@ -220,7 +220,7 @@ const Chat = () => {
         />
       ) : (
         <ChatSidebar
-        userType="Student"
+        userType="Teacher"
           conversations={conversations}
           activeConversation={activeConversation}
           setActiveConversation={setActiveConversation}

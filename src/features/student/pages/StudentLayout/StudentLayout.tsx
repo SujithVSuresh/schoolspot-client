@@ -152,7 +152,7 @@ const StudentLayout = () => {
           </div>
 
           <div className="max-w-7xl absolute w-full top-24 right-0 left-0 mx-auto">
-            <div className="sm:flex sm:items-end sm:space-x-5 mb-8">
+            <div className="sm:flex sm:items-end sm:space-x-5 mb-10">
               <div className="relative">
                 <img
                   className="h-32 w-32 rounded-full object-cover ring-4 ring-white bg-white"
@@ -160,10 +160,10 @@ const StudentLayout = () => {
                   alt="Profile"
                 />
               </div>
-              <div className="mt-6 sm:mt-0 sm:flex-1 min-w-0">
+              <div className="sm:mt-0 sm:flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-semibold text-gray-900 truncate">
+                    <h1 className="text-2xl mb-3 font-semibold text-gray-900 truncate">
                       {studentProfile?.fullName}
                     </h1>
                     <div className="flex items-center mt-1 text-gray-500 text-sm">

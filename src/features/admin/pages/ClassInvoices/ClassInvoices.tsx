@@ -145,24 +145,22 @@ const ClassInvoices = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
-                        "Paid"
-                      )}`}
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(invoice.status)}`}
                     >
                       {getStatusIcon(invoice.status)}
                       <span className="ml-1 capitalize">{invoice.status}</span>
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {invoice.status == "Unpaid" && (
                       <button
-                        onClick={() => deleteInvoiceHandler(invoice._id)}
+                        onClick={() => {}}
                         className="bg-gray-500 text-white text-sm px-3 py-1 rounded hover:bg-gray-600"
                       >
                         Edit
                       </button>
                     )}
-                  </td>
+                  </td> */}
 
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {invoice.status == "Unpaid" && (

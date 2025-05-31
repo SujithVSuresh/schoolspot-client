@@ -42,7 +42,7 @@ const Login = () => {
       );
       setTimeout(() => {
         setLoading(false);
-        navigate("/superadmin/dashboard");
+        navigate("/superadmin/plans");
       }, 1000);
     } else {
       setTimeout(() => {

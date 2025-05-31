@@ -203,8 +203,8 @@ const TimetableList = ({ timetable }: { timetable: DaySchedule[] }) => {
             </div>
           ))
         ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-500">No classes scheduled for this day</p>
+          <div className="text-center w-full py-8">
+            {/* <p className="text-gray-500">No classes scheduled for this day</p> */}
           </div>
         )}
       </div>

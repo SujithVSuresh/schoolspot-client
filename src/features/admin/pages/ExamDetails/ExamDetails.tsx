@@ -34,7 +34,7 @@ const ExamDetails = () => {
             {dateFormatter(String(exam?.endDate))}
           </span>
         </div>
-      <div className="flex gap-6 text-sm font-medium">
+      {/* <div className="flex gap-6 text-sm font-medium">
       <Link
         to="/edit"
         className="text-blue-600 underline hover:text-blue-800 transition duration-200"
@@ -53,7 +53,7 @@ const ExamDetails = () => {
       >
         Marks
       </Link>
-    </div>
+    </div> */}
       </div>
 
       <div className="w-full flex justify-center">
@@ -81,14 +81,20 @@ const ExamDetails = () => {
                     {String(item.startTime)} - {String(item.endTime)}
                   </span>
                 </div>
-                {new Date() > new Date(item.date) && (
+                {/* {new Date() > new Date(item.date) && (
                       <Link
         to={`/dashboard/classes/${classId}/exam/${exam?._id}/marks/${item?.subject}`}
         className="text-blue-600 underline hover:text-blue-800 text-sm transition duration-200"
       >
         Marks
       </Link>
-      )}
+      )} */}
+                           <Link
+        to={`/dashboard/classes/${classId}/exam/${exam?._id}/marks/${item?.subject}`}
+        className="text-blue-600 underline hover:text-blue-800 text-sm transition duration-200"
+      >
+        Marks
+      </Link>
               </div>
             </div>
           </div>

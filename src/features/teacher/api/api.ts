@@ -1,4 +1,4 @@
-import { AddAssignmentType, TeacherSigninFormType } from "../types/types";
+import { AddAssignmentType, CreateChapterType, TeacherSigninFormType, UpdateChapterType } from "../types/types";
 import axiosInstance from "../../../app/api/axiosInstance";
 import axios from "axios";
 import { AttendanceType } from "../types/types";
@@ -598,6 +598,84 @@ export const fetchExamById = async (examId: string) => {
 export const deleteMessage = async (messageId: string) => {
     try{
         const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/chat/message/${messageId}/delete`, {}, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const createChapter = async (chapterData: CreateChapterType) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/chapter`, chapterData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const updateChapter = async (chapterId: string, chapterData: UpdateChapterType) => {
+    try{
+        const {data} = await axiosInstance.put(`${envData.VITE_ENDPOINT_ORIGIN}/chapter/${chapterId}`, chapterData, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const fetchChaptersBySubject = async (subjectId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/chapter/subject/${subjectId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const deleteChapter = async (chapterId: string) => {
+    try{
+        const {data} = await axiosInstance.delete(`${envData.VITE_ENDPOINT_ORIGIN}/chapter/${chapterId}`, {
+            headers: {
+                'x-user-role': 'teacher'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+export const findChapter = async (chapterId: string) => {
+    console.log(chapterId, "hggggg")
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/chapter/${chapterId}`, {
             headers: {
                 'x-user-role': 'teacher'
             }

@@ -581,3 +581,19 @@ export const fetchAttendanceOverview = async () => {
         return { success: false, error: message }
     }
 }
+
+
+export const fetchChaptersBySubject = async (subjectId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/chapter/subject/${subjectId}`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}

@@ -143,3 +143,28 @@ export interface AnnouncementType {
 }
 
 
+export interface CreateChapterType {
+  title: string;
+  number: number;
+  description?: string;
+  subject: string;     
+  classGrade: string;   
+}
+
+export interface ChapterType {
+  _id: string
+  title: string;
+  number: number;
+  description?: string;
+  subject: string;     
+  classGrade: string;   
+  school:string;      
+}
+
+
+
+export interface UpdateChapterType {
+  title: string;
+  number: number;
+  description?: string;
+}

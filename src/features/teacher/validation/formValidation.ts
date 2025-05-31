@@ -59,6 +59,20 @@ export const studyMaterialValidationSchema = z.object({
 
 
 
+export const chapterValidationSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
+  chapterNumber: z.coerce
+    .number({
+      invalid_type_error: "Enter a valid chapter number",
+    })
+    .int({ message: "Chapter number must be an integer" })
+    .min(1, { message: "Chapter number must be at least 1" })
+    .max(100, { message: "Cannot exceed 100 chapters" }),
+});
+
+
+
 export const announcementSchema = z.object({
   title: z.string().trim().min(1, { message: "Title is required" }),
   content: z.string().trim().min(1, { message: "Content is required" }),

@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login/Login";
 import ProtectedRoute from "./ProtectedRoute";
-import Dashboard from "../pages/Dashboard/Dashboard";
 import Plans from "../pages/Plans/Plans";
 import SuperAdminLayout from "../pages/SuperAdminLayout/SuperAdminLayout";
 import AddPlan from "../pages/AddPlan/AddPlan";
 import EditPlan from "../pages/EditPlan/EditPlan";
+import Schools from "../pages/Schools/Schools";
+import SchoolProfile from "../pages/SchoolProfile/SchoolProfile";
 
 const SuperAdminRoute = () => {
   return (
@@ -16,15 +17,6 @@ const SuperAdminRoute = () => {
           element={
             <ProtectedRoute isLogin={false}>
               <Login />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="dashboard"
-          element={
-            <ProtectedRoute isLogin={true}>
-              <Dashboard />
             </ProtectedRoute>
           }
         />
@@ -48,10 +40,28 @@ const SuperAdminRoute = () => {
         />
 
         <Route
-          path="plans/edit/:id"
+          path="plans/edit/:planId"
           element={
             <ProtectedRoute isLogin={true}>
               <EditPlan />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="schools"
+          element={
+            <ProtectedRoute isLogin={true}>
+              <Schools />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="schools/:schoolId"
+          element={
+            <ProtectedRoute isLogin={true}>
+              <SchoolProfile />
             </ProtectedRoute>
           }
         />
