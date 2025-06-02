@@ -1,12 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { studentValidationSchema } from "../../validation/formValidation";
-import { StudentUserProfileType } from "../../types/types";
 import { createStudent } from "../../api/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { StudentValidationSchemaType } from "../../types/StudentType";
 
 const AddStudent = () => {
-  const {classId} = useParams()
   const navigate = useNavigate()
 
   const {
@@ -17,20 +16,21 @@ const AddStudent = () => {
     resolver: zodResolver(studentValidationSchema),
   });
 
-  const onSubmit = async (data: StudentUserProfileType) => {
+  const onSubmit = async (data: StudentValidationSchemaType) => {
     const formData = new FormData();
-    formData.append("profilePhoto", data.profilePhoto[0]);
-    formData.append("fullName", data.fullName);
+
     formData.append("email", data.email);
     formData.append("password", data.password);
+    formData.append("profilePhoto", data.profilePhoto[0]);
+    formData.append("fullName", data.fullName);
     formData.append("gender", data.gender);
     formData.append("dob", data.dob);
-    formData.append("roll", data.roll.toString());
     formData.append("address", data.address);
     formData.append("fatherName", data.fatherName);
     formData.append("motherName", data.motherName);
-    formData.append("contactNumber", data.contactNumber);
-    formData.append("classId", classId as string);
+    formData.append("admissionNo", data.admissionNo);
+    formData.append("parentContactNumber", data.parentContactNumber);
+    formData.append("parentEmailAddress", data.parentEmailAddress);
 
     for (const [key, value] of formData.entries()) {
       console.log(key, value);
@@ -39,10 +39,10 @@ const AddStudent = () => {
     const response = await createStudent(formData)
 
 
-    console.log(response, "this is the response")
+    console.log(response, "this is the response student")
 
     if(response.success){
-      navigate(`/dashboard/classes/profile/${response?.data?.classId}/students`)
+      navigate(`/dashboard/students`)
     }
  
   };
@@ -102,9 +102,9 @@ const AddStudent = () => {
               {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700">Roll number</label>
-                <input {...register("roll")} className="w-full p-2 border border-gray-400 rounded outline-none" />
-                {errors.roll && <p className="text-red-500 text-xs mt-1">{errors.roll.message}</p>}
+                <label className="block text-sm font-medium text-gray-700">Admission no</label>
+                <input {...register("admissionNo")} className="w-full p-2 border border-gray-400 rounded outline-none" />
+                {errors.admissionNo && <p className="text-red-500 text-xs mt-1">{errors.admissionNo.message}</p>}
               </div>
             </div>
 
@@ -148,10 +148,30 @@ const AddStudent = () => {
               </div>
             </div>
             
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Contact Number</label>
-              <input {...register("contactNumber")} className="w-full p-2 border border-gray-400 rounded outline-none" />
-              {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm mb-1 font-medium text-gray-700">
+                  Parent Email
+                </label>
+                <input
+                  {...register("parentEmailAddress")}
+                  type="text"
+                  className="w-full p-2 border border-gray-400 rounded outline-none"
+                />
+                {errors.parentEmailAddress && <p className="text-red-500 text-xs mt-1">{errors.parentEmailAddress.message}</p>}
+              </div>
+              
+              <div>
+                <label className="block text-sm mb-1 font-medium text-gray-700">
+                  Parent Contact
+                </label>
+                <input
+                  {...register("parentContactNumber")}
+                  type="text"
+                  className="w-full p-2 border border-gray-400 rounded outline-none"
+                />
+                {errors.parentContactNumber && <p className="text-red-500 text-xs mt-1">{errors.parentContactNumber.message}</p>}
+              </div>
             </div>
             
             <div>

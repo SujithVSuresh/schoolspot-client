@@ -29,16 +29,16 @@ const TableItem = ({student}: {student: StudentDataResponseType}) => {
                     {student.fullName}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {student.class}
+                    {student.admissionNo}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {student.section}
+                    {student.userId.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {student.roll}
+                    {student.parentContactNumber}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {accountStatus(student.user.status)}
+                    {accountStatus(student.userId.status)}
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

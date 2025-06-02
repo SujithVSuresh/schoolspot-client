@@ -1,15 +1,17 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAllStudents } from "../../api/api";
 import { useSearchParams } from "react-router-dom";
-import { StudentDataResponseType } from "../../types/types";
 import Heading from "../../components/Heading";
 import { SlidersHorizontal } from "lucide-react";
 import MenuModal from "./components/MenuModal";
 import TableItem from "./components/TableItem";
+import { useNavigate } from "react-router-dom";
+import { StudentListType } from "../../types/StudentType";
 
 function Student() {
-  const [students, setStudents] = useState<StudentDataResponseType[]>([]);
+  const navigate = useNavigate();
+  const [students, setStudents] = useState<StudentListType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,6 +22,8 @@ function Student() {
   const sort = searchParams.get("sort") || "";
   const classfilter = searchParams.get("classFilter") || "";
   const statusFilter = searchParams.get("statusFilter") || "";
+
+  console.log(students, "hhhhhhh")
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -64,12 +68,18 @@ function Student() {
     setOpenSideMenu(false);
   };
 
-
   return (
     <>
       {openSideMenu && <MenuModal closeSideMenu={closeSideMenu} />}
 
       <Heading headingValue="Students">
+        <button
+          onClick={() => navigate(`/dashboard/students/new`)}
+          className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
+        >
+          <UserPlus className="h-5 w-5" />
+          Add
+        </button>
         <div className="bg-gray-200 p-3 rounded-full">
           <SlidersHorizontal
             className="hover: cursor-pointer h-5 w-5"
@@ -88,13 +98,13 @@ function Student() {
                   NAME
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  CLASS
+                  ADMISSION NO
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  SECTION
+                  EMAIL
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  ROLL NO
+                  CONTACT
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   STATUS
@@ -104,7 +114,7 @@ function Student() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {students.map((student) => (
-               <TableItem student={student}/>
+                <TableItem student={student} />
               ))}
             </tbody>
           </table>

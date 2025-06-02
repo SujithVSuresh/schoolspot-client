@@ -203,14 +203,17 @@ export const studentValidationSchema = z
       .string()
       .min(1, { message: "Mother's name is required" })
       .regex(nameRegex, { message: "Enter a valid name" }),
-    contactNumber: z  
+    parentContactNumber: z  
       .string()
       .min(1, { message: "Phone number is required" })
       .regex(phoneNumberRegex, { message: "Enter a valid email phone number" }),
-    roll: z.coerce  
-      .number({ invalid_type_error: "Enter a valid roll number" })
-      .min(1, { message: "This field is required" })
-      .max(100, { message: "Enter a valid experience" }),
+    parentEmailAddress: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .regex(emailRegex, { message: "Enter a valid email address" }),
+    admissionNo: z
+      .string()
+      .min(1, { message: "Admission no is required" }),
     address: z
       .string()
       .min(1, { message: "Address is required" })
