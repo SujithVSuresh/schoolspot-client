@@ -12,7 +12,7 @@ const ChatSidebar = ({userType, conversations, activeConversation, setActiveConv
 }) => {
   return (
          <div
-        className="w-96 bg-white border-r transition-all duration-300 overflow-hidden"
+        className="w-96 border-r bg-white rounded-l-lg transition-all duration-300 overflow-hidden"
       >
         <div className="h-16 border-b flex items-center px-5">
           <div className="flex items-center w-full justify-between">

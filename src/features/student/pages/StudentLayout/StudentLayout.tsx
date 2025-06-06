@@ -1,9 +1,8 @@
-import logo from "../../../../assets/images/dotlogo.png";
 import cover from "../../../../assets/images/coverimg.jpg";
 import { School, Bell } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchConversations, fetchStudentProfile } from "../../api/api";
+import { fetchConversations, fetchProfileforStudent } from "../../api/api";
 import NavLink from "./components/NavLink";
 import {
   announcementSocket,
@@ -11,7 +10,7 @@ import {
   notificationSocket,
 } from "../../../../app/socket/socket";
 import { useNavigate } from "react-router-dom";
-import { Conversation } from "../../types/types";
+import { Conversation } from "../../../../app/types/ChatType";
 
 const StudentLayout = () => {
   const navigate = useNavigate();
@@ -19,48 +18,45 @@ const StudentLayout = () => {
   const [studentProfile, setStudentProfile] = useState<{
     _id: string;
     fullName: string;
-    class: string;
-    section: string;
-    roll: number;
     profilePhoto: string;
-    classId: string;
-    user: {
+    schoolId: {
+      _id: string;
+      schoolName: string;
+    };
+    userId: {
       _id: string;
       email: string;
+      status: "active" | "inactive" | string;
     };
-    school: string;
+    academicProfile: {
+      _id: string;
+      name: string;
+      section: string;
+      roll: number;
+    } | null;
   } | null>(null);
 
   const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
 
   useEffect(() => {
     const fetchStudentProfileHandler = async () => {
-      const response = await fetchStudentProfile("null");
-      setStudentProfile({
-        _id: response.data._id,
-        fullName: response.data.fullName,
-        class: response.data.class,
-        section: response.data.section,
-        roll: response.data.roll,
-        profilePhoto: response.data.profilePhoto,
-        classId: response.data.classId,
-        school: response.data.school,
-        user: {
-          _id: response.data.user._id,
-          email: response.data.user.email,
-        },
-      });
+      const response = await fetchProfileforStudent();
+      console.log(response, "resssss123");
+      setStudentProfile(response.data);
     };
     fetchStudentProfileHandler();
   }, []);
 
   useEffect(() => {
-    if (studentProfile?.classId) {
+    if (studentProfile?.academicProfile?._id) {
       announcementSocket.connect();
 
       announcementSocket.on("connect", () => {
         console.log("Connected:", announcementSocket.id);
-        announcementSocket.emit("join-room", `room-${studentProfile?.classId}`);
+        announcementSocket.emit(
+          "join-room",
+          `room-${studentProfile?.academicProfile?._id}`
+        );
       });
 
       announcementSocket.on("receive-announcement", (message) => {
@@ -72,13 +68,13 @@ const StudentLayout = () => {
       return () => {
         announcementSocket.emit(
           "leave-room",
-          `room-${studentProfile?.classId}`
+          `room-${studentProfile?.academicProfile?._id}`
         );
         announcementSocket.off("receive-announcement");
         announcementSocket.disconnect();
       };
     }
-  }, [studentProfile?.classId]);
+  }, [studentProfile?.academicProfile?._id]);
 
   useEffect(() => {
     const fetchConversationHandler = async () => {
@@ -111,26 +107,26 @@ const StudentLayout = () => {
 
   // student joining their own notification room
   useEffect(() => {
-    if (studentProfile?.user._id) {
+    if (studentProfile?.userId._id) {
       notificationSocket.connect();
 
       notificationSocket.on("connect", () => {
         console.log("Connected:", notificationSocket.id);
         notificationSocket.emit(
           "join-room",
-          `notification-${studentProfile?.user._id}`
+          `notification-${studentProfile?.userId._id}`
         );
       });
 
       return () => {
         notificationSocket.emit(
           "leave-room",
-          `notification-${studentProfile?.user._id}`
+          `notification-${studentProfile?.userId._id}`
         );
         notificationSocket.disconnect();
       };
     }
-  }, [studentProfile?.user._id]);
+  }, [studentProfile?.userId._id]);
 
   const setAnnouncementBadgeHandler = (value: number) => {
     setNewAnnouncementBadgeCount(value);
@@ -166,15 +162,16 @@ const StudentLayout = () => {
                     <h1 className="text-2xl mb-3 font-semibold text-gray-900 truncate">
                       {studentProfile?.fullName}
                     </h1>
-                    <div className="flex items-center mt-1 text-gray-500 text-sm">
+                    <div className="flex items-center mt-1 text-gray-700 text-sm">
                       <span>
-                        Class: {studentProfile?.class} {studentProfile?.section}{" "}
-                        - Roll no: {studentProfile?.roll}
+                        Class: {studentProfile?.academicProfile?.name}{" "}
+                        {studentProfile?.academicProfile?.section} - Roll no:{" "}
+                        {studentProfile?.academicProfile?.roll}
                       </span>
                       <span className="mx-2">•</span>
                       <div className="flex items-center">
                         <School className="w-4 h-4 mr-1" />
-                        <span>St Mary's Bethany School</span>
+                        <span>{studentProfile?.schoolId.schoolName}</span>
                       </div>
                     </div>
                   </div>
@@ -183,7 +180,7 @@ const StudentLayout = () => {
                   </button> */}
                   <button
                     onClick={() => navigate("/student/notification")}
-                    className="relative text-gray-500 bg-blue-50 p-3 rounded-full hover:text-gray-900 transition-colors"
+                    className="relative text-gray-700 bg-gray-100 hover:bg-gray-200 p-3 rounded-full hover:text-gray-900 transition-colors"
                   >
                     <Bell className="w-5 h-5" />
                     {/* Notification badge */}
@@ -202,7 +199,9 @@ const StudentLayout = () => {
             />
 
             <div className="py-5 w-full flex justify-between">
-              <Outlet context={{ classId: studentProfile?.classId }} />
+              <Outlet
+                context={{ classId: studentProfile?.academicProfile?._id }}
+              />
             </div>
           </div>
         </div>

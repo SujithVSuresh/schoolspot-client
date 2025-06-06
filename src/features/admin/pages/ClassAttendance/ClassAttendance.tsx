@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { changeAttendanceStatus, getAttendanceByClass } from "../../api/api";
 import "react-calendar/dist/Calendar.css";
-import { AttendaceResponseType } from "../../types/types";
+import { AttendanceResponseType } from "../../../../app/types/AttendanceType";
 
 const ClassAttendance = () => {
      const { classId }: { classId: string } = useOutletContext();
@@ -14,7 +14,7 @@ const ClassAttendance = () => {
   type Value = Date | null;
 
   const [value, onChange] = useState<Value>(new Date());
-  const [attendanceData, setAttendanceData] = useState<AttendaceResponseType[]>(
+  const [attendanceData, setAttendanceData] = useState<AttendanceResponseType[]>(
     []
   );
   const [menu, setMenu] = useState<number | null>(null);
@@ -91,10 +91,10 @@ const ClassAttendance = () => {
                             attendanceData.map((attendance) => (
                               <tr key={attendance._id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                  {attendance.student.roll}
+                                  {attendance.academicProfile.roll}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                  {attendance.student.name}
+                                  {attendance.studentProfile.fullName}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   <span

@@ -13,6 +13,8 @@ const Notifications = () => {
     const notificationHandler = async () => {
       const response = await fetchNotifications();
 
+      console.log(response, "this is the notifications.......123123123")
+
       if (response.success) {
         setNotifications(response.data);
       }
@@ -33,8 +35,9 @@ const Notifications = () => {
 
   const clearNotificationHandler = async (notificationId: string) => {
     const response = await clearNotification(notificationId)
+    console.log(response, "triiiiiiiii")
     if(response.success){
-      const filteredNotification = notifications.filter((item) => item._id !== response.data._id)
+      const filteredNotification = notifications.filter((item) => item.userNotificationId !== response.data._id)
       setNotifications(filteredNotification)
     }
 
@@ -78,7 +81,7 @@ const Notifications = () => {
                 {notification.message}
               </p>
               <div
-                onClick={() => clearNotificationHandler(notification._id)} 
+                onClick={() => clearNotificationHandler(notification.userNotificationId)} 
                 className="absolute top-0 right-0 w-1/12 h-full text-gray-800 hidden group-hover:flex items-center justify-center transition"
               >
                 <div className="p-2 rounded-full cursor-pointer bg-gray-100">

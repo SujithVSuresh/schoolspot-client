@@ -1,39 +1,39 @@
 import { useEffect, useState } from "react";
-import { StudentDataResponseType, AttendanceType } from "../../types/types";
-import { getStudentsByClassId } from "../../api/api";
+import { AttendanceType } from "../../types/types";
 import { useParams, useNavigate } from "react-router-dom";
 import { Users, Calendar, Search, XCircle, CheckCircle } from "lucide-react";
 import { addAttendance } from "../../api/api";
 import toast from "react-hot-toast";
 import { dateFormatter } from "../../../../app/utils/formatter";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../app/store";
+import { StudentAcademicProfileListType } from "../../../../app/types/StudentType";
 
 const AddAttendance = () => {
   const navigate = useNavigate();
   const [attendanceData, setAttendanceData] = useState<AttendanceType[]>([]);
 
+  const students = useSelector((state: RootState) => state.studentListAdmin);
+
   const { classId } = useParams();
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      const response = await getStudentsByClassId(classId as string);
-
-      const setupAttendace = (students: StudentDataResponseType[]) => {
+      const setupAttendace = (students: StudentAcademicProfileListType[]) => {
         const data: AttendanceType[] = students.map((student) => {
           return {
-            student: student.user._id,
+            student: student.userId,
             class: student.classId,
             status: "Absent",
             roll: student.roll,
-            name: student.fullName,
+            name: student.studentId.fullName
           };
         });
         setAttendanceData(data);
       };
-      setupAttendace(response.data);
-    };
+  
 
-    fetchStudents();
-  }, [classId]);
+    setupAttendace(students);
+  }, []);
 
   const handleAttendanceStatus = (
     roll: number,

@@ -20,7 +20,7 @@ import { setAttendanceCount } from "../../redux/attendanceSlice";
 import { RootState } from "../../../../app/store";
 import { chatSocket } from "../../../../app/socket/socket";
 import { fetchConversationsBySubjects } from "../../api/api";
-import { Conversation } from "../../types/types";
+import { Conversation } from "../../../../app/types/ChatType";
 import { setStudentList } from "../../redux/studentListSlice";
 import { getStudentsByClassId } from "../../api/api";
 import { notificationSocket } from "../../../../app/socket/socket";
@@ -129,7 +129,7 @@ const ClassDetails = () => {
     notificationSocket.on("connect", () => {
       console.log("Connected:", notificationSocket.id);
       students?.forEach((item: StudentUserProfileType) => {
-        notificationSocket.emit("join-room", `notification-${item?.user?._id}`);
+        notificationSocket.emit("join-room", `notification-${item?.userId}`);
       });
     });
 
@@ -137,7 +137,7 @@ const ClassDetails = () => {
       students?.forEach((item: StudentUserProfileType) => {
         notificationSocket.emit(
           "leave-room",
-          `notification-${item?.user?._id}`
+          `notification-${item?.userId}`
         );
       });
       notificationSocket.disconnect();

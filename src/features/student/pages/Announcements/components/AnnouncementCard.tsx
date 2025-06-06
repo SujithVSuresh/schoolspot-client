@@ -19,11 +19,11 @@ const AnnouncementCard = ({
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center space-x-2">
-            <h3 className="text-lg font-medium text-gray-700">
-              {announcement.title}
+            <h3 className="text-xl font-semibold text-primaryText">
+              {announcement.title.slice(0, 80)}..{" "}
             </h3>
           </div>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-primaryText">
             {announcement.content.slice(0, 100)} ..{" "}
             <span
               className="text-blue-700 text-sm hover:cursor-pointer"
@@ -33,7 +33,7 @@ const AnnouncementCard = ({
             </span>
           </p>
 
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-primaryText">
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-1" />
               {dateFormatter(announcement.createdAt)}

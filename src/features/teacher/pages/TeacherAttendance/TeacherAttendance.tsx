@@ -4,10 +4,9 @@ import Breadcrumb from "../../components/Breadcrumb";
 import { useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getAttendanceByClass } from "../../api/api";
-import { AttendaceResponseType } from "../../types/types";
 import { changeAttendanceStatus } from "../../api/api";
-import toast from "react-hot-toast";
 import { successToast } from "../../../../app/utils/toastMessage";
+import { AttendanceResponseType } from "../../../../app/types/AttendanceType";
 
 const TeacherAttendance = () => {
   const { classId }: { subjectId: string; classId: string } =
@@ -17,7 +16,7 @@ const TeacherAttendance = () => {
   const [filterDate, setFilterDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [attendanceData, setAttendanceData] = useState<AttendaceResponseType[]>(
+  const [attendanceData, setAttendanceData] = useState<AttendanceResponseType[]>(
     []
   );
 
@@ -25,7 +24,7 @@ const TeacherAttendance = () => {
     const fetchAttendance = async () => {
       const response = await getAttendanceByClass(classId, filterDate);
 
-      console.log(response, "dfasdfdsfdsafsd");
+      console.log(response, "dfasdfdsfdsafsd123");
 
       setAttendanceData(response.data);
     };
@@ -51,7 +50,7 @@ const TeacherAttendance = () => {
       });
       setAttendanceData(updatedAttendanceData);
 
-      successToast("Attendance status updated successfully")
+      successToast("Attendance status updated successfully");
     }
   };
 
@@ -135,10 +134,10 @@ const TeacherAttendance = () => {
                   attendanceData.map((attendance) => (
                     <tr key={attendance._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {attendance.student.roll}
+                        {attendance.academicProfile.roll}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {attendance.student.name}
+                        {attendance.studentProfile.fullName}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span

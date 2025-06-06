@@ -128,7 +128,7 @@ export const getAllStudents = async (page: number, search: string, sortBy: strin
 
 export const getStudentsByClassId = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/students/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/academicProfile/class/${classId}`, {
             headers: {
                 'x-user-role': 'admin'
             }
@@ -922,6 +922,37 @@ export const fetchSchoolOverview = async () => {
     }
 }
 
+
+export const fetchStudentAcademicProfile = async (userId: string) => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/academicProfile/${userId}`, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
+
+export const createAcademicProfile = async (academicProfileData: {admissionNo: string; roll:number; classId: string}) => {
+    try{
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/academicProfile`, academicProfileData, {
+            headers: {
+                'x-user-role': 'admin'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
 
 
 

@@ -4,7 +4,7 @@ import { RootState } from "../../../../../app/store";
 import { useState } from "react";
 import { createConversation } from "../../../api/api";
 import { successToast } from "../../../../../app/utils/toastMessage";
-import { Conversation } from "../../../../../app/types/chatType";
+import { Conversation } from "../../../../../app/types/ChatType";
 
 
 const CreateGroup = ({
@@ -17,6 +17,8 @@ const CreateGroup = ({
   setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>
 }) => {
   const students = useSelector((state: RootState) => state.studentList);
+
+  console.log(students, "Sssss")
 
   const [groupName, setGroupName] = useState("");
   const [members, setMembers] = useState<string[]>([]);
@@ -32,8 +34,11 @@ const CreateGroup = ({
     }
   };
 
+  console.log("triii", members)
+
   const handleCreateGroupSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    console.log(groupName, members, "jjjjjjjjjjj")
 
     const response = await createConversation({
       isGroup: true,
@@ -103,12 +108,12 @@ const CreateGroup = ({
                 >
                   <div className="flex items-center">
                     <img
-                      src={student.profilePhoto}
-                      alt={student.fullName}
+                      src={student?.studentId?.profilePhoto}
+                      alt={student.studentId.fullName}
                       className="w-10 h-10 rounded-full object-cover mr-3"
                     />
                     <div>
-                      <p className="font-medium">{student.fullName}</p>
+                      <p className="font-medium">{student.studentId.fullName}</p>
                       <p className="text-sm text-gray-500">
                         Roll No: {student.roll}
                       </p>
@@ -117,7 +122,7 @@ const CreateGroup = ({
                   <input
                     type="checkbox"
                     name="selectedStudents"
-                    value={student?.user?._id}
+                    value={student?.userId}
                     className="accent-blue-600 w-4 h-4"
                     onChange={(e) => handleAddMember(e)}
                   />

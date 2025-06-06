@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../app/store";
 import StudentListCard from "./StudentListCard";
-import { StudentUserProfileType } from "../../../../../app/types/UserType";
+import { StudentAcademicProfileListType } from "../../../../../app/types/StudentType";
 
 const StudentList = ({selectedStudents, setSelectedStudents}: {selectedStudents: string[], setSelectedStudents: React.Dispatch<React.SetStateAction<string[]>>}) => {
   const students = useSelector((state: RootState) => state.studentListAdmin);
@@ -20,7 +20,7 @@ const StudentList = ({selectedStudents, setSelectedStudents}: {selectedStudents:
 
   return (
     <div className="w-full rounded-lg overflow-y-auto max-h-96">
-      {students.map((student: StudentUserProfileType) => (
+      {students.map((student: StudentAcademicProfileListType) => (
           <StudentListCard student={student} handleSelectStudent={handleSelectStudent}/>
       ))}
     </div>

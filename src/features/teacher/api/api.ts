@@ -38,7 +38,7 @@ export const getAllClassesForTeacher = async () => {
 
 export const getStudentsByClassId = async (classId: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/students/${classId}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/academicProfile/class/${classId}`, {
             headers: {
                 'x-user-role': 'teacher'
             }

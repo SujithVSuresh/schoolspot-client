@@ -188,7 +188,7 @@ useEffect(() => {
     };
 
   return (
-    <div className="flex h-screen mt-5 border top-50 sticky w-full bg-white">
+    <div className="flex h-screen mt-5 border rounded-lg top-50 sticky w-full bg-white">
       {/* Sidebar */}
       <ChatSidebar
         userType="Student"

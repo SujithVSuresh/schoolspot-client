@@ -7,7 +7,7 @@ import { SlidersHorizontal } from "lucide-react";
 import MenuModal from "./components/MenuModal";
 import TableItem from "./components/TableItem";
 import { useNavigate } from "react-router-dom";
-import { StudentListType } from "../../types/StudentType";
+import { StudentListType } from "../../../../app/types/StudentType";
 
 function Student() {
   const navigate = useNavigate();

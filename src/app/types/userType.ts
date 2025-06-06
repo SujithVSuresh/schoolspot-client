@@ -1,17 +1,14 @@
 
 
 export interface StudentUserProfileType {
-    _id?: string;
+  _id?: string; 
+  roll: number;
+  studentId: {
     fullName: string;
-    class: string;
-    classId: string;
-    roll: number;
-    section: string;
     profilePhoto: string;
-    schoolId?: string;
-    user: {
-        _id: string
-        email: string,
-        status: "active" | "inactive" | "deleted" | "blocked";
-    }
-  }
+    _id?: string;
+  };
+  classId: string;
+  userId: string;
+}
+  

@@ -7,6 +7,8 @@ import { textFormatter } from "../../../../app/utils/formatter"
 
 const Subjects = () => {
     const { classId }: { classId: string } = useOutletContext();
+
+    console.log(classId, "this is the class Id...123")
     const navigate = useNavigate()
 
     const [subjects, setSubjects] = useState<{

@@ -51,8 +51,8 @@ const AddMarks = () => {
     useEffect(() => {
     if (students.length > 0) {
       const updatedResults = students.map((student) => ({
-        studentId: student.user._id,
-        studentName: student.fullName,
+        studentId: student.userId,
+        studentName: student.studentId.fullName,
         marksObtained: "",
         grade: "",
       }));

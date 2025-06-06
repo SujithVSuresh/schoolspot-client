@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { studentValidationSchema } from "../../validation/formValidation";
 import { createStudent } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { StudentValidationSchemaType } from "../../types/StudentType";
+import { StudentValidationSchemaType } from "../../../../app/types/StudentType";
+import { errorToast, successToast } from "../../../../app/utils/toastMessage";
 
 const AddStudent = () => {
   const navigate = useNavigate()
@@ -42,7 +43,10 @@ const AddStudent = () => {
     console.log(response, "this is the response student")
 
     if(response.success){
+      successToast("User profile created successfully")
       navigate(`/dashboard/students`)
+    }else{
+      errorToast(response.error.message)
     }
  
   };

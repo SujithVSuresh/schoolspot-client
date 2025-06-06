@@ -43,6 +43,7 @@ import ClassAttendance from "../pages/ClassAttendance/ClassAttendance";
 import ClassExams from "../pages/ClassExams/ClassExams";
 import ClassInvoices from "../pages/ClassInvoices/ClassInvoices";
 import ClassTimetable from "../pages/ClassTimetable/ClassTimetable";
+import AddAcademicProfile from "../pages/AddAcademicProfile/AddAcademicProfile";
 
 const AdminRoute = () => {
   return (
@@ -162,6 +163,10 @@ const AdminRoute = () => {
         <Route
           path="classes/subject/:subjectId/update/:classId"
           element={<UpdateSubject />}
+        />
+        <Route
+          path="classes/:classId/academicProfile/new"
+          element={<AddAcademicProfile />}
         />
 
         <Route path="classes/profile/:id" element={<ClassProfile />}>

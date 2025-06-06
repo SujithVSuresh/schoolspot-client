@@ -197,18 +197,7 @@ export interface AttendanceType {
 
 
 
-export interface AttendaceResponseType {
-    _id?: string;
-    student: {
-      _id: string;
-      name: string;
-      roll: number;
-    }
-    status: "Present" | "Absent";
-    createdAt?: Date;
-    updatedAt?: Date;  
-  }
-  
+
    
 export interface AnnouncementCreateType {
     title: string;

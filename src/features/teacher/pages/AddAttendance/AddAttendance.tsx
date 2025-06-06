@@ -2,44 +2,51 @@ import { useEffect, useState } from "react";
 import { Calendar, Users, CheckCircle, XCircle, Search } from "lucide-react";
 import Breadcrumb from "../../components/Breadcrumb";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import { getStudentsByClassId } from "../../api/api";
+// import { getStudentsByClassId } from "../../api/api";
 import { AttendanceType } from "../../types/types";
-import { StudentDataResponseType } from "../../types/types";
 import { dateFormatter } from "../../../../app/utils/formatter";
 import toast from "react-hot-toast";
 import { addAttendance } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { setAttendanceCount } from "../../redux/attendanceSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../app/store";
+import { StudentUserProfileType } from "../../../../app/types/UserType";
+
 
 const AddAttendance = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const students = useSelector((state: RootState) => state.studentList);
+  
   const { classId }: { classId: string } = useOutletContext();
   const [searchQuery, setSearchQuery] = useState("");
   const [attendanceData, setAttendanceData] = useState<AttendanceType[]>([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const response = await getStudentsByClassId(classId as string);
+      // const response = await getStudentsByClassId(classId as string);
 
-      const setupAttendace = (students: StudentDataResponseType[]) => {
+      console.log(students, "gaaaaaaaa123123123")
+
+      const setupAttendace = (students: StudentUserProfileType[]) => {
         const data: AttendanceType[] = students.map((student) => {
           return {
-            student: student.user._id,
+            student: student.userId,
             class: student.classId,
             status: "Absent",
             roll: student.roll,
-            name: student.fullName,
+            name: student.studentId.fullName,
           };
         });
         setAttendanceData(data);
       };
-      setupAttendace(response.data);
+      setupAttendace(students);
     };
 
     fetchStudents();
-  }, [classId]);
+  }, [students]);
 
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },
@@ -72,7 +79,7 @@ const AddAttendance = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const data: AttendanceType[] = attendanceData.map((student) => {
       return {
@@ -98,10 +105,10 @@ const AddAttendance = () => {
         },
       });
       navigate(`/teacher/classes/${classId}/attendance`);
-      setLoading(false);
+      // setLoading(false);
     } else {
       setTimeout(() => {
-        setLoading(false);
+        // setLoading(false);
         toast(response.error.message, {
           duration: 8000,
           position: "bottom-right",

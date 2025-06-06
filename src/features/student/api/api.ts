@@ -34,6 +34,21 @@ export const fetchStudentProfile = async (id?: string) => {
     }
 }
 
+export const fetchProfileforStudent = async () => {
+    try{
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/student/profile`, {
+            headers: {
+                'x-user-role': 'student'
+            }
+        });
+        return { success: true, data }
+    }catch(error){
+        console.log(error, "this is the error")
+        const message = axios.isAxiosError(error) ? error.response?.data : "An error occured";
+        return { success: false, error: message }
+    }
+}
+
 
 export const fetchSubjects = async (classId: string) => {
     try{
@@ -503,7 +518,7 @@ export const clearNotification = async (notificationId: string) => {
 
 export const clearAllNotifications = async () => {
     try{
-        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/notification/clear`, {}, {
+        const {data} = await axiosInstance.patch(`${envData.VITE_ENDPOINT_ORIGIN}/notification/clearAll`, {}, {
             headers: {
                 'x-user-role': 'student'
             }
