@@ -45,7 +45,7 @@ export interface SchoolProfileType {
     state: string;
     country: string;
     postalCode: string;
-    academicYear?: string;
+    academicYear: string;
 }
 
 
@@ -104,7 +104,7 @@ export interface TeacherProfileType {
     subjectSpecialized: string;
     qualification: string;
     experience: number;
-    profilePhoto: string;
+    profilePhoto: string | FileList;
     userId?: string;
     schoolId?: string;
     createdAt?: Date;

@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StudentUserProfileType } from "../../../app/types/UserType";
+import { StudentProfileType } from "../../../app/types/StudentType";
 
 
-const initialState: StudentUserProfileType[] = [];
+const initialState: StudentProfileType[] = [];
 
 
 const studentListSlice = createSlice({
     name: 'studentList',
     initialState,
     reducers: {
-        setStudentList: (state, action) => {
+        setStudentList: (_, action) => {
             return action.payload
         }
     }

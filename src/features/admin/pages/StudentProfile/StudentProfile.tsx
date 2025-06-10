@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProfileAttendanceRecord from "./component/ProfileAttendanceRecord";
+// import ProfileAttendanceRecord from "./component/ProfileAttendanceRecord";
 import { getStudentProfile } from "../../api/api";
 import { useParams } from "react-router-dom";
 import { RiParentLine } from "react-icons/ri";
@@ -17,8 +17,6 @@ import AcademicProfileSection from "./component/AcademicProfileSection";
 const StudentProfile = () => {
   const navigate = useNavigate();
   const { id: userId } = useParams();
-
-  const [selectedBtn, setSelectedBtn] = useState("students");
 
   const [student, setStudent] = useState<StudentProfileType | null>(null);
 
@@ -266,9 +264,7 @@ const StudentProfile = () => {
               `/dashboard/students/profile/${student?.userId._id}/update`
             )
           }
-          className={`${
-            selectedBtn == "exam" ? "bg-blue-200" : "bg-gray-200"
-          } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+          className={`"bg-gray-200" text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
         >
           Edit Profile
         </div>
@@ -278,9 +274,7 @@ const StudentProfile = () => {
             onClick={() =>
               onBlockClick(student?.userId._id as string, "blocked")
             }
-            className={`${
-              selectedBtn == "exam" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+            className={`"bg-gray-200" text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Block Account
           </div>
@@ -289,16 +283,14 @@ const StudentProfile = () => {
             onClick={() =>
               onBlockClick(student?.userId._id as string, "active")
             }
-            className={`${
-              selectedBtn == "exam" ? "bg-blue-200" : "bg-gray-200"
-            } text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+            className={`"bg-gray-200" text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Unblock Account
           </div>
         )}
       </div>
 
-      {selectedBtn == "attendance" ? <ProfileAttendanceRecord /> : <></>}
+      {/* {selectedBtn == "attendance" ? <ProfileAttendanceRecord /> : <></>} */}
     </>
   );
 };

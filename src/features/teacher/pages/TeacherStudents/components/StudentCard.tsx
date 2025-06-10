@@ -1,4 +1,4 @@
-import { User, Hash } from "lucide-react"
+import { Hash } from "lucide-react"
 
 
 interface StudentCardProps {

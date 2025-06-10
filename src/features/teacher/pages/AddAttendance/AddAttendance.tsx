@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { setAttendanceCount } from "../../redux/attendanceSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
-import { StudentUserProfileType } from "../../../../app/types/UserType";
+import { StudentProfileType } from "../../../../app/types/StudentType";
 
 
 const AddAttendance = () => {
@@ -26,18 +26,15 @@ const AddAttendance = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      // const response = await getStudentsByClassId(classId as string);
 
-      console.log(students, "gaaaaaaaa123123123")
-
-      const setupAttendace = (students: StudentUserProfileType[]) => {
+      const setupAttendace = (students: StudentProfileType[]) => {
         const data: AttendanceType[] = students.map((student) => {
           return {
-            student: student.userId,
-            class: student.classId,
+            student: student.userId._id,
+            class: classId,
             status: "Absent",
-            roll: student.roll,
-            name: student.studentId.fullName,
+            roll: student.academicProfile.roll,
+            name: student.fullName,
           };
         });
         setAttendanceData(data);

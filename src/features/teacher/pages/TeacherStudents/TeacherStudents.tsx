@@ -22,9 +22,9 @@ const TeacherStudents = () => {
         {students.map((student, index) => (
           <StudentCard
             student={{
-              fullName: student.studentId.fullName,
-              roll: student.roll,
-              profilePhoto: student.studentId.profilePhoto
+              fullName: student.fullName,
+              roll: student.academicProfile.roll,
+              profilePhoto: student.profilePhoto
             }}
             key={index}
           />

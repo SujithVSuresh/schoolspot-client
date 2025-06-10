@@ -2,7 +2,6 @@ import TimeTable from "./components/TimeTable";
 import Attendance from "./components/Attendance";
 import Announcements from "./components/Announcements";
 import Assignments from "./components/Assignments";
-import Exams from "./components/Exams";
 import { useOutletContext } from "react-router-dom";
 
 const Home = () => {

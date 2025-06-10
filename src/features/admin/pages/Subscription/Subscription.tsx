@@ -56,7 +56,7 @@ const Subscription = () => {
               <></>
             </Heading>
 
-            <SubscriptionPlan plans={plans} activeSubscription={activeSubscription}/>
+            <SubscriptionPlan plans={plans} activeSubscription={activeSubscription as SubscriptionType}/>
           </div>
 
           <div className="flex flex-col px-20">

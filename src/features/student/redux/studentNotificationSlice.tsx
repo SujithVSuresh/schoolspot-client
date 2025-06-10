@@ -9,7 +9,7 @@ const studentNotificationSlice = createSlice({
     name: 'studentNotification',
     initialState,
     reducers: {
-        setStudentNotification: (state, action) => {
+        setStudentNotification: (_, action) => {
             return [...action.payload]
         },
         // removeStudentNotification: (state, action) => {

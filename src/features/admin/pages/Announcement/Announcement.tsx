@@ -1,13 +1,11 @@
-import { MoreVertical, Clock, Calendar, Edit2, Trash2 } from "lucide-react";
 import Heading from "../../components/Heading";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchAnnouncements } from "../../api/api";
 import { AnnouncementResponseType } from "../../types/types";
-import { dateFormatter, timeFormatter } from "../../../../app/utils/formatter";
-import { deleteAnnouncement } from "../../api/api";
-import toast from "react-hot-toast";
+// import { deleteAnnouncement } from "../../api/api";
+// import toast from "react-hot-toast";
 import AnnouncementCard from "./components/AnnouncementCard";
 
 const Announcement = () => {
@@ -17,7 +15,6 @@ const Announcement = () => {
     AnnouncementResponseType[]
   >([]);
 
-  const [showMenu, setShowMenu] = useState("");
 
   useEffect(() => {
     const getAllAnnouncements = async () => {
@@ -30,34 +27,34 @@ const Announcement = () => {
     getAllAnnouncements();
   }, []);
 
-    const deleteAnnouncementHandler = async (announcementId: string) => {
-      const response = await deleteAnnouncement(announcementId);
-      if (response.success) {
-              // announcementSocket.emit("delete-announcement", {
-              //   roomId: `room-${classId}`,
-              //   message: response.data,
-              // });
-        const filteredAnnouncements = await announcements.filter(
-          (announcement) => {
-            if (announcement._id !== announcementId) {
-              return announcement;
-            }
-          }
-        );
-        toast("Announcement deleted successfully", {
-          duration: 2000,
-          position: "bottom-right",
-          style: {
-            backgroundColor: "#E7FEE2",
-            border: "2px, solid, #16A34A",
-            minWidth: "400px",
-            color: "black",
-          },
-        });
+    // const deleteAnnouncementHandler = async (announcementId: string) => {
+    //   const response = await deleteAnnouncement(announcementId);
+    //   if (response.success) {
+    //           // announcementSocket.emit("delete-announcement", {
+    //           //   roomId: `room-${classId}`,
+    //           //   message: response.data,
+    //           // });
+    //     const filteredAnnouncements = await announcements.filter(
+    //       (announcement) => {
+    //         if (announcement._id !== announcementId) {
+    //           return announcement;
+    //         }
+    //       }
+    //     );
+    //     toast("Announcement deleted successfully", {
+    //       duration: 2000,
+    //       position: "bottom-right",
+    //       style: {
+    //         backgroundColor: "#E7FEE2",
+    //         border: "2px, solid, #16A34A",
+    //         minWidth: "400px",
+    //         color: "black",
+    //       },
+    //     });
   
-        setAnnouncements(filteredAnnouncements);
-      }
-    };
+    //     setAnnouncements(filteredAnnouncements);
+    //   }
+    // };
   return (
     <div>
       <Heading headingValue="Announcements">

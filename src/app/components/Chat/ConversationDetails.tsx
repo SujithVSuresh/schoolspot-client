@@ -1,5 +1,5 @@
 import { X, Users, ChevronRight } from "lucide-react";
-import { Conversation } from "../../types/chatType";
+import { Conversation } from "../../types/ChatType";
 import { dateFormatter } from "../../utils/formatter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -36,7 +36,7 @@ const ConversationDetails = ({
   };
 
 
-  const handleGroupUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGroupUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await updateConversation(conversation._id, {
       name: name,
@@ -145,17 +145,17 @@ const ConversationDetails = ({
                     <div>
                       <p className="font-medium">{student.fullName}</p>
                       <p className="text-sm text-gray-500">
-                        Roll No: {student.roll}
+                        Roll No: {student.academicProfile.roll}
                       </p>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     name="selectedStudents"
-                    value={student?.user?._id}
+                    value={student?.userId?._id}
                     className="accent-blue-600 w-4 h-4"
                     onChange={(e) => handleGroupMember(e)}
-                    checked={participants.includes(student.user._id)}
+                    checked={participants.includes(student.userId._id)}
                   />
                 </label>
               ))}

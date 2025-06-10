@@ -218,7 +218,7 @@ const ExamResult = () => {
   )
 }
 
-function StatCard({ icon, title, value }) {
+function StatCard({ icon, title, value }: { icon: React.ReactElement; title: string; value: string | number }) {
     return (
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <div className="flex items-center">

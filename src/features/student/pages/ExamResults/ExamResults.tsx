@@ -2,7 +2,6 @@ import { fetchExamResult } from "../../api/api";
 import { useEffect, useState } from "react";
 import { ExamResultType } from "../../../../app/types/ExamResultType";
 import { useParams } from "react-router-dom";
-import ExamResultOverviewCard from "../../../../app/components/Exam/ExamResultOverviewCard";
 import ExamResultCard from "../../../../app/components/Exam/ExamResultCard";
 
 const ExamResults = () => {

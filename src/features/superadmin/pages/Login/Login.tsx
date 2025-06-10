@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { setSuperAdmin } from "../../redux/superAdminSlice";
+import { setSuperAdmin } from "../../redux/superadminSlice";
 import { signin } from "../../api/api";
 import { SuperAdminSigninFormType } from "../../types/types";
 import loadingGif from "../../../../assets/images/loading.webp";

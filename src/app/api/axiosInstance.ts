@@ -6,7 +6,7 @@ import { removeTeacher } from "../../features/teacher/redux/teacherSlice";
 import { removeStudent } from "../../features/student/redux/studentSlice";
 import { setStudent } from "../../features/student/redux/studentSlice";
 import { setTeacher } from "../../features/teacher/redux/teacherSlice";
-import { setSuperAdmin } from "../../features/superadmin/redux/superAdminSlice";
+import { setSuperAdmin } from "../../features/superadmin/redux/superadminSlice";
 const envData = import.meta.env;
 
 const axiosInstance = axios.create({

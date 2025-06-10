@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { chapterValidationSchema } from "../../validation/formValidation";
-import { createChapter, updateChapter } from "../../api/api";
+import { updateChapter } from "../../api/api";
 import { findChapter } from "../../api/api";
 import { useEffect } from "react";
 
@@ -12,7 +12,7 @@ const UpdateChapter = () => {
   const navigate = useNavigate();
   const {chapterId} = useParams()
 
-  const { subjectId, classId }: { subjectId: string; classId: string } = useOutletContext();
+  const { classId }: { subjectId: string; classId: string } = useOutletContext();
 
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },

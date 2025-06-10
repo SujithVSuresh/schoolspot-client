@@ -113,23 +113,23 @@ const CreateGroup = ({
                 >
                   <div className="flex items-center">
                     <img
-                      src={student?.studentId?.profilePhoto}
-                      alt={student.studentId.fullName}
+                      src={student.profilePhoto}
+                      alt={student.fullName}
                       className="w-10 h-10 rounded-full object-cover mr-3"
                     />
                     <div>
                       <p className="font-medium">
-                        {student.studentId.fullName}
+                        {student.fullName}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Roll No: {student.roll}
+                        Roll No: {student.academicProfile.roll}
                       </p>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     name="selectedStudents"
-                    value={student?.userId}
+                    value={student?.userId._id}
                     className="accent-blue-600 w-4 h-4"
                     onChange={(e) => handleAddMember(e)}
                   />

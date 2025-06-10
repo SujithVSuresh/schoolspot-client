@@ -7,9 +7,10 @@ import { studentReducer } from "../features/student/redux/studentSlice.tsx";
 import { teacherReducer } from "../features/teacher/redux/teacherSlice.ts";
 import { attendanceReducer } from "../features/teacher/redux/attendanceSlice.ts";
 import { studentListReducer } from "../features/teacher/redux/studentListSlice.ts";
-import { superAdminReducer } from "../features/superadmin/redux/superAdminSlice.ts";
 import { studentListAdminReducer } from "../features/admin/redux/studentListAdminSlice.ts";
 import { studentNotificationReducer } from "../features/student/redux/studentNotificationSlice.tsx";
+import { superAdminReducer } from "../features/superadmin/redux/superadminSlice.ts";
+
 
 const adminPersistConfig = {
     key: "admin",

@@ -54,7 +54,7 @@ const AddAttendance = () => {
   };
 
   const handleAttendanceSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
 

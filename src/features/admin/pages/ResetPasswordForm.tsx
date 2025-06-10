@@ -2,7 +2,6 @@ import logo from "../../../assets/images/logo.png";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { passwordReset } from "../api/api";
-import { useNavigate } from "react-router-dom";
 import loadingGif from "../../../assets/images/loading.webp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,7 +9,6 @@ import { resetPasswordValidationSchema } from "../validation/formValidation";
 import toast from "react-hot-toast";
 
 const ResetPasswordForm = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 

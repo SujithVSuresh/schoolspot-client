@@ -9,7 +9,7 @@ const studentListAdminSlice = createSlice({
     name: 'studentListAdmin',
     initialState,
     reducers: {
-        setStudentList: (state, action) => {
+        setStudentList: (_, action) => {
             return action.payload
         }
     }

@@ -25,6 +25,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
   const [isCreateGroup, setIsCreateGroup] = useState(false);
+  console.log(isCreateGroup)
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [messageMenu, setMessageMenu] = useState("");
