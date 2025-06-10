@@ -5,16 +5,10 @@ import { monthFormatter } from "../../../../app/utils/formatter";
 import { Calendar, CalendarCheck, CalendarX } from "lucide-react";
 import LeaveLetter from "./components/LeaveLetter";
 
-
 const Attendance = () => {
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
-
-  const [month, setMonth] = useState(new Date().getMonth() + 1)
-
-  const [year, setYear] = useState(new Date().getFullYear())
-
-    console.log(month, "this is the monthhhhhhhh",new Date(year, month - 1, 1).toISOString() )
-
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const [attendanceData, setAttendanceData] = useState<
     {
@@ -23,10 +17,6 @@ const Attendance = () => {
       createdAt: Date;
     }[]
   >([]);
-
-  console.log(attendanceData, "this is attendance data...")
-
-  
 
   useEffect(() => {
     fetchAttendanceHandler(new Date(year, month - 1, 1).toISOString());
@@ -39,7 +29,6 @@ const Attendance = () => {
       setAttendanceData(response.data);
     }
   };
-
 
   const getDaysInMonth = (month: number, year: number) => {
     return new Date(year, month - 1, 0).getDate();
@@ -72,26 +61,24 @@ const Attendance = () => {
   };
 
   const moveNextMonth = () => {
-    if(month == 12){
-      setYear((prev) => prev + 1)
-      setMonth(1)
-      return
+    if (month == 12) {
+      setYear((prev) => prev + 1);
+      setMonth(1);
+      return;
     }
 
-    setMonth((prev) => prev + 1)
-
-  }
+    setMonth((prev) => prev + 1);
+  };
 
   const movePrevMonth = () => {
-    if(month == 1){
-      setYear((prev) => prev - 1)
-      setMonth(12)
-      return
+    if (month == 1) {
+      setYear((prev) => prev - 1);
+      setMonth(12);
+      return;
     }
 
-    setMonth((prev) => prev - 1)
-
-  }
+    setMonth((prev) => prev - 1);
+  };
 
   const renderDays = () => {
     const days = [];
@@ -118,7 +105,7 @@ const Attendance = () => {
             day === new Date().getDate() &&
             month === new Date().getMonth() + 1 &&
             year === new Date().getFullYear()
-              ? "ring-2 ring-blue-500 ring-inset"
+              ? "ring-2 ring-primary ring-inset"
               : ""
           }`}
         >
@@ -150,51 +137,46 @@ const Attendance = () => {
     {
       name: "Working Days",
       data: attendanceData.length,
-      icon: <Calendar className="w-4 h-4"/>
+      icon: <Calendar className="w-5 h-5 text-primaryText" />,
     },
     {
       name: "Present Count",
       data: attendanceData.reduce((acc, val) => {
-        if(val.status == "Present"){
-          return acc + 1
+        if (val.status == "Present") {
+          return acc + 1;
         }
-        return acc
+        return acc;
       }, 0),
-      icon: <CalendarCheck className="w-4 h-4"/>
+      icon: <CalendarCheck className="w-5 h-5 text-primaryText" />,
     },
     {
       name: "Absent Count",
       data: attendanceData.reduce((acc, val) => {
-        if(val.status == "Absent"){
-          return acc + 1
+        if (val.status == "Absent") {
+          return acc + 1;
         }
-        return acc
+        return acc;
       }, 0),
-      icon: <CalendarX className="w-4 h-4"/>
-    }
-  ]
+      icon: <CalendarX className="w-5 h-5 text-primaryText" />,
+    },
+  ];
 
   return (
     <div className="rounded-lg overflow-hidden w-full">
       <div className="flex w-full gap-x-5">
         {attendacneStat.map((item, index) => (
-                    <div
-            key={index}
-            className="bg-white rounded-lg border w-full p-4 flex items-center"
-          >
-            <div className={`rounded-full p-3 mr-4 bg-blue-200`}>
+          <div key={index} className="w-full flex border p-5 rounded-lg">
+            <div className="bg-secondary p-3.5 rounded-full mr-4">
               {item.icon}
             </div>
             <div>
-              <p className="text-sm text-gray-500">{item.name}</p>
-              <p className={`text-xl font-bold `}>{item.data}</p>
+              <p className="text-sm text-secondaryText">{item.name}</p>
+              <p className="text-primaryText">{item.data}</p>
             </div>
           </div>
-
         ))}
-
       </div>
-      <div className="py-4 border-b border-gray-200 flex justify-between items-center">
+      <div className="py-4  flex justify-between items-center">
         <div className="mt-4 flex flex-wrap gap-2">
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -208,7 +190,7 @@ const Attendance = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={movePrevMonth}
-            className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200"
+            className="p-1 rounded-md bg-secondary transition-colors duration-200"
             aria-label="Previous month"
           >
             <ChevronLeft className="h-5 w-5 text-gray-600" />
@@ -218,25 +200,27 @@ const Attendance = () => {
           </span>
           <button
             onClick={moveNextMonth}
-            className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200"
+            className="p-1 rounded-md bg-secondary transition-colors duration-200"
             aria-label="Next month"
           >
             <ChevronRight className="h-5 w-5 text-gray-600" />
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-7 gap-px">
+      <div className="flex gap-5">
+      <div className="grid grid-cols-7 gap-px w-8/12">
         {weekdays.map((day) => (
           <div
             key={day}
-            className="py-2 text-center text-sm font-medium text-gray-700 bg-gray-100"
+            className="py-2 text-center text-sm font-medium text-primaryText bg-secondary"
           >
             {day}
           </div>
         ))}
         {renderDays()}
       </div>
-      <LeaveLetter selectedDate={new Date(year, month - 1, 1).toISOString()}/>
+      <LeaveLetter selectedDate={new Date(year, month - 1, 1).toISOString()} />
+      </div>
     </div>
   );
 };

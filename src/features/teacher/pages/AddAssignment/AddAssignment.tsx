@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react";
 import Breadcrumb from "../../components/Breadcrumb";
-import {useForm} from 'react-hook-form'
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { assignmentValidationSchema } from "../../validation/formValidation";
 import { useOutletContext } from "react-router-dom";
 import { AddAssignmentType } from "../../types/types";
@@ -11,8 +11,10 @@ import { errorToast, successToast } from "../../../../app/utils/toastMessage";
 
 
 const AddAssignment = () => {
-  const navigate = useNavigate()
-  const {subjectId, classId}: {subjectId: string, classId: string} = useOutletContext()
+  const navigate = useNavigate();
+
+  const { subjectId, classId }: { subjectId: string; classId: string } =
+    useOutletContext();
 
   const breadcrumbItems = [
     { label: "Classes", href: `/teacher/classes` },
@@ -29,22 +31,21 @@ const AddAssignment = () => {
   });
 
   const onSubmit = async (data: AddAssignmentType) => {
-    const response = await addAssignment({...data, subjectId, classId})
-
-    if(response.success){
-      navigate(`/teacher/classes/${classId}/assignments`)
-      successToast("Assignment added successfully")
-    }else{
-      errorToast(response.error.message)
+    const response = await addAssignment({ ...data, subjectId, classId });
+    if (response.success) {
+      navigate(`/teacher/classes/${classId}/assignments`);
+      successToast("Assignment added successfully");
+    } else {
+      errorToast(response.error.message);
     }
-  }
+  };
 
   return (
     <div className="p-5">
       <Breadcrumb items={breadcrumbItems} />
       <div className="flex justify-center">
         <form
-        method="POST"
+          method="POST"
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-8 w-5/12 border p-8 rounded-lg"
         >
@@ -60,18 +61,18 @@ const AddAssignment = () => {
                 Title
               </label>
               <input
-              {...register("title")}
+                {...register("title")}
                 type="text"
                 id="title"
                 name="title"
                 placeholder="Enter assignment title"
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
               />
-                       {errors.title && (
-            <span className="text-red-500 text-sm">
-              {errors.title.message}
-            </span>
-          )}
+              {errors.title && (
+                <span className="text-red-500 text-sm">
+                  {errors.title.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -82,18 +83,18 @@ const AddAssignment = () => {
                 Description
               </label>
               <textarea
-              {...register("description")}
+                {...register("description")}
                 id="description"
                 name="description"
                 rows={4}
                 placeholder="Enter assignment description"
                 className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200"
               />
-                       {errors.description && (
-            <span className="text-red-500 text-sm">
-              {errors.description.message}
-            </span>
-          )}
+              {errors.description && (
+                <span className="text-red-500 text-sm">
+                  {errors.description.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -116,10 +117,10 @@ const AddAssignment = () => {
                 </select>
               </div>
               {errors.submissionType && (
-            <span className="text-red-500 text-sm">
-              {errors.submissionType.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.submissionType.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -131,7 +132,7 @@ const AddAssignment = () => {
               </label>
               <div className="mt-1 relative">
                 <input
-                {...register("dueDate")}
+                  {...register("dueDate")}
                   type="datetime-local"
                   id="dueDate"
                   name="dueDate"
@@ -142,10 +143,10 @@ const AddAssignment = () => {
                 </div>
               </div>
               {errors.dueDate && (
-            <span className="text-red-500 text-sm">
-              {errors.dueDate.message}
-            </span>
-          )}
+                <span className="text-red-500 text-sm">
+                  {errors.dueDate.message}
+                </span>
+              )}
             </div>
           </div>
 

@@ -40,23 +40,17 @@ const LeaveLetter = ({selectedDate}: {selectedDate: string}) => {
          }
        }
    return (
- <div className="bg-white rounded-xl border mt-8 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b flex justify-between items-center border-gray-200">
-          <div>
-          <h2 className="text-xl font-semibold text-gray-800">
-            Leave Letters
-          </h2>
-          <p className="text-sm text-gray-500">
-            All submitted leave applications
-          </p>
-          </div>
+ <div className="bg-white rounded-lg border flex-1 shadow-sm overflow-hidden">
+        <div className="px-5 py-3 border-b flex justify-between items-center border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-800">Leave letters</h2>
+    
 
           <button
           onClick={() => navigate('/student/attendance/leave-letter/add')}
             type="submit"
             className="w-auto bg-blue-600 text-white py-2 px-4 text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
           >
-            Apply Leave
+            +
           </button>
         </div>
  
@@ -71,7 +65,7 @@ const LeaveLetter = ({selectedDate}: {selectedDate: string}) => {
               </p>
             </div>
           ) : (
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid grid-cols-1 gap-4'>
               {
             leaveLetters.map((leave, index) => (
           <div

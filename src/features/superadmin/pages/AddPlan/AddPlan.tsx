@@ -1,6 +1,7 @@
 import { createPlan } from "../../api/api"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { errorToast } from "../../../../app/utils/toastMessage"
 
 const AddPlan = () => {
   const navigate = useNavigate()
@@ -21,6 +22,8 @@ const AddPlan = () => {
 
     if(response.success){
       navigate('/superadmin/plans')
+    }else{
+      errorToast(response.error.message)
     }
   }
   return (

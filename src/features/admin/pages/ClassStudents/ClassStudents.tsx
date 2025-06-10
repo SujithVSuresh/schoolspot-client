@@ -33,7 +33,7 @@ const ClassStudents = () => {
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
           <button
-            onClick={() => navigate(`/dashboard/students/new/${classId}`)}
+            onClick={() => navigate(`/dashboard/classes/${classId}/academicProfile/new`)}
             className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
           >
             <UserPlus className="h-5 w-5" />

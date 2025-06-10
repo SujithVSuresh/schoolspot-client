@@ -1,6 +1,7 @@
-import { createPlan, editPlan, fetchPlanById } from "../../api/api"
+import { editPlan, fetchPlanById } from "../../api/api"
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { errorToast } from "../../../../app/utils/toastMessage"
 
 const EditPlan = () => {
   const navigate = useNavigate()
@@ -42,6 +43,8 @@ const EditPlan = () => {
 
     if(response.success){
       navigate('/superadmin/plans')
+    }else{
+      errorToast(response.error.message)
     }
   }
   return (

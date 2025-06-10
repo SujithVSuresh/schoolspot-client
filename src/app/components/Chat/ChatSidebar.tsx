@@ -1,6 +1,6 @@
 import { MessageCircle, CirclePlus } from "lucide-react"
 import { dateFormatter } from "../../utils/formatter"
-import { Conversation } from "../../types/chatType"
+import { Conversation } from "../../types/ChatType"
 
 
 const ChatSidebar = ({userType, conversations, activeConversation, setActiveConversation, setIsCreateGroup}: {
@@ -32,16 +32,16 @@ const ChatSidebar = ({userType, conversations, activeConversation, setActiveConv
               key={conv._id}
               onClick={() => setActiveConversation(conv)}
               className={`p-4 border-gray-200 cursor-pointer border-b ${
-                activeConversation?._id === conv._id ? "bg-gray-200" : ""
+                activeConversation?._id === conv._id ? "bg-secondary" : ""
               }`}
             >
-              <h3 className="font-medium truncate text-gray-800">
+              <h3 className="font-medium truncate text-primaryText">
                 {conv.name}
               </h3>
-              <p className="text-sm text-gray-500 truncate">
+              <p className="text-sm text-secondaryText truncate">
                 {conv.lastMessage?.content}
               </p>
-              <p className="text-xs mt-2 text-gray-500">
+              <p className="text-xs mt-2 text-secondaryText">
                 {dateFormatter(String(conv.createdAt))}
               </p>
             </div>

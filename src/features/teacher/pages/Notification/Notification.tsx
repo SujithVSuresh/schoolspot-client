@@ -25,6 +25,7 @@ const Notification = () => {
 
   useEffect(() => {
     notificationSocket.on("receive-notification", (message) => {
+      console.log(message, "notiiii")
       setNotifications((prev) => [message, ...prev]);
     });
 
@@ -81,7 +82,7 @@ const Notification = () => {
                 {notification.message}
               </p>
               <div
-                onClick={() => clearNotificationHandler(notification._id)} 
+                onClick={() => clearNotificationHandler(notification._id as string)} 
                 className="absolute top-0 right-0 w-1/12 h-full text-gray-800 hidden group-hover:flex items-center justify-center transition"
               >
                 <div className="p-2 rounded-full cursor-pointer bg-gray-100">

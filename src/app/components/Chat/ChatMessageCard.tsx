@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { dateFormatter } from "../../utils/formatter";
 import ChatMessageMenu from "./ChatMessageMenu";
-import { MessageListType } from "../../types/chatType";
+import { MessageListType } from "../../types/ChatType";
 
 const ChatMessageCard = ({
   message,
@@ -16,7 +16,6 @@ const ChatMessageCard = ({
   handleMessageMenu: (id: string) => void;
   handleMessageDelete: (id: string) => void;
 }) => {
-
   return (
     <div
       key={message._id}
@@ -27,8 +26,8 @@ const ChatMessageCard = ({
       <div
         className={`max-w-xs md:max-w-md lg:max-w-lg rounded-lg px-4 py-2 ${
           message?.senderId?._id === user?._id
-            ? "bg-blue-500 text-white rounded-br-none"
-            : "bg-gray-200 text-gray-800 rounded-bl-none"
+            ? "bg-primary text-white rounded-br-none"
+            : "bg-secondary text-primaryText rounded-bl-none"
         }`}
       >
         {message.senderId?._id !== user?._id ? (
@@ -53,36 +52,36 @@ const ChatMessageCard = ({
           )
         )}
 
-
         {message.status === "deleted" ? (
-  <span className="text-xs italic">Message deleted</span>
-) : (
-  <div className="flex flex-col gap-1">
-    {(message.messageType === "text" || message.messageType === "file-text") && (
-      <span>{message.content}</span>
-    )}
+          <span className="text-xs italic">Message deleted</span>
+        ) : (
+          <div className="flex flex-col gap-1">
+            {(message.messageType === "text" ||
+              message.messageType === "file-text") && (
+              <span >{message.content}</span>
+            )}
 
-    {(message.messageType === "file" || message.messageType === "file-text") &&
-      message.fileUrl && (
-        <a
-          href={message.fileUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          download
-          className="text-sm text-blue-200 underline"
-        >
-          View Attachment
-        </a>
-      )}
-  </div>
-)}
-
+            {(message.messageType === "file" ||
+              message.messageType === "file-text") &&
+              message.fileUrl && (
+                <a
+                  href={message.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                  className="text-sm text-blue-200 underline"
+                >
+                  View Attachment
+                </a>
+              )}
+          </div>
+        )}
 
         <div
           className={`text-xs mt-1 ${
             message?.senderId?._id === user?._id
-              ? "text-blue-100"
-              : "text-gray-500"
+              ? "text-gray-400"
+              : "text-secondaryText"
           }`}
         >
           {dateFormatter(String(message.createdAt))}

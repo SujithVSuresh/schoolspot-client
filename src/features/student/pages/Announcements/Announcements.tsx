@@ -3,19 +3,24 @@ import { announcementSocket } from "../../../../app/socket/socket";
 import AnnouncementCard from "./components/AnnouncementCard";
 import { AnnouncementType } from "../../types/types";
 import { useOutletContext } from "react-router-dom";
-import { fetchAnnouncementsByClass, fetchPinnedAnnouncements } from "../../api/api";
+import {
+  fetchAnnouncementsByClass,
+  fetchPinnedAnnouncements,
+} from "../../api/api";
 import AnnouncementModal from "./components/AnnouncementModal";
 import { fetchAnnouncementById } from "../../api/api";
 import { AnnouncementDetailsType } from "../../types/types";
 import { announcementPinHandler } from "../../api/api";
 
-
 const Announcements = () => {
   const { classId }: { classId: string } = useOutletContext();
 
   const [announcements, setAnnouncements] = useState<AnnouncementType[]>([]);
-  const [pinnedAnnouncements, setPinnedAnnouncements] = useState<AnnouncementType[]>([]);
-  const [selectedAnnouncement, setSelectedAnnouncements] = useState<AnnouncementDetailsType  | null>(null);
+  const [pinnedAnnouncements, setPinnedAnnouncements] = useState<
+    AnnouncementType[]
+  >([]);
+  const [selectedAnnouncement, setSelectedAnnouncements] =
+    useState<AnnouncementDetailsType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const Announcements = () => {
     };
 
     fetchAnnouncementsHandler(classId);
-    fetchPinnedAnnouncementsHandler()
+    fetchPinnedAnnouncementsHandler();
   }, [classId]);
 
   useEffect(() => {
@@ -78,34 +83,39 @@ const Announcements = () => {
   };
 
   const fetchAnnouncementByIdHandler = async (announcementId: string) => {
-    const response = await fetchAnnouncementById(announcementId)
-    console.log(response, "gagaga...")
-    if(response.success){
-      setSelectedAnnouncements(response.data)
-      setIsModalOpen(true)
+    const response = await fetchAnnouncementById(announcementId);
+    console.log(response, "gagaga...");
+    if (response.success) {
+      setSelectedAnnouncements(response.data);
+      setIsModalOpen(true);
     }
-    
-  }
+  };
 
-  const handleAnnouncementPin = async (announcementId: string, status: "pin" | "unpin") => {
-    const response = await announcementPinHandler(announcementId, status)
-    if(response.success){
-      if(response.data.isPinned){
-        setPinnedAnnouncements((prev) => [response.data, ...prev])
-      }else{
+  const handleAnnouncementPin = async (
+    announcementId: string,
+    status: "pin" | "unpin"
+  ) => {
+    const response = await announcementPinHandler(announcementId, status);
+    if (response.success) {
+      if (response.data.isPinned) {
+        setPinnedAnnouncements((prev) => [response.data, ...prev]);
+      } else {
         setPinnedAnnouncements((prev) => [
-          ...prev.filter((announcement) => announcement._id != response.data._id)
-        ])
+          ...prev.filter(
+            (announcement) => announcement._id != response.data._id
+          ),
+        ]);
       }
-      setIsModalOpen(false)
+      setIsModalOpen(false);
     }
-
-  }
+  };
 
   return (
     <div className="min-h-screen w-full">
-            <div className="grid grid-cols-2 gap-3 mb-3 justify-center w-full">
-          {pinnedAnnouncements.length > 0 && pinnedAnnouncements.map((announcement) => (
+      <div className="flex justify-end items-center"></div>
+      {pinnedAnnouncements.length > 0 && (
+        <div className="grid grid-cols-2 gap-3 mb-3 justify-center w-full border-b pb-5">
+          {pinnedAnnouncements.map((announcement) => (
             <AnnouncementCard
               key={announcement._id}
               announcement={announcement}
@@ -113,18 +123,38 @@ const Announcements = () => {
               pinned={true}
             />
           ))}
+        </div>
+      )}
+
+      <div className="flex gap-2 mb-5 justify-end">
+        <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+          All
+        </span>
+
+        <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+          This Week
+        </span>
+
+        <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+          This Month
+        </span>
       </div>
       <div className="grid grid-cols-2 gap-3 justify-center w-full">
-          {announcements.map((announcement) => (
-            <AnnouncementCard
-              key={announcement._id}
-              announcement={announcement}
-              onModalOpen={fetchAnnouncementByIdHandler}
-              pinned={false}
-            />
-          ))}
+        {announcements.map((announcement) => (
+          <AnnouncementCard
+            key={announcement._id}
+            announcement={announcement}
+            onModalOpen={fetchAnnouncementByIdHandler}
+            pinned={false}
+          />
+        ))}
       </div>
-      <AnnouncementModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} handleAnnouncementPin={handleAnnouncementPin} selectedAnnouncement={selectedAnnouncement as AnnouncementDetailsType}/>
+      <AnnouncementModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        handleAnnouncementPin={handleAnnouncementPin}
+        selectedAnnouncement={selectedAnnouncement as AnnouncementDetailsType}
+      />
     </div>
   );
 };

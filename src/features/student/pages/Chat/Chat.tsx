@@ -3,10 +3,10 @@ import {
   createMessage,
   fetchConversations,
   fetchMessagesByConversation,
-  deleteMessage
+  deleteMessage,
 } from "../../api/api";
-import { Conversation } from "../../../../app/types/chatType";
-import { MessageListType } from "../../../../app/types/chatType";
+import { Conversation } from "../../../../app/types/ChatType";
+import { MessageListType } from "../../../../app/types/ChatType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { chatSocket } from "../../../../app/socket/socket";
@@ -16,7 +16,6 @@ import ChatInputArea from "../../../../app/components/Chat/ChatInputArea";
 import ChatMessageCard from "../../../../app/components/Chat/ChatMessageCard";
 import ConversationDetails from "../../../../app/components/Chat/ConversationDetails";
 
-
 const Chat = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
 
@@ -25,21 +24,19 @@ const Chat = () => {
 
   const [messages, setMessages] = useState<MessageListType[]>([]);
 
-    const [isCreateGroup, setIsCreateGroup] = useState(false);
-      const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    
-
+  const [isCreateGroup, setIsCreateGroup] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [messageMenu, setMessageMenu] = useState("");
 
-    const [viewGroupDetails, setViewGroupDetails] = useState(false)
-
+  const [viewGroupDetails, setViewGroupDetails] = useState(false);
 
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const student = useSelector((state: RootState) => state.student);
 
+  // fetches all the conversations
   useEffect(() => {
     const fetchConversationHandler = async () => {
       const response = await fetchConversations();
@@ -52,6 +49,7 @@ const Chat = () => {
     fetchConversationHandler();
   }, []);
 
+  // fetch All messages from selected conversation
   useEffect(() => {
     if (!activeConversation) return;
 
@@ -67,37 +65,59 @@ const Chat = () => {
     fetchMessages(activeConversation._id);
   }, [activeConversation]);
 
+  // scroll to the bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-useEffect(() => {
-  chatSocket.on("receive-message", (message) => {
-    setMessages((prev) => [...prev, message]);
-
-    setConversations((prev) => {
-      const conversationToUpdate = prev.find(c => c._id === message.conversationId);
-
-      if (conversationToUpdate) {
-        return [
-          {
-            ...conversationToUpdate,
-            lastMessage: message,
-          },
-          ...prev.filter((item) => item._id !== message.conversationId),
-        ];
+  useEffect(() => {
+    chatSocket.on("receive-message", (message) => {
+      if(message.conversationId == activeConversation?._id){
+      setMessages((prev) => [...prev, message]);
       }
 
-      return prev;
+      setConversations((prev) => {
+        const conversationToUpdate = prev.find(
+          (c) => c._id === message.conversationId
+        );
+
+        if (conversationToUpdate) {
+          return [
+            {
+              ...conversationToUpdate,
+              lastMessage: message,
+            },
+            ...prev.filter((item) => item._id !== message.conversationId),
+          ];
+        }
+
+        return prev;
+      });
     });
-  });
 
-  return () => {
-    chatSocket.off("receive-message");
-  };
-}, []);
+    return () => {
+      chatSocket.off("receive-message");
+    };
+  }, [activeConversation?._id]);
 
 
+    useEffect(() => {
+    chatSocket.on("receive-create-conversation", (message) => {
+
+      setConversations((prev) => {
+        return [
+          message,
+          ...prev
+        ]
+      });
+    });
+
+    return () => {
+      chatSocket.off("receive-create-conversation");
+    };
+  }, []);
+
+  // handles the message card menu
   const handleMessageMenu = (id: string) => {
     if (messageMenu == id) {
       setMessageMenu("");
@@ -106,41 +126,26 @@ useEffect(() => {
     }
   };
 
-  // const handleMessageDelete = async (id: string) => {
-  //   const response = await deleteMessage(id);
-  //   console.log(response.data)
-
-  //   if (response.success) {
-  //     const msgs = messages.map((item) => {
-  //       if (item._id == response.data._id) {
-  //         return {
-  //           ...item,
-  //           status: "deleted",
-  //         };
-  //       }
-  //       return item;
-  //     });
-  //     setMessages(msgs);
-  //   }
-  // };
-
+  // handles the send message
   const handleSendMessage = async () => {
-    const formData = new FormData()
+    const formData = new FormData();
 
     const fileAvailable = selectedFile && !inputValue;
-    const fileTextAvailable = selectedFile && inputValue
+    const fileTextAvailable = selectedFile && inputValue;
     const textAvailable = !selectedFile && inputValue;
 
     formData.append("conversationId", activeConversation?._id as string);
-    formData.append("messageType", fileAvailable ? "file" : fileTextAvailable ? "file-text": "text");
+    formData.append(
+      "messageType",
+      fileAvailable ? "file" : fileTextAvailable ? "file-text" : "text"
+    );
 
-
-    if( fileTextAvailable) {
+    if (fileTextAvailable) {
       formData.append("content", inputValue);
       formData.append("attachment", selectedFile);
-    }else if( fileAvailable) {
+    } else if (fileAvailable) {
       formData.append("attachment", selectedFile);
-    }else if(textAvailable) {
+    } else if (textAvailable) {
       formData.append("content", inputValue);
     }
 
@@ -152,13 +157,17 @@ useEffect(() => {
       setSelectedFile(null);
       setMessages((prev) => [...prev, response?.data]);
 
-  if (activeConversation && activeConversation._id) {
-
-      setConversations([{
-    ...activeConversation,
-    lastMessage: response.data,
-  }, ...conversations.filter((item) => item._id !== activeConversation?._id)])
-  }
+      if (activeConversation && activeConversation._id) {
+        setConversations([
+          {
+            ...activeConversation,
+            lastMessage: response.data,
+          },
+          ...conversations.filter(
+            (item) => item._id !== activeConversation?._id
+          ),
+        ]);
+      }
       chatSocket.emit("send-message", {
         roomId: `conversation-${activeConversation?._id}`,
         message: response.data,
@@ -166,26 +175,29 @@ useEffect(() => {
     }
   };
 
-    const handleViewGroupDetails = () => {
-    setViewGroupDetails((prev) => !prev)
-  }
+ 
+  const handleViewGroupDetails = () => {
+    setViewGroupDetails((prev) => !prev);
+  };
 
-    const handleMessageDelete = async (id: string) => {
-      const response = await deleteMessage(id);
-  
-      if (response.success) {
-        const msgs = messages.map((item) => {
-          if (item._id == response.data._id) {
-            return {
-              ...item,
-              status: "deleted",
-            };
-          }
-          return item;
-        });
-        setMessages(msgs);
-      }
-    };
+
+  // delete message handler
+  const handleMessageDelete = async (id: string) => {
+    const response = await deleteMessage(id);
+
+    if (response.success) {
+      const msgs = messages.map((item) => {
+        if (item._id == response.data._id) {
+          return {
+            ...item,
+            status: "deleted" as "deleted" | "active",
+          };
+        }
+        return item;
+      });
+      setMessages(msgs);
+    }
+  };
 
   return (
     <div className="flex h-screen mt-5 border rounded-lg top-50 sticky w-full bg-white">
@@ -196,31 +208,30 @@ useEffect(() => {
         activeConversation={activeConversation}
         setActiveConversation={setActiveConversation}
         setIsCreateGroup={setIsCreateGroup}
-
       />
 
       {/* Main chat area */}
       <div className="flex-1 flex flex-col">
         {/* Header with sidebar toggle */}
-             {activeConversation && (
-        <ChatHeader
-          userType="Student"
-          activeConversation={activeConversation}
-          handleViewGroupDetails={handleViewGroupDetails}
-        />
-             )}
+        {activeConversation && (
+          <ChatHeader
+            userType="Student"
+            activeConversation={activeConversation}
+            handleViewGroupDetails={handleViewGroupDetails}
+          />
+        )}
 
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages?.length > 0 &&
             messages.map((message, index) => (
-              <ChatMessageCard 
-              key={index}
-              message={message} 
-              user={student}
-                  messageMenu={messageMenu}
+              <ChatMessageCard
+                key={index}
+                message={message}
+                user={student}
+                messageMenu={messageMenu}
                 handleMessageMenu={handleMessageMenu}
-                handleMessageDelete={handleMessageDelete} 
+                handleMessageDelete={handleMessageDelete}
               />
             ))}
           <div ref={messagesEndRef} />
@@ -228,21 +239,22 @@ useEffect(() => {
 
         {/* Input area */}
         {activeConversation && (
-        <ChatInputArea
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleSendMessage={handleSendMessage}
-          selectedFile={selectedFile}
-          setSelectedFile={setSelectedFile}
-        />
+          <ChatInputArea
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleSendMessage={handleSendMessage}
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
+          />
         )}
       </div>
 
-           {viewGroupDetails && (
-     <ConversationDetails conversation={activeConversation as Conversation} handleViewGroupDetails={handleViewGroupDetails}/>
-
-     )}
- 
+      {viewGroupDetails && (
+        <ConversationDetails
+          conversation={activeConversation as Conversation}
+          handleViewGroupDetails={handleViewGroupDetails}
+        />
+      )}
     </div>
   );
 };

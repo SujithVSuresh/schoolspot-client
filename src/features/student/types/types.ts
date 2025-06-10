@@ -90,12 +90,12 @@ export interface InvoiceDetailsType {
 
 
   export interface NotificationType {
-    _id: string;
+    _id?: string;
     notificationType: string; 
     message: string; 
     userNotificationId: string;
     title: string;
-    createdAt: Date;
+    createdAt?: Date;
 }
 
 

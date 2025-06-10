@@ -16,7 +16,6 @@ import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import Announcements from "../pages/Announcements/Announcements";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import InvoiceDetailsPage from "../pages/InvoiceDetails/InvoiceDetails";
-import LeaveLetters from "../pages/LeaveLetters/LeaveLetters";
 import Chat from "../pages/Chat/Chat";
 import Notifications from "../pages/Notifications/Notifications";
 import CreateLeaveLetter from "../pages/CreateLeaveLetter/CreateLeaveLetter";

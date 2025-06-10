@@ -11,9 +11,14 @@ import {
 } from "../../../../app/socket/socket";
 import { useNavigate } from "react-router-dom";
 import { Conversation } from "../../../../app/types/ChatType";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../app/store";
+import { useNotifications } from "../../../../app/hooks/useNotifications";
 
 const StudentLayout = () => {
   const navigate = useNavigate();
+  const student = useSelector((state: RootState) => state.student)
+  
 
   const [studentProfile, setStudentProfile] = useState<{
     _id: string;
@@ -38,15 +43,18 @@ const StudentLayout = () => {
 
   const [newAnnouncementBadgeCount, setNewAnnouncementBadgeCount] = useState(0);
 
+
+  // fetching student profile data
   useEffect(() => {
     const fetchStudentProfileHandler = async () => {
       const response = await fetchProfileforStudent();
-      console.log(response, "resssss123");
       setStudentProfile(response.data);
     };
     fetchStudentProfileHandler();
   }, []);
 
+
+  //handling announcement room
   useEffect(() => {
     if (studentProfile?.academicProfile?._id) {
       announcementSocket.connect();
@@ -59,23 +67,18 @@ const StudentLayout = () => {
         );
       });
 
-      announcementSocket.on("receive-announcement", (message) => {
-        if (message) {
-          setNewAnnouncementBadgeCount((prev) => prev + 1);
-        }
-      });
-
       return () => {
         announcementSocket.emit(
           "leave-room",
           `room-${studentProfile?.academicProfile?._id}`
         );
-        announcementSocket.off("receive-announcement");
         announcementSocket.disconnect();
       };
     }
   }, [studentProfile?.academicProfile?._id]);
 
+
+  // conversation room handler
   useEffect(() => {
     const fetchConversationHandler = async () => {
       const response = await fetchConversations();
@@ -85,6 +88,9 @@ const StudentLayout = () => {
 
         chatSocket.on("connect", () => {
           console.log("Connected:", chatSocket.id);
+
+          chatSocket.emit("register-user", student._id);
+
 
           response.data.forEach((conversation: Conversation) => {
             chatSocket.emit("join-room", `conversation-${conversation._id}`);
@@ -103,7 +109,7 @@ const StudentLayout = () => {
     //   chatSocket.emit("leave-room", `conversation-${conversation._id}`);
     // })
     // };
-  }, []);
+  }, [student._id]);
 
   // student joining their own notification room
   useEffect(() => {
@@ -128,9 +134,17 @@ const StudentLayout = () => {
     }
   }, [studentProfile?.userId._id]);
 
+
+
   const setAnnouncementBadgeHandler = (value: number) => {
     setNewAnnouncementBadgeCount(value);
   };
+
+  const notifications = useNotifications("student");
+
+  const unreadCount = notifications?.filter(n => !n.isRead).length ?? 0;
+
+
 
   return (
     <>
@@ -185,7 +199,7 @@ const StudentLayout = () => {
                     <Bell className="w-5 h-5" />
                     {/* Notification badge */}
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                      3
+                      {unreadCount}
                     </span>
                   </button>
                 </div>

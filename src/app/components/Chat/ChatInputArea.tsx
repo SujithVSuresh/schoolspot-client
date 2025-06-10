@@ -81,9 +81,9 @@ const ChatInputArea = ({
         <button
           onClick={handleSendMessage}
           disabled={selectedFile === null && !inputValue.trim()}
-          className="bg-blue-600 flex text-white p-3 h-full rounded-lg disabled:bg-blue-300 transition-colors"
+          className="bg-primary flex text-white p-3 h-full rounded-lg disabled:bg-secondary transition-colors"
         >
-          <SendHorizonal className="w-4 h-4" />
+          <SendHorizonal className={`w-4 h-4 ${selectedFile === null && !inputValue.trim() ? "text-secondaryText" : "text-white"}`} />
         </button>
       </div>
     </div>

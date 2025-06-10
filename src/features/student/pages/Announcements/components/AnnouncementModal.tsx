@@ -42,16 +42,16 @@ const AnnouncementModal = ({
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <div className="flex items-center space-x-2">
-                  <h3 className="text-lg font-medium text-gray-700">
+                  <h3 className="text-xl font-semibold text-primaryText">
                     {selectedAnnouncement?.title}
                   </h3>
                 </div>
-                <p className="mt-2 text-gray-600">
+                <p className="mt-2 text-primaryText">
                   {selectedAnnouncement?.content}
                 </p>
 
                 <div className="flex justify-between mt-5 items-center">
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-primaryText">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-1" />
                       {dateFormatter(selectedAnnouncement.createdAt)}
@@ -68,7 +68,7 @@ const AnnouncementModal = ({
                       onClick={() =>
                         handleAnnouncementPin(selectedAnnouncement._id, "unpin")
                       }
-                      className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600"
+                      className="bg-primary text-white text-sm px-3 py-1 rounded hover:bg-secondary"
                     >
                       Unpin
                     </button>
@@ -77,7 +77,7 @@ const AnnouncementModal = ({
                       onClick={() =>
                         handleAnnouncementPin(selectedAnnouncement._id, "pin")
                       }
-                      className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600"
+                      className="bg-primary text-white text-sm px-3 py-1 rounded hover:bg-secondary"
                     >
                       Pin
                     </button>

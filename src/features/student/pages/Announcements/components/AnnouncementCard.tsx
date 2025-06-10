@@ -19,14 +19,14 @@ const AnnouncementCard = ({
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center space-x-2">
-            <h3 className="text-xl font-semibold text-primaryText">
+            <h3 className="text-lg font-semibold text-primary">
               {announcement.title.slice(0, 80)}..{" "}
             </h3>
           </div>
           <p className="mt-2 text-primaryText">
             {announcement.content.slice(0, 100)} ..{" "}
             <span
-              className="text-blue-700 text-sm hover:cursor-pointer"
+              className="text-primaryText underline font-semibold text-sm hover:cursor-pointer"
               onClick={() => onModalOpen(announcement._id)}
             >
               read more

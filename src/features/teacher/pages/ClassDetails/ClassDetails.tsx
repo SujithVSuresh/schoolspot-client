@@ -33,8 +33,6 @@ const ClassDetails = () => {
 
   const students = useSelector((state: RootState) => state.studentList);
 
-  console.log(students, "this is the students...");
-
   const classId = location.pathname.split("/")[3];
 
   const [classDetails, setClassDetails] = useState<ClassType>({

@@ -29,10 +29,7 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
     });
   
     useEffect(() => {
-      fetchAssignmentByIdHandler(assignmentId);
-    }, [assignmentId]);
-  
-    async function fetchAssignmentByIdHandler(assignmentId: string) {
+          async function fetchAssignmentByIdHandler(assignmentId: string) {
       const response = await fetchAssignmentById(assignmentId);
   
       if (response.success) {
@@ -41,10 +38,14 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
       }
   
     }
+      fetchAssignmentByIdHandler(assignmentId);
+    }, [assignmentId]);
+  
+
   return (
     <div className="w-7/12 mr-5">
     <div className="flex items-center gap-3 mb-4">
-      <h2 className="text-2xl font-medium text-gray-700">
+      <h2 className="text-2xl font-semibold text-primary">
         {assignmentData.title}
       </h2>
     </div>
@@ -72,16 +73,16 @@ const AssignmentComponent = ({submissionTypeHandler}: {submissionTypeHandler: (f
     )}
 
     <div className="flex mt-6 gap-5">
-      <div className="flex items-center text-gray-600">
-        <Calendar className="w-4 h-4 mr-2 text-purple-500" />
+      <div className="flex items-center text-primaryText">
+        <Calendar className="w-4 h-4 mr-2 text-primaryText" />
         <span className="text-sm">
           Due: {dateFormatter(assignmentData.dueDate)} -{" "}
           {timeFormatter(assignmentData.dueDate)}
         </span>
       </div>
 
-      <div className="flex items-center text-gray-600">
-        <Calendar className="w-4 h-4 mr-2 text-green-500" />
+      <div className="flex items-center text-primaryText">
+        <Calendar className="w-4 h-4 mr-2 text-primaryText" />
         <span className="text-sm">
           Created: {dateFormatter(String(new Date()))}
         </span>

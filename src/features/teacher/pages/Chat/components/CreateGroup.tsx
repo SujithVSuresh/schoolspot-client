@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createConversation } from "../../../api/api";
 import { successToast } from "../../../../../app/utils/toastMessage";
 import { Conversation } from "../../../../../app/types/ChatType";
-
+import { chatSocket } from "../../../../../app/socket/socket";
 
 const CreateGroup = ({
   setIsCreateGroup,
@@ -14,11 +14,9 @@ const CreateGroup = ({
 }: {
   setIsCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
   subjectId: string;
-  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
 }) => {
   const students = useSelector((state: RootState) => state.studentList);
-
-  console.log(students, "Sssss")
 
   const [groupName, setGroupName] = useState("");
   const [members, setMembers] = useState<string[]>([]);
@@ -34,11 +32,10 @@ const CreateGroup = ({
     }
   };
 
-  console.log("triii", members)
-
-  const handleCreateGroupSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCreateGroupSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
-    console.log(groupName, members, "jjjjjjjjjjj")
 
     const response = await createConversation({
       isGroup: true,
@@ -48,9 +45,17 @@ const CreateGroup = ({
     });
 
     if (response.success) {
-      successToast("Group created succcessfully")
-      setIsCreateGroup(false)
-      setConversations((prev) => [response.data, ...prev])
+      successToast("Group created succcessfully");
+      setIsCreateGroup(false);
+      chatSocket.emit("join-room", `conversation-${response.data._id}`);
+
+      console.log(response.data, "convv data.....")
+      chatSocket.emit("create-conversation", {
+        roomId: `conversation-${response.data?._id}`,
+        message: response.data,
+      });
+
+      setConversations((prev) => [response.data, ...prev]);
       console.log(response.data, "group added successfully...");
     }
   };
@@ -113,7 +118,9 @@ const CreateGroup = ({
                       className="w-10 h-10 rounded-full object-cover mr-3"
                     />
                     <div>
-                      <p className="font-medium">{student.studentId.fullName}</p>
+                      <p className="font-medium">
+                        {student.studentId.fullName}
+                      </p>
                       <p className="text-sm text-gray-500">
                         Roll No: {student.roll}
                       </p>
