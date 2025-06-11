@@ -30,9 +30,9 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
-        source: "dist/*"
+        source: "dist"
         target: "/var/www/schoolspot"
-        strip_components: 0
+        strip_components: 1
         rm: true
 
     - name: Reload Nginx
