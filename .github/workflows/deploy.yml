@@ -3,7 +3,7 @@ name: Deploy React App to EC2
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main  # or your deployment branch
 
 jobs:
   deploy:
@@ -13,26 +13,29 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18
 
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build
+    - name: Install dependencies
+      run: npm install
 
-    - name: Deploy to EC2
+    - name: Build React app
+      run: npm run build
+
+    - name: Deploy dist folder to EC2
       uses: appleboy/scp-action@v0.1.3
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
-        source: "build/*"
+        source: "dist"
         target: "/var/www/schoolspot"
+        strip_components: 0
+        rm: true
 
-    - name: Reload Nginx (optional)
+    - name: Reload Nginx
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
