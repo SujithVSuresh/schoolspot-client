@@ -7,7 +7,6 @@ import LeaveLetter from "./components/LeaveLetter";
 
 const Attendance = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-
   const [year, setYear] = useState(new Date().getFullYear());
 
   const [attendanceData, setAttendanceData] = useState<
@@ -19,7 +18,8 @@ const Attendance = () => {
   >([]);
 
   useEffect(() => {
-    fetchAttendanceHandler(new Date(year, month - 1, 1).toISOString());
+    const dateStr = `${year}-${String(month).padStart(2, "0")}-01`;
+    fetchAttendanceHandler(dateStr);
   }, [month, year]);
 
   const fetchAttendanceHandler = async (date: string) => {
@@ -31,7 +31,7 @@ const Attendance = () => {
   };
 
   const getDaysInMonth = (month: number, year: number) => {
-    return new Date(year, month - 1, 0).getDate();
+    return new Date(year, month, 0).getDate(); // correct range
   };
 
   const getFirstDayOfMonth = (month: number, year: number) => {
@@ -61,29 +61,26 @@ const Attendance = () => {
   };
 
   const moveNextMonth = () => {
-    if (month == 12) {
+    if (month === 12) {
       setYear((prev) => prev + 1);
       setMonth(1);
-      return;
+    } else {
+      setMonth((prev) => prev + 1);
     }
-
-    setMonth((prev) => prev + 1);
   };
 
   const movePrevMonth = () => {
-    if (month == 1) {
+    if (month === 1) {
       setYear((prev) => prev - 1);
       setMonth(12);
-      return;
+    } else {
+      setMonth((prev) => prev - 1);
     }
-
-    setMonth((prev) => prev - 1);
   };
 
   const renderDays = () => {
     const days = [];
 
-    // Empty cells for days before the first day of the month
     for (let i = 0; i < firstDayOfMonth; i++) {
       days.push(
         <div
@@ -93,7 +90,6 @@ const Attendance = () => {
       );
     }
 
-    // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const status = getStatusForDay(day);
       const statusClass = getStatusClass(status);
@@ -133,7 +129,7 @@ const Attendance = () => {
     return days;
   };
 
-  const attendacneStat = [
+  const attendanceStat = [
     {
       name: "Working Days",
       data: attendanceData.length,
@@ -141,34 +137,24 @@ const Attendance = () => {
     },
     {
       name: "Present Count",
-      data: attendanceData.reduce((acc, val) => {
-        if (val.status == "Present") {
-          return acc + 1;
-        }
-        return acc;
-      }, 0),
+      data: attendanceData.reduce((acc, val) => val.status === "Present" ? acc + 1 : acc, 0),
       icon: <CalendarCheck className="w-5 h-5 text-primaryText" />,
     },
     {
       name: "Absent Count",
-      data: attendanceData.reduce((acc, val) => {
-        if (val.status == "Absent") {
-          return acc + 1;
-        }
-        return acc;
-      }, 0),
+      data: attendanceData.reduce((acc, val) => val.status === "Absent" ? acc + 1 : acc, 0),
       icon: <CalendarX className="w-5 h-5 text-primaryText" />,
     },
   ];
 
+  const selectedDateStr = `${year}-${String(month).padStart(2, "0")}-01`;
+
   return (
     <div className="rounded-lg overflow-hidden w-full">
       <div className="flex w-full gap-x-5">
-        {attendacneStat.map((item, index) => (
+        {attendanceStat.map((item, index) => (
           <div key={index} className="w-full flex border p-5 rounded-lg">
-            <div className="bg-secondary p-3.5 rounded-full mr-4">
-              {item.icon}
-            </div>
+            <div className="bg-secondary p-3.5 rounded-full mr-4">{item.icon}</div>
             <div>
               <p className="text-sm text-secondaryText">{item.name}</p>
               <p className="text-primaryText">{item.data}</p>
@@ -176,7 +162,8 @@ const Attendance = () => {
           </div>
         ))}
       </div>
-      <div className="py-4  flex justify-between items-center">
+
+      <div className="py-4 flex justify-between items-center">
         <div className="mt-4 flex flex-wrap gap-2">
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -187,10 +174,11 @@ const Attendance = () => {
             <span className="text-xs text-gray-600">Absent</span>
           </div>
         </div>
+
         <div className="flex items-center space-x-4">
           <button
             onClick={movePrevMonth}
-            className="p-1 rounded-md bg-secondary transition-colors duration-200"
+            className="p-1 rounded-md bg-secondary"
             aria-label="Previous month"
           >
             <ChevronLeft className="h-5 w-5 text-gray-600" />
@@ -200,26 +188,27 @@ const Attendance = () => {
           </span>
           <button
             onClick={moveNextMonth}
-            className="p-1 rounded-md bg-secondary transition-colors duration-200"
+            className="p-1 rounded-md bg-secondary"
             aria-label="Next month"
           >
             <ChevronRight className="h-5 w-5 text-gray-600" />
           </button>
         </div>
       </div>
+
       <div className="flex gap-5">
-      <div className="grid grid-cols-7 gap-px w-8/12">
-        {weekdays.map((day) => (
-          <div
-            key={day}
-            className="py-2 text-center text-sm font-medium text-primaryText bg-secondary"
-          >
-            {day}
-          </div>
-        ))}
-        {renderDays()}
-      </div>
-      <LeaveLetter selectedDate={new Date(year, month - 1, 1).toISOString()} />
+        <div className="grid grid-cols-7 gap-px w-8/12">
+          {weekdays.map((day) => (
+            <div
+              key={day}
+              className="py-2 text-center text-sm font-medium text-primaryText bg-secondary"
+            >
+              {day}
+            </div>
+          ))}
+          {renderDays()}
+        </div>
+        <LeaveLetter selectedDate={selectedDateStr} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import logo from "../../../assets/images/dotlogo.png";
-import { Bell } from "lucide-react";
+// import { Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { UserCircle } from "lucide-react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,19 +18,17 @@ const Header = () => {
           <Link to={'/teacher/classes'} className={`font-medium ${pathName[2] == "classes" ? "text-gray-900 border-b-2 border-gray-900 pb-1" : "text-gray-500 hover:text-gray-900 transition-colors"}`}>Classes</Link>
         </div> */}
       <div className="flex items-center space-x-6">
-        <button
+        {/* <button
           onClick={() => navigate("/teacher/notification")}
           className="text-gray-500 bg-gray-50 p-3 rounded-full hover:text-gray-900 transition-colors"
         >
           <Bell className="w-5 h-5" />
-        </button>
+        </button> */}
 
-        <img
-          onClick={() => navigate("/teacher/profile")}
-          className="w-8 h-8 ring-2 ring-offset-2 rounded-full ring-gray-200 cursor-pointer transition-all hover:ring-gray-300 object-cover"
-          src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
-          alt=""
-        />
+    <UserCircle
+      onClick={() => navigate("/teacher/profile")}
+      className="w-8 h-8 rounded-full cursor-pointer transition-all hover:ring-gray-300 text-gray-500"
+    />
       </div>
     </nav>
   );
