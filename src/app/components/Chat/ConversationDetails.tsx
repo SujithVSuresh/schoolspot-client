@@ -138,24 +138,24 @@ const ConversationDetails = ({
                 >
                   <div className="flex items-center">
                     <img
-                      src={student.profilePhoto}
-                      alt={student.fullName}
+                      src={student?.studentId.profilePhoto}
+                      alt={student?.studentId.fullName}
                       className="w-10 h-10 rounded-full object-cover mr-3"
                     />
                     <div>
-                      <p className="font-medium">{student.fullName}</p>
+                      <p className="font-medium">{student?.studentId.fullName}</p>
                       <p className="text-sm text-gray-500">
-                        Roll No: {student.academicProfile.roll}
+                        Roll No: {student?.roll}
                       </p>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     name="selectedStudents"
-                    value={student?.userId?._id}
+                    value={student?.userId}
                     className="accent-blue-600 w-4 h-4"
                     onChange={(e) => handleGroupMember(e)}
-                    checked={participants.includes(student.userId._id)}
+                    checked={participants.includes(student?.userId)}
                   />
                 </label>
               ))}
