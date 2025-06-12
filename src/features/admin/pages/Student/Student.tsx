@@ -23,8 +23,6 @@ function Student() {
   const classfilter = searchParams.get("classFilter") || "";
   const statusFilter = searchParams.get("statusFilter") || "";
 
-  console.log(students, "hhhhhhh")
-
   useEffect(() => {
     const fetchUserData = async () => {
       let sortBy = "";
