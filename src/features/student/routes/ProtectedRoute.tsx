@@ -17,7 +17,7 @@ const ProtectedRoute = ({children, isLogin}: ProtectedRouteProps) => {
       }
       
       if(!isLogin && student.accessToken && student.status == "active"){
-        return <Navigate to="/student" replace />;
+        return <Navigate to="/student/home" replace />;
       }
   
       return (
