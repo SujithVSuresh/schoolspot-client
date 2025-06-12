@@ -47,6 +47,7 @@ function Student() {
       );
 
       if (data?.success) {
+        console.log(data, "students data");
         setStudents(data.data.students);
         setTotalPages(data.data.totalPages);
       } else {

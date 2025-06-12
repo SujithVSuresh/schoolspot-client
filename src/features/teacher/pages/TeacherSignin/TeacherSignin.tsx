@@ -48,6 +48,7 @@ const TeacherSignin = () => {
                   navigate("/teacher");
                 }, 1000);
               } else {
+                console.log(response, "error in teacher signin")
                 setTimeout(() => {
                   setLoading(false);
                   toast(

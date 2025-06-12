@@ -8,7 +8,7 @@ import { ChangePasswordType } from "../../../app/components/ChangePasswordCompon
 
 export const signin = async (userData: TeacherSigninFormType) => {
     try{
-        const {data} = await axiosInstance.post("http://localhost:3000/auth/signin", {
+        const {data} = await axiosInstance.post(`${envData.VITE_ENDPOINT_ORIGIN}/auth/signin`, {
             ...userData,
             role: "teacher"
         });
