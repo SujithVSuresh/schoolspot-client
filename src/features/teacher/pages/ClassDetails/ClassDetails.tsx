@@ -24,7 +24,7 @@ import { Conversation } from "../../../../app/types/ChatType";
 import { setStudentList } from "../../redux/studentListSlice";
 import { getStudentsByClassId } from "../../api/api";
 import { notificationSocket } from "../../../../app/socket/socket";
-import { StudentProfileType } from "../../../../app/types/StudentType";
+import { StudentAcademicProfileListType, StudentProfileType } from "../../../../app/types/StudentType";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
@@ -126,13 +126,13 @@ const ClassDetails = () => {
 
     notificationSocket.on("connect", () => {
       console.log("Connected:", notificationSocket.id);
-      students?.forEach((item: StudentProfileType) => {
+      students?.forEach((item: StudentAcademicProfileListType) => {
         notificationSocket.emit("join-room", `notification-${item?.userId}`);
       });
     });
 
     return () => {
-      students?.forEach((item: StudentProfileType) => {
+      students?.forEach((item: StudentAcademicProfileListType) => {
         notificationSocket.emit(
           "leave-room",
           `notification-${item?.userId}`

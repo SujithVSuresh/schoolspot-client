@@ -7,6 +7,8 @@ import { RootState } from "../../../../app/store";
 const TeacherStudents = () => {
   const students = useSelector((state: RootState) => state.studentList);
 
+  console.log(students, "Studentss....")
+
   const location = useLocation();
 
   const classId = location.pathname.split("/")[3];
@@ -22,9 +24,9 @@ const TeacherStudents = () => {
         {students.map((student, index) => (
           <StudentCard
             student={{
-              fullName: student.fullName,
-              roll: student.academicProfile.roll,
-              profilePhoto: student.profilePhoto
+              fullName: student?.studentId?.fullName,
+              roll: student?.roll,
+              profilePhoto: student?.studentId?.profilePhoto
             }}
             key={index}
           />

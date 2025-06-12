@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StudentProfileType } from "../../../app/types/StudentType";
+import { StudentAcademicProfileListType } from "../../../app/types/StudentType";
 
 
-const initialState: StudentProfileType[] = [];
+const initialState: StudentAcademicProfileListType[] = [];
 
 
 const studentListSlice = createSlice({
