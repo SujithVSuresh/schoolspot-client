@@ -9,11 +9,13 @@ import { fetchSubjects, deleteSubject } from "../../api/api";
 import { textFormatter } from "../../../../app/utils/formatter";
 import { Edit2, Trash2 } from "lucide-react";
 import AddButton from "../../components/AddButton";
+import CustomProgress from "../../../../app/components/Loader/CustomProgress";
 
 const ClassSubjects = () => {
   const navigate = useNavigate();
   const { classId }: { classId: string } = useOutletContext();
 
+  const [loading, setLoading] = useState(false);
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
   const [showMenu, setShowMenu] = useState("");
 
@@ -22,11 +24,13 @@ const ClassSubjects = () => {
   }, [classId]);
 
   const handleFetchSubjects = async (classId: string) => {
+    setLoading(true)
     const response = await fetchSubjects(classId);
 
     if (response.success) {
       setSubjects(response.data);
     }
+    setLoading(false)
   };
 
   const toggleMenu = (subjectId: string) => {
@@ -54,6 +58,7 @@ const ClassSubjects = () => {
   };
   return (
     <div>
+      <CustomProgress isAnimating={loading} />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Subjects
