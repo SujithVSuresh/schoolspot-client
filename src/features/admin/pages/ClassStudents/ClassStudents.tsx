@@ -3,13 +3,16 @@ import { useOutletContext } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import AddButton from "../../components/AddButton";
+// import CustomProgress from "../../../../app/components/Loader/CustomProgress";
 
 const ClassStudents = () => {
   const students = useSelector((state: RootState) => state.studentListAdmin);
+  console.log(students, "shooo")
   const { classId }: { classId: string } = useOutletContext();
 
   return (
     <>
+     
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Students

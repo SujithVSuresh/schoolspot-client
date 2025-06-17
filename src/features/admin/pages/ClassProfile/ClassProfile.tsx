@@ -15,6 +15,8 @@ import {
 import SectionButton from "./components/SectionButton";
 import { useDispatch } from "react-redux";
 import { setStudentList } from "../../redux/studentListAdminSlice";
+import BoxSkelton from "../../../../app/components/Loader/BoxSkelton";
+import { useLoading } from "../../../../app/hooks/useLoading";
 
 const ClassProfile = () => {
   const dispatch = useDispatch();
@@ -33,16 +35,20 @@ const ClassProfile = () => {
       date: string;
     };
   } | null>(null);
+  const { isLoading, startLoading, stopLoading } = useLoading();
+  
 
   const urlSection = location.pathname.split("/")[5];
 
   useEffect(() => {
     const fetchClassProfileData = async () => {
       if (classId) {
+        startLoading()
         const response = await getClassById(classId);
         if (response.success) {
           setClassData(response.data?.data);
         }
+        stopLoading()
       }
     };
 
@@ -134,6 +140,7 @@ const ClassProfile = () => {
 
   return (
     <div className="pt-5">
+      {isLoading ? <BoxSkelton count={6}/> : 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {classInfo.map((info) => (
           <ClassInfoCard
@@ -143,6 +150,7 @@ const ClassProfile = () => {
           />
         ))}
       </div>
+      }
 
       <div className="mt-10">
         <div className="flex border-b pb-5 border-gray-200 justify-between">

@@ -10,28 +10,31 @@ import { textFormatter } from "../../../../app/utils/formatter";
 import { Edit2, Trash2 } from "lucide-react";
 import AddButton from "../../components/AddButton";
 import CustomProgress from "../../../../app/components/Loader/CustomProgress";
+import { useLoading } from "../../../../app/hooks/useLoading";
+import Spinner from "../../../../app/components/Loader/Spinner";
 
 const ClassSubjects = () => {
   const navigate = useNavigate();
   const { classId }: { classId: string } = useOutletContext();
 
-  const [loading, setLoading] = useState(false);
+  const { isLoading, startLoading, stopLoading } = useLoading();
+
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
   const [showMenu, setShowMenu] = useState("");
 
   useEffect(() => {
+    const handleFetchSubjects = async (classId: string) => {
+      startLoading();
+      const response = await fetchSubjects(classId);
+
+      if (response.success) {
+        setSubjects(response.data);
+      }
+      stopLoading();
+    };
+
     handleFetchSubjects(classId);
   }, [classId]);
-
-  const handleFetchSubjects = async (classId: string) => {
-    setLoading(true)
-    const response = await fetchSubjects(classId);
-
-    if (response.success) {
-      setSubjects(response.data);
-    }
-    setLoading(false)
-  };
 
   const toggleMenu = (subjectId: string) => {
     setShowMenu((prev) => {
@@ -58,7 +61,7 @@ const ClassSubjects = () => {
   };
   return (
     <div>
-      <CustomProgress isAnimating={loading} />
+      <CustomProgress isAnimating={isLoading} />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 ml-0">
           Subjects
@@ -72,11 +75,11 @@ const ClassSubjects = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+     {isLoading ? <Spinner /> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
         {subjects &&
           subjects.length > 0 &&
           subjects.map((subject) => (
-            <div className="bg-gray-100 rounded-xl p-4 relative">
+            <div className="border rounded-xl p-4 relative">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div>
@@ -124,6 +127,9 @@ const ClassSubjects = () => {
             </div>
           ))}
       </div>
+}
+
+
     </div>
   );
 };
