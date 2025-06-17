@@ -15,21 +15,21 @@ const Header = () => {
       <img src={logo} alt="" className="lg:h-10 md:h-8 h-8" />
       {(location.pathname === "/signup" || location.pathname === "/signin") &&
         (location.pathname === "/signup" ? (
-          <h5 className="font-medium">
+          <h5 className="font-medium text-primaryText">
             Have an account?{" "}
             <span
               onClick={() => navigate("/signin")}
-              className="text-blue-500 cursor-pointer font-semibold"
+              className="text-primary cursor-pointer font-semibold"
             >
               Sign in
             </span>
           </h5>
         ) : (
-          <h5 className="font-medium">
+          <h5 className="font-medium text-primaryText">
             Don't have an account?{" "}
             <span
               onClick={() => navigate("/school-info")}
-              className="text-blue-500 cursor-pointer font-semibold"
+              className="text-primary cursor-pointer font-semibold"
             >
               Sign up
             </span>

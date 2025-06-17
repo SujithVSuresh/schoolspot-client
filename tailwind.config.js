@@ -11,7 +11,7 @@ export default {
         primary: "#0D0D0D",
         secondary: "#F3F4F6",
         //text
-        primaryText: "#374151",
+        primaryText: "#1F2937",
         secondaryText: "#6B7280"
       },
       fontFamily: {

@@ -41,8 +41,8 @@ const Overview = () => {
             key={2}
             className="bg-white rounded-lg border p-4 flex items-center"
           >
-            <div className={`rounded-full p-4 mr-4 bg-blue-200`}>
-              <GraduationCap className="text-blue-800"/>
+            <div className={`rounded-full p-4 mr-4 bg-secondary`}>
+              <GraduationCap className="text-secondaryText"/>
             </div>
             <div>
               <p className="text-sm text-gray-500">Student Count</p>

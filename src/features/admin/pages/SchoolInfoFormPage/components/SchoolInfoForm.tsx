@@ -386,7 +386,7 @@ const SchoolInfoForm = () => {
           <button
             disabled={loading}
             type="submit"
-            className="bg-indigo-600 w-full mt-5 text-white h-12 px-5 flex justify-center items-center rounded-lg font-medium hover:bg-indigo-700"
+            className="bg-primary text: text-white w-full mt-5 h-12 px-5 flex justify-center items-center rounded-lg font-medium hover:bg-secondary hover:text-secondaryText"
           >
             {loading ? (
               <img className="w-10 h-10" src={loadingGif} alt="" />

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { createAcademicProfile } from '../../api/api';
 import { errorToast, successToast } from '../../../../app/utils/toastMessage';
 
+
 const AddAcademicProfile = () => {
   const {classId} = useParams()
   const navigate = useNavigate()
@@ -82,65 +83,68 @@ const AddAcademicProfile = () => {
 
   return (
     <div className="pt-10 px-6 md:px-16 lg:px-28 flex flex-col justify-center items-center mt-10 w-full">
-      <form
-        method="POST"
-        onSubmit={handleSubmit}
-        className="space-y-4 w-5/12 mt-6 p-6 rounded-lg border border-gray-400"
-      >
-        <h1 className="text-xl font-medium text-gray-800 text-center">
-          Create Academic Profile
-        </h1>
+     <form
+  method="POST"
+  onSubmit={handleSubmit}
+  className="space-y-8 w-5/12 border p-8 rounded-lg"
+>
+  <h1 className="text-2xl font-bold text-primaryText text-center">
+    Academic Profile
+  </h1>
 
-        <div>
-          <label className="block text-sm mb-1 font-medium text-gray-700">
-            Admission No
-          </label>
-          <input
-            name="admissionNo"
-            value={formData.admissionNo}
-            onChange={handleChange}
-            type="text"
-            className="w-full p-2 border border-gray-400 rounded outline-none"
-          />
-          {errors.admissionNo && (
-            <p className="text-red-500 text-xs mt-1">{errors.admissionNo}</p>
-          )}
-        </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Admission no
+    </label>
+    <input
+      name="admissionNo"
+      value={formData.admissionNo}
+      onChange={handleChange}
+      type="text"
+      placeholder="Enter admission number"
+      className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
+    />
+    {errors.admissionNo && (
+      <p className="text-red-500 text-sm mt-1">{errors.admissionNo}</p>
+    )}
+  </div>
 
-        <div>
-          <label className="block text-sm mb-1 font-medium text-gray-700">
-            Roll No (numbers only)
-          </label>
-          <input
-            name="rollNo"
-            value={formData.rollNo}
-            onChange={handleChange}
-            type="text"
-            className="w-full p-2 border border-gray-400 rounded outline-none"
-          />
-          {errors.rollNo && (
-            <p className="text-red-500 text-xs mt-1">{errors.rollNo}</p>
-          )}
-        </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Roll no
+    </label>
+    <input
+      name="rollNo"
+      value={formData.rollNo}
+      onChange={handleChange}
+      type="text"
+      placeholder="Enter roll number"
+      className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border border-gray-200 text-gray-900 text-base"
+    />
+    {errors.rollNo && (
+      <p className="text-red-500 text-sm mt-1">{errors.rollNo}</p>
+    )}
+  </div>
 
-        <div className="flex justify-end space-x-3">
-          <button
-            type="button"
-            onClick={() => {
-              // Optional: handle cancel action
-            }}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+  <div className="flex justify-end space-x-3">
+    <button
+      type="button"
+      onClick={() => {
+        navigate(`/dashboard/classes/profile/${classId}/students`)
+      }}
+      className="px-6 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 text-base font-medium transition duration-200 ease-in-out shadow-sm"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      className="px-6 py-3 border border-transparent rounded-lg bg-primary text-white hover:bg-secondary text-base font-medium"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+
     </div>
   );
 };

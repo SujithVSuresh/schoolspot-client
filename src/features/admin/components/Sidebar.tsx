@@ -1,7 +1,5 @@
 import {
   LayoutDashboard,
-  Settings,
-  HelpCircle,
   GraduationCap,
   Users,
   School,
@@ -40,8 +38,8 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="fixed min-h-screen inset-y-0 left-0 z-30 w-20 h-full bg-blue-800 text-white transform transition duration-300 md:translate-x-0">
-      <div className="flex items-center justify-center border-b h-16 border-indigo-800">
+    <div className="fixed min-h-screen left-0 z-30 w-20 h-full bg-primary text-white">
+      <div className="flex items-center justify-center border-b h-16 border-secondaryText">
         <div className="flex items-center">
           <img src={dotlogo} alt="" className="h-10" />
         </div>
@@ -54,7 +52,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <div className="mt-10 pt-6 border-t border-indigo-800">
+        {/* <div className="mt-10 pt-6 border-t border-indigo-800">
           <div className="space-y-1">
             <a
               href="#"
@@ -69,7 +67,7 @@ const Sidebar = () => {
               <HelpCircle className="h-5 w-5" />
             </a>
           </div>
-        </div>
+        </div> */}
       </nav>
     </div>
   );

@@ -28,8 +28,7 @@ const Signin = () => {
     resolver: zodResolver(signinValidationSchema),
   });
 
- 
-   const onSubmit = async (data: AdminSigninFormType) => {  
+  const onSubmit = async (data: AdminSigninFormType) => {
     setLoading(true);
 
     const response = await signin(data);
@@ -51,19 +50,16 @@ const Signin = () => {
     } else {
       setTimeout(() => {
         setLoading(false);
-        toast(
-          response?.error?.message,
-          {
-            duration: 8000,
-            position: "bottom-right",
-            style: {
-              backgroundColor: "#FEE2E2",
-              border: "2px, solid, #DC2626",
-              minWidth: "400px",
-              color: "black",
-            },
-          }
-        );
+        toast(response?.error?.message, {
+          duration: 8000,
+          position: "bottom-right",
+          style: {
+            backgroundColor: "#FEE2E2",
+            border: "2px, solid, #DC2626",
+            minWidth: "400px",
+            color: "black",
+          },
+        });
       }, 1000);
     }
   };
@@ -75,11 +71,7 @@ const Signin = () => {
           <h1 className="font-bold text-4xl mb-10 text-center">
             Sign in to your account
           </h1>
-          {/* 
-    <h5 className="text-base text-center mt-5 mb-6">
-      Sign in fast and safe to your SchoolSpot account.
-    </h5> */}
-
+        
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <label
@@ -135,8 +127,8 @@ const Signin = () => {
             </label>
 
             <button
-             disabled={loading}
-              className={`bg-blue-700 w-full h-12 rounded-sm flex justify-center text-base font-medium text-white mt-6 items-center`}
+              disabled={loading}
+              className={`bg-primary w-full h-12 rounded-sm flex justify-center text-base font-medium text-white mt-6 items-center`}
             >
               {loading ? (
                 <img className="w-10 h-10" src={loadingGif} alt="loading" />
@@ -145,11 +137,11 @@ const Signin = () => {
               )}
             </button>
 
-            <h5 className="font-medium mt-5">
+            <h5 className="font-medium mt-5 text-primaryText">
               Forgot your password?{" "}
               <Link
                 to={"/signin/forgot"}
-                className="text-blue-500 cursor-pointer font-semibold"
+                className="text-primary cursor-pointer font-semibold"
               >
                 Reset password
               </Link>

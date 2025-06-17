@@ -154,7 +154,7 @@ const Signup = () => {
             <button
             disabled={loading}
               type="submit"
-              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-blue-700`}
+              className={`w-full mt-5 h-12 rounded-sm flex justify-center items-center text-base font-medium text-white bg-primary`}
             >
               {loading ? (
                 <img className="w-10 h-10" src={loadingGif} alt="loading" />

@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { setStudentList } from "../../redux/studentListAdminSlice";
 
 const ClassProfile = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { id: classId } = useParams();
@@ -46,23 +46,19 @@ const ClassProfile = () => {
       }
     };
 
+    const fetchStudentsByClassId = async () => {
+      const response = await getStudentsByClassId(classId as string);
+      if (response.success) {
+        dispatch(setStudentList(response.data));
+      } else {
+        console.log(response.error);
+      }
+    };
 
-   const fetchStudentsByClassId = async () => {
-        const response = await getStudentsByClassId(classId as string);
-        if (response.success) {
-          dispatch(setStudentList(response.data));
-        } else {
-          console.log(response.error);
-        }
-      };
-  
-      fetchStudentsByClassId();
+    fetchStudentsByClassId();
 
     fetchClassProfileData();
   }, [classId, dispatch]);
-
-
-
 
   const deleteClassHandler = async (classId: string) => {
     if (!classId) {
@@ -149,7 +145,8 @@ const ClassProfile = () => {
       </div>
 
       <div className="mt-10">
-        <div className="flex border-b pb-5 border-gray-200">
+        <div className="flex border-b pb-5 border-gray-200 justify-between">
+         <div className="flex">
           {sectionInfo.map((section) => (
             <SectionButton
               classId={classId as string}
@@ -157,7 +154,20 @@ const ClassProfile = () => {
               urlSection={urlSection}
             />
           ))}
+          </div>
 
+            {/* <SectionButton
+              classId={classId as string}
+              section={section}
+              urlSection={urlSection}
+            />
+
+                        <SectionButton
+              classId={classId as string}
+              section={section}
+              urlSection={urlSection}
+            /> */}
+            <div className="flex">
           <div
             onClick={() => navigate(`/dashboard/classes/${classId}/update`)}
             className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
@@ -170,6 +180,7 @@ const ClassProfile = () => {
             className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
           >
             Delete Class
+          </div>
           </div>
         </div>
       </div>

@@ -378,7 +378,7 @@ const SchoolProfileForm = () => {
     </div>
       <button
     type="submit"
-    className="rounded-md mt-5 flex justify-center w-40 h-12 items-center text-base font-medium text-white bg-blue-600"
+    className="rounded-md mt-5 flex justify-center w-40 h-12 items-center text-base font-medium text-white bg-primary"
   >
               {loading ? (
                     <img className="w-10 h-10" src={loadingGif} alt="loading" />

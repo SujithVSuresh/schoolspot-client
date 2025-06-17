@@ -1,4 +1,3 @@
-import { Settings } from "lucide-react";
 import { fetchAdminProfile } from "../../../api/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -92,7 +91,6 @@ const AdminProfileForm = () => {
     <div className="pt-20 pl-28 pr-8 ">
     <div className="flex justify-between relative">
     <h1 className="text-xl font-medium text-gray-800 mb-8">Profile info</h1>
-    <Settings className="h-5 w-5 mt-2" />
 
     {/* <div className="bg-red-500 w-40 h-20 absolute right-0 top-2 z-10">
 
@@ -196,7 +194,7 @@ const AdminProfileForm = () => {
     </div>
     <button
     type="submit"
-    className="rounded-md mt-5 flex justify-center w-40 h-12 items-center text-base font-medium text-white bg-blue-600"
+    className="rounded-md mt-5 flex justify-center w-40 h-12 items-center text-base font-medium text-white bg-primary"
   >
               {loading ? (
                     <img className="w-10 h-10" src={loadingGif} alt="loading" />

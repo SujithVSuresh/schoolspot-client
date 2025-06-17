@@ -45,8 +45,6 @@ const StudentProfile = () => {
   const fetchStudentProfileHandler = async () => {
     const response = await fetchProfileforStudent();
 
-    console.log(response, "rrrrrrrrrrrrrrrr");
-
     setProfileData(response.data);
   };
 

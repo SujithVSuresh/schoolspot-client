@@ -13,8 +13,8 @@ const SidebarItem = ({
     <a
       onClick={() => navigate(`/dashboard/${url}`)}
       className={`flex hover:cursor-pointer items-center justify-center p-5 ${
-        location.pathname.split("/")[2] == url && "bg-blue-600"
-      } hover:bg-blue-700 rounded-md group`}
+        location.pathname.split("/")[2] == url && "bg-secondary text-primaryText"
+      } hover:bg-secondary hover:text-primaryText rounded-md group`}
     >
       <Icon className="h-5 w-5" />
     </a>
