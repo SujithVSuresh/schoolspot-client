@@ -4,16 +4,16 @@ import { dateFormatter, timeFormatter } from '../../../../../app/utils/formatter
 
 const AnnouncementCard = ({announcement}: {announcement: AnnouncementResponseType}) => {
   return (
-            <div className="rounded-lg border border-gray-200 p-4">
+            <div className="rounded-lg border-2 p-4">
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <div className="flex items-center space-x-2">
-                  <h3 className="text-lg font-medium text-gray-700">{announcement.title}</h3>
+                  <h3 className="text-lg font-semibold text-primaryText">{announcement.title}</h3>
                   {/* {announcement.isPinned && (
                     <Pin className="h-4 w-4 text-indigo-600" />
                   )} */}
                 </div>
-                <p className="mt-2 text-gray-600">{announcement.content}</p>
+                <p className="mt-2 text-primaryText">{announcement.content}</p>
                 
                 <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center">

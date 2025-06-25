@@ -1,6 +1,6 @@
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/DashboardHeader";
-import loadingGif from "../../../../assets/images/loading.webp";
+import loadingGif from "../../../../assets/images/loading.gif";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { changePasswordSchema } from "../../../../app/validation/validatorSchema";

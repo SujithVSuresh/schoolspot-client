@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { setSuperAdmin } from "../../redux/superadminSlice";
 import { signin } from "../../api/api";
 import { SuperAdminSigninFormType } from "../../types/types";
-import loadingGif from "../../../../assets/images/loading.webp";
+import loadingGif from "../../../../assets/images/loading.gif";
 import { superadminSigninValidationSchema } from "../../validation/formValidation";
 
 const Login = () => {

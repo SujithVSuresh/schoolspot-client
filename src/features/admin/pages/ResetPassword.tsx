@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { resetPasswordEmailValidationSchema } from "../validation/formValidation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import loadingGif from "../../../assets/images/loading.webp";
+import loadingGif from "../../../assets/images/loading.gif";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);

@@ -7,7 +7,7 @@ import { useLoading } from "../../../../app/hooks/useLoading";
 import CustomProgress from "../../../../app/components/Loader/CustomProgress";
 import Spinner from "../../../../app/components/Loader/Spinner";
 import NotFound from "../../../../app/components/NotFound";
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/NavigateButton";
 
 type Status = "Paid" | "Unpaid" | "overdue";
 

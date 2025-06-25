@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchAcademicYears, updateAcademicYear } from "../../../api/api";
 import { AcademicYearType } from "../../../types/types";
-import loadingGif from "../../../../../assets/images/loading.webp";
+import loadingGif from "../../../../../assets/images/loading.gif";
 import toast from "react-hot-toast";
 
 const AcademicYear = () => {

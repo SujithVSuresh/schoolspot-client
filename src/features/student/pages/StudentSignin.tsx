@@ -4,12 +4,12 @@ import { useState } from "react"
 import {useForm} from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { studentSigninValidationSchema } from "../validation/formValidation"
-import toast from "react-hot-toast"
 import { setStudent } from "../redux/studentSlice"
 import { signin } from "../api/api"
 import { StudentSigninFormType } from "../types/types"
-import loadingGif from "../../../assets/images/loading.webp";
+import loadingGif from "../../../assets/images/loading.gif";
 import Header from "../components/AuthHeader"
+import { errorToast } from "../../../app/utils/toastMessage"
 
 const StudentSignin = () => {
     const dispatch = useDispatch()
@@ -47,22 +47,10 @@ const StudentSignin = () => {
                 navigate("/student/home");
               }, 1000);
             } else {
-              setTimeout(() => {
+       
                 setLoading(false);
-                toast(
-                  "We don't have any record of a SchoolSpot account with this credentials",
-                  {
-                    duration: 8000,
-                    position: "bottom-right",
-                    style: {
-                      backgroundColor: "#FEE2E2",
-                      border: "2px, solid, #DC2626",
-                      minWidth: "400px",
-                      color: "black",
-                    },
-                  }
-                );
-              }, 1000);
+                errorToast(response?.error?.message)
+    
             }
           };
 

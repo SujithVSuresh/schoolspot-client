@@ -8,45 +8,61 @@ const TableItem = ({ student }: { student: StudentListType }) => {
   const accountStatus = (
     status: "active" | "inactive" | "blocked" | "deleted"
   ) => {
+    const statusStyles = {
+      active: "bg-green-100 text-green-600",
+      inactive: "bg-yellow-100 text-yellow-600",
+      blocked: "bg-red-100 text-red-600",
+      deleted: "bg-gray-200 text-gray-600",
+    };
+
     return (
       <span
-        className={`${status == "active" ? "text-green-500" : "text-red-500"}`}
+        className={`px-2 py-1 rounded-full text-xs font-semibold ${statusStyles[status]}`}
       >
         {textFormatter(status)}
       </span>
     );
   };
+
   return (
-    <tr key={student._id} className="hover:bg-gray-50">
+    <tr
+      key={student._id}
+      className="hover:bg-gray-50 transition-colors duration-200 border-b"
+    >
       <td className="px-6 py-4 whitespace-nowrap">
-        <img
-          src={student.profilePhoto as string}
-          alt={student.fullName}
-          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
-        />
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {student.fullName}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {student.admissionNo}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {student.userId.email}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {student.parentContactNumber}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-        {accountStatus(student.userId.status)}
+        <div className="flex items-center">
+          <img
+            src={student.profilePhoto as string}
+            alt={student.fullName}
+            className="w-10 h-10 rounded-full object-cover border border-gray-200"
+          />
+        </div>
       </td>
 
-      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primaryText">
+        {student.fullName}
+      </td>
+
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-primaryText">
+        {student.admissionNo}
+      </td>
+
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-primaryText">
+        {student.userId.email}
+      </td>
+
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-primaryText">
+        {student.parentContactNumber}
+      </td>
+
+      <td className="px-6 py-4 whitespace-nowrap">{accountStatus(student.userId.status)}</td>
+
+      <td className="px-6 py-4 whitespace-nowrap text-right">
         <button
           onClick={() => {
             navigate(`/dashboard/students/profile/${student.userId._id}`);
           }}
-          className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600"
+          className="bg-primary hover:bg-secondary text-white text-xs px-4 py-2 rounded-full transition-all"
         >
           View
         </button>

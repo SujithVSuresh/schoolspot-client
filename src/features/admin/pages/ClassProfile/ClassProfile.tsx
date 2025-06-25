@@ -11,12 +11,14 @@ import {
   Users,
   UserCheck,
   UserX,
+  PencilLine,
 } from "lucide-react";
 import SectionButton from "./components/SectionButton";
 import { useDispatch } from "react-redux";
 import { setStudentList } from "../../redux/studentListAdminSlice";
 import BoxSkelton from "../../../../app/components/Loader/BoxSkelton";
 import { useLoading } from "../../../../app/hooks/useLoading";
+import NavigateButton from "../../components/NavigateButton";
 
 const ClassProfile = () => {
   const dispatch = useDispatch();
@@ -153,7 +155,7 @@ const ClassProfile = () => {
       }
 
       <div className="mt-10">
-        <div className="flex border-b pb-5 border-gray-200 justify-between">
+        <div className="flex border-b-2 pb-5 border-gray-200 justify-between">
          <div className="flex">
           {sectionInfo.map((section) => (
             <SectionButton
@@ -175,17 +177,13 @@ const ClassProfile = () => {
               section={section}
               urlSection={urlSection}
             /> */}
-            <div className="flex">
-          <div
-            onClick={() => navigate(`/dashboard/classes/${classId}/update`)}
-            className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
-          >
-            Edit Class
-          </div>
+            <div className="flex gap-x-3">
+
+          <NavigateButton label="Edit Class" navlink={`/dashboard/classes/${classId}/update`} icon={PencilLine}/>
 
           <div
             onClick={() => deleteClassHandler(classId as string)}
-            className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer mr-3 text-sm`}
+            className={`bg-gray-200 text-gray-800 px-4 py-3 rounded-full hover: cursor-pointer text-sm`}
           >
             Delete Class
           </div>

@@ -156,7 +156,7 @@ const Invoices = () => {
                         </button>
                       </div> */}
                       {/* onClick={() => handlePayment(invoice.invoiceNumber, invoice.totalAmount)}  */}
-                      <button onClick={() => navigate(`/student/invoices/${invoice._id}`)} className="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600">
+                      <button onClick={() => navigate(`/student/invoices/${invoice._id}`)} className="bg-primary text-white text-sm px-3 py-1 rounded hover:bg-secondary">
                         View
                       </button>
                     </td>

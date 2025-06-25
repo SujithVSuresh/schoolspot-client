@@ -5,7 +5,7 @@ import { Pen, Plus, Trash } from "lucide-react";
 import TimetableList from "../../../../app/components/Timetable/TimetableList";
 import { DaySchedule } from "../../../../app/types/Timetable";
 import { deleteTimetable } from "../../api/api";
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/NavigateButton";
 import { useLoading } from "../../../../app/hooks/useLoading";
 import CustomProgress from "../../../../app/components/Loader/CustomProgress";
 import Spinner from "../../../../app/components/Loader/Spinner";

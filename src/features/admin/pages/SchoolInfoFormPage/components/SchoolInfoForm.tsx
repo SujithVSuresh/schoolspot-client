@@ -6,7 +6,7 @@ import { setSchoolProfile } from "../../../redux/schoolProfileSlice";
 import { RootState } from "../../../../../app/store";
 import { useNavigate } from "react-router-dom";
 import { SchoolProfileType } from "../../../types/types";
-import loadingGif from "../../../../../assets/images/loading.webp";
+import loadingGif from "../../../../../assets/images/loading.gif";
 import { useState } from "react";
 
 const SchoolInfoForm = () => {

@@ -84,7 +84,6 @@ const Announcements = () => {
 
   const fetchAnnouncementByIdHandler = async (announcementId: string) => {
     const response = await fetchAnnouncementById(announcementId);
-    console.log(response, "gagaga...");
     if (response.success) {
       setSelectedAnnouncements(response.data);
       setIsModalOpen(true);
@@ -114,7 +113,7 @@ const Announcements = () => {
     <div className="min-h-screen w-full">
       <div className="flex justify-end items-center"></div>
       {pinnedAnnouncements.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 mb-3 justify-center w-full border-b pb-5">
+        <div className="grid grid-cols-2 gap-3 mb-3 justify-center w-full pb-5">
           {pinnedAnnouncements.map((announcement) => (
             <AnnouncementCard
               key={announcement._id}
@@ -126,7 +125,7 @@ const Announcements = () => {
         </div>
       )}
 
-      <div className="flex gap-2 mb-5 justify-end">
+      {/* <div className="flex gap-2 mb-5 justify-end">
         <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
           All
         </span>
@@ -138,7 +137,7 @@ const Announcements = () => {
         <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
           This Month
         </span>
-      </div>
+      </div> */}
       <div className="grid grid-cols-2 gap-3 justify-center w-full">
         {announcements.map((announcement) => (
           <AnnouncementCard

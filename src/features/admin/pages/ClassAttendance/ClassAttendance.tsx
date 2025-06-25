@@ -7,7 +7,7 @@ import "react-calendar/dist/Calendar.css";
 import { AttendanceResponseType } from "../../../../app/types/AttendanceType";
 import { useLoading } from "../../../../app/hooks/useLoading";
 import CustomProgress from "../../../../app/components/Loader/CustomProgress";
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/NavigateButton";
 import Spinner from "../../../../app/components/Loader/Spinner";
 import NotFound from "../../../../app/components/NotFound";
 
@@ -40,6 +40,7 @@ const ClassAttendance = () => {
 
       if (selectedDate) {
         const response = await getAttendanceByClass(classId, selectedDate);
+        console.log(response, "shuiiiiii response of attendance")
         setAttendanceData(response.data);
       }
       stopLoading();
@@ -86,71 +87,75 @@ const ClassAttendance = () => {
             <NotFound />
           ) : (
             <div className="bg-white rounded-lg border overflow-hidden">
-  <div className="overflow-x-auto">
-    <table className="w-full">
-      <thead>
-        <tr className="bg-secondary h-12">
-          <th className="px-6 py-3 text-left text-xs font-medium text-primaryText uppercase tracking-wider">
-            Roll No
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-primaryText uppercase tracking-wider">
-            Student Name
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-primaryText uppercase tracking-wider">
-            Status
-          </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-primaryText uppercase tracking-wider">
-            Action
-          </th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-200">
-        {attendanceData?.map((attendance) => (
-          <tr key={attendance._id} className="hover:bg-gray-50">
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {attendance.academicProfile.roll}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {attendance.studentProfile.fullName}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  attendance.status === "Present"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                {attendance.status}
-              </span>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <button
-                onClick={() =>
-                  handleAttendanceStatus(
-                    attendance._id as string,
-                    attendance.status === "Present" ? "Absent" : "Present"
-                  )
-                }
-                className="flex items-center space-x-1 text-indigo-600 hover:text-indigo-900"
-              >
-                {attendance.status === "Present" ? (
-                  <XCircle className="h-5 w-5" />
-                ) : (
-                  <CheckCircle className="h-5 w-5" />
-                )}
-                <span>
-                  {attendance.status === "Present"
-                    ? "Mark Absent"
-                    : "Mark Present"}
-                </span>
-              </button>
-            </td>
+     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Roll No
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Student Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Status
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Action
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody className="divide-y divide-gray-200 text-sm">
+          {attendanceData?.map((attendance) => (
+            <tr
+              key={attendance._id}
+              className="hover:bg-gray-50 transition-colors duration-150"
+            >
+              <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                {attendance.academicProfile.roll}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                {attendance.studentProfile.fullName}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span
+                  className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                    attendance.status === "Present"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {attendance.status}
+                </span>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm">
+                <button
+                  onClick={() =>
+                    handleAttendanceStatus(
+                      attendance._id as string,
+                      attendance.status === "Present" ? "Absent" : "Present"
+                    )
+                  }
+                  className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium transition-all"
+                >
+                  {attendance.status === "Present" ? (
+                    <>
+                      <XCircle className="h-5 w-5" />
+                      <span>Mark Absent</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="h-5 w-5" />
+                      <span>Mark Present</span>
+                    </>
+                  )}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 </div>
 
           )}

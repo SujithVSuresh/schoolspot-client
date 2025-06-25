@@ -1,46 +1,69 @@
-import {
-  UserPlus,
-} from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getAllTeachers } from "../../api/api";
 import { TeacherDataResponseType } from "../../types/types";
-import { useNavigate } from "react-router-dom";
+import NavigateButton from "../../components/NavigateButton";
+import { Search } from "lucide-react";
+import UserListingCard from "../../components/UserListingCard";
+import { usePagenation } from "../../../../app/hooks/usePagenation";
+import { useLoading } from "../../../../app/hooks/useLoading";
+import Spinner from "../../../../app/components/Loader/Spinner";
+import NotFound from "../../../../app/components/NotFound";
 
 function Teacher() {
-  const navigate = useNavigate();
-
   const [teachers, setTeachers] = useState<TeacherDataResponseType[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
-
   const search = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState(search);
 
-  
+  const { totalPages, setTotalPages, page, limit, handlePrev, handleNext } =
+    usePagenation();
+
+  const { isLoading, startLoading, stopLoading } = useLoading();
+
   useEffect(() => {
     const fetchTeacherData = async () => {
-      const response = await getAllTeachers(search);
-      console.log(response.data)
+      startLoading();
+      const response = await getAllTeachers(page, limit, search);
       if (response.success) {
-        setTeachers(response.data);
+        setTeachers(response.data.data);
+        setTotalPages(response.data.totalPages);
       } else {
         console.log(response.error);
       }
+      stopLoading();
     };
-  
+
     fetchTeacherData();
-  }, [search]);
-  
-    const updateSearch = (value: string) => {
-    if (!value && search) {
-      searchParams.delete("search");
-      setSearchParams(searchParams);
-    } else {
-      searchParams.set("page", "1")
-      searchParams.set("search", value);
-      setSearchParams(searchParams);
-    }
-  };
+  }, [search, page]);
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (!searchInput && search) {
+        searchParams.delete("search");
+        setSearchParams(searchParams);
+      } else if (searchInput !== search) {
+        searchParams.set("page", "1");
+        searchParams.set("search", searchInput);
+        setSearchParams(searchParams);
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchInput]);
+
+  // const updateSearch = (value: string) => {
+  //   if (!value && search) {
+  //     searchParams.delete("search");
+  //     setSearchParams(searchParams);
+  //   } else {
+  //     searchParams.set("page", "1");
+  //     searchParams.set("search", value);
+  //     setSearchParams(searchParams);
+  //   }
+  // };
 
   return (
     <>
@@ -49,82 +72,77 @@ function Teacher() {
           Teachers
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <input
-          value={search}
-          onChange={(e) => updateSearch(e.target.value)}
-          type="text"
-          placeholder="Search name..."
-          className="w-full border p-2 border-gray-200 rounded-lg focus:outline-none focus:ring-0"
-        />
-
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="flex items-center w-full sm:w-72 border border-gray-300 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-3 flex items-center justify-center">
+                <Search className="w-4 h-4 text-gray-500" />
+              </div>
+              <input
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                type="text"
+                placeholder="Search name..."
+                className="w-full px-2 text-sm focus:outline-none"
+              />
+            </div>
           </div>
-          <button
-            onClick={() => navigate("/dashboard/teachers/new")}
-            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors w-full sm:w-auto"
-          >
-            <UserPlus className="h-5 w-5" />
-            Add
-          </button>
+
+          <NavigateButton
+            label="Add Teacher"
+            navlink="/dashboard/teachers/new"
+            icon={UserPlus}
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        {teachers.length > 0 &&
-          teachers.map((teacher, index) => (
-            <div key={index} className="bg-gray-100 rounded-xl p-4 relative" onClick={() => navigate(`/dashboard/teachers/profile/${teacher.user._id}`)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={teacher.profilePhoto}
-                    alt={teacher.fullName}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <h3 className="font-medium text-gray-700 text-sm sm:text-base">
-                      {teacher.fullName}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      {teacher.subjectSpecialized}
-                    </p>
-                  </div>
-                </div>
-      
-                
-              </div>
-            </div>
-          ))}
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : teachers.length == 0 ? (
+        <NotFound />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {teachers.length > 0 &&
+            teachers.map((teacher, index) => (
+              <UserListingCard
+                profilePhoto={teacher.profilePhoto}
+                primaryText={teacher.fullName}
+                secondaryText={teacher.subjectSpecialized}
+                navlink={`/dashboard/teachers/profile/${teacher.user._id}`}
+                key={index}
+              />
+            ))}
+        </div>
+      )}
 
-      {/* <div className="flex items-center justify-center gap-2 sm:gap-4 mt-4">
-        <button
-          disabled={page === 1}
-          onClick={() => updateQuery({ page: page - 1 })}
-          className={`p-2 sm:px-4 sm:py-2 rounded-md text-white transition ${
-            page === 1
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-
-        <span className="text-gray-700 font-medium text-xs sm:text-sm">
-          Page {page} of {totalPages}
-        </span>
-
-        <button
-          disabled={page === totalPages}
-          onClick={() => updateQuery({ page: page + 1 })}
-          className={`p-2 sm:px-4 sm:py-2 rounded-md text-white transition ${
-            page === totalPages
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div> */}
+      {!isLoading && teachers.length > 0 && (
+        <div className="flex gap-2 justify-center mt-4 items-center">
+          <button
+            onClick={handlePrev}
+            disabled={page === 1}
+            className={`px-3 py-1 rounded ${
+              page === 1
+                ? "bg-secondary text-primaryText"
+                : "bg-primary text-white"
+            }`}
+          >
+            Prev
+          </button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <button
+            onClick={handleNext}
+            disabled={page === totalPages}
+            className={`px-3 py-1 rounded ${
+              page === totalPages
+                ? "bg-secondary text-primaryText"
+                : "bg-primary text-white"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adminProfileValidationSchema } from "../../../validation/formValidation";
-import loadingGif from '../../../../../assets/images/loading.webp'
+import loadingGif from '../../../../../assets/images/loading.gif'
 import { updateAdminProfile } from "../../../api/api";
 import toast from "react-hot-toast";
 import { textFormatter } from "../../../../../app/utils/formatter";

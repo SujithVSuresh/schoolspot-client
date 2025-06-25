@@ -5,7 +5,7 @@ import { ClassType } from "../../../types/types"
 const ClassCard = ({classData}: {classData: ClassType}) => {
     const navigate = useNavigate()
   return (
-          <div className="space-y-4 p-5 hover: cursor-pointer rounded-lg bg-gray-100" onClick={() => navigate(`/dashboard/classes/profile/${classData._id}/students`)}>
+          <div className="space-y-4 p-5 hover: cursor-pointer rounded-lg border-2" onClick={() => navigate(`/dashboard/classes/profile/${classData._id}/students`)}>
           <div className="flex items-center justify-between text-gray-700">
     
             <div>

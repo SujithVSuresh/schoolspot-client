@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editSchoolProfile } from "../../../api/api";
 import toast from "react-hot-toast";
-import loadingGif from '../../../../../assets/images/loading.webp'
+import loadingGif from '../../../../../assets/images/loading.gif'
 
 
 const SchoolProfileForm = () => {

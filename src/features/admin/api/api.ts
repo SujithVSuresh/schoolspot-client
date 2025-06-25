@@ -230,9 +230,9 @@ export const updateTeacher = async (userId: string, formData: FormData) => {
 }
 
 
-export const getAllTeachers = async (search: string) => {
+export const getAllTeachers = async (page: number, limit: number, search: string) => {
     try{
-        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/teachers?search=${search}`, {
+        const {data} = await axiosInstance.get(`${envData.VITE_ENDPOINT_ORIGIN}/teacher/teachers?page=${page}&limit=${limit}&search=${search}`, {
             headers: {
                 'x-user-role': 'admin'
             }

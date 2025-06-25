@@ -8,7 +8,7 @@ import toast from "react-hot-toast"
 import { setTeacher } from "../../redux/teacherSlice"
 import { TeacherSigninFormType } from "../../types/types" 
 import { signin } from "../../api/api"
-import loadingGif from '../../../../assets/images/loading.webp'
+import loadingGif from '../../../../assets/images/loading.gif'
 
 const TeacherSignin = () => {
    const dispatch = useDispatch()

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { setAdmin } from "../../redux/adminSlice";
 import { RootState } from "../../../../app/store";
-import loadingGif from "../../../../assets/images/loading.webp";
+import loadingGif from "../../../../assets/images/loading.gif";
 import toast from "react-hot-toast";
 
 const SignupProfile = () => {

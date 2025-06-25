@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { verify, resendOtp } from '../api/api';
 import toast from 'react-hot-toast';
-import loadingGif from "../../../assets/images/loading.webp";
+import loadingGif from "../../../assets/images/loading.gif";
 import { useDispatch } from 'react-redux';
 import { setAdmin } from '../redux/adminSlice';
 

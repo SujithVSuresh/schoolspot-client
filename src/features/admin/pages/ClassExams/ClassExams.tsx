@@ -3,7 +3,7 @@ import { dateFormatter } from "../../../../app/utils/formatter";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { fetchExams } from "../../api/api";
 import { Plus } from "lucide-react";
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/NavigateButton";
 import { useLoading } from "../../../../app/hooks/useLoading";
 import CustomProgress from "../../../../app/components/Loader/CustomProgress";
 import Spinner from "../../../../app/components/Loader/Spinner";

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupValidationSchema } from "../validation/formValidation";
 import { useEffect, useState } from "react";
-import loadingGif from "../../../assets/images/loading.webp";
+import loadingGif from "../../../assets/images/loading.gif";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store"

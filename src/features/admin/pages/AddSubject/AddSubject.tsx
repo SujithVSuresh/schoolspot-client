@@ -114,7 +114,7 @@ const AddSubject = () => {
     </button>
     <button
       type="submit"
-      className="px-6 py-3 bg-primary text-white text-base font-medium rounded-lg hover:bg-blue-700 transition duration-200 ease-in-out shadow-sm hover:shadow-md"
+      className="px-6 py-3 bg-primary text-white text-base font-medium rounded-lg hover:bg-secondary transition duration-200 ease-in-out shadow-sm hover:shadow-md"
     >
       Submit
     </button>

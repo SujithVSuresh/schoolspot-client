@@ -6,7 +6,7 @@ const InvoiceHeader = ({invoice, paymentHandler}: {
   invoice: InvoiceDetailsType,
   paymentHandler: (invoiceId: string, amount: number) => void
 }) => {
-  const isOverdue = true;
+  const isOverdue = invoice?.dueDate < new Date();;
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('en-US', {
@@ -28,7 +28,7 @@ const InvoiceHeader = ({invoice, paymentHandler}: {
           </div>
         </div>
         <div className="mt-4 md:mt-0 flex space-x-3">
-          <button onClick={() => paymentHandler(invoice.invoiceNumber, invoice.totalAmount)} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white text-sm transition-colors duration-200 flex items-center">
+          <button onClick={() => paymentHandler(invoice.invoiceNumber, invoice.totalAmount)} className="px-4 py-2 bg-primary hover:bg-secondary rounded text-white text-sm transition-colors duration-200 flex items-center">
             <span>Make Payment</span>
           </button>
         </div>
@@ -65,7 +65,7 @@ const InvoiceHeader = ({invoice, paymentHandler}: {
           <p className={`font-medium ${isOverdue ? 'text-red-600' : 'text-gray-800'}`}>
             {formatDate(invoice?.dueDate)}
           </p>
-          {/* {isOverdue && <p className="text-red-500 text-sm font-medium">Overdue</p>} */}
+          {isOverdue && <p className="text-red-500 text-sm font-medium">Overdue</p>}
         </div>
       </div>
 

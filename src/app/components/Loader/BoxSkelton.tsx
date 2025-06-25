@@ -4,7 +4,7 @@ const BoxSkelton = ({ count }: { count: number }) => {
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}
-          className="flex items-center gap-3 py-4 px-4 rounded-lg overflow-hidden border animate-pulse"
+          className="flex items-center gap-3 py-4 px-4 rounded-lg overflow-hidden border-2 animate-pulse"
         >
           <div className="bg-gray-200 p-3.5 rounded-full">
             <div className="w-5 h-5 rounded-full bg-gray-300" />

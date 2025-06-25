@@ -2,7 +2,7 @@ import logo from "../../../assets/images/logo.png";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { passwordReset } from "../api/api";
-import loadingGif from "../../../assets/images/loading.webp";
+import loadingGif from "../../../assets/images/loading.gif";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { resetPasswordValidationSchema } from "../validation/formValidation";

@@ -24,19 +24,19 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br bg-white">
       {/* Navigation */}
       <nav className="container mx-auto px-52 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <img src={logo} alt="" className="h-10" />
         </div>
         <div className="md:flex space-x-6 flex items-center relative">
-          <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Home</a>
+          {/* <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Home</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Pages</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Pricing</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Portfolio</a>
           <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Blog</a>
-          <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Contact</a>
+          <a href="#" className="text-sm font-medium text-gray-800 hover:text-indigo-600">Contact</a> */}
 
           {/* Sign In Dropdown */}
           <div className="relative" ref={dropdownRef}>
@@ -73,7 +73,7 @@ const Home = () => {
 
           <button
             onClick={() => navigate('/school-info')}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary transition-colors"
           >
             Get Started Free
           </button>
@@ -92,7 +92,7 @@ const Home = () => {
             Simplifies student coursework management, academic progress tracking, and communication.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition-colors">
+            <button className="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-secondary transition-colors">
               Discover More
             </button>
             <button className="border border-gray-300 text-gray-800 px-6 py-3 rounded-md font-medium hover:bg-gray-50 transition-colors flex items-center">
