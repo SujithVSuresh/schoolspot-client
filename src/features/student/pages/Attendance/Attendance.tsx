@@ -4,8 +4,11 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import { monthFormatter } from "../../../../app/utils/formatter";
 import { Calendar, CalendarCheck, CalendarX } from "lucide-react";
 // import LeaveLetter from "./components/LeaveLetter";
+import { useOutletContext } from "react-router-dom";
 
 const Attendance = () => {
+      const { classId }: { classId: string } = useOutletContext();
+
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
 
@@ -19,11 +22,11 @@ const Attendance = () => {
 
   useEffect(() => {
     const dateStr = `${year}-${String(month).padStart(2, "0")}-01`;
-    fetchAttendanceHandler(dateStr);
-  }, [month, year]);
+    fetchAttendanceHandler(dateStr, classId);
+  }, [month, year, classId]);
 
-  const fetchAttendanceHandler = async (date: string) => {
-    const response = await fetchAttendanceByMonth(date);
+  const fetchAttendanceHandler = async (date: string, classId: string) => {
+    const response = await fetchAttendanceByMonth(date, classId);
 
     if (response.success) {
       setAttendanceData(response.data);

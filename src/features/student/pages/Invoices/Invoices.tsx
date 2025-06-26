@@ -10,6 +10,7 @@ import {
 import { fetchInvoicesByStudentId } from '../../api/api';
 import { dateFormatter, formatCurrency } from '../../../../app/utils/formatter';
 import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
 type Status = 'Paid' | 'Unpaid' | 'overdue';
 
@@ -32,6 +33,9 @@ interface InvoiceType {
 
 const Invoices = () => {
   const navigate = useNavigate()
+
+        const { classId }: { classId: string } = useOutletContext();
+
     // const [searchTerm, setSearchTerm] = useState('');
     const [invoices, setInvoices] = useState<InvoiceType[]>([]);
 
@@ -41,7 +45,7 @@ const Invoices = () => {
     }, [])
 
     const handleInvoiceFetch = async () => {
-      const invoices = await fetchInvoicesByStudentId()
+      const invoices = await fetchInvoicesByStudentId(classId)
       if(invoices.success){
         console.log(invoices.data, "this is the invoices")
         setInvoices(invoices.data)
