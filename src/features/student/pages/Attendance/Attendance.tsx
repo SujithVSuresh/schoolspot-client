@@ -3,7 +3,7 @@ import { fetchAttendanceByMonth } from "../../api/api";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { monthFormatter } from "../../../../app/utils/formatter";
 import { Calendar, CalendarCheck, CalendarX } from "lucide-react";
-import LeaveLetter from "./components/LeaveLetter";
+// import LeaveLetter from "./components/LeaveLetter";
 
 const Attendance = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -147,7 +147,7 @@ const Attendance = () => {
     },
   ];
 
-  const selectedDateStr = `${year}-${String(month).padStart(2, "0")}-01`;
+  // const selectedDateStr = `${year}-${String(month).padStart(2, "0")}-01`;
 
   return (
     <div className="rounded-lg overflow-hidden w-full">
@@ -208,7 +208,7 @@ const Attendance = () => {
           ))}
           {renderDays()}
         </div>
-        <LeaveLetter selectedDate={selectedDateStr} />
+        {/* <LeaveLetter selectedDate={selectedDateStr} /> */}
       </div>
     </div>
   );

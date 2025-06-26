@@ -50,23 +50,26 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
     // const { admin } = store.getState();
 
-    console.log(error, "heeeeeeeerrorrrr123")
-
     if (
       error?.response?.status === 403 &&
       error?.response?.data?.code === "BLOCKED"
     ) {
-      const userRole = error?.response?.data?.role
-      console.log("Blacklisted...........", userRole);
+      const userRole = error?.response?.data?.role;
       if (userRole == "student") {
-            store.dispatch(
-              removeStudent()
-            );
-          } else if (userRole == "teacher") {
-            store.dispatch(
-              removeTeacher()
-            );
-          }
+        store.dispatch(removeStudent());
+      } else if (userRole == "teacher") {
+        store.dispatch(removeTeacher());
+      }
+    }
+
+    if (
+      error?.response?.status === 403 &&
+      error?.response?.data?.code === "DELETED"
+    ) {
+      const userRole = error?.response?.data?.role;
+      if (userRole == "student") {
+        store.dispatch(removeStudent());
+      }
     }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
