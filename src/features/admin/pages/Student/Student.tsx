@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, UserPlus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getAllStudents } from "../../api/api";
 import { useSearchParams } from "react-router-dom";
 import Heading from "../../components/Heading";
@@ -18,12 +18,31 @@ function Student() {
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
 
-
   const page = Number(searchParams.get("page")) || 1;
   const search = searchParams.get("search") || "";
   const sort = searchParams.get("sort") || "";
   const classfilter = searchParams.get("classFilter") || "";
   const statusFilter = searchParams.get("statusFilter") || "";
+
+  const [searchInput, setSearchInput] = useState(search);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Debounced Search Update
+  useEffect(() => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      searchParams.set("search", searchInput);
+      searchParams.set("page", "1"); // Reset to first page
+      setSearchParams(searchParams);
+    }, 500);
+
+    return () => {
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    };
+  }, [searchInput]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -48,7 +67,6 @@ function Student() {
       );
 
       if (data?.success) {
-        console.log(data, "students data");
         setStudents(data.data.students);
         setTotalPages(data.data.totalPages);
       } else {
@@ -75,19 +93,23 @@ function Student() {
           label={"Add Student"}
           navlink="/dashboard/students/new"
         />
-        {/* <div className="bg-gray-200 p-3 rounded-full">
-          <SlidersHorizontal
-            className="hover: cursor-pointer h-5 w-5"
-            onClick={() => setOpenSideMenu(true)}
-          />
-        </div> */}
       </Heading>
 
       <div className="flex gap-5">
         <div className="w-full">
+          <div className="w-full flex justify-end">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search students..."
+            className="mb-4 px-4 py-2 border-2 rounded max-w-sm"
+          />
+          </div>
+
           {isLoading ? (
             <Spinner />
-          ) : students.length == 0 ? (
+          ) : students.length === 0 ? (
             <NotFound />
           ) : (
             <div className="bg-white w-full rounded-lg border-2 overflow-hidden">
@@ -95,28 +117,18 @@ function Student() {
                 <table className="w-full">
                   <thead>
                     <tr className="bg-secondary h-12">
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider"></th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider">
-                        NAME
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider">
-                        ADMISSION NO
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider">
-                        EMAIL
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider">
-                        CONTACT
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-primary uppercase tracking-wider">
-                        STATUS
-                      </th>
-                      <th className="px-6 py-3 text-right text-xs font-semibold text-primary uppercase tracking-wider"></th>
+                      <th className="px-6 py-3"></th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold">NAME</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold">ADMISSION NO</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold">EMAIL</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold">CONTACT</th>
+                      <th className="px-6 py-3 text-left text-xs font-semibold">STATUS</th>
+                      <th className="px-6 py-3 text-right text-xs font-semibold"></th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {students.map((student) => (
-                      <TableItem student={student} />
+                    {students.map((student, index) => (
+                      <TableItem key={index} student={student} />
                     ))}
                   </tbody>
                 </table>
@@ -124,7 +136,7 @@ function Student() {
             </div>
           )}
 
-          {/* Pagenation */}
+          {/* ⏮ Pagination */}
           {students.length > 0 && !isLoading && (
             <div className="flex items-center justify-center gap-2 sm:gap-4 mt-4">
               <button
@@ -149,7 +161,7 @@ function Student() {
                 className={`p-2 sm:px-4 sm:py-2 rounded-md text-white transition ${
                   page === totalPages
                     ? "bg-secondary cursor-not-allowed"
-                    : "bg-primary hover:secondary"
+                    : "bg-primary hover:bg-secondary"
                 }`}
               >
                 <ChevronRight className="h-5 w-5" />

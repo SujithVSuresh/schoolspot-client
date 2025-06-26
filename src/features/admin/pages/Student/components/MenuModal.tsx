@@ -4,23 +4,23 @@ const MenuModal = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const search = searchParams.get("search") || "";
+  // const search = searchParams.get("search") || "";
   const sort = searchParams.get("sort") || "";
   const statusFilter = searchParams.get("statusFilter") || "";
   // const classfilter = searchParams.get("classFilter") ? decodeURIComponent(searchParams.get("classFilter") as string).split(",") : [];
 
   // const classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9' ,'10']
 
-  const updateSearch = (value: string) => {
-    if (!value && search) {
-      searchParams.delete("search");
-      setSearchParams(searchParams);
-    } else {
-      searchParams.set("page", "1")
-      searchParams.set("search", value);
-      setSearchParams(searchParams);
-    }
-  };
+  // const updateSearch = (value: string) => {
+  //   if (!value && search) {
+  //     searchParams.delete("search");
+  //     setSearchParams(searchParams);
+  //   } else {
+  //     searchParams.set("page", "1")
+  //     searchParams.set("search", value);
+  //     setSearchParams(searchParams);
+  //   }
+  // };
 
   const updateSort = (value: string) => {
     if (!value && sort) {
@@ -48,7 +48,7 @@ const MenuModal = () => {
   {/* <h2 className="text-xl font-bold text-primaryText">Search & Filters</h2> */}
 
   {/* Search Input */}
-  <div>
+  {/* <div>
     <label className="block text-sm font-medium text-gray-700 mb-1">Search by Name</label>
     <input
       value={search}
@@ -57,7 +57,7 @@ const MenuModal = () => {
       placeholder="Enter student name"
       className="mt-1 block w-full px-4 py-3 bg-white rounded-lg border-2 text-gray-900 text-base focus:outline-none focus:ring-0"
     />
-  </div>
+  </div> */}
 
   {/* Sort */}
   <div>
